@@ -1,6 +1,6 @@
 //
-//  JQKUtil.h
-//  JQKuaibo
+//  YYKUtil.h
+//  YYKuaibo
 //
 //  Created by Sean Yue on 15/12/25.
 //  Copyright © 2015年 iqu8. All rights reserved.
@@ -10,18 +10,18 @@
 
 extern NSString *const kPaymentInfoKeyName;
 
-@class JQKPaymentInfo;
-@class JQKVideo;
+@class YYKPaymentInfo;
+@class YYKVideo;
 
-@interface JQKUtil : NSObject
+@interface YYKUtil : NSObject
 
 + (BOOL)isRegistered;
 + (void)setRegisteredWithUserId:(NSString *)userId;
 
-+ (NSArray<JQKPaymentInfo *> *)allPaymentInfos;
-+ (NSArray<JQKPaymentInfo *> *)payingPaymentInfos;
-+ (NSArray<JQKPaymentInfo *> *)paidNotProcessedPaymentInfos;
-+ (JQKPaymentInfo *)successfulPaymentInfo;
++ (NSArray<YYKPaymentInfo *> *)allPaymentInfos;
++ (NSArray<YYKPaymentInfo *> *)payingPaymentInfos;
++ (NSArray<YYKPaymentInfo *> *)paidNotProcessedPaymentInfos;
++ (YYKPaymentInfo *)successfulPaymentInfo;
 
 + (BOOL)isPaid;
 
@@ -31,5 +31,7 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSString *)appVersion;
 
 + (NSString *)paymentReservedData;
+
++ (NSString *)cachedImageSizeString;
 
 @end

@@ -43,8 +43,9 @@ return _##propertyName; \
 #define kScreenHeight     [ [ UIScreen mainScreen ] bounds ].size.height
 #define kScreenWidth      [ [ UIScreen mainScreen ] bounds ].size.width
 
-#define kPaidNotificationName @"jqkuaibo_paid_notification"
+#define kPaidNotificationName @"yykuaibo_paid_notification"
 #define kDefaultDateFormat    @"yyyyMMddHHmmss"
+#define kDefaultCollectionViewInteritemSpace  (3)
 
 typedef void (^YYKAction)(id obj);
 typedef void (^YYKCompletionHandler)(BOOL success, id obj);

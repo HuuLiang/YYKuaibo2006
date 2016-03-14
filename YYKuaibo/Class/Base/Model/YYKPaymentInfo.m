@@ -1,24 +1,24 @@
 //
 //  YYKPaymentInfo.m
-//  kuaibov
+//  yykuaibov
 //
 //  Created by Sean Yue on 15/12/17.
-//  Copyright © 2015年 kuaibov. All rights reserved.
+//  Copyright © 2015年 yykuaibov. All rights reserved.
 //
 
 #import "YYKPaymentInfo.h"
 #import "NSMutableDictionary+SafeCoding.h"
 
-static NSString *const kPaymentInfoPaymentIdKeyName = @"kuaibov_paymentinfo_paymentid_keyname";
-static NSString *const kPaymentInfoOrderIdKeyName = @"kuaibov_paymentinfo_orderid_keyname";
-static NSString *const kPaymentInfoOrderPriceKeyName = @"kuaibov_paymentinfo_orderprice_keyname";
-static NSString *const kPaymentInfoContentIdKeyName = @"kuaibov_paymentinfo_contentid_keyname";
-static NSString *const kPaymentInfoContentTypeKeyName = @"kuaibov_paymentinfo_contenttype_keyname";
-static NSString *const kPaymentInfoPayPointTypeKeyName = @"kuaibov_paymentinfo_paypointtype_keyname";
-static NSString *const kPaymentInfoPaymentTypeKeyName = @"kuaibov_paymentinfo_paymenttype_keyname";
-static NSString *const kPaymentInfoPaymentResultKeyName = @"kuaibov_paymentinfo_paymentresult_keyname";
-static NSString *const kPaymentInfoPaymentStatusKeyName = @"kuaibov_paymentinfo_paymentstatus_keyname";
-static NSString *const kPaymentInfoPaymentTimeKeyName = @"kuaibov_paymentinfo_paymenttime_keyname";
+static NSString *const kPaymentInfoPaymentIdKeyName = @"yykuaibov_paymentinfo_paymentid_keyname";
+static NSString *const kPaymentInfoOrderIdKeyName = @"yykuaibov_paymentinfo_orderid_keyname";
+static NSString *const kPaymentInfoOrderPriceKeyName = @"yykuaibov_paymentinfo_orderprice_keyname";
+static NSString *const kPaymentInfoContentIdKeyName = @"yykuaibov_paymentinfo_contentid_keyname";
+static NSString *const kPaymentInfoContentTypeKeyName = @"yykuaibov_paymentinfo_contenttype_keyname";
+static NSString *const kPaymentInfoPayPointTypeKeyName = @"yykuaibov_paymentinfo_paypointtype_keyname";
+static NSString *const kPaymentInfoPaymentTypeKeyName = @"yykuaibov_paymentinfo_paymenttype_keyname";
+static NSString *const kPaymentInfoPaymentResultKeyName = @"yykuaibov_paymentinfo_paymentresult_keyname";
+static NSString *const kPaymentInfoPaymentStatusKeyName = @"yykuaibov_paymentinfo_paymentstatus_keyname";
+static NSString *const kPaymentInfoPaymentTimeKeyName = @"yykuaibov_paymentinfo_paymenttime_keyname";
 
 @implementation YYKPaymentInfo
 

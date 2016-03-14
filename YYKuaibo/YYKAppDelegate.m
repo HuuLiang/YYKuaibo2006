@@ -7,6 +7,12 @@
 //
 
 #import "YYKAppDelegate.h"
+#import "YYKHomeViewController.h"
+#import "YYKSideMenuViewController.h"
+#import "YYKActivateModel.h"
+#import "YYKUserAccessModel.h"
+#import "YYKPaymentModel.h"
+#import "YYKSystemConfigModel.h"
 
 @interface YYKAppDelegate ()
 
@@ -14,9 +20,129 @@
 
 @implementation YYKAppDelegate
 
+- (UIWindow *)window {
+    if (_window) {
+        return _window;
+    }
+    
+    _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    _window.backgroundColor              = [UIColor whiteColor];
+    
+    YYKHomeViewController *homeVC = [[YYKHomeViewController alloc] init];
+    UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeVC];
+    
+    YYKSideMenuViewController *sideMenuVC = [[YYKSideMenuViewController alloc] init];
+    UINavigationController *sideMenuNav = [[UINavigationController alloc] initWithRootViewController:sideMenuVC];
+//    sideMenuNav.navigationBarHidden = YES;
+    
+    RESideMenu *sideMenu = [[RESideMenu alloc] initWithContentViewController:homeNav
+                                                      leftMenuViewController:sideMenuNav
+                                                     rightMenuViewController:nil];
+    sideMenu.delegate = sideMenuVC;
+    sideMenu.scaleContentView = NO;
+    sideMenu.scaleBackgroundImageView = NO;
+    sideMenu.scaleMenuView = NO;
+    sideMenu.fadeMenuView = NO;
+    sideMenu.parallaxEnabled = NO;
+    sideMenu.bouncesHorizontally = NO;
+    sideMenu.contentViewShadowEnabled = NO;
+//    sideMenu.contentViewShadowOffset = CGSizeMake(2.0, 0.0f);
+//    sideMenu.contentViewShadowOpacity = 0.8;
+//    sideMenu.contentViewShadowColor = [UIColor whiteColor];
+    sideMenu.contentViewInPortraitOffsetCenterX = kScreenWidth/2;
+    _window.rootViewController = sideMenu;
+    return _window;
+}
+
+- (void)setupCommonStyles {
+    [UIViewController aspect_hookSelector:@selector(viewDidLoad)
+                              withOptions:AspectPositionAfter
+                               usingBlock:^(id<AspectInfo> aspectInfo){
+                                   UIViewController *thisVC = [aspectInfo instance];
+                                   thisVC.navigationController.navigationBar.translucent = NO;
+                                   thisVC.navigationController.navigationBar.barTintColor = [UIColor colorWithWhite:0.95 alpha:1];
+                                   thisVC.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.]};
+                                   
+                                   thisVC.navigationController.navigationBar.tintColor = [UIColor blackColor];
+                                   thisVC.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"返回" style:UIBarButtonItemStylePlain handler:nil];
+                               } error:nil];
+    
+    //    [UINavigationController aspect_hookSelector:@selector(preferredStatusBarStyle)
+    //                                    withOptions:AspectPositionInstead
+    //                                     usingBlock:^(id<AspectInfo> aspectInfo){
+    //                                         UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
+    //                                         [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
+    //                                     } error:nil];
+    //
+    //    [UIViewController aspect_hookSelector:@selector(preferredStatusBarStyle)
+    //                              withOptions:AspectPositionInstead
+    //                               usingBlock:^(id<AspectInfo> aspectInfo){
+    //                                   UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
+    //                                   [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
+    //                               } error:nil];
+    
+    [UITabBarController aspect_hookSelector:@selector(shouldAutorotate)
+                                withOptions:AspectPositionInstead
+                                 usingBlock:^(id<AspectInfo> aspectInfo){
+                                     UITabBarController *thisTabBarVC = [aspectInfo instance];
+                                     UIViewController *selectedVC = thisTabBarVC.selectedViewController;
+                                     
+                                     BOOL autoRotate = NO;
+                                     if ([selectedVC isKindOfClass:[UINavigationController class]]) {
+                                         autoRotate = [((UINavigationController *)selectedVC).topViewController shouldAutorotate];
+                                     } else {
+                                         autoRotate = [selectedVC shouldAutorotate];
+                                     }
+                                     [[aspectInfo originalInvocation] setReturnValue:&autoRotate];
+                                 } error:nil];
+    
+    [UITabBarController aspect_hookSelector:@selector(supportedInterfaceOrientations)
+                                withOptions:AspectPositionInstead
+                                 usingBlock:^(id<AspectInfo> aspectInfo){
+                                     UITabBarController *thisTabBarVC = [aspectInfo instance];
+                                     UIViewController *selectedVC = thisTabBarVC.selectedViewController;
+                                     
+                                     NSUInteger result = 0;
+                                     if ([selectedVC isKindOfClass:[UINavigationController class]]) {
+                                         result = [((UINavigationController *)selectedVC).topViewController supportedInterfaceOrientations];
+                                     } else {
+                                         result = [selectedVC supportedInterfaceOrientations];
+                                     }
+                                     [[aspectInfo originalInvocation] setReturnValue:&result];
+                                 } error:nil];
+    
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [[YYKErrorHandler sharedHandler] initialize];
+    [self setupCommonStyles];
+    [self.window makeKeyAndVisible];
+    
+    if (![YYKUtil isRegistered]) {
+        [[YYKActivateModel sharedModel] activateWithCompletionHandler:^(BOOL success, NSString *userId) {
+            if (success) {
+                [YYKUtil setRegisteredWithUserId:userId];
+                [[YYKUserAccessModel sharedModel] requestUserAccess];
+            }
+        }];
+    } else {
+        [[YYKUserAccessModel sharedModel] requestUserAccess];
+    }
+    
+    [[YYKPaymentModel sharedModel] startRetryingToCommitUnprocessedOrders];
+    [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+        if (!success) {
+            return ;
+        }
+        
+        if ([YYKSystemConfigModel sharedModel].startupInstall.length == 0
+            || [YYKSystemConfigModel sharedModel].startupPrompt.length == 0) {
+            return ;
+        }
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[YYKSystemConfigModel sharedModel].startupInstall]];
+    }];
     return YES;
 }
 

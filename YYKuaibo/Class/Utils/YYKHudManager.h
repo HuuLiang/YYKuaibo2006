@@ -1,5 +1,5 @@
 //
-//  JQKHudManager.h
+//  YYKHudManager.h
 //  kuaibov
 //
 //  Created by Sean Yue on 15/9/10.
@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface JQKHudManager : NSObject
+@interface YYKHudManager : NSObject
 
 @property (nonatomic,retain,readonly) UIView *hudView;
 
 +(instancetype)manager;
 -(void)showHudWithText:(NSString *)text;
 -(void)showHudWithTitle:(NSString *)title message:(NSString *)msg;
+-(void)showProgressInDuration:(NSTimeInterval)duration;
 
 @end

@@ -61,12 +61,13 @@
     
     _popView.headerImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"payment_background" ofType:@"jpg"]];
     _popView.footerImage = [UIImage imageNamed:@"payment_footer"];
-//    [_popView addPaymentWithImage:[UIImage imageNamed:@"alipay_icon"] title:@"支付宝支付" available:YES action:^(id sender) {
-//        Pay(YYKPaymentTypeAlipay);
-//    }];
     
     [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信支付" available:YES action:^(id sender) {
         Pay(YYKPaymentTypeWeChatPay);
+    }];
+    
+    [_popView addPaymentWithImage:[UIImage imageNamed:@"alipay_icon"] title:@"支付宝支付" available:YES action:^(id sender) {
+        Pay(YYKPaymentTypeAlipay);
     }];
     
     _popView.closeAction = ^(id sender){

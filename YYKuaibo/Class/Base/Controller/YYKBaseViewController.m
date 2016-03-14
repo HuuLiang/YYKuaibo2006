@@ -26,16 +26,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
+    self.view.backgroundColor = [UIColor colorWithWhite:0.96 alpha:1];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
 }
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    DLog(@"%@ dealloc", [self class]);
 }
 
 - (void)switchToPlayProgram:(YYKProgram *)program {
-    if (![YYKUtil isPaid]) {
+    if (![YYKUtil isPaid] && program.spec.unsignedIntegerValue != YYKVideoSpecFree) {
         [self payForProgram:program];
     } else if (program.type.unsignedIntegerValue == YYKProgramTypeVideo) {
         [self playVideo:program];
@@ -54,8 +56,11 @@
     } else {
         YYKVideoPlayerViewController *playerVC = [[YYKVideoPlayerViewController alloc] initWithVideo:video];
         playerVC.hidesBottomBarWhenPushed = YES;
+        playerVC.shouldPopupPaymentIfNotPaid = shouldPopPayment;
         [self presentViewController:playerVC animated:YES completion:nil];
     }
+    
+    [video didPlay];
 }
 
 - (void)payForProgram:(YYKProgram *)program {
@@ -66,7 +71,7 @@
     [[YYKPaymentViewController sharedPaymentVC] popupPaymentInView:view forProgram:program withCompletionHandler:nil];
 }
 
-- (void)onPaidNotification:(NSNotification *)notification {}
+//- (void)onPaidNotification:(NSNotification *)notification {}
 
 - (BOOL)shouldAutorotate {
     return NO;

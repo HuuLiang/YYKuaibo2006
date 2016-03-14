@@ -1,5 +1,5 @@
 //
-//  JQKErrorHandler.h
+//  YYKErrorHandler.h
 //  kuaibov
 //
 //  Created by Sean Yue on 15/9/10.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface JQKErrorHandler : NSObject
+@interface YYKErrorHandler : NSObject
 
 + (instancetype)sharedHandler;
 - (void)initialize;

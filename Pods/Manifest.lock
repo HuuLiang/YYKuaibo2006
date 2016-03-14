@@ -40,10 +40,12 @@ PODS:
   - MBProgressHUD (0.9.2)
   - MJRefresh (2.4.12)
   - OpenSSL (1.0.206)
+  - RESideMenu (4.0.7)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
   - SFHFKeychainUtils (0.0.1)
+  - UITextView+Placeholder (1.1.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.6.0)
@@ -53,8 +55,10 @@ DEPENDENCIES:
   - MBProgressHUD (~> 0.9.1)
   - MJRefresh (~> 2.4.7)
   - OpenSSL (~> 1.0.204)
+  - RESideMenu (~> 4.0.7)
   - SDWebImage (~> 3.7.3)
   - SFHFKeychainUtils (~> 0.0.1)
+  - UITextView+Placeholder (~> 1.1.1)
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
@@ -64,7 +68,9 @@ SPEC CHECKSUMS:
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MJRefresh: ca8e9589895977df32d379d46e6b8a5450b3ff44
   OpenSSL: 0de82ee7d57a219bcc22a3e2cce78ae159c8fbea
+  RESideMenu: f24c508404b49c667344c54aba7e590883533958
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SFHFKeychainUtils: 9576b411a79a058f4d5381ace6f3242b9a62e664
+  UITextView+Placeholder: a6fc3e0378f3870036ec562a7537cbf6dbae4bf6
 
 COCOAPODS: 0.39.0

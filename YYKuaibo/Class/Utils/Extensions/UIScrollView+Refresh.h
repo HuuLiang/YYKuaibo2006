@@ -10,11 +10,11 @@
 
 @interface UIScrollView (Refresh)
 
-- (void)JQK_addPullToRefreshWithHandler:(void (^)(void))handler;
-- (void)JQK_triggerPullToRefresh;
-- (void)JQK_endPullToRefresh;
+- (void)YYK_addPullToRefreshWithHandler:(void (^)(void))handler;
+- (void)YYK_triggerPullToRefresh;
+- (void)YYK_endPullToRefresh;
 
-- (void)JQK_addPagingRefreshWithHandler:(void (^)(void))handler;
-- (void)JQK_pagingRefreshNoMoreData;
+- (void)YYK_addPagingRefreshWithHandler:(void (^)(void))handler;
+- (void)YYK_pagingRefreshNoMoreData;
 
 @end

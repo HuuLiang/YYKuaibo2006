@@ -9,4 +9,5 @@ pod 'OpenSSL', '~> 1.0.204'
 pod 'BlocksKit', '~> 2.2.5'
 pod 'Aspects','~>1.4.1'
 pod 'SFHFKeychainUtils', '~> 0.0.1'
-
+pod 'RESideMenu', '~> 4.0.7'
+pod 'UITextView+Placeholder', '~> 1.1.1'

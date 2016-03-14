@@ -31,13 +31,13 @@
     //创建支付签名对象
     payRequsestHandler *req = [[payRequsestHandler alloc] init];
     //初始化支付签名对象
-    [req init:JQK_WECHAT_APP_ID mch_id:JQK_WECHAT_MCH_ID];
+    [req init:YYK_WECHAT_APP_ID mch_id:YYK_WECHAT_MCH_ID];
     //设置密钥
-    [req setKey:JQK_WECHAT_PRIVATE_KEY];
+    [req setKey:YYK_WECHAT_PRIVATE_KEY];
     //设置回调URL
-    [req setNotifyUrl:JQK_WECHAT_NOTIFY_URL];
+    [req setNotifyUrl:YYK_WECHAT_NOTIFY_URL];
     //设置附加数据
-    [req setAttach:[JQKUtil paymentReservedData]];
+    [req setAttach:[YYKUtil paymentReservedData]];
     
     //获取到实际调起微信支付的参数后，在app端调起支付
     NSMutableDictionary *dict = [req sendPayWithOrderNo:orderNo price:@(price*100).unsignedIntegerValue];

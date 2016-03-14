@@ -12,7 +12,8 @@ typedef NS_ENUM(NSUInteger, YYKVideoSpec) {
     YYKVideoSpecNone,
     YYKVideoSpecHot,
     YYKVideoSpecNew,
-    YYKVideoSpecHD
+    YYKVideoSpecHD,
+    YYKVideoSpecFree
 };
 
 @interface YYKVideo : NSObject
@@ -27,8 +28,9 @@ typedef NS_ENUM(NSUInteger, YYKVideoSpec) {
 @property (nonatomic) NSDate *playedDate; // for history 
 
 + (NSArray<YYKVideo *> *)allPlayedVideos;
-//- (void)didPlay;
+- (void)didPlay;
 
+- (NSString *)playedDateString;
 
 @end
 

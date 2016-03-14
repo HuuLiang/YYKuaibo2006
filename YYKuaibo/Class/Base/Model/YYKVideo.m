@@ -8,7 +8,7 @@
 
 #import "YYKVideo.h"
 
-static NSString *const kVideoHistoryKeyName = @"jqkuaibov_video_history_keyname";
+static NSString *const kVideoHistoryKeyName = @"yykuaibov_video_history_keyname";
 
 @implementation YYKVideo
 
@@ -77,4 +77,12 @@ static NSString *const kVideoHistoryKeyName = @"jqkuaibov_video_history_keyname"
     [[NSUserDefaults standardUserDefaults] setObject:historyM forKey:kVideoHistoryKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+- (NSString *)playedDateString {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+    NSString *dateString = [formatter stringFromDate:self.playedDate];
+    return dateString;
+}
+
 @end

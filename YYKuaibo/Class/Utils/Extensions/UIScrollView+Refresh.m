@@ -11,31 +11,31 @@
 
 @implementation UIScrollView (Refresh)
 
-- (void)JQK_addPullToRefreshWithHandler:(void (^)(void))handler {
+- (void)YYK_addPullToRefreshWithHandler:(void (^)(void))handler {
     if (!self.header) {
         MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:handler];
-        refreshHeader.lastUpdatedTimeLabel.hidden = YES;
+//        refreshHeader.lastUpdatedTimeLabel.hidden = YES;
         self.header = refreshHeader;
     }
 }
 
-- (void)JQK_triggerPullToRefresh {
+- (void)YYK_triggerPullToRefresh {
     [self.header beginRefreshing];
 }
 
-- (void)JQK_endPullToRefresh {
+- (void)YYK_endPullToRefresh {
     [self.header endRefreshing];
     [self.footer resetNoMoreData];
 }
 
-- (void)JQK_addPagingRefreshWithHandler:(void (^)(void))handler {
+- (void)YYK_addPagingRefreshWithHandler:(void (^)(void))handler {
     if (!self.footer) {
         MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:handler];
         self.footer = refreshFooter;
     }
 }
 
-- (void)JQK_pagingRefreshNoMoreData {
+- (void)YYK_pagingRefreshNoMoreData {
     [self.footer endRefreshingWithNoMoreData];
 }
 @end

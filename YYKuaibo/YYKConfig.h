@@ -12,7 +12,7 @@
 #import "YYKConfiguration.h"
 
 #define YYK_CHANNEL_NO           [YYKConfiguration sharedConfig].channelNo
-#define YYK_REST_APP_ID          @"QUBA_2004"
+#define YYK_REST_APP_ID          @"QUBA_2006"
 #define YYK_REST_PV              @100
 #define YYK_PACKAGE_CERTIFICATE  @"iPhone Distribution: Jiangxi Electronic Group Corporation Ltd."
 
@@ -20,16 +20,18 @@
 #define YYK_WECHAT_MCH_ID        @"1281148901"
 #define YYK_WECHAT_PRIVATE_KEY   @"hangzhouquba20151112qwertyuiopas"
 #define YYK_WECHAT_NOTIFY_URL    @"http://phas.ihuiyx.com/pd-has/notifyWx.json"
-#define YYK_UMENG_APP_ID         @"567d010667e58e2c8200223a"
-#define YYK_PAYNOW_SCHEME        @"com.jiqingkuaibo.app.paynow.scheme"
+#define YYK_UMENG_APP_ID         @"56e653d767e58e0eb7002156"
 
 #define YYK_BASE_URL             @"http://120.24.252.114:8093" //@"http://iv.ihuiyx.com"//
 
-#define YYK_HOME_VIDEO_URL              @"/iosvideo/homePage.htm"
-#define YYK_HOME_CHANNEL_URL            @"/iosvideo/channelRanking.htm"
-#define YYK_HOME_CHANNEL_PROGRAM_URL    @"/iosvideo/program.htm"
-#define YYK_HOT_VIDEO_URL               @"/iosvideo/hotVideo.htm"
-#define YYK_MOVIE_URL                   @"/iosvideo/hotFilm.htm"
+//#define YYK_HOME_VIDEO_URL              @"/iosvideo/hotVideo.htm"
+//#define YYK_HOME_CHANNEL_URL            @"/iosvideo/channelRanking.htm"
+//#define YYK_HOME_CHANNEL_PROGRAM_URL    @"/iosvideo/program.htm"
+//#define YYK_HOT_VIDEO_URL               @"/iosvideo/hotVideo.htm"
+//#define YYK_MOVIE_URL                   @"/iosvideo/hotFilm.htm"
+
+#define YYK_VIDEO_LIB_URL               @"/iosvideo/hotVideo.htm"
+#define YYK_HOT_VIDEO_URL               @"/iosvideo/hotFilm.htm"
 
 #define YYK_ACTIVATE_URL                @"/iosvideo/activat.htm"
 #define YYK_SYSTEM_CONFIG_URL           @"/iosvideo/systemConfig.htm"
@@ -37,8 +39,7 @@
 #define YYK_AGREEMENT_NOTPAID_URL       @"/iosvideo/agreement.html"
 #define YYK_AGREEMENT_PAID_URL          @"/iosvideo/agreement-paid.html"
 
-#define YYK_PAYMENT_COMMIT_URL   @"http://pay.iqu8.net/paycenter/qubaPr.json"
-#define YYK_PAYMENT_SIGN_URL     @"http://phas.ihuiyx.com/pd-has/signtureNowdata.json"
+#define YYK_PAYMENT_COMMIT_URL   @"http://120.24.252.114:8084/paycenter/qubaPr.json" //@"http://pay.iqu8.net/paycenter/qubaPr.json"
 
 #define YYK_SYSTEM_CONFIG_PAY_AMOUNT            @"PAY_AMOUNT"
 #define YYK_SYSTEM_CONFIG_PAYMENT_TOP_IMAGE     @"CHANNEL_TOP_IMG"

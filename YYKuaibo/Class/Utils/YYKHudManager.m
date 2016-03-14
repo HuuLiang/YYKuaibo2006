@@ -1,25 +1,26 @@
 //
-//  JQKHudManager.m
+//  YYKHudManager.m
 //  kuaibov
 //
 //  Created by Sean Yue on 15/9/10.
 //  Copyright (c) 2015年 kuaibov. All rights reserved.
 //
 
-#import "JQKHudManager.h"
+#import "YYKHudManager.h"
 #import <MBProgressHUD.h>
 
-@interface JQKHudManager ()
+@interface YYKHudManager ()
 @property (nonatomic,retain) MBProgressHUD *textHud;
+@property (nonatomic,retain) MBProgressHUD *progressHud;
 @end
 
-@implementation JQKHudManager
+@implementation YYKHudManager
 
 +(instancetype)manager {
-    static JQKHudManager *_instance;
+    static YYKHudManager *_instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _instance = [[JQKHudManager alloc] init];
+        _instance = [[YYKHudManager alloc] init];
     });
     return _instance;
 }
@@ -70,4 +71,22 @@
     [self.textHud hide:YES];
 }
 
+- (MBProgressHUD *)progressHud {
+    if (_progressHud) {
+        return _progressHud;
+    }
+    
+    UIWindow *keyWindow = [[UIApplication sharedApplication].delegate window];
+    _progressHud = [[MBProgressHUD alloc] initWithWindow:keyWindow];
+    _progressHud.userInteractionEnabled = NO;
+    _progressHud.mode = MBProgressHUDModeIndeterminate;
+    _progressHud.minShowTime = 2;
+    [keyWindow addSubview:_progressHud];
+    return _progressHud;
+}
+- (void)showProgressInDuration:(NSTimeInterval)duration {
+    self.progressHud.minShowTime = duration;
+    [self.progressHud show:YES];
+    [self.progressHud hide:YES];
+}
 @end
