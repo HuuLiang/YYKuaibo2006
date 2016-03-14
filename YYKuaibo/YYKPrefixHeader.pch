@@ -1,0 +1,25 @@
+//
+//  YYKPrefixHeader.pch
+//  YYKuaibo
+//
+//  Created by Sean Yue on 16/3/14.
+//  Copyright © 2016年 iqu8. All rights reserved.
+//
+
+#ifndef YYKPrefixHeader_pch
+#define YYKPrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+#import "YYKCommonDef.h"
+#import "YYKConfig.h"
+#import "RACEXTScope.h"
+#import "YYKExtensions.h"
+#import "YYKUtil.h"
+#import "YYKErrorHandler.h"
+#import "YYKHudManager.h"
+
+#endif /* YYKPrefixHeader_pch */
