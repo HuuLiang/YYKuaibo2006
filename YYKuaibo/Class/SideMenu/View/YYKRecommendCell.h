@@ -10,4 +10,7 @@
 
 @interface YYKRecommendCell : UICollectionViewCell
 
+@property (nonatomic) NSURL *imageURL;
+@property (nonatomic) NSString *title;
+
 @end

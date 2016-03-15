@@ -51,6 +51,8 @@
                 
                 if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAY_AMOUNT]) {
                     self.payAmount = config.value.doubleValue / 100.;
+                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAY_IMG]) {
+                    self.paymentImage = config.value;
                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAYMENT_TOP_IMAGE]) {
                     self.channelTopImage = config.value;
                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_STARTUP_INSTALL]) {
@@ -60,14 +62,16 @@
                     self.spreadTopImage = config.value;
                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_URL]) {
                     self.spreadURL = config.value;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_LEFT_IMAGE]) {
-                    self.spreadLeftImage = config.value;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_LEFT_URL]) {
-                    self.spreadLeftUrl = config.value;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_RIGHT_IMAGE]) {
-                    self.spreadRightImage = config.value;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_RIGHT_URL]) {
-                    self.spreadRightUrl = config.value;
+//                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_LEFT_IMAGE]) {
+//                    self.spreadLeftImage = config.value;
+//                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_LEFT_URL]) {
+//                    self.spreadLeftUrl = config.value;
+//                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_RIGHT_IMAGE]) {
+//                    self.spreadRightImage = config.value;
+//                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_RIGHT_URL]) {
+//                    self.spreadRightUrl = config.value;
+                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_CONTACT]) {
+                    self.contact = config.value;
                 }
             }];
             

@@ -34,4 +34,6 @@ extern NSString *const kPaymentInfoKeyName;
 
 + (NSString *)cachedImageSizeString;
 
++ (void)callPhoneNumber:(NSString *)phoneNum;
+
 @end

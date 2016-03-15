@@ -9,7 +9,6 @@
 #import "YYKBaseViewController.h"
 #import "YYKProgram.h"
 #import "YYKPaymentViewController.h"
-#import "YYKVideoPlayerViewController.h"
 
 @import MediaPlayer;
 @import AVKit;
@@ -40,25 +39,34 @@
     if (![YYKUtil isPaid] && program.spec.unsignedIntegerValue != YYKVideoSpecFree) {
         [self payForProgram:program];
     } else if (program.type.unsignedIntegerValue == YYKProgramTypeVideo) {
-        [self playVideo:program];
+        YYKAction closeAction;
+        if (![YYKUtil isPaid]) {
+            @weakify(self);
+            closeAction = ^(id sender) {
+                @strongify(self);
+                [self payForProgram:program];
+            };
+        }
+        [self playVideo:program withCloseAction:closeAction];
     }
 }
 
 - (void)playVideo:(YYKVideo *)video {
-    [self playVideo:video withTimeControl:YES shouldPopPayment:NO];
+    [self playVideo:video withCloseAction:nil];
 }
 
-- (void)playVideo:(YYKVideo *)video withTimeControl:(BOOL)hasTimeControl shouldPopPayment:(BOOL)shouldPopPayment {
-    if (hasTimeControl) {
-        UIViewController *videoPlayVC = [self playerVCWithVideo:video];
-        videoPlayVC.hidesBottomBarWhenPushed = YES;
-        [self presentViewController:videoPlayVC animated:YES completion:nil];
-    } else {
-        YYKVideoPlayerViewController *playerVC = [[YYKVideoPlayerViewController alloc] initWithVideo:video];
-        playerVC.hidesBottomBarWhenPushed = YES;
-        playerVC.shouldPopupPaymentIfNotPaid = shouldPopPayment;
-        [self presentViewController:playerVC animated:YES completion:nil];
-    }
+- (void)playVideo:(YYKVideo *)video withCloseAction:(YYKAction)closeAction {
+    UIViewController *videoPlayVC = [self playerVCWithVideo:video];
+    videoPlayVC.hidesBottomBarWhenPushed = YES;
+    [videoPlayVC aspect_hookSelector:@selector(viewDidDisappear:)
+                         withOptions:AspectPositionAfter
+                          usingBlock:^(id<AspectInfo> aspectInfo, BOOL animated)
+    {
+        if (closeAction) {
+            closeAction([aspectInfo instance]);
+        }
+    } error:nil];
+    [self presentViewController:videoPlayVC animated:YES completion:nil];
     
     [video didPlay];
 }
@@ -68,7 +76,7 @@
 }
 
 - (void)payForProgram:(YYKProgram *)program inView:(UIView *)view {
-    [[YYKPaymentViewController sharedPaymentVC] popupPaymentInView:view forProgram:program withCompletionHandler:nil];
+    [[YYKPaymentViewController sharedPaymentVC] popupPaymentInView:view forProgram:program];
 }
 
 //- (void)onPaidNotification:(NSNotification *)notification {}

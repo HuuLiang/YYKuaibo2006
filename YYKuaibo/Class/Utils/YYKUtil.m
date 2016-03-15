@@ -114,4 +114,18 @@ static NSString *const kUserAccessServicename = @"yykuaibov_user_access_service"
         return [NSString stringWithFormat:@"%ld B", (unsigned long)size];
     }
 }
+
++ (void)callPhoneNumber:(NSString *)phoneNum {
+    [UIAlertView bk_showAlertViewWithTitle:nil
+                                   message:[NSString stringWithFormat:@"拨打热线电话：%@", phoneNum]
+                         cancelButtonTitle:@"取消"
+                         otherButtonTitles:@[@"确认"]
+                                   handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+    {
+        if (buttonIndex == 1) {
+            NSString *phoneUrl = [NSString stringWithFormat:@"tel://%@", phoneNum];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneUrl]];
+        }
+    }];
+}
 @end

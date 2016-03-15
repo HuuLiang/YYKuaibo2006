@@ -36,6 +36,7 @@ typedef NS_ENUM(NSUInteger, YYKProgramType) {
 
 @interface YYKProgram : YYKVideo
 //@property (nonatomic) NSNumber *payPointType; // 1、会员注册 2、付费
+@property (nonatomic) NSNumber *payPointType; // 1、会员注册 2、付费
 @property (nonatomic) NSNumber *type; // 1、视频 2、图片
 @property (nonatomic,retain) NSArray<YYKProgramUrl> *urlList; // type==2有集合，目前为图集url集合
 

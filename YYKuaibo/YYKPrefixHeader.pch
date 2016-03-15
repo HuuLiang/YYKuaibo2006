@@ -28,5 +28,6 @@
 #import "YYKUtil.h"
 #import "YYKErrorHandler.h"
 #import "YYKHudManager.h"
+#import "YYKPaymentManager.h"
 
 #endif /* YYKPrefixHeader_pch */

@@ -12,6 +12,7 @@
 #import "YYKWebViewController.h"
 #import "YYKInputTextViewController.h"
 #import "YYKRecommendViewController.h"
+#import "YYKSystemConfigModel.h"
 
 static NSString *const kSideMenuNormalCellReusableIdentifier = @"SideMenuNormalCellReusableIdentifier";
 static NSString *const kSideMenuVIPCellReusableIdentifier = @"SideMenuVIPCellReusableIdentifier";
@@ -78,6 +79,26 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
     [_layoutTableView reloadData];
 }
 
+- (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController {
+    if ([YYKUtil isPaid]) {
+        if ([YYKSystemConfigModel sharedModel].loaded) {
+            [_layoutTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:YYKSideMenuSectionPhone]] withRowAnimation:UITableViewRowAnimationNone];
+        } else {
+            @weakify(self);
+            [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+                @strongify(self);
+                if (!self) {
+                    return ;
+                }
+                
+                if (success) {
+                    [self->_layoutTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:YYKSideMenuSectionPhone]] withRowAnimation:UITableViewRowAnimationNone];
+                }
+            }];
+        }
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -105,6 +126,8 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
         if (!vipCell.memberAction) {
             vipCell.memberAction = ^(id sender) {
                 @strongify(self);
+                [self.sideMenuViewController hideMenuViewController];
+                [self payForProgram:nil];
             };
         }
         
@@ -114,6 +137,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kSideMenuNormalCellReusableIdentifier];
         }
         cell.accessoryType = [YYKUtil isPaid] && indexPath.section == YYKSideMenuSectionPhone ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
+        cell.detailTextLabel.text = nil;
         
         if (indexPath.section == YYKSideMenuSectionRecommended) {
             cell.imageView.image = [UIImage imageNamed:@"side_menu_recommended_icon"];
@@ -121,6 +145,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
         } else if ([YYKUtil isPaid] && indexPath.section == YYKSideMenuSectionPhone) {
             cell.imageView.image = [UIImage imageNamed:@"side_menu_phone_icon"];
             cell.textLabel.text = @"投诉热线";
+            cell.detailTextLabel.text = [YYKSystemConfigModel sharedModel].contact;
         } else if (indexPath.section == [self numberOfSectionsInTableView:tableView] - 1) {
             if (indexPath.row == YYKSideMenuOtherSectionCellHistory) {
                 cell.imageView.image = [UIImage imageNamed:@"side_menu_history_icon"];
@@ -224,6 +249,11 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
         YYKRecommendViewController *recommendVC = [[YYKRecommendViewController alloc] init];
         recommendVC.title = cell.textLabel.text;
         [self.navigationController pushViewController:recommendVC animated:YES];
+    } else if ([YYKUtil isPaid] && indexPath.section == YYKSideMenuSectionPhone) {
+        NSString *phoneNum = cell.detailTextLabel.text;
+        if (phoneNum.length > 0) {
+            [YYKUtil callPhoneNumber:phoneNum];
+        }
     }
 }
 @end

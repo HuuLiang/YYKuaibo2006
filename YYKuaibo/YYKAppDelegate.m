@@ -13,6 +13,7 @@
 #import "YYKUserAccessModel.h"
 #import "YYKPaymentModel.h"
 #import "YYKSystemConfigModel.h"
+#import "MobClick.h"
 
 @interface YYKAppDelegate ()
 
@@ -113,9 +114,23 @@
     
 }
 
+- (void)setupMobStatistics {
+#ifdef DEBUG
+    [MobClick setLogEnabled:YES];
+#endif
+    NSString *bundleVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
+    if (bundleVersion) {
+        [MobClick setAppVersion:bundleVersion];
+    }
+    [MobClick startWithAppkey:YYK_UMENG_APP_ID reportPolicy:BATCH channelId:YYK_CHANNEL_NO];
+    
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [[YYKPaymentManager sharedManager] setup];
     [[YYKErrorHandler sharedHandler] initialize];
+    [self setupMobStatistics];
     [self setupCommonStyles];
     [self.window makeKeyAndVisible];
     
@@ -168,4 +183,13 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    [[YYKPaymentManager sharedManager] handleOpenURL:url];
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+    [[YYKPaymentManager sharedManager] handleOpenURL:url];
+    return YES;
+}
 @end

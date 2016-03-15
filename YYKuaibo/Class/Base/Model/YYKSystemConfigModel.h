@@ -18,6 +18,7 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 @interface YYKSystemConfigModel : YYKEncryptedURLRequest
 
 @property (nonatomic) double payAmount;
+@property (nonatomic) NSString *paymentImage;
 @property (nonatomic) NSString *channelTopImage;
 @property (nonatomic) NSString *spreadTopImage;
 @property (nonatomic) NSString *spreadURL;
@@ -25,10 +26,11 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic) NSString *startupInstall;
 @property (nonatomic) NSString *startupPrompt;
 
-@property (nonatomic) NSString *spreadLeftImage;
-@property (nonatomic) NSString *spreadLeftUrl;
-@property (nonatomic) NSString *spreadRightImage;
-@property (nonatomic) NSString *spreadRightUrl;
+@property (nonatomic) NSString *contact;
+//@property (nonatomic) NSString *spreadLeftImage;
+//@property (nonatomic) NSString *spreadLeftUrl;
+//@property (nonatomic) NSString *spreadRightImage;
+//@property (nonatomic) NSString *spreadRightUrl;
 
 @property (nonatomic,readonly) BOOL loaded;
 

@@ -9,6 +9,7 @@
 #import "YYKRecommendViewController.h"
 #import "YYKSystemConfigModel.h"
 #import "YYKRecommendCell.h"
+#import "YYKAppSpreadModel.h"
 
 static NSString *const kRecommendCellReusableIdentifier = @"RecommendCellReusableIdentifier";
 
@@ -19,9 +20,12 @@ static NSString *const kRecommendCellReusableIdentifier = @"RecommendCellReusabl
     
     UICollectionView *_layoutCollectionView;
 }
+@property (nonatomic,retain) YYKAppSpreadModel *appSpreadModel;
 @end
 
 @implementation YYKRecommendViewController
+
+DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,6 +67,9 @@ static NSString *const kRecommendCellReusableIdentifier = @"RecommendCellReusabl
     }
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.minimumInteritemSpacing = 15;
+    layout.minimumLineSpacing = layout.minimumInteritemSpacing;
+    layout.sectionInset = UIEdgeInsetsMake(layout.minimumInteritemSpacing, layout.minimumInteritemSpacing, layout.minimumInteritemSpacing, layout.minimumInteritemSpacing);
     
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     _layoutCollectionView.backgroundColor = self.view.backgroundColor;
@@ -81,6 +88,7 @@ static NSString *const kRecommendCellReusableIdentifier = @"RecommendCellReusabl
     [_layoutCollectionView YYK_addPullToRefreshWithHandler:^{
         @strongify(self);
         [self loadHeaderImage];
+        [self loadSpreadApps];
     }];
     [_layoutCollectionView YYK_triggerPullToRefresh];
 }
@@ -111,7 +119,7 @@ static NSString *const kRecommendCellReusableIdentifier = @"RecommendCellReusabl
                  if (image) {
                      double showPrice = systemConfigModel.payAmount;
                      BOOL showInteger = (NSUInteger)(showPrice * 100) % 100 == 0;
-                     self->_priceLabel.text = showInteger ? [NSString stringWithFormat:@"%ld", (NSUInteger)showPrice] : [NSString stringWithFormat:@"%.2f", showPrice];
+                     self->_priceLabel.text = showInteger ? [NSString stringWithFormat:@"%ld", (unsigned long)showPrice] : [NSString stringWithFormat:@"%.2f", showPrice];
                  } else {
                      self->_priceLabel.text = nil;
                  }
@@ -119,6 +127,22 @@ static NSString *const kRecommendCellReusableIdentifier = @"RecommendCellReusabl
         }
     }];
     
+}
+
+- (void)loadSpreadApps {
+    @weakify(self);
+    [self.appSpreadModel fetchAppSpreadWithCompletionHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (!self) {
+            return ;
+        }
+        
+        [self->_layoutCollectionView YYK_endPullToRefresh];
+        
+        if (success) {
+            [self->_layoutCollectionView reloadData];
+        }
+    }];
 }
 
 - (void)onPaidNotification {
@@ -139,11 +163,30 @@ static NSString *const kRecommendCellReusableIdentifier = @"RecommendCellReusabl
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YYKRecommendCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kRecommendCellReusableIdentifier forIndexPath:indexPath];
-    
+
+    if (indexPath.item < self.appSpreadModel.fetchedSpreads.count) {
+        YYKProgram *appSpread = self.appSpreadModel.fetchedSpreads[indexPath.item];
+        cell.title = appSpread.title;
+        cell.imageURL = [NSURL URLWithString:appSpread.coverImg];
+    }
     return cell;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 6;
+    return self.appSpreadModel.fetchedSpreads.count;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionViewLayout;
+    
+    const CGFloat fullWidth = CGRectGetWidth(collectionView.bounds) - layout.sectionInset.left - layout.sectionInset.right;
+    const CGFloat itemWidth = (fullWidth - 2 * layout.minimumInteritemSpacing) / 3;
+    const CGFloat itemHeight = itemWidth + 20;
+    return CGSizeMake(itemWidth, itemHeight);
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    YYKProgram *appSpread = self.appSpreadModel.fetchedSpreads[indexPath.item];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appSpread.videoUrl]];
 }
 @end

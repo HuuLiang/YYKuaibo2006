@@ -12,9 +12,7 @@
 #import "YYKPaymentModel.h"
 #import <objc/runtime.h>
 #import "YYKProgram.h"
-#import "WeChatPayManager.h"
 #import "YYKPaymentInfo.h"
-#import "YYKPaymentSignModel.h"
 
 @interface YYKPaymentViewController ()
 @property (nonatomic,retain) YYKPaymentPopView *popView;
@@ -24,7 +22,6 @@
 @property (nonatomic,retain) YYKPaymentInfo *paymentInfo;
 
 @property (nonatomic,readonly,retain) NSDictionary *paymentTypeMap;
-@property (nonatomic,copy) dispatch_block_t completionHandler;
 @end
 
 @implementation YYKPaymentViewController
@@ -55,21 +52,19 @@
         [self payForProgram:self.programToPayFor
                       price:self.payAmount.doubleValue
                 paymentType:type];
+        
+        [self hidePayment];
     };
     
     _popView = [[YYKPaymentPopView alloc] init];
-    
-    _popView.headerImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"payment_background" ofType:@"jpg"]];
+    _popView.headerImageURL = [NSURL URLWithString:[YYKSystemConfigModel sharedModel].paymentImage];
     _popView.footerImage = [UIImage imageNamed:@"payment_footer"];
-    
-    [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信支付" available:YES action:^(id sender) {
+    [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信客户端支付" available:YES action:^(id sender) {
         Pay(YYKPaymentTypeWeChatPay);
     }];
-    
     [_popView addPaymentWithImage:[UIImage imageNamed:@"alipay_icon"] title:@"支付宝支付" available:YES action:^(id sender) {
         Pay(YYKPaymentTypeAlipay);
     }];
-    
     _popView.closeAction = ^(id sender){
         @strongify(self);
         [self hidePayment];
@@ -92,9 +87,7 @@
     }
 }
 
-- (void)popupPaymentInView:(UIView *)view forProgram:(YYKProgram *)program withCompletionHandler:(void (^)(void))completionHandler {
-    self.completionHandler = completionHandler;
-    
+- (void)popupPaymentInView:(UIView *)view forProgram:(YYKProgram *)program {
     if (self.view.superview) {
         [self.view removeFromSuperview];
     }
@@ -123,15 +116,19 @@
     [systemConfigModel fetchSystemConfigWithCompletionHandler:^(BOOL success) {
         @strongify(self);
         if (success) {
+#ifdef DEBUG
+            self.payAmount = @(0.01);
+#else
             self.payAmount = @(systemConfigModel.payAmount);
+#endif
         }
     }];
 }
 
 - (void)setPayAmount:(NSNumber *)payAmount {
-#ifdef DEBUG
-    payAmount = @(0.01);
-#endif
+//#ifdef DEBUG
+//    payAmount = @(0.1);
+//#endif
     _payAmount = payAmount;
     self.popView.showPrice = payAmount;
 }
@@ -141,10 +138,6 @@
         self.view.alpha = 0;
     } completion:^(BOOL finished) {
         [self.view removeFromSuperview];
-        if (self.completionHandler) {
-            self.completionHandler();
-            self.completionHandler = nil;
-        }
     }];
 }
 
@@ -152,99 +145,14 @@
                 price:(double)price
           paymentType:(YYKPaymentType)paymentType {
     @weakify(self);
-    NSString *channelNo = YYK_CHANNEL_NO;
-    channelNo = [channelNo substringFromIndex:channelNo.length-14];
-    NSString *uuid = [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)];
-    NSString *orderNo = [NSString stringWithFormat:@"%@_%@", channelNo, uuid];
-    
-    if (paymentType==YYKPaymentTypeWeChatPay) {
-        // Payment info
-        YYKPaymentInfo *paymentInfo = [[YYKPaymentInfo alloc] init];
-        paymentInfo.orderId = orderNo;
-        paymentInfo.orderPrice = @((NSUInteger)(price * 100));
-        paymentInfo.contentId = program.programId;
-        paymentInfo.contentType = program.type;
-        paymentInfo.paymentType = @(paymentType);
-        paymentInfo.paymentResult = @(PAYRESULT_UNKNOWN);
-        paymentInfo.paymentStatus = @(YYKPaymentStatusPaying);
-        [paymentInfo save];
-        self.paymentInfo = paymentInfo;
-        
-        [[WeChatPayManager sharedInstance] startWeChatPayWithOrderNo:orderNo price:price completionHandler:^(PAYRESULT payResult) {
-            @strongify(self);
-            [self notifyPaymentResult:payResult withPaymentInfo:self.paymentInfo];
-        }];
-    } else {
-        [[YYKHudManager manager] showHudWithText:@"无法获取支付信息"];
-//        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//        [dateFormatter setDateFormat:kDefaultDateFormat];
-//        
-//        IPNPreSignMessageUtil *preSign =[[IPNPreSignMessageUtil alloc] init];
-//        preSign.consumerId = YYK_CHANNEL_NO;
-//        preSign.mhtOrderNo = orderNo;
-//        preSign.mhtOrderName = [NSBundle mainBundle].infoDictionary[@"CFBundleDisplayName"] ?: @"家庭影院";
-//        preSign.mhtOrderType = kPayNowNormalOrderType;
-//        preSign.mhtCurrencyType = kPayNowRMBCurrencyType;
-//        preSign.mhtOrderAmt = [NSString stringWithFormat:@"%ld", @(price*100).unsignedIntegerValue];
-//        preSign.mhtOrderDetail = [preSign.mhtOrderName stringByAppendingString:@"终身会员"];
-//        preSign.mhtOrderStartTime = [dateFormatter stringFromDate:[NSDate date]];
-//        preSign.mhtCharset = kPayNowDefaultCharset;
-//        preSign.payChannelType = ((NSNumber *)self.paymentTypeMap[@(paymentType)]).stringValue;
-//        preSign.mhtReserved = [YYKUtil paymentReservedData];
-//        
-//        [[YYKPaymentSignModel sharedModel] signWithPreSignMessage:preSign completionHandler:^(BOOL success, NSString *signedData) {
-//            @strongify(self);
-//            if (success && [YYKPaymentSignModel sharedModel].appId.length > 0) {
-//                [IpaynowPluginApi pay:signedData AndScheme:YYK_PAYNOW_SCHEME viewController:self delegate:self];
-//            } else {
-//                [[YYKHudManager manager] showHudWithText:@"无法获取支付信息"];
-//            }
-//        }];
-    }
+    [[YYKPaymentManager sharedManager] startPaymentWithType:paymentType
+                                                     price:price*100
+                                                forProgram:program
+                                         completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
+        @strongify(self);
+        [self notifyPaymentResult:payResult withPaymentInfo:paymentInfo];
+    }];
 }
-
-//- (NSDictionary *)paymentTypeMap {
-//    if (_paymentTypeMap) {
-//        return _paymentTypeMap;
-//    }
-//    
-//    _paymentTypeMap = @{@(YYKPaymentTypeAlipay):@(PayNowChannelTypeAlipay),
-//                          @(YYKPaymentTypeWeChatPay):@(PayNowChannelTypeWeChatPay),
-//                          @(YYKPaymentTypeUPPay):@(PayNowChannelTypeUPPay)};
-//    return _paymentTypeMap;
-//}
-//
-//- (YYKPaymentType)paymentTypeFromPayNowType:(PayNowChannelType)type {
-//    __block YYKPaymentType retType = YYKPaymentTypeNone;
-//    [self.paymentTypeMap enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-//        if ([(NSNumber *)obj isEqualToNumber:@(type)]) {
-//            retType = ((NSNumber *)key).unsignedIntegerValue;
-//            *stop = YES;
-//            return ;
-//        }
-//    }];
-//    return retType;
-//}
-//
-//- (PayNowChannelType)payNowTypeFromPaymentType:(YYKPaymentType)type {
-//    return ((NSNumber *)self.paymentTypeMap[@(type)]).unsignedIntegerValue;
-//}
-//
-//- (PAYRESULT)paymentResultFromPayNowResult:(IPNPayResult)result {
-//    NSDictionary *resultMap = @{@(IPNPayResultSuccess):@(PAYRESULT_SUCCESS),
-//                                @(IPNPayResultFail):@(PAYRESULT_FAIL),
-//                                @(IPNPayResultCancel):@(PAYRESULT_ABANDON),
-//                                @(IPNPayResultUnknown):@(PAYRESULT_UNKNOWN)};
-//    return ((NSNumber *)resultMap[@(result)]).unsignedIntegerValue;
-//}
-//
-//-(IPNPayResult)paymentResultFromPayresult:(PAYRESULT)result{
-//    NSDictionary *resultMap = @{@(PAYRESULT_SUCCESS):@(IPNPayResultSuccess),
-//                                @(PAYRESULT_FAIL):@(IPNPayResultFail),
-//                                @(PAYRESULT_ABANDON):@(IPNPayResultCancel),
-//                                @(PAYRESULT_UNKNOWN):@(IPNPayResultUnknown)};
-//    return ((NSNumber *)resultMap[@(result)]).unsignedIntegerValue;
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -253,7 +161,7 @@
 
 - (void)notifyPaymentResult:(PAYRESULT)result withPaymentInfo:(YYKPaymentInfo *)paymentInfo {
     NSDateFormatter *dateFormmater = [[NSDateFormatter alloc] init];
-    [dateFormmater setDateFormat:kDefaultDateFormat];
+    [dateFormmater setDateFormat:@"yyyyMMddHHmmss"];
     
     paymentInfo.paymentResult = @(result);
     paymentInfo.paymentStatus = @(YYKPaymentStatusNotProcessed);
@@ -272,11 +180,5 @@
     
     [[YYKPaymentModel sharedModel] commitPaymentInfo:paymentInfo];
 }
-
-//- (void)IpaynowPluginResult:(IPNPayResult)result errCode:(NSString *)errCode errInfo:(NSString *)errInfo {
-//    DLog(@"PayNow Result:%ld\nerrorCode:%@\nerrorInfo:%@", result,errCode,errInfo);
-//    PAYRESULT payResult = [self paymentResultFromPayNowResult:result];
-//    [self notifyPaymentResult:payResult withPaymentInfo:self.paymentInfo];
-//}
 
 @end
