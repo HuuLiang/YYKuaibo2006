@@ -22,6 +22,7 @@
 //#define YYK_WECHAT_PRIVATE_KEY   @"hangzhouquba20151112qwertyuiopas"
 //#define YYK_WECHAT_NOTIFY_URL    @"http://phas.ihuiyx.com/pd-has/notifyWx.json"
 #define YYK_UMENG_APP_ID         @"56e653d767e58e0eb7002156"
+#define YYK_KSCRASH_APP_ID       @"7962837d6e51cd0555ab71ac9acd8807"
 
 #define YYK_BASE_URL             @"http://iv.ihuiyx.com"//@"http://120.24.252.114:8093" //
 

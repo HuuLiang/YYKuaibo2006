@@ -14,6 +14,7 @@
 #import "YYKPaymentModel.h"
 #import "YYKSystemConfigModel.h"
 #import "MobClick.h"
+#import <KSCrash/KSCrashInstallationStandard.h>
 
 @interface YYKAppDelegate ()
 
@@ -118,6 +119,7 @@
 #ifdef DEBUG
     [MobClick setLogEnabled:YES];
 #endif
+    [MobClick setCrashReportEnabled:NO];
     NSString *bundleVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
     if (bundleVersion) {
         [MobClick setAppVersion:bundleVersion];
@@ -126,12 +128,20 @@
     
 }
 
+- (void)setupCrashReporter {
+    KSCrashInstallationStandard* installation = [KSCrashInstallationStandard sharedInstance];
+    installation.url = [NSURL URLWithString:[NSString stringWithFormat:@"https://collector.bughd.com/kscrash?key=%@", YYK_KSCRASH_APP_ID]];
+    [installation install];
+    [installation sendAllReportsWithCompletion:nil];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [[YYKPaymentManager sharedManager] setup];
     [[YYKErrorHandler sharedHandler] initialize];
     [self setupMobStatistics];
     [self setupCommonStyles];
+    [self setupCrashReporter];
     [self.window makeKeyAndVisible];
     
     if (![YYKUtil isRegistered]) {

@@ -68,6 +68,8 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
             return ;
         }
 
+        [self->_layoutCollectionView YYK_endPullToRefresh];
+         
         if (success) {
             if (isRefresh) {
                 [self.videos removeAllObjects];
@@ -81,8 +83,6 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
                 [self->_layoutCollectionView YYK_pagingRefreshNoMoreData];
             }
         }
-         
-        [self->_layoutCollectionView YYK_endPullToRefresh];
     }];
 }
 
