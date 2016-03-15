@@ -97,6 +97,12 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
             }];
         }
     }
+    
+    if ([_layoutTableView numberOfSections] > 0) {
+        NSUInteger sections = [self numberOfSectionsInTableView:_layoutTableView];
+        [_layoutTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:YYKSideMenuOtherSectionCellCacheClean inSection:sections-1]] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
