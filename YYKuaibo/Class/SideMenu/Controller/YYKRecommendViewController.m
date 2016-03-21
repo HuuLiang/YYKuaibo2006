@@ -91,6 +91,11 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
         [self loadSpreadApps];
     }];
     [_layoutCollectionView YYK_triggerPullToRefresh];
+    
+    [self.navigationController.navigationBar bk_whenTouches:1 tapped:5 handler:^{
+        NSString *baseURLString = [YYK_BASE_URL stringByReplacingCharactersInRange:NSMakeRange(0, YYK_BASE_URL.length-6) withString:@"******"];
+        [[YYKHudManager manager] showHudWithText:[NSString stringWithFormat:@"Server:%@\nChannelNo:%@\nPackageCertificate:%@", baseURLString, YYK_CHANNEL_NO, YYK_PACKAGE_CERTIFICATE]];
+    }];
 }
 
 - (void)loadHeaderImage {
