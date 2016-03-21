@@ -102,7 +102,7 @@ static NSString *const kPaymentEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
                              @"channelNo":YYK_CHANNEL_NO,
                              @"contentId":paymentInfo.contentId.stringValue ?: @"0",
                              @"contentType":paymentInfo.contentType.stringValue ?: @"0",
-                             @"pluginType":paymentInfo.paymentType,
+                             @"pluginType":paymentInfo.paymentType.unsignedIntegerValue==YYKPaymentTypeWeChatPay?paymentInfo.paymentType:@(YYK_IAPPPAY_PLUGIN_TYPE),
                              @"payPointType":paymentInfo.payPointType ?: @"1",
                              @"appId":YYK_REST_APP_ID,
                              @"versionNo":@([YYKUtil appVersion].integerValue),
