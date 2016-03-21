@@ -43,7 +43,7 @@ fi
 cd $WORK_DIR
 
 if [ $NEXT_MODPLIST == 1 ]; then
-	eval "$MODPLIST_EXEC $SCHEME/config.plist ChannelNo $CHANNELNO >> /Users/seanyue/JQKuaibo.log"
+	eval "$MODPLIST_EXEC $SCHEME/config.plist ChannelNo $CHANNELNO >> /Users/seanyue/BatchBuild.log"
 	if [ $? != 0 ]; then
                 echo "modplist faild"
                 exit 1
@@ -54,7 +54,7 @@ fi
 
 
 if [ $NEXT_XCBUILD == 1 ]; then
-        eval "$XCODEBUILD_EXEC -workspace $SCHEME.xcworkspace -scheme $SCHEME -sdk iphoneos -configuration Release -derivedDataPath $DERIVEDDATAPATH_DIR >> /Users/seanyue/JQKuaibo.log"
+        eval "$XCODEBUILD_EXEC -workspace $SCHEME.xcworkspace -scheme $SCHEME -sdk iphoneos -configuration Release -derivedDataPath $DERIVEDDATAPATH_DIR >> /Users/seanyue/BatchBuild.log"
 	if [ $? != 0 ]; then
                 echo "xcodebuild faild"
                 exit 1
@@ -64,7 +64,7 @@ if [ $NEXT_XCBUILD == 1 ]; then
 fi
 
 if [ $NEXT_XCRUN == 1 ]; then
-        eval "$XCRUN_EXEC -sdk iphoneos PackageApplication -v $DERIVEDDATAPATH_DIR/Build/Products/Release-iphoneos/$SCHEME.app -o $IPA_DES_DIR/$SCHEME.ipa >> /Users/seanyue/JQKuaibo.log"
+        eval "$XCRUN_EXEC -sdk iphoneos PackageApplication -v $DERIVEDDATAPATH_DIR/Build/Products/Release-iphoneos/$SCHEME.app -o $IPA_DES_DIR/$SCHEME.ipa >> /Users/seanyue/BatchBuild.log"
         if [ $? != 0 ]; then
                 echo "xcrun faild"
                 exit 1
