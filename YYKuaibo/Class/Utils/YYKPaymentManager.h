@@ -20,6 +20,6 @@ typedef void (^YYKPaymentCompletionHandler)(PAYRESULT payResult, YYKPaymentInfo 
 - (BOOL)startPaymentWithType:(YYKPaymentType)type price:(NSUInteger)price forProgram:(YYKProgram *)program completionHandler:(YYKPaymentCompletionHandler)handler;
 
 - (void)handleOpenURL:(NSURL *)url;
-//- (void)checkPayment;
+- (void)checkPayment;
 
 @end

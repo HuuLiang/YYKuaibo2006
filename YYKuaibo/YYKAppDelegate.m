@@ -14,7 +14,6 @@
 #import "YYKPaymentModel.h"
 #import "YYKSystemConfigModel.h"
 #import "MobClick.h"
-#import <KSCrash/KSCrashInstallationStandard.h>
 
 @interface YYKAppDelegate ()
 
@@ -128,20 +127,12 @@
     
 }
 
-- (void)setupCrashReporter {
-    KSCrashInstallationStandard* installation = [KSCrashInstallationStandard sharedInstance];
-    installation.url = [NSURL URLWithString:[NSString stringWithFormat:@"https://collector.bughd.com/kscrash?key=%@", YYK_KSCRASH_APP_ID]];
-    [installation install];
-    [installation sendAllReportsWithCompletion:nil];
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [[YYKPaymentManager sharedManager] setup];
     [[YYKErrorHandler sharedHandler] initialize];
     [self setupMobStatistics];
     [self setupCommonStyles];
-    [self setupCrashReporter];
     [self.window makeKeyAndVisible];
     
     if (![YYKUtil isRegistered]) {
@@ -183,6 +174,9 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    if (![YYKUtil isPaid]) {
+        [[YYKPaymentManager sharedManager] checkPayment];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

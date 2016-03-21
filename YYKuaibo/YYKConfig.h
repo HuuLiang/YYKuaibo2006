@@ -17,14 +17,13 @@
 #define YYK_PACKAGE_CERTIFICATE  @"iPhone Distribution: Tianjin Institute of Surveying and Mapping"
 #define YYK_PAYMENT_RESERVE_DATA [NSString stringWithFormat:@"%@$%@", YYK_REST_APP_ID, YYK_CHANNEL_NO]
 
-//#define YYK_WECHAT_APP_ID        @"wx4af04eb5b3dbfb56"
-//#define YYK_WECHAT_MCH_ID        @"1281148901"
-//#define YYK_WECHAT_PRIVATE_KEY   @"hangzhouquba20151112qwertyuiopas"
-//#define YYK_WECHAT_NOTIFY_URL    @"http://phas.ihuiyx.com/pd-has/notifyWx.json"
-#define YYK_UMENG_APP_ID         @"56e653d767e58e0eb7002156"
-#define YYK_KSCRASH_APP_ID       @"7962837d6e51cd0555ab71ac9acd8807"
+#define YYK_WECHAT_APP_ID        @"wx4af04eb5b3dbfb56"
+#define YYK_WECHAT_MCH_ID        @"1281148901"
+#define YYK_WECHAT_PRIVATE_KEY   @"hangzhouquba20151112qwertyuiopas"
+#define YYK_WECHAT_NOTIFY_URL    @"http://phas.ihuiyx.com/pd-has/notifyWx.json"
 
 #define YYK_BASE_URL             @"http://iv.ihuiyx.com"//@"http://120.24.252.114:8093" //
+#define YYK_UMENG_APP_ID         @"56e653d767e58e0eb7002156"
 
 //#define YYK_HOME_VIDEO_URL              @"/iosvideo/hotVideo.htm"
 //#define YYK_HOME_CHANNEL_URL            @"/iosvideo/channelRanking.htm"

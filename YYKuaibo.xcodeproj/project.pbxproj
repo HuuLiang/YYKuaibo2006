@@ -8,8 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		55F6FDF1E0146D6F7E6A2858 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4577FED980A3FE4A17E106BF /* libPods.a */; };
+		BC2914491C9FF6AD002084E2 /* ApiXml.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC2914421C9FF6AD002084E2 /* ApiXml.mm */; };
+		BC29144A1C9FF6AD002084E2 /* payRequsestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC2914441C9FF6AD002084E2 /* payRequsestHandler.mm */; };
+		BC29144B1C9FF6AD002084E2 /* WeChatPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2914461C9FF6AD002084E2 /* WeChatPayManager.m */; };
+		BC29144C1C9FF6AD002084E2 /* WXUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC2914481C9FF6AD002084E2 /* WXUtil.mm */; };
+		BC29144F1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC29144E1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m */; };
 		BC58EA8E1C97DD6A001D40B0 /* YYKAppSpreadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC58EA8D1C97DD6A001D40B0 /* YYKAppSpreadModel.m */; };
-		BC58EA911C9800EF001D40B0 /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC58EA901C9800EF001D40B0 /* KSCrash.framework */; };
 		BC660B081C97243F00E04D23 /* YYKPaymentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC660B071C97243F00E04D23 /* YYKPaymentManager.m */; };
 		BC660B0E1C9724A200E04D23 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC660B0B1C9724A200E04D23 /* AlipaySDK.framework */; };
 		BC660B0F1C9724A300E04D23 /* IapppayAlphaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC660B0C1C9724A200E04D23 /* IapppayAlphaKit.framework */; };
@@ -100,9 +104,18 @@
 		26563315252187AA0C5AEA85 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		4577FED980A3FE4A17E106BF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5220C7BCBCEF2D19CB8CBF73 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		BC2914411C9FF6AD002084E2 /* ApiXml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiXml.h; sourceTree = "<group>"; };
+		BC2914421C9FF6AD002084E2 /* ApiXml.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApiXml.mm; sourceTree = "<group>"; };
+		BC2914431C9FF6AD002084E2 /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
+		BC2914441C9FF6AD002084E2 /* payRequsestHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = payRequsestHandler.mm; sourceTree = "<group>"; };
+		BC2914451C9FF6AD002084E2 /* WeChatPayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeChatPayManager.h; sourceTree = "<group>"; };
+		BC2914461C9FF6AD002084E2 /* WeChatPayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeChatPayManager.m; sourceTree = "<group>"; };
+		BC2914471C9FF6AD002084E2 /* WXUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXUtil.h; sourceTree = "<group>"; };
+		BC2914481C9FF6AD002084E2 /* WXUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WXUtil.mm; sourceTree = "<group>"; };
+		BC29144D1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeChatPayQueryOrderRequest.h; sourceTree = "<group>"; };
+		BC29144E1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeChatPayQueryOrderRequest.m; sourceTree = "<group>"; };
 		BC58EA8C1C97DD6A001D40B0 /* YYKAppSpreadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKAppSpreadModel.h; sourceTree = "<group>"; };
 		BC58EA8D1C97DD6A001D40B0 /* YYKAppSpreadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKAppSpreadModel.m; sourceTree = "<group>"; };
-		BC58EA901C9800EF001D40B0 /* KSCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KSCrash.framework; sourceTree = "<group>"; };
 		BC660B061C97243F00E04D23 /* YYKPaymentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKPaymentManager.h; sourceTree = "<group>"; };
 		BC660B071C97243F00E04D23 /* YYKPaymentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKPaymentManager.m; sourceTree = "<group>"; };
 		BC660B0B1C9724A200E04D23 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
@@ -255,7 +268,6 @@
 				55F6FDF1E0146D6F7E6A2858 /* libPods.a in Frameworks */,
 				BCE257251C968AED00133F4F /* libMobClickLibrary.a in Frameworks */,
 				BCE257261C968AED00133F4F /* libWeChatSDK.a in Frameworks */,
-				BC58EA911C9800EF001D40B0 /* KSCrash.framework in Frameworks */,
 				BC660B0F1C9724A300E04D23 /* IapppayAlphaKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,6 +310,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BC2914401C9FF6AD002084E2 /* WeChatPay */ = {
+			isa = PBXGroup;
+			children = (
+				BC2914411C9FF6AD002084E2 /* ApiXml.h */,
+				BC2914421C9FF6AD002084E2 /* ApiXml.mm */,
+				BC2914431C9FF6AD002084E2 /* payRequsestHandler.h */,
+				BC2914441C9FF6AD002084E2 /* payRequsestHandler.mm */,
+				BC2914451C9FF6AD002084E2 /* WeChatPayManager.h */,
+				BC2914461C9FF6AD002084E2 /* WeChatPayManager.m */,
+				BC2914471C9FF6AD002084E2 /* WXUtil.h */,
+				BC2914481C9FF6AD002084E2 /* WXUtil.mm */,
+				BC29144D1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.h */,
+				BC29144E1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m */,
+			);
+			path = WeChatPay;
+			sourceTree = "<group>";
+		};
 		BC58EA8B1C97DD4A001D40B0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -305,14 +334,6 @@
 				BC58EA8D1C97DD6A001D40B0 /* YYKAppSpreadModel.m */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		BC58EA8F1C9800EF001D40B0 /* KSCrash */ = {
-			isa = PBXGroup;
-			children = (
-				BC58EA901C9800EF001D40B0 /* KSCrash.framework */,
-			);
-			path = KSCrash;
 			sourceTree = "<group>";
 		};
 		BC660B051C9720BB00E04D23 /* Resources */ = {
@@ -479,6 +500,7 @@
 		BCE256C51C966DB400133F4F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				BC2914401C9FF6AD002084E2 /* WeChatPay */,
 				BCE256C61C966DB400133F4F /* Extensions */,
 				BCE256E61C966DB400133F4F /* rac_extobjc */,
 				BCE256FB1C966DB400133F4F /* YYKUtil.h */,
@@ -550,7 +572,6 @@
 		BCE2571A1C968AED00133F4F /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				BC58EA8F1C9800EF001D40B0 /* KSCrash */,
 				BC660B091C9724A200E04D23 /* iAppPay */,
 				BCE2571C1C968AED00133F4F /* Umeng */,
 				BCE257201C968AED00133F4F /* WeChatSDK */,
@@ -868,6 +889,7 @@
 				BCE257421C96ABD300133F4F /* YYKVideoCell.m in Sources */,
 				BCE257331C968D5100133F4F /* YYKHomeViewController.m in Sources */,
 				BCE257141C966DB400133F4F /* YYKUtil.m in Sources */,
+				BC2914491C9FF6AD002084E2 /* ApiXml.mm in Sources */,
 				BCE257361C96928200133F4F /* YYKVideoLibViewController.m in Sources */,
 				BCE256671C966C2600133F4F /* YYKPaymentInfo.m in Sources */,
 				BCE2566E1C966C2600133F4F /* YYKURLResponse.m in Sources */,
@@ -879,16 +901,20 @@
 				BCE256FD1C966DB400133F4F /* NSDate+Utilities.m in Sources */,
 				BCE257131C966DB400133F4F /* YYKHudManager.m in Sources */,
 				BCE257041C966DB400133F4F /* NSString+md5.m in Sources */,
+				BC29144B1C9FF6AD002084E2 /* WeChatPayManager.m in Sources */,
 				BCE257601C97039300133F4F /* YYKRecommendViewController.m in Sources */,
 				BCE256621C966C2600133F4F /* YYKBaseViewController.m in Sources */,
 				BCE257121C966DB400133F4F /* YYKErrorHandler.m in Sources */,
 				BCE2566A1C966C2600133F4F /* YYKProgram.m in Sources */,
 				BCE257511C96C53D00133F4F /* UITableView+Separator.m in Sources */,
+				BC29144A1C9FF6AD002084E2 /* payRequsestHandler.mm in Sources */,
 				BCE2573C1C969AB700133F4F /* YYKVideoLibModel.m in Sources */,
 				BCE257571C96E70000133F4F /* YYKHistoryCell.m in Sources */,
 				BCE257541C96E2DC00133F4F /* YYKHistoryViewController.m in Sources */,
 				BCE256631C966C2600133F4F /* YYKPaymentViewController.m in Sources */,
 				BCE2566F1C966C2600133F4F /* YYKUserAccessModel.m in Sources */,
+				BC29144F1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m in Sources */,
+				BC29144C1C9FF6AD002084E2 /* WXUtil.mm in Sources */,
 				BCE2575A1C96F31200133F4F /* YYKWebViewController.m in Sources */,
 				BCE2570C1C966DB400133F4F /* RACEXTRuntimeExtensions.m in Sources */,
 				BCE256FE1C966DB400133F4F /* NSDictionary+YYKSign.m in Sources */,

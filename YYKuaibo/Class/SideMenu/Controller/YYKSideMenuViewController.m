@@ -132,8 +132,12 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
         if (!vipCell.memberAction) {
             vipCell.memberAction = ^(id sender) {
                 @strongify(self);
-                [self.sideMenuViewController hideMenuViewController];
-                [self payForProgram:nil];
+                if (![YYKUtil isPaid]) {
+                    [self.sideMenuViewController hideMenuViewController];
+                    [self payForProgram:nil];
+                } else {
+                    [[YYKHudManager manager] showHudWithText:@"您已经是会员，感谢您的观看！"];
+                }
             };
         }
         
