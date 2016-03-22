@@ -54,4 +54,5 @@
 #define YYK_SYSTEM_CONFIG_SPREAD_TOP_IMAGE      @"SPREAD_TOP_IMG"
 #define YYK_SYSTEM_CONFIG_SPREAD_URL            @"SPREAD_URL"
 
+#define YYK_IAPPPAY_PLUGIN_TYPE                 (1009)
 #endif /* YYKConfig_h */
