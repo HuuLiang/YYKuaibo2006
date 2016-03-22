@@ -1,22 +1,26 @@
 //
-//  YYKVideoLibModel.m
+//  YYKVideoListModel.m
 //  YYKuaibo
 //
-//  Created by Sean Yue on 16/3/14.
+//  Created by Sean Yue on 16/3/22.
 //  Copyright © 2016年 iqu8. All rights reserved.
 //
 
-#import "YYKVideoLibModel.h"
+#import "YYKVideoListModel.h"
+#import "YYKVideos.h"
 
-@implementation YYKVideoLibModel
+@implementation YYKVideoListModel
 
 + (Class)responseClass {
     return [YYKVideos class];
 }
 
-- (BOOL)fetchVideosInPage:(NSUInteger)page withCompletionHandler:(YYKCompletionHandler)handler {
+- (BOOL)fetchVideosInSpace:(YYKVideoListSpace)space
+                      page:(NSUInteger)page
+     withCompletionHandler:(YYKCompletionHandler)handler
+{
     @weakify(self);
-    BOOL ret = [self requestURLPath:YYK_VIDEO_LIB_URL
+    BOOL ret = [self requestURLPath:space==YYKVideoListSpaceHot ? YYK_HOT_VIDEO_URL : YYK_VIDEO_LIB_URL
                          withParams:@{@"page":@(page)}
                     responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
     {

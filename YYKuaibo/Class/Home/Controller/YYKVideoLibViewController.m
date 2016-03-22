@@ -7,22 +7,24 @@
 //
 
 #import "YYKVideoLibViewController.h"
-#import "YYKVideoLibModel.h"
+#import "YYKVideos.h"
+#import "YYKVideoListModel.h"
 #import "YYKVideoCell.h"
 
 static NSString *const kVideoLibCellReusableIdentifier = @"VideoLibCellReusableIdentifier";
+static NSString *const kSpreadCellReusableIdentifier = @"SpreadCellReusableIdentifier";
 
 @interface YYKVideoLibViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UICollectionView *_layoutCollectionView;
 }
-@property (nonatomic,retain) YYKVideoLibModel *videoLibModel;
+@property (nonatomic,retain) YYKVideoListModel *videoLibModel;
 @property (nonatomic,retain) NSMutableArray<YYKVideo *> *videos;
 @end
 
 @implementation YYKVideoLibViewController
 
-DefineLazyPropertyInitialization(YYKVideoLibModel, videoLibModel)
+DefineLazyPropertyInitialization(YYKVideoListModel, videoLibModel)
 DefineLazyPropertyInitialization(NSMutableArray, videos)
 
 - (void)viewDidLoad {
@@ -38,6 +40,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
     _layoutCollectionView.delegate = self;
     _layoutCollectionView.dataSource = self;
     [_layoutCollectionView registerClass:[YYKVideoCell class] forCellWithReuseIdentifier:kVideoLibCellReusableIdentifier];
+    [_layoutCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kSpreadCellReusableIdentifier];
     [self.view addSubview:_layoutCollectionView];
     {
         [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -60,8 +63,9 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
 
 - (void)loadVideosWithRefreshFlag:(BOOL)isRefresh {
     @weakify(self);
-    [self.videoLibModel fetchVideosInPage:isRefresh?1:self.videoLibModel.fetchedVideos.page.unsignedIntegerValue+1
-                    withCompletionHandler:^(BOOL success, id obj)
+    [self.videoLibModel fetchVideosInSpace:YYKVideoListSpaceLib
+                                      page:isRefresh?1:self.videoLibModel.fetchedVideos.page.unsignedIntegerValue+1
+                     withCompletionHandler:^(BOOL success, id obj)
      {
         @strongify(self);
         if (!self) {
@@ -94,16 +98,30 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
 #pragma mark - UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    YYKVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVideoLibCellReusableIdentifier forIndexPath:indexPath];
-
-    if (indexPath.item < self.videos.count) {
-        YYKVideo *video = self.videos[indexPath.item];
+    if (indexPath.item >= self.videos.count) {
+        return nil;
+    }
+    
+    YYKVideo *video = self.videos[indexPath.item];
+    if ([video isKindOfClass:[YYKProgram class]] && ((YYKProgram *)video).type.unsignedIntegerValue == YYKProgramTypeSpread) {
+        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSpreadCellReusableIdentifier forIndexPath:indexPath];
+        
+        if (!cell.backgroundView) {
+            cell.backgroundView = [[UIImageView alloc] init];
+        }
+        
+        UIImageView *imageView = (UIImageView *)cell.backgroundView;
+        [imageView sd_setImageWithURL:[NSURL URLWithString:video.coverImg]];
+        return cell;
+    } else {
+        YYKVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVideoLibCellReusableIdentifier forIndexPath:indexPath];
         
         cell.title = video.title;
         cell.imageURL = [NSURL URLWithString:video.coverImg];
         cell.showPlayIcon = YES;
+        
+        return cell;
     }
-    return cell;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -117,16 +135,28 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionViewLayout;
     
     const CGFloat fullWidth = CGRectGetWidth(collectionView.bounds) - layout.sectionInset.left - layout.sectionInset.right;
-    if (indexPath.item == 0) {
-        return CGSizeMake(fullWidth, fullWidth/2+[YYKVideoCell footerViewHeight]);
-    } else {
-        const CGFloat width = (fullWidth-layout.minimumInteritemSpacing)/2;
-        return CGSizeMake(width, width * 1050./825. + [YYKVideoCell footerViewHeight]);
+    if (indexPath.item < self.videos.count) {
+        YYKVideo *video = self.videos[indexPath.item];
+        
+        if ([video isKindOfClass:[YYKProgram class]] && ((YYKProgram *)video).type.unsignedIntegerValue == YYKProgramTypeSpread) {
+            return CGSizeMake(fullWidth, fullWidth/5);
+        } else if (indexPath.item == 0) {
+            return CGSizeMake(fullWidth, fullWidth/2+[YYKVideoCell footerViewHeight]);
+        } else {
+            const CGFloat width = (fullWidth-layout.minimumInteritemSpacing)/2;
+            return CGSizeMake(width, width * 1050./825. + [YYKVideoCell footerViewHeight]);
+        }
     }
+    return CGSizeZero;
+    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     YYKVideo *video = self.videos[indexPath.item];
-    [self switchToPlayProgram:(YYKProgram *)video];
+    if ([video isKindOfClass:[YYKProgram class]] && ((YYKProgram *)video).type.unsignedIntegerValue == YYKProgramTypeSpread) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:video.videoUrl]];
+    } else {
+        [self switchToPlayProgram:(YYKProgram *)video];
+    }
 }
 @end
