@@ -90,7 +90,6 @@ static YYKPaymentConfig *_shardConfig;
 
 - (void)loadDefaultConfig {
     self.weixinInfo = [YYKWeChatPaymentConfig defaultConfig];
-    self.iappPayInfo = [YYKIAppPayConfig defaultConfig];
 }
 
 - (void)setAsCurrentConfig {
