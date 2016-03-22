@@ -59,16 +59,9 @@ static YYKPaymentConfig *_shardConfig;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _shardConfig = [[self alloc] init];
+        [_shardConfig loadDefaultConfig];
     });
     return _shardConfig;
-}
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        [self loadDefaultConfig];
-    }
-    return self;
 }
 
 - (NSNumber *)success {
