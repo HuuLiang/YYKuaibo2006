@@ -65,7 +65,7 @@
         Pay(YYKPaymentTypeWeChatPay);
     }];
     
-    if ([YYKPaymentConfig sharedConfig].alipayInfo) {
+    if ([YYKPaymentConfig sharedConfig].iappPayInfo) {
         [_popView addPaymentWithImage:[UIImage imageNamed:@"alipay_icon"] title:@"支付宝支付" available:YES action:^(id sender) {
             Pay(YYKPaymentTypeAlipay);
         }];
@@ -166,6 +166,10 @@
 }
 
 - (void)notifyPaymentResult:(PAYRESULT)result withPaymentInfo:(YYKPaymentInfo *)paymentInfo {
+    if (result == PAYRESULT_SUCCESS && [YYKUtil successfulPaymentInfo]) {
+        return ;
+    }
+    
     NSDateFormatter *dateFormmater = [[NSDateFormatter alloc] init];
     [dateFormmater setDateFormat:@"yyyyMMddHHmmss"];
     
