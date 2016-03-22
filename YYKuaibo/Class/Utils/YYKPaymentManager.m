@@ -10,6 +10,7 @@
 #import "YYKPaymentInfo.h"
 #import "YYKPaymentViewController.h"
 #import "YYKProgram.h"
+#import "YYKPaymentConfigModel.h"
 
 #import "WXApi.h"
 #import "WeChatPayQueryOrderRequest.h"
@@ -19,9 +20,6 @@
 #import <IapppayAlphaKit/IapppayAlphaKit.h>
 
 static NSString *const kAlipaySchemeUrl = @"comyykuaibo2016appalipayurlscheme";
-static NSString *const kIAppPayAppId = @"3004262770";
-static NSString *const kIAppPayPrivateKey = @"MIICXQIBAAKBgQCAlkSlxfOCLY/6NPA5VaLvlJjKByjUk2HRGxXDMCZhxucckfvY2yJ0eInTKoqVmkof3+Sp22TNlAdfsMFbsw/9qyHalRclfjhXlKzjurXtGGZ+7uDZGIHM3BV492n1gSbWMAFZE7l5tNPiANkxFjfid7771S3vYB7lthaEcvgRmwIDAQABAoGAMG/qdgOmIcBl/ttYLlDK6rKwB1JBGCpYa3tnbDpECwrw3ftDwkFxriwFxuy8fXQ8PduJ+E3zn9kGGg6sF43RFLVNlEwJMZXWXj0tA1rtbk56vbISXzK+/McDqfhk89abdvdS1HngXRXsYZSFSwt67IwsLRPNCz5vYkS+56kLckkCQQC8IF5zbr+9zLRoUP5H7URNvvYceUHB500skyVfB/kE2KqfP9NCwt7OlTaZG0iFOqSGtG1bqXawiGuTzk+bxvd/AkEArvq/p0dBv00OVFeo7j/OZ2d/usAYSTGCWcGib7vb8xlXHvWkwKSR2priG2vTTNlx7K2r35YheyQcfjV0G4HT5QJBALEF8HrEmw7ZomWK2UwLezuBVwuCGpuAsMEiEYdz9CJYU22Y3I20234fMIov/zTG8uyCuWkIdNQ2+qvR9l1Kg7cCQQCEKAp8cwsrSy2ZciO63iIsYzVLfS5aibQjymW+8inrb6YnUew/O4yViQlhII0Uq96pnXoEgsWC1gFXKVQqOmIpAkBtljLpXAoLNGku5cvGpZycAck9Mbwz4tNzixf4Q/eCuLH6rmUcoNI9q5zQjp8GSITN/7PyzZ+Mw3TahCysC5fl";
-static NSString *const kIAppPayPublicKey = @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC9NgdzqMPgAySHtV02jw8alHb/es/4NOBfjmNwi2uO50No1DM85S/THpNbBLPS7etLunb8XBqGDOQ3cILxCcWOggdcqjaHvmJ/OliWNofDu2QImMrM3t129wSjhfbvUA1btqnDuNcKz0yawZWt9YIIk/jQxutEmxYMq1eN1uvWHQIDAQAB";
 
 @interface YYKPaymentManager () <IapppayAlphaKitPayRetDelegate,WXApiDelegate>
 @property (nonatomic,retain) YYKPaymentInfo *paymentInfo;
@@ -43,10 +41,11 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 }
 
 - (void)setup {
-    [[IapppayAlphaKit sharedInstance] setAppAlipayScheme:kAlipaySchemeUrl];
-    [[IapppayAlphaKit sharedInstance] setAppId:kIAppPayAppId mACID:YYK_CHANNEL_NO];
-    
-    [WXApi registerApp:YYK_WECHAT_APP_ID];
+    [[YYKPaymentConfigModel sharedModel] fetchConfigWithCompletionHandler:^(BOOL success, id obj) {
+        [[IapppayAlphaKit sharedInstance] setAppAlipayScheme:kAlipaySchemeUrl];
+        [[IapppayAlphaKit sharedInstance] setAppId:[YYKPaymentConfig sharedConfig].iappPayInfo.appid mACID:YYK_CHANNEL_NO];
+        [WXApi registerApp:[YYKPaymentConfig sharedConfig].weixinInfo.appId];
+    }];
 }
 
 - (void)handleOpenURL:(NSURL *)url {
@@ -95,13 +94,13 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
         }];
     } else {
         IapppayAlphaOrderUtils *order = [[IapppayAlphaOrderUtils alloc] init];
-        order.appId = kIAppPayAppId;
-        order.cpPrivateKey = kIAppPayPrivateKey;
+        order.appId = [YYKPaymentConfig sharedConfig].iappPayInfo.appid;
+        order.cpPrivateKey = [YYKPaymentConfig sharedConfig].iappPayInfo.privateKey;
         order.cpOrderId = orderNo;
 #ifdef DEBUG
         order.waresId = @"2";
 #else
-        order.waresId = @"1";
+        order.waresId = [YYKPaymentConfig sharedConfig].iappPayInfo.waresid;
 #endif
         order.price = [NSString stringWithFormat:@"%.2f", price/100.];
         order.appUserId = [YYKUtil userId] ?: @"UnregisterUser";

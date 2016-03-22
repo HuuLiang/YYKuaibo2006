@@ -35,11 +35,27 @@
             make.edges.equalTo(self.view);
         }];
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [_webView loadRequest:[NSURLRequest requestWithURL:self.url]];
+    
+    NSURLRequest *urlReq = [NSURLRequest requestWithURL:_url];
+    NSURLRequest *standUrlReq = [NSURLRequest requestWithURL:_standbyUrl];
+    
+    if (_standbyUrl) {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            NSHTTPURLResponse *response;
+            NSError *error;
+            [NSURLConnection sendSynchronousRequest:urlReq returningResponse:&response error:&error];
+            NSInteger responseCode = response.statusCode;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (responseCode == 502 || responseCode == 404) {
+                    [_webView loadRequest:standUrlReq];
+                } else {
+                    [_webView loadRequest:urlReq];
+                }
+            });
+        });
+    } else {
+        [_webView loadRequest:urlReq];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

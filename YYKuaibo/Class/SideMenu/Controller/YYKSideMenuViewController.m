@@ -255,7 +255,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
             NSString *standbyUrlString = [YYKUtil isPaid]?YYK_STANDBY_AGREEMENT_PAID_URL:YYK_STANDBY_AGREEMENT_NOTPAID_URL;
             standbyUrlString = [YYK_STANDBY_BASE_URL stringByAppendingString:standbyUrlString];
             
-            YYKWebViewController *webVC = [[YYKWebViewController alloc] initWithURL:[NSURL URLWithString:standbyUrlString]
+            YYKWebViewController *webVC = [[YYKWebViewController alloc] initWithURL:[NSURL URLWithString:urlString]
                                                                          standbyURL:[NSURL URLWithString:standbyUrlString]];
             webVC.title = cell.textLabel.text;
             [self.navigationController pushViewController:webVC animated:YES];

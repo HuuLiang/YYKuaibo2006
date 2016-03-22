@@ -9,6 +9,7 @@
 #import "WeChatPayManager.h"
 #import "WXApi.h"
 #import "payRequsestHandler.h"
+#import "YYKPaymentConfig.h"
 
 @interface WeChatPayManager ()
 @property (nonatomic,copy) WeChatPayCompletionHandler handler;
@@ -31,11 +32,11 @@
     //创建支付签名对象
     payRequsestHandler *req = [[payRequsestHandler alloc] init];
     //初始化支付签名对象
-    [req init:YYK_WECHAT_APP_ID mch_id:YYK_WECHAT_MCH_ID];
+    [req init:[YYKPaymentConfig sharedConfig].weixinInfo.appId mch_id:[YYKPaymentConfig sharedConfig].weixinInfo.mchId];
     //设置密钥
-    [req setKey:YYK_WECHAT_PRIVATE_KEY];
+    [req setKey:[YYKPaymentConfig sharedConfig].weixinInfo.signKey];
     //设置回调URL
-    [req setNotifyUrl:YYK_WECHAT_NOTIFY_URL];
+    [req setNotifyUrl:[YYKPaymentConfig sharedConfig].weixinInfo.notifyUrl];
     //设置附加数据
     [req setAttach:[YYKUtil paymentReservedData]];
     

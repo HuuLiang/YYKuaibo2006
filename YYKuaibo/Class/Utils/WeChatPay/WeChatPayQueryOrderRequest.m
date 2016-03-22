@@ -9,6 +9,7 @@
 #import "WeChatPayQueryOrderRequest.h"
 #import "payRequsestHandler.h"
 #import "WXUtil.h"
+#import "YYKPaymentConfig.h"
 
 static NSString *const kWeChatPayQueryOrderUrlString = @"https://api.mch.weixin.qq.com/pay/orderquery";
 static NSString *const kSuccessString = @"SUCCESS";
@@ -21,18 +22,18 @@ static NSString *const kSuccessString = @"SUCCESS";
         srand( (unsigned)time(0) );
         NSString *noncestr  = [NSString stringWithFormat:@"%d", rand()];
         
-        NSMutableDictionary *params = @{@"appid":YYK_WECHAT_APP_ID,
-                                        @"mch_id":YYK_WECHAT_MCH_ID,
+        NSMutableDictionary *params = @{@"appid":[YYKPaymentConfig sharedConfig].weixinInfo.appId,
+                                        @"mch_id":[YYKPaymentConfig sharedConfig].weixinInfo.mchId,
                                         @"out_trade_no":orderNo,
                                         @"nonce_str":noncestr}.mutableCopy;
         //创建支付签名对象
         payRequsestHandler *req = [[payRequsestHandler alloc] init];
         //初始化支付签名对象
-        [req init:YYK_WECHAT_APP_ID mch_id:YYK_WECHAT_MCH_ID];
+        [req init:[YYKPaymentConfig sharedConfig].weixinInfo.appId mch_id:[YYKPaymentConfig sharedConfig].weixinInfo.mchId];
         //设置密钥
-        [req setKey:YYK_WECHAT_PRIVATE_KEY];
+        [req setKey:[YYKPaymentConfig sharedConfig].weixinInfo.signKey];
         //设置回调URL
-        [req setNotifyUrl:YYK_WECHAT_NOTIFY_URL];
+        [req setNotifyUrl:[YYKPaymentConfig sharedConfig].weixinInfo.notifyUrl];
         //设置附加数据
         [req setAttach:[YYKUtil paymentReservedData]];
         

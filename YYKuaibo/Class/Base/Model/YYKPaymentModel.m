@@ -7,7 +7,6 @@
 //
 
 #import "YYKPaymentModel.h"
-#import "NSDictionary+YYKSign.h"
 #import "YYKPaymentInfo.h"
 
 static const NSTimeInterval kRetryingTimeInterval = 180;
@@ -25,7 +24,7 @@ static NSString *const kPaymentEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
     static YYKPaymentModel *_sharedModel;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedModel = [[YYKPaymentModel alloc] init];
+        _sharedModel = [[self alloc] init];
     });
     return _sharedModel;
 }

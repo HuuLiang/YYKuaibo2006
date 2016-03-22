@@ -133,15 +133,15 @@
     };
     
     AFHTTPRequestOperation *requestOp;
-    if (self.requestMethod == YYKURLGetRequest) {
-        requestOp = [isStandBy?self.standbyRequestOpManager:self.requestOpManager GET:urlPath parameters:params success:success failure:failure];
-    } else {
-        requestOp = [isStandBy?self.standbyRequestOpManager:self.requestOpManager POST:urlPath parameters:params success:success failure:failure];
-    }
-    
     if (isStandBy) {
+        requestOp = [self.standbyRequestOpManager GET:urlPath parameters:params success:success failure:failure];
         self.standbyRequestOp = requestOp;
     } else {
+        if (self.requestMethod == YYKURLGetRequest) {
+            requestOp = [self.requestOpManager GET:urlPath parameters:params success:success failure:failure];
+        } else {
+            requestOp = [self.requestOpManager POST:urlPath parameters:params success:success failure:failure];
+        }
         self.requestOp = requestOp;
     }
     return YES;

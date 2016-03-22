@@ -13,6 +13,7 @@
 #import <objc/runtime.h>
 #import "YYKProgram.h"
 #import "YYKPaymentInfo.h"
+#import "YYKPaymentConfig.h"
 
 @interface YYKPaymentViewController ()
 @property (nonatomic,retain) YYKPaymentPopView *popView;
@@ -59,12 +60,17 @@
     _popView = [[YYKPaymentPopView alloc] init];
     _popView.headerImageURL = [NSURL URLWithString:[YYKSystemConfigModel sharedModel].paymentImage];
     _popView.footerImage = [UIImage imageNamed:@"payment_footer"];
+    
     [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信客户端支付" available:YES action:^(id sender) {
         Pay(YYKPaymentTypeWeChatPay);
     }];
-    [_popView addPaymentWithImage:[UIImage imageNamed:@"alipay_icon"] title:@"支付宝支付" available:YES action:^(id sender) {
-        Pay(YYKPaymentTypeAlipay);
-    }];
+    
+    if ([YYKPaymentConfig sharedConfig].alipayInfo) {
+        [_popView addPaymentWithImage:[UIImage imageNamed:@"alipay_icon"] title:@"支付宝支付" available:YES action:^(id sender) {
+            Pay(YYKPaymentTypeAlipay);
+        }];
+    }
+    
     _popView.closeAction = ^(id sender){
         @strongify(self);
         [self hidePayment];
