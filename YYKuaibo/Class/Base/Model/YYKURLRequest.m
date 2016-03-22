@@ -60,7 +60,7 @@
 }
 
 - (NSURL *)standbyBaseURL {
-    return nil;
+    return [NSURL URLWithString:YYK_STANDBY_BASE_URL];
 }
 
 - (BOOL)shouldPostErrorNotification {

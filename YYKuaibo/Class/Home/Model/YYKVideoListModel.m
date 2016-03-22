@@ -21,6 +21,7 @@
 {
     @weakify(self);
     BOOL ret = [self requestURLPath:space==YYKVideoListSpaceHot ? YYK_HOT_VIDEO_URL : YYK_VIDEO_LIB_URL
+                     standbyURLPath:space==YYKVideoListSpaceHot ? YYK_STANDBY_HOT_VIDEO_URL : YYK_STANDBY_VIDEO_LIB_URL
                          withParams:@{@"page":@(page)}
                     responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
     {

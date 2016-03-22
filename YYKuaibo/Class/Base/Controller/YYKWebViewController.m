@@ -16,10 +16,11 @@
 
 @implementation YYKWebViewController
 
-- (instancetype)initWithURL:(NSURL *)url {
+- (instancetype)initWithURL:(NSURL *)url standbyURL:(NSURL *)standbyUrl {
     self = [self init];
     if (self) {
         _url = url;
+        _standbyUrl = standbyUrl;
     }
     return self;
 }

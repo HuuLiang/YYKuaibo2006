@@ -24,6 +24,7 @@
 - (BOOL)fetchAppSpreadWithCompletionHandler:(YYKCompletionHandler)handler {
     @weakify(self);
     BOOL ret = [self requestURLPath:YYK_APP_SPREAD_LIST_URL
+                     standbyURLPath:YYK_STANDBY_APP_SPREAD_LIST_URL
                          withParams:nil
                     responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
     {

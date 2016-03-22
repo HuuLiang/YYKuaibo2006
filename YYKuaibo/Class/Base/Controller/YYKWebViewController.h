@@ -10,8 +10,9 @@
 
 @interface YYKWebViewController : YYKBaseViewController
 
-@property (nonatomic) NSURL *url;
+@property (nonatomic,readonly) NSURL *url;
+@property (nonatomic,readonly) NSURL *standbyUrl;
 
-- (instancetype)initWithURL:(NSURL *)url;
+- (instancetype)initWithURL:(NSURL *)url standbyURL:(NSURL *)standbyUrl;
 
 @end

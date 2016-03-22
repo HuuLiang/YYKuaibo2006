@@ -38,6 +38,7 @@
 - (BOOL)fetchSystemConfigWithCompletionHandler:(YYKFetchSystemConfigCompletionHandler)handler {
     @weakify(self);
     BOOL success = [self requestURLPath:YYK_SYSTEM_CONFIG_URL
+                         standbyURLPath:YYK_STANDBY_SYSTEM_CONFIG_URL
                              withParams:nil
                         responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
     {
