@@ -94,7 +94,7 @@ static YYKPaymentConfig *_shardConfig;
 
 - (void)setAsCurrentConfig {
     YYKPaymentConfig *currentConfig = [[self class] sharedConfig];
-    currentConfig.weixinInfo = self.weixinInfo;
+    currentConfig.weixinInfo = self.weixinInfo ?: [YYKWeChatPaymentConfig defaultConfig];
     currentConfig.iappPayInfo = self.iappPayInfo;
     currentConfig.alipayInfo = self.alipayInfo;
 }
