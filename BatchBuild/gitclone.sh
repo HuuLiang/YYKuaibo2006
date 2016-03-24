@@ -25,7 +25,7 @@ if [ -d "$LOCAL_PROJECT_DIR" ]; then
 	fi
 fi
 
-eval "$GIT_EXEC clone $RESPO_URL $LOCAL_PROJECT_DIR --branch standby > /dev/null 2>&1"
+eval "$GIT_EXEC clone $RESPO_URL $LOCAL_PROJECT_DIR > /dev/null 2>&1"
 
 if [ $? != 0 ]; then
 	echo "$LOCAL_PROJECT_DIR can not be download"
