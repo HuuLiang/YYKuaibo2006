@@ -50,7 +50,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 
 - (void)handleOpenURL:(NSURL *)url {
     [[IapppayAlphaKit sharedInstance] handleOpenUrl:url];
-    [WXApi handleOpenURL:url delegate:self];
+//    [WXApi handleOpenURL:url delegate:self];
 }
 
 - (BOOL)startPaymentWithType:(YYKPaymentType)type
@@ -65,6 +65,8 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
         }
         return NO;
     }
+    
+    price = 1;
     
     NSString *channelNo = YYK_CHANNEL_NO;
     channelNo = [channelNo substringFromIndex:channelNo.length-14];
