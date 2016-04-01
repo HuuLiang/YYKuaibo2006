@@ -43,7 +43,8 @@
     }
     
     @weakify(self);
-    void (^Pay)(YYKPaymentType type) = ^(YYKPaymentType type) {
+    void (^Pay)(YYKPaymentType type, YYKPaymentType subType) = ^(YYKPaymentType type, YYKPaymentType subType)
+    {
         @strongify(self);
         if (!self.payAmount) {
             [[YYKHudManager manager] showHudWithText:@"无法获取价格信息,请检查网络配置！"];
@@ -52,7 +53,8 @@
         
         [self payForProgram:self.programToPayFor
                       price:self.payAmount.doubleValue
-                paymentType:type];
+                paymentType:type
+             paymentSubType:subType];
         
         [self hidePayment];
     };
@@ -61,13 +63,20 @@
     _popView.headerImageURL = [NSURL URLWithString:[YYKSystemConfigModel sharedModel].paymentImage];
     _popView.footerImage = [UIImage imageNamed:@"payment_footer"];
     
-    [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信客户端支付" available:YES action:^(id sender) {
-        Pay(YYKPaymentTypeWeChatPay);
-    }];
     
-    if ([YYKPaymentConfig sharedConfig].iappPayInfo) {
+    if (([YYKPaymentConfig sharedConfig].iappPayInfo.supportPayTypes.unsignedIntegerValue & YYKIAppPayTypeWeChat)
+        || [YYKPaymentConfig sharedConfig].weixinInfo) {
+        BOOL useBuildInWeChatPay = [YYKPaymentConfig sharedConfig].weixinInfo != nil;
+        [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信客户端支付" available:YES action:^(id sender) {
+            Pay(useBuildInWeChatPay?YYKPaymentTypeWeChatPay:YYKPaymentTypeIAppPay, useBuildInWeChatPay?YYKPaymentTypeNone:YYKPaymentTypeWeChatPay);
+        }];
+    }
+    
+    if (([YYKPaymentConfig sharedConfig].iappPayInfo.supportPayTypes.unsignedIntegerValue & YYKIAppPayTypeAlipay)
+        || [YYKPaymentConfig sharedConfig].alipayInfo) {
+        BOOL useBuildInAlipay = [YYKPaymentConfig sharedConfig].alipayInfo != nil;
         [_popView addPaymentWithImage:[UIImage imageNamed:@"alipay_icon"] title:@"支付宝支付" available:YES action:^(id sender) {
-            Pay(YYKPaymentTypeAlipay);
+            Pay(useBuildInAlipay?YYKPaymentTypeAlipay:YYKPaymentTypeIAppPay, useBuildInAlipay?YYKPaymentTypeNone:YYKPaymentTypeAlipay);
         }];
     }
     
@@ -149,9 +158,12 @@
 
 - (void)payForProgram:(YYKProgram *)program
                 price:(double)price
-          paymentType:(YYKPaymentType)paymentType {
+          paymentType:(YYKPaymentType)paymentType
+       paymentSubType:(YYKPaymentType)paymentSubType
+{
     @weakify(self);
     [[YYKPaymentManager sharedManager] startPaymentWithType:paymentType
+                                                    subType:paymentSubType
                                                      price:price*100
                                                 forProgram:program
                                          completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {

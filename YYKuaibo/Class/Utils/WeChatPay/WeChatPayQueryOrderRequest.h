@@ -10,6 +10,7 @@
 
 typedef void (^WeChatPayQueryOrderCompletionHandler)(BOOL success, NSString *trade_state, double total_fee);
 
+@class YYKPaymentInfo;
 @interface WeChatPayQueryOrderRequest : NSObject
 
 @property (nonatomic) NSString *return_code;
@@ -17,6 +18,5 @@ typedef void (^WeChatPayQueryOrderCompletionHandler)(BOOL success, NSString *tra
 @property (nonatomic) NSString *trade_state;
 @property (nonatomic) double total_fee;
 
-- (BOOL)queryOrderWithNo:(NSString *)orderNo completionHandler:(WeChatPayQueryOrderCompletionHandler)handler;
-
+- (BOOL)queryPayment:(YYKPaymentInfo *)paymentInfo withCompletionHandler:(WeChatPayQueryOrderCompletionHandler)handler;
 @end

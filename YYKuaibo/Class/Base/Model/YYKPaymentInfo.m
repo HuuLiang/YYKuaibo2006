@@ -19,6 +19,12 @@ static NSString *const kPaymentInfoPaymentTypeKeyName = @"yykuaibov_paymentinfo_
 static NSString *const kPaymentInfoPaymentResultKeyName = @"yykuaibov_paymentinfo_paymentresult_keyname";
 static NSString *const kPaymentInfoPaymentStatusKeyName = @"yykuaibov_paymentinfo_paymentstatus_keyname";
 static NSString *const kPaymentInfoPaymentTimeKeyName = @"yykuaibov_paymentinfo_paymenttime_keyname";
+static NSString *const kPaymentInfoPaymentReservedDataKeyName = @"yykuaibov_paymentinfo_paymentreserveddata_keyname";
+
+static NSString *const kPaymentInfoPaymentAppId = @"yykuaibov_paymentinfo_paymentappid_keyname";
+static NSString *const kPaymentInfoPaymentMchId = @"yykuaibov_paymentinfo_paymentmchid_keyname";
+static NSString *const kPaymentInfoPaymentSignKey = @"yykuaibov_paymentinfo_paymentsignkey_keyname";
+static NSString *const kPaymentInfoPaymentNotifyUrl = @"yykuaibov_paymentinfo_paymentnotifyurl_keyname";
 
 @implementation YYKPaymentInfo
 
@@ -43,6 +49,11 @@ static NSString *const kPaymentInfoPaymentTimeKeyName = @"yykuaibov_paymentinfo_
     paymentInfo.paymentResult = payment[kPaymentInfoPaymentResultKeyName];
     paymentInfo.paymentStatus = payment[kPaymentInfoPaymentStatusKeyName];
     paymentInfo.paymentTime = payment[kPaymentInfoPaymentTimeKeyName];
+    paymentInfo.reservedData = payment[kPaymentInfoPaymentReservedDataKeyName];
+    paymentInfo.appId = payment[kPaymentInfoPaymentAppId];
+    paymentInfo.mchId = payment[kPaymentInfoPaymentMchId];
+    paymentInfo.notifyUrl = payment[kPaymentInfoPaymentNotifyUrl];
+    paymentInfo.signKey = payment[kPaymentInfoPaymentSignKey];
     return paymentInfo;
 }
 
@@ -58,6 +69,11 @@ static NSString *const kPaymentInfoPaymentTimeKeyName = @"yykuaibov_paymentinfo_
     [payment safelySetObject:self.paymentResult forKey:kPaymentInfoPaymentResultKeyName];
     [payment safelySetObject:self.paymentStatus forKey:kPaymentInfoPaymentStatusKeyName];
     [payment safelySetObject:self.paymentTime forKey:kPaymentInfoPaymentTimeKeyName];
+    [payment safelySetObject:self.reservedData forKey:kPaymentInfoPaymentReservedDataKeyName];
+    [payment safelySetObject:self.appId forKey:kPaymentInfoPaymentAppId];
+    [payment safelySetObject:self.mchId forKey:kPaymentInfoPaymentMchId];
+    [payment safelySetObject:self.notifyUrl forKey:kPaymentInfoPaymentNotifyUrl];
+    [payment safelySetObject:self.signKey forKey:kPaymentInfoPaymentSignKey];
     return payment;
 }
 

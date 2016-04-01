@@ -17,7 +17,11 @@ typedef void (^YYKPaymentCompletionHandler)(PAYRESULT payResult, YYKPaymentInfo 
 + (instancetype)sharedManager;
 
 - (void)setup;
-- (BOOL)startPaymentWithType:(YYKPaymentType)type price:(NSUInteger)price forProgram:(YYKProgram *)program completionHandler:(YYKPaymentCompletionHandler)handler;
+- (BOOL)startPaymentWithType:(YYKPaymentType)type
+                     subType:(YYKPaymentType)subType
+                       price:(NSUInteger)price
+                  forProgram:(YYKProgram *)program
+           completionHandler:(YYKPaymentCompletionHandler)handler;
 
 - (void)handleOpenURL:(NSURL *)url;
 - (void)checkPayment;

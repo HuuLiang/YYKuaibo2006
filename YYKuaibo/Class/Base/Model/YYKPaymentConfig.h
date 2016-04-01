@@ -8,6 +8,12 @@
 
 #import "YYKURLResponse.h"
 
+typedef NS_ENUM(NSUInteger, YYKIAppPayType) {
+    YYKIAppPayTypeUnknown = 0,
+    YYKIAppPayTypeWeChat = 1 << 0,
+    YYKIAppPayTypeAlipay = 1 << 1
+};
+
 @interface YYKWeChatPaymentConfig : NSObject
 @property (nonatomic) NSString *appId;
 @property (nonatomic) NSString *mchId;
@@ -31,6 +37,7 @@
 @property (nonatomic) NSString *publicKey;
 @property (nonatomic) NSString *notifyUrl;
 @property (nonatomic) NSNumber *waresid;
+@property (nonatomic) NSNumber *supportPayTypes;
 
 + (instancetype)defaultConfig;
 @end
