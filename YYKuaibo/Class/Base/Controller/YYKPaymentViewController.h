@@ -15,7 +15,7 @@
 
 + (instancetype)sharedPaymentVC;
 
-- (void)popupPaymentInView:(UIView *)view forProgram:(YYKProgram *)program;
+- (void)popupPaymentInView:(UIView *)view forProgram:(YYKProgram *)program withCompletionHandler:(void (^)(void))completionHandler;;
 - (void)hidePayment;
 
 - (void)notifyPaymentResult:(PAYRESULT)result withPaymentInfo:(YYKPaymentInfo *)paymentInfo;

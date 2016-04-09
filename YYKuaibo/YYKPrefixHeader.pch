@@ -29,5 +29,6 @@
 #import "YYKErrorHandler.h"
 #import "YYKHudManager.h"
 #import "YYKPaymentManager.h"
+#import "YYKLocalNotificationManager.h"
 
 #endif /* YYKPrefixHeader_pch */

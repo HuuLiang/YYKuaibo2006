@@ -23,6 +23,7 @@
 @property (nonatomic,retain) YYKPaymentInfo *paymentInfo;
 
 @property (nonatomic,readonly,retain) NSDictionary *paymentTypeMap;
+@property (nonatomic,copy) dispatch_block_t completionHandler;
 @end
 
 @implementation YYKPaymentViewController
@@ -102,7 +103,9 @@
     }
 }
 
-- (void)popupPaymentInView:(UIView *)view forProgram:(YYKProgram *)program {
+- (void)popupPaymentInView:(UIView *)view forProgram:(YYKProgram *)program withCompletionHandler:(void (^)(void))completionHandler; {
+    self.completionHandler = completionHandler;
+    
     if (self.view.superview) {
         [self.view removeFromSuperview];
     }
@@ -131,11 +134,7 @@
     [systemConfigModel fetchSystemConfigWithCompletionHandler:^(BOOL success) {
         @strongify(self);
         if (success) {
-#ifdef DEBUG
-            self.payAmount = @(0.01);
-#else
             self.payAmount = @(systemConfigModel.payAmount);
-#endif
         }
     }];
 }
@@ -153,6 +152,11 @@
         self.view.alpha = 0;
     } completion:^(BOOL finished) {
         [self.view removeFromSuperview];
+        
+        if (self.completionHandler) {
+            self.completionHandler();
+            self.completionHandler = nil;
+        }
     }];
 }
 

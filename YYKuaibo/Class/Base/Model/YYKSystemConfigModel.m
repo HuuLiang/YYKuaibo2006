@@ -27,6 +27,15 @@
     return _sharedModel;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _halfPayLaunchSeq = -1;
+        _halfPayLaunchDelay = -1;
+    }
+    return self;
+}
+
 + (Class)responseClass {
     return [YYKSystemConfigResponse class];
 }
@@ -73,6 +82,12 @@
 //                    self.spreadRightUrl = config.value;
                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_CONTACT]) {
                     self.contact = config.value;
+                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_HALF_PAY_SEQ]) {
+                    self.halfPayLaunchSeq = config.value.integerValue;
+                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_HALF_PAY_DELAY]) {
+                    self.halfPayLaunchDelay = config.value.integerValue;
+                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_HALF_PAY_NOTIFICATION]) {
+                    self.halfPayLaunchNotification = config.value;
                 }
             }];
             
@@ -86,4 +101,11 @@
     return success;
 }
 
+- (double)payAmount {
+    if (self.halfPayLaunchSeq >= 0 && [YYKUtil launchSeq] >= self.halfPayLaunchSeq) {
+        return _payAmount / 2;
+    } else {
+        return _payAmount;
+    }
+}
 @end

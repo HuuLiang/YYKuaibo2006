@@ -15,7 +15,8 @@
 
 - (void)switchToPlayProgram:(YYKProgram *)program;
 - (void)playVideo:(YYKVideo *)video;
-- (void)playVideo:(YYKVideo *)video withCloseAction:(YYKAction)closeAction;
+//- (void)playVideo:(YYKVideo *)video withCloseAction:(YYKAction)closeAction;
+- (void)playVideo:(YYKVideo *)video withTimeControl:(BOOL)hasTimeControl shouldPopPayment:(BOOL)shouldPopPayment;
 
 - (void)payForProgram:(YYKProgram *)program;
 //- (void)onPaidNotification:(NSNotification *)notification;

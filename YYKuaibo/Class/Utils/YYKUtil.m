@@ -18,6 +18,7 @@ NSString *const kPaymentInfoKeyName = @"yykuaibov_paymentinfo_keyname";
 static NSString *const kRegisterKeyName = @"yykuaibov_register_keyname";
 static NSString *const kUserAccessUsername = @"yykuaibov_user_access_username";
 static NSString *const kUserAccessServicename = @"yykuaibov_user_access_service";
+static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
 
 @implementation YYKUtil
 
@@ -127,5 +128,15 @@ static NSString *const kUserAccessServicename = @"yykuaibov_user_access_service"
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneUrl]];
         }
     }];
+}
+
++ (NSUInteger)launchSeq {
+    NSNumber *launchSeq = [[NSUserDefaults standardUserDefaults] objectForKey:kLaunchSeqKeyName];
+    return launchSeq.unsignedIntegerValue;
+}
+
++ (void)accumateLaunchSeq {
+    NSUInteger launchSeq = [self launchSeq];
+    [[NSUserDefaults standardUserDefaults] setObject:@(launchSeq+1) forKey:kLaunchSeqKeyName];
 }
 @end

@@ -27,6 +27,10 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic) NSString *startupPrompt;
 
 @property (nonatomic) NSString *contact;
+
+@property (nonatomic) NSInteger halfPayLaunchSeq;
+@property (nonatomic) NSInteger halfPayLaunchDelay;
+@property (nonatomic) NSString *halfPayLaunchNotification;
 //@property (nonatomic) NSString *spreadLeftImage;
 //@property (nonatomic) NSString *spreadLeftUrl;
 //@property (nonatomic) NSString *spreadRightImage;
