@@ -12,5 +12,6 @@
 
 + (instancetype)sharedManager;
 - (void)scheduleLocalNotification:(NSString *)notification withDelay:(NSTimeInterval)delay;
+- (void)cancelAllNotifications;
 
 @end

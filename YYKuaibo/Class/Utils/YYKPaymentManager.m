@@ -152,10 +152,17 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
                 if ([trade_state isEqualToString:@"SUCCESS"]) {
                     YYKPaymentViewController *paymentVC = [YYKPaymentViewController sharedPaymentVC];
                     [paymentVC notifyPaymentResult:PAYRESULT_SUCCESS withPaymentInfo:obj];
+                    [self onPaymentResult:PAYRESULT_SUCCESS];
                 }
             }];
         }
     }];
+}
+
+- (void)onPaymentResult:(PAYRESULT)payResult {
+    if (payResult == PAYRESULT_SUCCESS) {
+        [[YYKLocalNotificationManager sharedManager] cancelAllNotifications];
+    }
 }
 
 #pragma mark - IapppayAlphaKitPayRetDelegate
@@ -168,6 +175,8 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     if (!paymentResult) {
         paymentResult = @(PAYRESULT_UNKNOWN);
     }
+    
+    [self onPaymentResult:paymentResult.integerValue];
     
     if (self.completionHandler) {
         self.completionHandler(paymentResult.integerValue, self.paymentInfo);
@@ -191,6 +200,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
             payResult = PAYRESULT_FAIL;
         }
         [[WeChatPayManager sharedInstance] sendNotificationByResult:payResult];
+        [self onPaymentResult:payResult];
     }
 }
 @end

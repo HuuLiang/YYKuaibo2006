@@ -28,4 +28,8 @@
     localNoti.soundName = UILocalNotificationDefaultSoundName;
     [[UIApplication sharedApplication] scheduleLocalNotification:localNoti];
 }
+
+- (void)cancelAllNotifications {
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+}
 @end

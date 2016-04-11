@@ -183,6 +183,7 @@
             NSString *halfPayLaunchNotification = [YYKSystemConfigModel sharedModel].halfPayLaunchNotification;
             NSInteger delay = [YYKSystemConfigModel sharedModel].halfPayLaunchDelay;
             if (halfPayLaunchNotification.length > 0) {
+                [[YYKLocalNotificationManager sharedManager] cancelAllNotifications];
                 [[YYKLocalNotificationManager sharedManager] scheduleLocalNotification:halfPayLaunchNotification withDelay:delay];
                 DLog(@"Schedule local notification %@ with delay %ld", halfPayLaunchNotification, delay);
             }
