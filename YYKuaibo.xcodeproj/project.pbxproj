@@ -26,6 +26,8 @@
 		BC660B0F1C9724A300E04D23 /* IapppayAlphaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC660B0C1C9724A200E04D23 /* IapppayAlphaKit.framework */; };
 		BC660B101C9724A300E04D23 /* IapppayAlphaResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC660B0D1C9724A200E04D23 /* IapppayAlphaResource.bundle */; };
 		BC660B121C97275100E04D23 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BC660B111C97275100E04D23 /* libc++.tbd */; };
+		BCB1420B1CBBDA9C0017A2B9 /* YYKLaunchView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB1420A1CBBDA9C0017A2B9 /* YYKLaunchView.m */; };
+		BCB1420D1CBBDEFB0017A2B9 /* launch_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BCB1420C1CBBDEFB0017A2B9 /* launch_image.jpg */; };
 		BCE256031C966A8E00133F4F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE256021C966A8E00133F4F /* main.m */; };
 		BCE2560E1C966A8E00133F4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCE2560D1C966A8E00133F4F /* Assets.xcassets */; };
 		BCE256111C966A8E00133F4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCE2560F1C966A8E00133F4F /* LaunchScreen.storyboard */; };
@@ -139,6 +141,9 @@
 		BC660B0C1C9724A200E04D23 /* IapppayAlphaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IapppayAlphaKit.framework; sourceTree = "<group>"; };
 		BC660B0D1C9724A200E04D23 /* IapppayAlphaResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IapppayAlphaResource.bundle; sourceTree = "<group>"; };
 		BC660B111C97275100E04D23 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		BCB142091CBBDA9C0017A2B9 /* YYKLaunchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKLaunchView.h; sourceTree = "<group>"; };
+		BCB1420A1CBBDA9C0017A2B9 /* YYKLaunchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKLaunchView.m; sourceTree = "<group>"; };
+		BCB1420C1CBBDEFB0017A2B9 /* launch_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = launch_image.jpg; sourceTree = "<group>"; };
 		BCE255FE1C966A8E00133F4F /* YYKuaibo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YYKuaibo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCE256021C966A8E00133F4F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BCE2560D1C966A8E00133F4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -350,6 +355,7 @@
 		BC660B051C9720BB00E04D23 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BCB1420C1CBBDEFB0017A2B9 /* launch_image.jpg */,
 				BC51AC321CA1275F0073AF91 /* payment_header_placeholder.jpg */,
 			);
 			path = Resources;
@@ -511,6 +517,8 @@
 				BC61D15A1CB971CA002A858E /* YYKVideoPlayer.m */,
 				BCE2565E1C966C2600133F4F /* YYKPaymentPopView.h */,
 				BCE2565F1C966C2600133F4F /* YYKPaymentPopView.m */,
+				BCB142091CBBDA9C0017A2B9 /* YYKLaunchView.h */,
+				BCB1420A1CBBDA9C0017A2B9 /* YYKLaunchView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -805,6 +813,7 @@
 			files = (
 				BCE256111C966A8E00133F4F /* LaunchScreen.storyboard in Resources */,
 				BC660B101C9724A300E04D23 /* IapppayAlphaResource.bundle in Resources */,
+				BCB1420D1CBBDEFB0017A2B9 /* launch_image.jpg in Resources */,
 				BC51AC331CA1275F0073AF91 /* payment_header_placeholder.jpg in Resources */,
 				BCE2560E1C966A8E00133F4F /* Assets.xcassets in Resources */,
 				BCE257191C9689F500133F4F /* config.plist in Resources */,
@@ -909,6 +918,7 @@
 				BCE2575D1C96F4F800133F4F /* YYKInputTextViewController.m in Sources */,
 				BC51AC311CA0F7530073AF91 /* YYKVideoListModel.m in Sources */,
 				BC51AC391CA1316A0073AF91 /* YYKPaymentConfig.m in Sources */,
+				BCB1420B1CBBDA9C0017A2B9 /* YYKLaunchView.m in Sources */,
 				BCE257421C96ABD300133F4F /* YYKVideoCell.m in Sources */,
 				BCE257331C968D5100133F4F /* YYKHomeViewController.m in Sources */,
 				BCE257141C966DB400133F4F /* YYKUtil.m in Sources */,

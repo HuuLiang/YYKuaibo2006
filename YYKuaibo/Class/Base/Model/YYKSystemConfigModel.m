@@ -63,6 +63,8 @@
                     self.payAmount = config.value.doubleValue / 100.;
                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAY_IMG]) {
                     self.paymentImage = config.value;
+                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_HALF_PAY_IMG]) {
+                    self.halfPaymentImage = config.value;
                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAYMENT_TOP_IMAGE]) {
                     self.channelTopImage = config.value;
                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_STARTUP_INSTALL]) {
@@ -88,6 +90,8 @@
                     self.halfPayLaunchDelay = config.value.integerValue;
                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_HALF_PAY_NOTIFICATION]) {
                     self.halfPayLaunchNotification = config.value;
+                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_HALF_PAY_NOTI_REPEAT_TIMES]) {
+                    self.halfPayNotiRepeatTimes = config.value;
                 }
             }];
             
@@ -102,10 +106,17 @@
 }
 
 - (double)payAmount {
-    if (self.halfPayLaunchSeq >= 0 && [YYKUtil launchSeq] >= self.halfPayLaunchSeq) {
+    if ([self isHalfPay]) {
         return _payAmount / 2;
     } else {
         return _payAmount;
     }
+}
+
+- (BOOL)isHalfPay {
+    if (self.halfPayLaunchSeq >= 0 && [YYKUtil launchSeq] >= self.halfPayLaunchSeq) {
+        return YES;
+    }
+    return NO;
 }
 @end

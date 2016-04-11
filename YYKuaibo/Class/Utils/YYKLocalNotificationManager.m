@@ -32,4 +32,34 @@
 - (void)cancelAllNotifications {
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
+
+- (void)scheduleRepeatNotification:(NSString *)notification withTimes:(NSArray<NSString *> *)times {
+    if (notification.length == 0) {
+        return ;
+    }
+    
+    [times enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyyMMdd"];
+        
+        NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
+        dateString = [dateString stringByAppendingFormat:@" %@:00", obj];
+        
+        [dateFormatter setDateFormat:@"yyyyMMdd HH:mm:ss"];
+        NSDate *fireDate = [dateFormatter dateFromString:dateString];
+        if (fireDate) {
+            UILocalNotification *localNoti = [[UILocalNotification alloc] init];
+            localNoti.alertBody = notification;
+            localNoti.timeZone = [NSTimeZone defaultTimeZone];
+            localNoti.applicationIconBadgeNumber = 1;
+            localNoti.soundName = UILocalNotificationDefaultSoundName;
+            localNoti.repeatCalendar = [NSCalendar currentCalendar];
+            localNoti.repeatInterval = NSCalendarUnitDay;
+            localNoti.fireDate = fireDate;
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNoti];
+        }
+    }];
+    
+}
+
 @end
