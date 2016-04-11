@@ -19,16 +19,12 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _imageView = [[UIImageView alloc] init];
+        _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        _imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         _imageView.contentMode = UIViewContentModeScaleAspectFill;
         NSString *launchImagePath = [[NSBundle mainBundle] pathForResource:@"launch_image" ofType:@"jpg"];
         _imageView.image = [UIImage imageWithContentsOfFile:launchImagePath];
         [self addSubview:_imageView];
-        {
-            [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(self);
-            }];
-        }
     }
     return self;
 }
@@ -45,12 +41,17 @@
     
     self.frame = keyWindow.bounds;
     [keyWindow addSubview:self];
+//    {
+//        [self mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(keyWindow);
+//        }];
+//    }
     
-    [UIView animateWithDuration:4 delay:1 options:UIViewAnimationOptionCurveEaseInOut  animations:^{
-        _imageView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.25, 1.25);
+    [UIView animateWithDuration:2 delay:1 options:UIViewAnimationOptionCurveEaseIn  animations:^{
+        _imageView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 2, 2);
     } completion:nil];
     
-    [UIView animateWithDuration:2 delay:2 options:0 animations:^{
+    [UIView animateWithDuration:0.5 delay:2.5 options:UIViewAnimationOptionCurveLinear animations:^{
         self.alpha = 0;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
