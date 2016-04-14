@@ -15,7 +15,8 @@ typedef NS_ENUM(NSUInteger, YYKProgramType) {
     YYKProgramTypeVideo = 1,
     YYKProgramTypePicture = 2,
     YYKProgramTypeSpread = 3,
-    YYKProgramTypeBanner = 4
+    YYKProgramTypeBanner = 4,
+    YYKProgramTypeTrial = 5
 };
 
 @protocol YYKProgramUrl <NSObject>

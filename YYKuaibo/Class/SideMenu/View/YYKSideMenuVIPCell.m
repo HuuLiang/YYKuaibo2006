@@ -61,7 +61,7 @@
         }
         
         _promptLabel = [[UILabel alloc] init];
-        _promptLabel.textColor = [UIColor grayColor];
+        _promptLabel.textColor = [UIColor colorWithWhite:0.8 alpha:1];
         _promptLabel.text = @"成为会员，马上免费观看所有视频";
         _promptLabel.font = [UIFont systemFontOfSize:18.];
         [self addSubview:_promptLabel];

@@ -14,6 +14,9 @@
 - (void)YYK_addPullToRefreshWithHandler:(void (^)(void))handler {
     if (!self.header) {
         MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:handler];
+        refreshHeader.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+//        refreshHeader.lastUpdatedTimeLabel.textColor = [UIColor redColor];
+//        refreshHeader.stateLabel.textColor = [UIColor redColor];
 //        refreshHeader.lastUpdatedTimeLabel.hidden = YES;
         self.header = refreshHeader;
     }
@@ -31,6 +34,8 @@
 - (void)YYK_addPagingRefreshWithHandler:(void (^)(void))handler {
     if (!self.footer) {
         MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:handler];
+        refreshFooter.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+//        refreshFooter.stateLabel.textColor = [UIColor redColor];
         self.footer = refreshFooter;
     }
 }

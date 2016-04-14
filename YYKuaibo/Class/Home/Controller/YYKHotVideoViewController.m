@@ -120,6 +120,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
             
             cell.title = video.title;
             cell.imageURL = [NSURL URLWithString:video.coverImg];
+            cell.showPlayIcon = YES;
         }
         return cell;
     }
@@ -144,7 +145,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
         if ([video isKindOfClass:[YYKProgram class]] && ((YYKProgram *)video).type.unsignedIntegerValue == YYKProgramTypeSpread) {
             return CGSizeMake(fullWidth, fullWidth/5);
         } else {
-            return CGSizeMake(itemWidth, itemWidth * 1050./825. + [YYKVideoCell footerViewHeight]);
+            return CGSizeMake(itemWidth, itemWidth * 1050./825.);
         }
     }
     return CGSizeZero;

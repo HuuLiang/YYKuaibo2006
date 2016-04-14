@@ -25,6 +25,7 @@ static NSString *const kHistoryCellReusableIdentifier = @"HistoryCellReusableIde
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _layoutTableView = [[UITableView alloc] init];
+    _layoutTableView.backgroundColor = self.view.backgroundColor;
     _layoutTableView.delegate = self;
     _layoutTableView.dataSource = self;
     _layoutTableView.rowHeight = lround(kScreenHeight * 0.1);
@@ -71,6 +72,7 @@ static NSString *const kHistoryCellReusableIdentifier = @"HistoryCellReusableIde
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     YYKHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:kHistoryCellReusableIdentifier forIndexPath:indexPath];
+    cell.backgroundColor = tableView.backgroundColor;
     
     if (indexPath.row < self.historyVideos.count) {
         YYKVideo *video = self.historyVideos[indexPath.row];

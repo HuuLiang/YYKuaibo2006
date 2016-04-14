@@ -57,31 +57,35 @@
 }
 
 - (void)setupCommonStyles {
+    [[UINavigationBar appearance] setTranslucent:NO];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+//    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#12161d"]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.]}];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UISegmentedControl appearance] setTintColor:[UIColor colorWithHexString:@"#ff226f"]];
+    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}
+                                                   forState:UIControlStateNormal|UIControlStateSelected];
+    
     [UIViewController aspect_hookSelector:@selector(viewDidLoad)
                               withOptions:AspectPositionAfter
                                usingBlock:^(id<AspectInfo> aspectInfo){
                                    UIViewController *thisVC = [aspectInfo instance];
-                                   thisVC.navigationController.navigationBar.translucent = NO;
-                                   thisVC.navigationController.navigationBar.barTintColor = [UIColor colorWithWhite:0.95 alpha:1];
-                                   thisVC.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.]};
-                                   
-                                   thisVC.navigationController.navigationBar.tintColor = [UIColor blackColor];
                                    thisVC.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"返回" style:UIBarButtonItemStylePlain handler:nil];
                                } error:nil];
     
-    //    [UINavigationController aspect_hookSelector:@selector(preferredStatusBarStyle)
-    //                                    withOptions:AspectPositionInstead
-    //                                     usingBlock:^(id<AspectInfo> aspectInfo){
-    //                                         UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
-    //                                         [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
-    //                                     } error:nil];
-    //
-    //    [UIViewController aspect_hookSelector:@selector(preferredStatusBarStyle)
-    //                              withOptions:AspectPositionInstead
-    //                               usingBlock:^(id<AspectInfo> aspectInfo){
-    //                                   UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
-    //                                   [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
-    //                               } error:nil];
+    [UINavigationController aspect_hookSelector:@selector(preferredStatusBarStyle)
+                                    withOptions:AspectPositionInstead
+                                     usingBlock:^(id<AspectInfo> aspectInfo){
+                                         UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
+                                         [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
+                                     } error:nil];
+
+    [UIViewController aspect_hookSelector:@selector(preferredStatusBarStyle)
+                              withOptions:AspectPositionInstead
+                               usingBlock:^(id<AspectInfo> aspectInfo){
+                                   UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
+                                   [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
+                               } error:nil];
     
     [UINavigationController aspect_hookSelector:@selector(shouldAutorotate)
                                     withOptions:AspectPositionInstead

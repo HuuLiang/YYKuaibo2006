@@ -26,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor colorWithWhite:0.96 alpha:1];
+    self.view.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
 }
 
@@ -37,7 +37,9 @@
 }
 
 - (void)switchToPlayProgram:(YYKProgram *)program {
-    if (![YYKUtil isPaid] && program.spec.unsignedIntegerValue != YYKVideoSpecFree) {
+    if (program.type.unsignedIntegerValue == YYKProgramTypeSpread) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:program.videoUrl]];
+    } else if (![YYKUtil isPaid] && program.spec.unsignedIntegerValue != YYKVideoSpecFree) {
         [self payForProgram:program];
     } else if (program.type.unsignedIntegerValue == YYKProgramTypeVideo) {
         if (program.spec.unsignedIntegerValue == YYKVideoSpecFree && ![YYKUtil isPaid]) {

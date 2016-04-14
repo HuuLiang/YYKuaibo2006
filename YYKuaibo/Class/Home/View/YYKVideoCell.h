@@ -14,6 +14,6 @@
 @property (nonatomic) NSString *title;
 @property (nonatomic) BOOL showPlayIcon;
 
-+ (CGFloat)footerViewHeight;
+//+ (CGFloat)heightRelativeToWidth:(CGFloat)width;
 
 @end

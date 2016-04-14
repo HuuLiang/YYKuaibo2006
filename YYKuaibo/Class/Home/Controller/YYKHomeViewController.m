@@ -46,7 +46,6 @@ DefineLazyPropertyInitialization(NSMutableArray, viewControllers)
     for (NSUInteger i = 0; i < segmentItems.count; ++i) {
         [_segmentedControl setWidth:66 forSegmentAtIndex:i];
     }
-    _segmentedControl.tintColor = [UIColor colorWithHexString:@"#fa1e67"];
     _segmentedControl.selectedSegmentIndex = 0;
     [_segmentedControl addObserver:self
                         forKeyPath:NSStringFromSelector(@selector(selectedSegmentIndex))

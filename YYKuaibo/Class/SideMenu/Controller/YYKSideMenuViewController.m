@@ -145,10 +145,11 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
         cell = [tableView dequeueReusableCellWithIdentifier:kSideMenuNormalCellReusableIdentifier];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kSideMenuNormalCellReusableIdentifier];
+            cell.textLabel.textColor = [UIColor colorWithWhite:0.8 alpha:1];
         }
         cell.accessoryType = [YYKUtil isPaid] && indexPath.section == YYKSideMenuSectionPhone ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
         cell.detailTextLabel.text = nil;
-        
+    
         if (indexPath.section == YYKSideMenuSectionRecommended) {
             cell.imageView.image = [UIImage imageNamed:@"side_menu_recommended_icon"];
             cell.textLabel.text = @"精品推荐";
@@ -177,6 +178,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
             
         }
     }
+    cell.backgroundColor = [UIColor blackColor];
     return cell;
 }
 
@@ -201,6 +203,16 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
         return 0;
     }
     return 10;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == YYKSideMenuSectionVIP) {
+        return nil;
+    }
+    
+    UIView *headerView = [[UIView alloc] init];
+    headerView.backgroundColor = self.view.backgroundColor;
+    return headerView;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

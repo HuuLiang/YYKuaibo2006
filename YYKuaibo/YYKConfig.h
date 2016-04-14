@@ -13,13 +13,14 @@
 
 #define YYK_CHANNEL_NO           [YYKConfiguration sharedConfig].channelNo
 #define YYK_REST_APP_ID          @"QUBA_2006"
-#define YYK_REST_PV              @110
+#define YYK_REST_PV              @112
 #define YYK_PACKAGE_CERTIFICATE  @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
 #define YYK_PAYMENT_RESERVE_DATA [NSString stringWithFormat:@"%@$%@", YYK_REST_APP_ID, YYK_CHANNEL_NO]
 
 #define YYK_BASE_URL             @"http://iv.ihuiyx.com"//@"http://120.24.252.114:8093" //
 #define YYK_UMENG_APP_ID         @"56e653d767e58e0eb7002156"
 
+#define YYK_HOME_VIDEO_URL              @"/iosvideo/homePage.htm"
 #define YYK_VIDEO_LIB_URL               @"/iosvideo/hotVideo.htm"
 #define YYK_HOT_VIDEO_URL               @"/iosvideo/hotFilm.htm"
 #define YYK_APP_SPREAD_LIST_URL         @"/iosvideo/appSpreadList.htm"
@@ -36,6 +37,7 @@
 #define YYK_STANDBY_PAYMENT_CONFIG_URL  @"http://appcdn.mqu8.com/static/iosvideo/payConfig_%@.json"
 
 #define YYK_STANDBY_BASE_URL                @"http://appcdn.mqu8.com"
+#define YYK_STANDBY_HOME_VIDEO_URL          @""
 #define YYK_STANDBY_VIDEO_LIB_URL           @"/static/iosvideo/hotVideo.json"
 #define YYK_STANDBY_HOT_VIDEO_URL           @"/static/iosvideo/hotFilm.json"
 #define YYK_STANDBY_APP_SPREAD_LIST_URL     @"/static/iosvideo/appSpreadList.json"
