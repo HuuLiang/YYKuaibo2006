@@ -51,6 +51,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
     _layoutTableView.backgroundColor = self.view.backgroundColor;
     _layoutTableView.delegate = self;
     _layoutTableView.dataSource = self;
+    _layoutTableView.separatorColor = [UIColor grayColor];
     _layoutTableView.hasRowSeparator = YES;
     _layoutTableView.hasSectionBorder = YES;
 //    [_layoutTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kSideMenuNormalCellReusableIdentifier];
@@ -145,7 +146,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
         cell = [tableView dequeueReusableCellWithIdentifier:kSideMenuNormalCellReusableIdentifier];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kSideMenuNormalCellReusableIdentifier];
-            cell.textLabel.textColor = [UIColor colorWithWhite:0.8 alpha:1];
+            cell.textLabel.textColor = [UIColor colorWithWhite:0.9 alpha:1];
         }
         cell.accessoryType = [YYKUtil isPaid] && indexPath.section == YYKSideMenuSectionPhone ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
         cell.detailTextLabel.text = nil;
@@ -178,7 +179,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
             
         }
     }
-    cell.backgroundColor = [UIColor blackColor];
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 

@@ -57,7 +57,6 @@
 }
 
 - (void)setupCommonStyles {
-    [[UINavigationBar appearance] setTranslucent:NO];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
 //    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#12161d"]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.]}];
@@ -70,6 +69,7 @@
                               withOptions:AspectPositionAfter
                                usingBlock:^(id<AspectInfo> aspectInfo){
                                    UIViewController *thisVC = [aspectInfo instance];
+                                   thisVC.navigationController.navigationBar.translucent = NO;
                                    thisVC.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"返回" style:UIBarButtonItemStylePlain handler:nil];
                                } error:nil];
     

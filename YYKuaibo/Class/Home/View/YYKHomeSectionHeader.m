@@ -12,6 +12,7 @@
 {
     UILabel *_titleLabel;
     UILabel *_subtitleLabel;
+    UIImageView *_iconImageView;
 }
 @end
 
@@ -25,26 +26,55 @@
         
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = [UIColor whiteColor];
-        _titleLabel.font = [UIFont systemFontOfSize:16];
         [_contentView addSubview:_titleLabel];
         
         _subtitleLabel = [[UILabel alloc] init];
         _subtitleLabel.textColor = _titleLabel.textColor;
-        _subtitleLabel.font = _titleLabel.font;
         [_contentView addSubview:_subtitleLabel];
         
-        [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_contentView).offset(15);
-            make.centerY.equalTo(_contentView);
-            make.right.equalTo(_subtitleLabel.mas_left).offset(-5).priority(MASLayoutPriorityRequired);
-        }];
-        
-        [_subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(_contentView).offset(-15);
-            make.centerY.equalTo(_contentView);
-        }];
+        _iconImageView = [[UIImageView alloc] init];
+        [_contentView addSubview:_iconImageView];
     }
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    _contentView.frame = CGRectMake(CGRectGetMinX(self.bounds)-_contentSizeOffset.horizontal/2,
+                                    CGRectGetMinY(self.bounds)-_contentSizeOffset.vertical/2,
+                                    CGRectGetWidth(self.bounds)+_contentSizeOffset.horizontal,
+                                    CGRectGetHeight(self.bounds)+_contentSizeOffset.vertical);
+    
+    _subtitleLabel.font = [UIFont systemFontOfSize:CGRectGetHeight(_contentView.frame)*0.4];
+    _titleLabel.font = _subtitleLabel.font;
+    
+    const CGSize subtitleSize = [_subtitleLabel.text sizeWithAttributes:@{NSFontAttributeName:_subtitleLabel.font}];
+    const CGSize titleSize = [_titleLabel.text sizeWithAttributes:@{NSFontAttributeName:_titleLabel.font}];
+    const CGFloat maxSubtitleWidth = CGRectGetWidth(_contentView.bounds) * 0.5;
+    const CGSize imageSize = _iconImageView.image.size;
+    const CGFloat imageHeight = titleSize.height;
+    const CGFloat imageWidth = imageSize.height == 0 ? 0 : imageHeight * imageSize.width / imageSize.height;
+    const CGFloat imageInterspacing = 5;
+    
+    const CGFloat subtitleWidth = MIN(subtitleSize.width, maxSubtitleWidth);
+    const CGFloat subtitleHeight = subtitleSize.height;
+    const CGFloat subtitleX = CGRectGetMaxX(_contentView.bounds) - subtitleWidth - 5;
+    const CGFloat subtitleY = (CGRectGetHeight(_contentView.bounds) - subtitleHeight)/2;
+    _subtitleLabel.frame = CGRectMake(subtitleX, subtitleY, subtitleWidth, subtitleHeight);
+    
+    
+    const CGFloat titleX = CGRectGetMinX(_contentView.bounds)+5;
+    const CGFloat maxTitleWidth = CGRectGetMinX(_subtitleLabel.frame) - titleX - imageWidth - imageInterspacing * 2;
+    const CGFloat titleWidth = MIN(maxTitleWidth, titleSize.width);
+    _titleLabel.frame = CGRectMake(titleX,
+                                   (CGRectGetHeight(_contentView.bounds)-titleSize.height)/2,
+                                   titleWidth, titleSize.height);
+    
+    _iconImageView.frame = CGRectMake(CGRectGetMaxX(_titleLabel.frame)+5,
+                                      (CGRectGetHeight(_contentView.bounds)-imageHeight)/2,
+                                      imageWidth, imageHeight);
+    
 }
 
 - (void)setTitle:(NSString *)title {
@@ -57,15 +87,13 @@
     _subtitleLabel.text = subtitle;
 }
 
-- (void)setContentSizeOffset:(UIOffset)contentSizeOffset {
-    BOOL update = contentSizeOffset.horizontal != _contentSizeOffset.horizontal || contentSizeOffset.vertical != _contentSizeOffset.vertical;
-    _contentSizeOffset = contentSizeOffset;
+- (void)setIconURL:(NSURL *)iconURL {
+    _iconURL = iconURL;
     
-    if (update) {
-        [_contentView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(self);
-            make.size.equalTo(self).sizeOffset(CGSizeMake(contentSizeOffset.horizontal, contentSizeOffset.vertical));
-        }];
-    }
+    @weakify(self);
+    [_iconImageView sd_setImageWithURL:iconURL completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        @strongify(self);
+        [self setNeedsLayout];
+    }];
 }
 @end

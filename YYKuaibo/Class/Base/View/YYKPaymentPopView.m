@@ -127,6 +127,16 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
 }
 
 - (void)setShowPrice:(NSNumber *)showPrice {
+    _showPrice = showPrice;
+    [self priceLabelShowPrice:showPrice];
+}
+
+- (void)priceLabelShowPrice:(NSNumber *)showPrice {
+    if (showPrice == nil) {
+        _priceLabel.text = nil;
+        return ;
+    }
+    
     double price = showPrice.doubleValue;
     BOOL showInteger = (NSUInteger)(price * 100) % 100 == 0;
     _priceLabel.text = showInteger ? [NSString stringWithFormat:@"%ld", (unsigned long)price] : [NSString stringWithFormat:@"%.2f", price];
@@ -158,6 +168,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
             _priceLabel.textColor = [UIColor redColor];
             _priceLabel.font = [UIFont boldSystemFontOfSize:18.];
             _priceLabel.textAlignment = NSTextAlignmentCenter;
+            [self priceLabelShowPrice:_showPrice];
             [_headerImageView addSubview:_priceLabel];
             {
                 [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {

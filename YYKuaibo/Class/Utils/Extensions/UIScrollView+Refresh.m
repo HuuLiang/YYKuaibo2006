@@ -11,12 +11,16 @@
 
 @implementation UIScrollView (Refresh)
 
+- (UIColor *)YYK_refreshTextColor {
+    return [UIColor colorWithWhite:0.8 alpha:1];
+}
+
 - (void)YYK_addPullToRefreshWithHandler:(void (^)(void))handler {
     if (!self.header) {
         MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:handler];
         refreshHeader.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-//        refreshHeader.lastUpdatedTimeLabel.textColor = [UIColor redColor];
-//        refreshHeader.stateLabel.textColor = [UIColor redColor];
+        refreshHeader.lastUpdatedTimeLabel.textColor = [self YYK_refreshTextColor];
+        refreshHeader.stateLabel.textColor = [self YYK_refreshTextColor];
 //        refreshHeader.lastUpdatedTimeLabel.hidden = YES;
         self.header = refreshHeader;
     }
@@ -35,7 +39,7 @@
     if (!self.footer) {
         MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:handler];
         refreshFooter.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-//        refreshFooter.stateLabel.textColor = [UIColor redColor];
+        refreshFooter.stateLabel.textColor = [self YYK_refreshTextColor];
         self.footer = refreshFooter;
     }
 }

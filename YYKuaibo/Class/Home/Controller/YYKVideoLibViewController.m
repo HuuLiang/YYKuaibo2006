@@ -199,12 +199,13 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     YYKHomeSectionHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionHeaderReusableIdentifier forIndexPath:indexPath];
     headerView.contentView.backgroundColor = [UIColor colorWithHexString:@"#292a39"];
     headerView.contentSizeOffset = UIOffsetMake(-edgeInsets.left-edgeInsets.right, 0);
-    
+
     NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
     if (programsIndex < self.programModel.fetchedVideoAndAdProgramList.count) {
         YYKPrograms *programs = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
         headerView.title = programs.name;
         headerView.subtitle = programs.columnDesc;
+        headerView.iconURL = [NSURL URLWithString:programs.columnImg];
     }
     return headerView;
 }
@@ -243,9 +244,9 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     if (section == YYKHomeSectionBanner) {
         return UIEdgeInsetsZero;
     } else if (section == YYKHomeSectionTrial) {
-        return UIEdgeInsetsMake(5, 5, 5, 5);
+        return UIEdgeInsetsMake(5, 5, 10, 5);
     } else {
-        return UIEdgeInsetsMake(0, 5, 5, 5);
+        return UIEdgeInsetsMake(0, 5, 10, 5);
     }
 }
 

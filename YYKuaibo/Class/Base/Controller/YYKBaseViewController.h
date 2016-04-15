@@ -13,6 +13,8 @@
 
 @interface YYKBaseViewController : UIViewController
 
+@property (nonatomic,retain) UIImage *backgroundImage;
+
 - (void)switchToPlayProgram:(YYKProgram *)program;
 - (void)playVideo:(YYKVideo *)video;
 //- (void)playVideo:(YYKVideo *)video withCloseAction:(YYKAction)closeAction;

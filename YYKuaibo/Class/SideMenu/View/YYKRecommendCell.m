@@ -22,7 +22,6 @@
     if (self) {
         self.layer.cornerRadius = 5;
         self.layer.masksToBounds = YES;
-        self.backgroundColor = [UIColor whiteColor];
         
         _thumbImageView = [[UIImageView alloc] init];
         [self addSubview:_thumbImageView];
@@ -34,7 +33,8 @@
         }
         
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:14.];
+        _titleLabel.font = [UIFont systemFontOfSize:16.];
+        _titleLabel.textColor = [UIColor whiteColor];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_titleLabel];
         {

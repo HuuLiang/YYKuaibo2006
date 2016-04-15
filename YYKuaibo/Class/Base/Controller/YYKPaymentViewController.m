@@ -131,12 +131,16 @@
 - (void)fetchPayAmount {
     @weakify(self);
     YYKSystemConfigModel *systemConfigModel = [YYKSystemConfigModel sharedModel];
-    [systemConfigModel fetchSystemConfigWithCompletionHandler:^(BOOL success) {
-        @strongify(self);
-        if (success) {
-            self.payAmount = @(systemConfigModel.payAmount);
-        }
-    }];
+    if (systemConfigModel.loaded) {
+        self.payAmount = @(systemConfigModel.payAmount);
+    } else {
+        [systemConfigModel fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+            @strongify(self);
+            if (success) {
+                self.payAmount = @(systemConfigModel.payAmount);
+            }
+        }];
+    }
 }
 
 - (void)setPayAmount:(NSNumber *)payAmount {

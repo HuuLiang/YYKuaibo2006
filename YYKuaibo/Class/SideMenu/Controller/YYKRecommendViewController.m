@@ -168,7 +168,8 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YYKRecommendCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kRecommendCellReusableIdentifier forIndexPath:indexPath];
-
+    cell.backgroundColor = collectionView.backgroundColor;
+    
     if (indexPath.item < self.appSpreadModel.fetchedSpreads.count) {
         YYKProgram *appSpread = self.appSpreadModel.fetchedSpreads[indexPath.item];
         cell.title = appSpread.title;
