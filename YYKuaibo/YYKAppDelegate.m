@@ -111,7 +111,6 @@
 #ifdef DEBUG
     [MobClick setLogEnabled:YES];
 #endif
-    [MobClick setCrashReportEnabled:NO];
     NSString *bundleVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
     if (bundleVersion) {
         [MobClick setAppVersion:bundleVersion];
