@@ -7,6 +7,7 @@
 //
 
 #import "YYKLocalNotificationManager.h"
+#import "YYKSystemConfigModel.h"
 
 @implementation YYKLocalNotificationManager
 
@@ -17,6 +18,22 @@
         _sharedManager = [[self alloc] init];
     });
     return _sharedManager;
+}
+
+- (void)scheduleLocalNotificationInEnteringBackground {
+    [self cancelAllNotifications];
+    
+    NSInteger notiLaunchSeq = [YYKSystemConfigModel sharedModel].notificationLaunchSeq;
+    if (notiLaunchSeq >= 0 && [YYKUtil launchSeq] >= notiLaunchSeq) {
+        NSString *notification = [YYKSystemConfigModel sharedModel].notificationText;
+        NSInteger delay = [YYKSystemConfigModel sharedModel].notificationBackgroundDelay;
+        if (notification.length > 0 && delay >= 0) {
+            [self scheduleLocalNotification:notification withDelay:delay];
+            DLog(@"Schedule local notification %@ with delay %ld", notification, delay);
+        }
+        
+        [self scheduleRepeatNotification];
+    }
 }
 
 - (void)scheduleLocalNotification:(NSString *)notification withDelay:(NSTimeInterval)delay {
@@ -31,6 +48,17 @@
 
 - (void)cancelAllNotifications {
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    DLog(@"Cancel all notifications!");
+}
+
+- (void)scheduleRepeatNotification {
+    NSString *notification = [YYKSystemConfigModel sharedModel].notificationText;
+    NSString *repeatTimeString = [YYKSystemConfigModel sharedModel].notificationRepeatTimes;
+    NSArray<NSString *> *repeatTimeStrings = [repeatTimeString componentsSeparatedByString:@";"];
+    if (notification.length > 0 && repeatTimeStrings.count > 0) {
+        [self scheduleRepeatNotification:notification withTimes:repeatTimeStrings];
+        DLog(@"Schedule repeated notification: %@ with repeated times: %@", notification, repeatTimeString);
+    }
 }
 
 - (void)scheduleRepeatNotification:(NSString *)notification withTimes:(NSArray<NSString *> *)times {
@@ -38,6 +66,7 @@
         return ;
     }
     
+    _repeatTimes = times;
     [times enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyyMMdd"];
@@ -59,7 +88,6 @@
             [[UIApplication sharedApplication] scheduleLocalNotification:localNoti];
         }
     }];
-    
 }
 
 @end

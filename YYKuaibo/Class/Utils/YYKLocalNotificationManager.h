@@ -10,8 +10,13 @@
 
 @interface YYKLocalNotificationManager : NSObject
 
+@property (nonatomic,readonly) NSArray<NSString *> *repeatTimes;
+
 + (instancetype)sharedManager;
+- (void)scheduleLocalNotificationInEnteringBackground;
 - (void)scheduleLocalNotification:(NSString *)notification withDelay:(NSTimeInterval)delay;
+
+- (void)scheduleRepeatNotification;
 - (void)scheduleRepeatNotification:(NSString *)notification withTimes:(NSArray<NSString *> *)times;
 - (void)cancelAllNotifications;
 

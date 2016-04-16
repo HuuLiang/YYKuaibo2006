@@ -61,7 +61,7 @@
     };
     
     _popView = [[YYKPaymentPopView alloc] init];
-    _popView.headerImageURL = [NSURL URLWithString:[YYKSystemConfigModel sharedModel].isHalfPay ? [YYKSystemConfigModel sharedModel].halfPaymentImage : [YYKSystemConfigModel sharedModel].paymentImage];
+    _popView.headerImageURL = [NSURL URLWithString:[YYKSystemConfigModel sharedModel].hasDiscount ? [YYKSystemConfigModel sharedModel].discountImage : [YYKSystemConfigModel sharedModel].paymentImage];
     _popView.footerImage = [UIImage imageNamed:@"payment_footer"];
     
     

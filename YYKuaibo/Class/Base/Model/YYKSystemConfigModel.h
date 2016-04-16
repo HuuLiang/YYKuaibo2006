@@ -19,7 +19,7 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 
 @property (nonatomic) double payAmount;
 @property (nonatomic) NSString *paymentImage;
-@property (nonatomic) NSString *halfPaymentImage;
+@property (nonatomic) NSString *discountImage;
 @property (nonatomic) NSString *channelTopImage;
 @property (nonatomic) NSString *spreadTopImage;
 @property (nonatomic) NSString *spreadURL;
@@ -29,17 +29,20 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 
 @property (nonatomic) NSString *contact;
 
-@property (nonatomic) NSInteger halfPayLaunchSeq;
-@property (nonatomic) NSInteger halfPayLaunchDelay;
-@property (nonatomic) NSString *halfPayLaunchNotification;
-@property (nonatomic) NSString *halfPayNotiRepeatTimes;
+@property (nonatomic) CGFloat discountAmount;
+@property (nonatomic) NSInteger discountLaunchSeq;
+@property (nonatomic) NSInteger notificationLaunchSeq;
+@property (nonatomic) NSInteger notificationBackgroundDelay;
+@property (nonatomic) NSString *notificationText;
+@property (nonatomic) NSString *notificationRepeatTimes;
+
 //@property (nonatomic) NSString *spreadLeftImage;
 //@property (nonatomic) NSString *spreadLeftUrl;
 //@property (nonatomic) NSString *spreadRightImage;
 //@property (nonatomic) NSString *spreadRightUrl;
 
 @property (nonatomic,readonly) BOOL loaded;
-@property (nonatomic,readonly) BOOL isHalfPay;
+@property (nonatomic,readonly) BOOL hasDiscount;
 
 + (instancetype)sharedModel;
 

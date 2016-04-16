@@ -157,14 +157,6 @@
             return ;
         }
         
-        NSInteger halfPayLaunchSeq = [YYKSystemConfigModel sharedModel].halfPayLaunchSeq;
-        if (halfPayLaunchSeq >= 0 && [YYKUtil launchSeq] == halfPayLaunchSeq) {
-            NSString *halfPayLaunchNotification = [YYKSystemConfigModel sharedModel].halfPayLaunchNotification;
-            NSString *repeatTimeString = [YYKSystemConfigModel sharedModel].halfPayNotiRepeatTimes;
-            NSArray<NSString *> *repeatTimeStrings = [repeatTimeString componentsSeparatedByString:@";"];
-            [[YYKLocalNotificationManager sharedManager] scheduleRepeatNotification:halfPayLaunchNotification withTimes:repeatTimeStrings];
-        }
-        
         if ([YYKSystemConfigModel sharedModel].startupInstall.length == 0
             || [YYKSystemConfigModel sharedModel].startupPrompt.length == 0) {
             return ;
@@ -194,15 +186,7 @@
     }];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSInteger halfPayLaunchSeq = [YYKSystemConfigModel sharedModel].halfPayLaunchSeq;
-        if (halfPayLaunchSeq >= 0 && [YYKUtil launchSeq] >= halfPayLaunchSeq) {
-            NSString *halfPayLaunchNotification = [YYKSystemConfigModel sharedModel].halfPayLaunchNotification;
-            NSInteger delay = [YYKSystemConfigModel sharedModel].halfPayLaunchDelay;
-            if (halfPayLaunchNotification.length > 0 && delay >= 0) {
-                [[YYKLocalNotificationManager sharedManager] scheduleLocalNotification:halfPayLaunchNotification withDelay:delay];
-                DLog(@"Schedule local notification %@ with delay %ld", halfPayLaunchNotification, delay);
-            }
-        }
+        [[YYKLocalNotificationManager sharedManager] scheduleLocalNotificationInEnteringBackground];
     });
 }
 

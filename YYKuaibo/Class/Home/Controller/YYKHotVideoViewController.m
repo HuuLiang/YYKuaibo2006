@@ -120,7 +120,6 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
             
             cell.title = video.title;
             cell.imageURL = [NSURL URLWithString:video.coverImg];
-            cell.showPlayIcon = YES;
         }
         return cell;
     }
