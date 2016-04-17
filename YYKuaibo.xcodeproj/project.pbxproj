@@ -1124,9 +1124,9 @@
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/Umeng",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yykuaibo2016cp.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cqkuaibo.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "996b37b4-21b8-4e31-b862-ae4ea53eba79";
+				PROVISIONING_PROFILE = "4acc7ffc-3c52-475d-9479-4c1663aca20f";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1152,9 +1152,9 @@
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/Umeng",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yykuaibo2016cp.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cqkuaibo.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "996b37b4-21b8-4e31-b862-ae4ea53eba79";
+				PROVISIONING_PROFILE = "4acc7ffc-3c52-475d-9479-4c1663aca20f";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
