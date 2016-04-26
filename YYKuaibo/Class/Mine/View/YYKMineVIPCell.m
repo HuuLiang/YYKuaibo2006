@@ -11,7 +11,7 @@
 @interface YYKMineVIPCell ()
 {
     UIImageView *_vipImageView;
-    UILabel *_promptLabel;
+//    UILabel *_promptLabel;
     UIButton *_memberButton;
 }
 @end
@@ -33,17 +33,17 @@
             }];
         }
         
-        _promptLabel = [[UILabel alloc] init];
-        _promptLabel.textColor = [UIColor colorWithWhite:0.8 alpha:1];
-        _promptLabel.text = @"成为会员，马上免费观看所有视频";
-        _promptLabel.font = [UIFont systemFontOfSize:18.];
-        [self addSubview:_promptLabel];
-        {
-            [_promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self);
-                make.top.equalTo(_vipImageView.mas_bottom).offset(10);
-            }];
-        }
+//        _promptLabel = [[UILabel alloc] init];
+//        _promptLabel.textColor = [UIColor colorWithWhite:0.8 alpha:1];
+//        _promptLabel.text = @"成为会员，马上免费观看所有视频";
+//        _promptLabel.font = [UIFont systemFontOfSize:18.];
+//        [self addSubview:_promptLabel];
+//        {
+//            [_promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.centerX.equalTo(self);
+//                make.top.equalTo(_vipImageView.mas_bottom).offset(10);
+//            }];
+//        }
         
         _memberButton = [[UIButton alloc] init];
         _memberButton.titleLabel.font = [UIFont systemFontOfSize:18.];
@@ -61,7 +61,7 @@
         {
             [_memberButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self);
-                make.top.equalTo(_promptLabel.mas_bottom).offset(10);
+                make.top.equalTo(_vipImageView.mas_bottom).offset(15);
                 make.width.equalTo(self).multipliedBy(0.4);
                 make.height.mas_equalTo(44);
             }];
@@ -70,4 +70,13 @@
     return self;
 }
 
+- (void)setVipImage:(UIImage *)vipImage {
+    _vipImage = vipImage;
+    _vipImageView.image = vipImage;
+}
+
+- (void)setMemberTitle:(NSString *)memberTitle {
+    _memberTitle = memberTitle;
+    [_memberButton setTitle:memberTitle forState:UIControlStateNormal];
+}
 @end

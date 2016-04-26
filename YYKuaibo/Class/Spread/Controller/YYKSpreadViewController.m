@@ -54,7 +54,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
         [_headerImageView bk_whenTapped:^{
             @strongify(self);
             if (![YYKUtil isVIP]) {
-                [self payForProgram:nil];
+                [self payForPayPointType:YYKPayPointTypeVIP];
             };
         }];
         [self.view addSubview:_headerImageView];
@@ -72,7 +72,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
     layout.sectionInset = UIEdgeInsetsMake(layout.minimumInteritemSpacing, layout.minimumInteritemSpacing, layout.minimumInteritemSpacing, layout.minimumInteritemSpacing);
     
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-    _layoutCollectionView.backgroundColor = self.view.backgroundColor;
+    _layoutCollectionView.backgroundColor = [UIColor clearColor];
     _layoutCollectionView.delegate = self;
     _layoutCollectionView.dataSource = self;
     [_layoutCollectionView registerClass:[YYKSpreadCell class] forCellWithReuseIdentifier:kSpreadCellReusableIdentifier];
@@ -122,9 +122,9 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
                  }
                  
                  if (image) {
-                     double showPrice = systemConfigModel.payAmount;
-                     BOOL showInteger = (NSUInteger)(showPrice * 100) % 100 == 0;
-                     self->_priceLabel.text = showInteger ? [NSString stringWithFormat:@"%ld", (unsigned long)showPrice] : [NSString stringWithFormat:@"%.2f", showPrice];
+                     NSUInteger showPrice = systemConfigModel.payAmount;
+                     BOOL showInteger = showPrice % 100 == 0;
+                     self->_priceLabel.text = showInteger ? [NSString stringWithFormat:@"%ld", showPrice/100] : [NSString stringWithFormat:@"%.2f", showPrice/100.];
                  } else {
                      self->_priceLabel.text = nil;
                  }

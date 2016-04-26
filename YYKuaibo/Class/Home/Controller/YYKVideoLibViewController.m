@@ -46,7 +46,7 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     _bannerView.autoScrollTimeInterval = 3;
     _bannerView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
     _bannerView.delegate = self;
-    _bannerView.backgroundColor = [UIColor whiteColor];
+    _bannerView.backgroundColor = [UIColor clearColor];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumInteritemSpacing = kDefaultCollectionViewInteritemSpace;

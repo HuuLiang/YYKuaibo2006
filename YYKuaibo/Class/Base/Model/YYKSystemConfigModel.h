@@ -9,6 +9,8 @@
 #import "YYKEncryptedURLRequest.h"
 #import "YYKSystemConfig.h"
 
+@class YYKProgram;
+
 @interface YYKSystemConfigResponse : YYKURLResponse
 @property (nonatomic,retain) NSArray<YYKSystemConfig> *confis;
 @end
@@ -17,8 +19,10 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 
 @interface YYKSystemConfigModel : YYKEncryptedURLRequest
 
-@property (nonatomic) double payAmount;
+@property (nonatomic) NSUInteger payAmount;
+@property (nonatomic) NSUInteger svipPayAmount;
 @property (nonatomic) NSString *paymentImage;
+@property (nonatomic) NSString *svipPaymentImage;
 @property (nonatomic) NSString *discountImage;
 @property (nonatomic) NSString *channelTopImage;
 @property (nonatomic) NSString *spreadTopImage;
@@ -28,6 +32,7 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic) NSString *startupPrompt;
 
 @property (nonatomic) NSString *contact;
+@property (nonatomic) NSString *contactTime;
 
 @property (nonatomic) CGFloat discountAmount;
 @property (nonatomic) NSInteger discountLaunchSeq;
@@ -47,5 +52,7 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 + (instancetype)sharedModel;
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(YYKFetchSystemConfigCompletionHandler)handler;
+- (NSUInteger)paymentPriceWithProgram:(YYKProgram *)program;
+- (NSString *)paymentImageWithProgram:(YYKProgram *)program;
 
 @end

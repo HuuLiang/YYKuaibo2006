@@ -10,6 +10,7 @@
 #import "YYKCardSlider.h"
 #import "YYKVideos.h"
 #import "YYKVideoListModel.h"
+#import "YYKPaymentInfo.h"
 
 @interface YYKVIPViewController () <YYKCardSliderDelegate,YYKCardSliderDataSource>
 {
@@ -37,7 +38,15 @@ DefineLazyPropertyInitialization(YYKVideoListModel, videoModel)
         [self loadVideos];
     }];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
+    
     [self loadVideos];
+}
+
+- (void)onPaidNotification:(NSNotification *)notification {
+    if ([YYKUtil isSVIP]) {
+        [_contentView reloadData];
+    }
 }
 
 - (void)loadVideos {
@@ -76,7 +85,8 @@ DefineLazyPropertyInitialization(YYKVideoListModel, videoModel)
     if (index < self.videoModel.fetchedVideos.programList.count) {
         YYKVideo *video = self.videoModel.fetchedVideos.programList[index];
         card.imageURL = [NSURL URLWithString:video.coverImg];
-        card.title = [NSString stringWithFormat:@"%ld", (unsigned long)index];
+        card.title = video.title;
+        card.subtitle = video.specialDesc;
         card.lightedDiamond = [YYKUtil isSVIP];
     }
     

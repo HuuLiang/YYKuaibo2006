@@ -7,6 +7,7 @@
 //
 
 #import "YYKSystemConfigModel.h"
+#import "YYKProgram.h"
 
 @implementation YYKSystemConfigResponse
 
@@ -62,9 +63,13 @@
                 YYKSystemConfig *config = obj;
                 
                 if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAY_AMOUNT]) {
-                    self.payAmount = config.value.doubleValue / 100.;
+                    self.payAmount = config.value.integerValue;
+                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SVIP_PAY_AMOUNT]) {
+                    self.svipPayAmount = config.value.integerValue;
                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAY_IMG]) {
                     self.paymentImage = config.value;
+                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SVIP_PAY_IMG]) {
+                    self.svipPaymentImage = config.value;
                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_DISCOUNT_IMG]) {
                     self.discountImage = config.value;
                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAYMENT_TOP_IMAGE]) {
@@ -86,6 +91,8 @@
 //                    self.spreadRightUrl = config.value;
                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_CONTACT]) {
                     self.contact = config.value;
+                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_CONTACT_TIME]) {
+                    self.contactTime = config.value;
                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_DISCOUNT_AMOUNT]) {
                     self.discountAmount = config.value.floatValue;
                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_DISCOUNT_LAUNCH_SEQ]) {
@@ -111,7 +118,7 @@
     return success;
 }
 
-- (double)payAmount {
+- (NSUInteger)payAmount {
     if ([self hasDiscount]) {
         return _payAmount * self.discountAmount;
     } else {
@@ -124,5 +131,23 @@
         return YES;
     }
     return NO;
+}
+
+- (NSUInteger)paymentPriceWithProgram:(YYKProgram *)program {
+    if (program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && [YYKUtil isVIP] && ![YYKUtil isSVIP]) {
+        return self.svipPayAmount;
+    } else {
+        return self.payAmount;
+    }
+}
+
+- (NSString *)paymentImageWithProgram:(YYKProgram *)program {
+    if (program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && [YYKUtil isVIP] && ![YYKUtil isSVIP]) {
+        return self.svipPaymentImage;
+    } else if ([self hasDiscount]) {
+        return self.discountImage;
+    } else {
+        return self.paymentImage;
+    }
 }
 @end

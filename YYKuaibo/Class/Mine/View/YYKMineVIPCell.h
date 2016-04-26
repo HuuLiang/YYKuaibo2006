@@ -10,6 +10,8 @@
 
 @interface YYKMineVIPCell : UITableViewCell
 
+@property (nonatomic) NSString *memberTitle;
 @property (nonatomic,copy) YYKAction memberAction;
+@property (nonatomic,retain) UIImage *vipImage;
 
 @end

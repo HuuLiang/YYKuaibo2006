@@ -20,10 +20,9 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.layer.cornerRadius = 5;
-        self.layer.masksToBounds = YES;
-        
         _thumbImageView = [[UIImageView alloc] init];
+        _thumbImageView.layer.cornerRadius = 18;
+        _thumbImageView.layer.masksToBounds = YES;
         [self addSubview:_thumbImageView];
         {
             [_thumbImageView mas_makeConstraints:^(MASConstraintMaker *make) {

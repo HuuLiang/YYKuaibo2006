@@ -76,7 +76,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     paymentInfo.orderPrice = @(price);
     paymentInfo.contentId = program.programId;
     paymentInfo.contentType = program.type;
-    paymentInfo.payPointType = program.payPointType;
+    paymentInfo.payPointType = program.payPointType ?: @(YYKPayPointTypeVIP);
     paymentInfo.paymentType = @(type);
     paymentInfo.paymentResult = @(PAYRESULT_UNKNOWN);
     paymentInfo.paymentStatus = @(YYKPaymentStatusPaying);

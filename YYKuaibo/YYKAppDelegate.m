@@ -65,20 +65,22 @@
                                                  selectedImage:nil];
     
     YYKMineViewController *mineVC = [[YYKMineViewController alloc] init];
+    mineVC.title = @"我的";
+    
     UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
-    mineNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的"
+    mineNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:mineVC.title
                                                            image:[UIImage imageNamed:@"tabbar_mine_normal"]
                                                    selectedImage:nil];
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = @[homeNav, channelNav, vipNav, spreadNav, mineNav];
+    tabBarController.tabBar.translucent = NO;
     _window.rootViewController = tabBarController;
     return _window;
 }
 
 - (void)setupCommonStyles {
     [[UITabBar appearance] setBarStyle:UIBarStyleBlack];
-    [[UITabBar appearance] setTranslucent:NO];
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#222222"]];
 //    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
     [[UITabBar appearance] setSelectedImageTintColor:[UIColor darkPink]];

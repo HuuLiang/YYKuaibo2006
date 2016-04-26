@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, YYKPullToRefreshStyle) {
 @property (nonatomic) BOOL YYK_showLastUpdatedTime;
 @property (nonatomic) BOOL YYK_showStateLabel;
 @property (nonatomic,weak,readonly) UIView *YYK_refreshView;
+@property (nonatomic,readonly) BOOL isRefreshing;
 
 - (void)YYK_addPullToRefreshWithHandler:(void (^)(void))handler;
 - (void)YYK_addPullToRefreshWithStyle:(YYKPullToRefreshStyle)style handler:(void (^)(void))handler;

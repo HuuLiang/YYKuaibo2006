@@ -80,7 +80,16 @@ DefineLazyPropertyInitialization(NSMutableDictionary, channelPrograms)
     
     [_contentView YYK_addPullToRefreshWithHandler:^{
         @strongify(self);
-        [self loadProgramsInChannel:self.currentChannel.columnId withRefresh:YES];
+        if (!self) {
+            return ;
+        }
+        
+        if (self.channelModel.fetchedChannels.count == 0) {
+            [self->_channelTableView YYK_triggerPullToRefresh];
+        } else {
+            [self loadProgramsInChannel:self.currentChannel.columnId withRefresh:YES];
+        }
+        
     }];
     
     [_contentView YYK_addPagingRefreshWithHandler:^{
@@ -108,6 +117,11 @@ DefineLazyPropertyInitialization(NSMutableDictionary, channelPrograms)
 }
 
 - (void)loadProgramsInChannel:(NSNumber *)channelId withRefresh:(BOOL)isRefresh {
+    if (channelId == nil) {
+        [_contentView YYK_endPullToRefresh];
+        return ;
+    }
+    
     @weakify(self);
     NSUInteger pageNo = isRefresh ? 1 : self.programModel.fetchedPrograms.page.unsignedIntegerValue + 1;
     [self.programModel fetchProgramsWithColumnId:channelId pageNo:pageNo pageSize:20 completionHandler:^(BOOL success, YYKPrograms *programs) {
@@ -155,7 +169,15 @@ DefineLazyPropertyInitialization(NSMutableDictionary, channelPrograms)
     _contentView.contentOffset = CGPointZero;
     NSMutableArray<YYKProgram *> *programs = [self.channelPrograms objectForKey:currentChannel.columnId];
     if (programs.count == 0 || oldChannel == currentChannel) {
-        [_contentView YYK_triggerPullToRefresh];
+        if ([_contentView isRefreshing]) {
+            [self loadProgramsInChannel:currentChannel.columnId withRefresh:YES];
+        } else {
+            [_contentView YYK_triggerPullToRefresh];
+        }
+    } else {
+        if ([_contentView isRefreshing]) {
+            [_contentView YYK_endPullToRefresh];
+        }
     }
 }
 

@@ -21,6 +21,7 @@
 - (void)playVideo:(YYKVideo *)video withTimeControl:(BOOL)hasTimeControl shouldPopPayment:(BOOL)shouldPopPayment;
 
 - (void)payForProgram:(YYKProgram *)program;
+- (void)payForPayPointType:(YYKPayPointType)payPointType;
 //- (void)onPaidNotification:(NSNotification *)notification;
 
 - (BOOL)shouldDisplayBackgroundImage;

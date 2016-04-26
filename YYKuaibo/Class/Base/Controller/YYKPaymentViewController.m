@@ -53,7 +53,7 @@
         }
         
         [self payForProgram:self.programToPayFor
-                      price:self.payAmount.doubleValue
+                      price:self.payAmount.unsignedIntegerValue
                 paymentType:type
              paymentSubType:subType];
         
@@ -62,7 +62,7 @@
     
     _popView = [[YYKPaymentPopView alloc] init];
     _popView.backgroundColor = [UIColor colorWithHexString:@"#121212"];
-    _popView.headerImageURL = [NSURL URLWithString:[YYKSystemConfigModel sharedModel].hasDiscount ? [YYKSystemConfigModel sharedModel].discountImage : [YYKSystemConfigModel sharedModel].paymentImage];
+//    _popView.headerImageURL = [NSURL URLWithString:[YYKSystemConfigModel sharedModel].hasDiscount ? [YYKSystemConfigModel sharedModel].discountImage : [YYKSystemConfigModel sharedModel].paymentImage];
     _popView.footerImage = [UIImage imageNamed:@"payment_footer"];
     
     
@@ -113,6 +113,7 @@
     
     self.payAmount = nil;
     self.programToPayFor = program;
+    self.popView.headerImageURL = [NSURL URLWithString:[[YYKSystemConfigModel sharedModel] paymentImageWithProgram:program]];
     self.view.frame = view.bounds;
     self.view.alpha = 0;
     
@@ -133,12 +134,12 @@
     @weakify(self);
     YYKSystemConfigModel *systemConfigModel = [YYKSystemConfigModel sharedModel];
     if (systemConfigModel.loaded) {
-        self.payAmount = @(systemConfigModel.payAmount);
+        self.payAmount = @([systemConfigModel paymentPriceWithProgram:self.programToPayFor]);
     } else {
         [systemConfigModel fetchSystemConfigWithCompletionHandler:^(BOOL success) {
             @strongify(self);
             if (success) {
-                self.payAmount = @(systemConfigModel.payAmount);
+                self.payAmount = @([systemConfigModel paymentPriceWithProgram:self.programToPayFor]);
             }
         }];
     }
@@ -149,7 +150,7 @@
 //    payAmount = @(0.1);
 //#endif
     _payAmount = payAmount;
-    self.popView.showPrice = payAmount;
+    self.popView.showPrice = @(payAmount.doubleValue / 100);
 }
 
 - (void)hidePayment {
@@ -166,14 +167,14 @@
 }
 
 - (void)payForProgram:(YYKProgram *)program
-                price:(double)price
+                price:(NSUInteger)price
           paymentType:(YYKPaymentType)paymentType
        paymentSubType:(YYKPaymentType)paymentSubType
 {
     @weakify(self);
     [[YYKPaymentManager sharedManager] startPaymentWithType:paymentType
                                                     subType:paymentSubType
-                                                     price:price*100
+                                                     price:price
                                                 forProgram:program
                                          completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
         @strongify(self);
@@ -208,7 +209,7 @@
     if (result == PAYRESULT_SUCCESS) {
         [self hidePayment];
         [[YYKHudManager manager] showHudWithText:@"支付成功"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kPaidNotificationName object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPaidNotificationName object:paymentInfo];
     } else if (result == PAYRESULT_ABANDON) {
         [[YYKHudManager manager] showHudWithText:@"支付取消"];
     } else {

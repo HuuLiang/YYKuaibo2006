@@ -66,7 +66,10 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+    
+    if (![YYKUtil isAllVIPs]) {
+        self.navigationController.navigationBarHidden = YES;
+    }
     
     if ([YYKUtil isAnyVIP]) {
         if ([YYKSystemConfigModel sharedModel].loaded) {
@@ -98,7 +101,35 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 }
 
 - (void)onPaidNotification {
+    if ([YYKUtil isAllVIPs]) {
+        self.navigationController.navigationBarHidden = NO;
+    }
+    
     [_layoutTableView reloadData];
+}
+
+- (YYKSideMenuSection)sectionTypeInSection:(NSUInteger)section {
+    if ([YYKUtil isNoVIP]) {
+        if (section == 0) {
+            return YYKSideMenuSectionVIP;
+        } else {
+            return YYKSideMenuSectionOthers;
+        }
+    } else if ([YYKUtil isVIP] && ![YYKUtil isSVIP]) {
+        if (section == 0) {
+            return YYKSideMenuSectionVIP;
+        } else if (section == 1) {
+            return YYKSideMenuSectionPhone;
+        } else {
+            return YYKSideMenuSectionOthers;
+        }
+    } else {
+        if (section == 0) {
+            return YYKSideMenuSectionPhone;
+        } else {
+            return YYKSideMenuSectionOthers;
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -109,21 +140,27 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 #pragma mark - UITableViewDataSource,UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [YYKUtil isAnyVIP] ? YYKSideMenuSectionCount : YYKSideMenuSectionCount - 1;
+    if ([YYKUtil isAllVIPs] || [YYKUtil isNoVIP])  {
+        return YYKSideMenuSectionCount - 1;
+    } else {
+        return YYKSideMenuSectionCount;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
-    if (indexPath.section == YYKSideMenuSectionVIP) {
+    if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP) {
         YYKMineVIPCell *vipCell = [tableView dequeueReusableCellWithIdentifier:kSideMenuVIPCellReusableIdentifier forIndexPath:indexPath];
+        vipCell.vipImage = [YYKUtil isVIP] && ![YYKUtil isSVIP] ? [UIImage imageNamed:@"svip_text"] : [UIImage imageNamed:@"vip_text"];
+        vipCell.memberTitle = [YYKUtil isVIP] && ![YYKUtil isSVIP] ? @"成为黑金VIP会员" : @"成为VIP会员";
         cell = vipCell;
         
         @weakify(self);
         if (!vipCell.memberAction) {
             vipCell.memberAction = ^(id sender) {
                 @strongify(self);
-                if (![YYKUtil isAnyVIP]) {
-                    [self payForProgram:nil];
+                if (![YYKUtil isAllVIPs]) {
+                    [self payForPayPointType:[YYKUtil isVIP] && ![YYKUtil isSVIP] ? YYKPayPointTypeSVIP : YYKPayPointTypeVIP];
                 } else {
                     [[YYKHudManager manager] showHudWithText:@"您已经是会员，感谢您的观看！"];
                 }
@@ -135,15 +172,15 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kSideMenuNormalCellReusableIdentifier];
             cell.textLabel.textColor = [UIColor colorWithWhite:0.9 alpha:1];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        cell.accessoryType = [YYKUtil isAnyVIP] && indexPath.section == YYKSideMenuSectionPhone ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
         cell.detailTextLabel.text = nil;
     
-        if ([YYKUtil isAnyVIP] && indexPath.section == YYKSideMenuSectionPhone) {
+        if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionPhone) {
             cell.imageView.image = [UIImage imageNamed:@"side_menu_phone_icon"];
             cell.textLabel.text = @"投诉热线";
-            cell.detailTextLabel.text = [YYKSystemConfigModel sharedModel].contact;
-        } else if (indexPath.section == [self numberOfSectionsInTableView:tableView] - 1) {
+            cell.detailTextLabel.text = [YYKSystemConfigModel sharedModel].contactTime;
+        } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionOthers) {
             if (indexPath.row == YYKSideMenuOtherSectionCellHistory) {
                 cell.imageView.image = [UIImage imageNamed:@"side_menu_history_icon"];
                 cell.textLabel.text = @"播放记录";
@@ -169,7 +206,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == [self numberOfSectionsInTableView:tableView] - 1) {
+    if ([self sectionTypeInSection:section] == YYKSideMenuSectionOthers) {
         return YYKSideMenuOtherSectionCellCount;
     } else {
         return 1;
@@ -177,22 +214,22 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == YYKSideMenuSectionVIP) {
-        return 200;
+    if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP) {
+        return 160;
     } else {
         return MAX(44, lround(kScreenHeight*0.08));
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == YYKSideMenuSectionVIP) {
+    if (section == 0) {
         return 0;
     }
     return 10;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == YYKSideMenuSectionVIP) {
+    if (section == 0) {
         return nil;
     }
     
@@ -205,7 +242,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if (indexPath.section == [self numberOfSectionsInTableView:tableView] - 1) {
+    if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionOthers) {
         if (indexPath.row == YYKSideMenuOtherSectionCellHistory) {
             YYKHistoryViewController *historyVC = [[YYKHistoryViewController alloc] init];
             historyVC.title = cell.textLabel.text;
@@ -258,8 +295,8 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
             webVC.title = cell.textLabel.text;
             [self.navigationController pushViewController:webVC animated:YES];
         }
-    } else if ([YYKUtil isAnyVIP] && indexPath.section == YYKSideMenuSectionPhone) {
-        NSString *phoneNum = cell.detailTextLabel.text;
+    } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionPhone) {
+        NSString *phoneNum = [YYKSystemConfigModel sharedModel].contact;
         if (phoneNum.length > 0) {
             [YYKUtil callPhoneNumber:phoneNum];
         }

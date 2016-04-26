@@ -20,6 +20,17 @@ static const void *kYYKShowStateAssociatedKey = &kYYKShowStateAssociatedKey;
     return [UIColor colorWithWhite:0.8 alpha:1];
 }
 
+- (BOOL)isRefreshing {
+    if ([self.YYK_refreshView isKindOfClass:[MJRefreshComponent class]]) {
+        MJRefreshComponent *refresh = (MJRefreshComponent *)self.YYK_refreshView;
+        return refresh.state == MJRefreshStateRefreshing;
+    } else if ([self.YYK_refreshView isKindOfClass:[ODRefreshControl class]]) {
+        ODRefreshControl *refresh = (ODRefreshControl *)self.YYK_refreshView;
+        return refresh.refreshing;
+    }
+    return NO;
+}
+
 - (UIView *)YYK_refreshView {
     return objc_getAssociatedObject(self, kYYKRefreshViewAssociatedKey);
 }

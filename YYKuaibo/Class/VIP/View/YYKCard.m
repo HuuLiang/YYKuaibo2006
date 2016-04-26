@@ -13,6 +13,7 @@
     UIImageView *_thumbImageView;
     UILabel *_titleLabel;
     UIImageView *_vipIconImageView;
+    UILabel *_subtitleLabel;
 }
 @end
 
@@ -30,12 +31,17 @@
             }];
         }
         
-        
         _titleLabel = [[UILabel alloc] init];
+        _titleLabel.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+        _titleLabel.layer.cornerRadius = 4;
+        _titleLabel.layer.masksToBounds = YES;
+        _titleLabel.font = [UIFont systemFontOfSize:20];
+        _titleLabel.textColor = [UIColor whiteColor];
         [self addSubview:_titleLabel];
         {
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.equalTo(self);
+                make.centerX.equalTo(self);
+                make.bottom.equalTo(self).offset(-15);
             }];
         }
         
@@ -69,6 +75,39 @@
 - (void)setTitle:(NSString *)title {
     _title = title;
     _titleLabel.text = title;
+}
+
+- (void)setSubtitle:(NSString *)subtitle {
+    _subtitle = subtitle;
+    
+    if (subtitle.length > 0 && !_subtitleLabel) {
+        _subtitleLabel = [[UILabel alloc] init];
+        _subtitleLabel.layer.cornerRadius = 4;
+        _subtitleLabel.layer.masksToBounds = YES;
+        _subtitleLabel.backgroundColor = _titleLabel.backgroundColor;
+        _subtitleLabel.textColor = _titleLabel.textColor;
+        _subtitleLabel.font = [UIFont systemFontOfSize:16];
+        _subtitleLabel.textAlignment = NSTextAlignmentCenter;
+        _subtitleLabel.numberOfLines = 2;
+        [self addSubview:_subtitleLabel];
+        {
+            [_subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+ //               make.top.equalTo(_titleLabel.mas_bottom).offset(5);
+                make.centerX.equalTo(self);
+                make.left.greaterThanOrEqualTo(self).offset(15);
+                make.right.lessThanOrEqualTo(self).offset(-15);
+                make.bottom.lessThanOrEqualTo(self).offset(-15);
+            }];
+        }
+        
+        [_titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self);
+            make.bottom.equalTo(_subtitleLabel.mas_top).offset(-5);
+        }];
+    }
+    
+    _subtitleLabel.text = subtitle;
+    _subtitleLabel.hidden = subtitle.length == 0;
 }
 
 - (void)setLightedDiamond:(BOOL)lightedDiamond {

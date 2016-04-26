@@ -125,6 +125,11 @@
     [[YYKPaymentViewController sharedPaymentVC] popupPaymentInView:view forProgram:program withCompletionHandler:nil];
 }
 
+- (void)payForPayPointType:(YYKPayPointType)payPointType {
+    YYKProgram *program = [[YYKProgram alloc] init];
+    program.payPointType = @(payPointType);
+    [self payForProgram:program];
+}
 //- (void)onPaidNotification:(NSNotification *)notification {}
 
 - (BOOL)shouldAutorotate {
