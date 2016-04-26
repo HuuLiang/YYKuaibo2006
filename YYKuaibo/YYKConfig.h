@@ -41,7 +41,8 @@
 #define YYK_STANDBY_PAYMENT_CONFIG_URL  @"http://appcdn.mqu8.com/static/iosvideo/payConfig_%@.json"
 
 #define YYK_STANDBY_BASE_URL                @"http://appcdn.mqu8.com"
-#define YYK_STANDBY_HOME_VIDEO_URL          @""
+#define YYK_STANDBY_HOME_VIDEO_URL          @"/static/iosvideo/homePage.json"
+
 //#define YYK_STANDBY_VIDEO_LIB_URL           @"/static/iosvideo/hotVideo.json"
 #define YYK_STANDBY_HOT_VIDEO_URL           @"/static/iosvideo/hotFilm.json"
 #define YYK_STANDBY_VIP_VIDEO_URL           @"/static/iosvideo/vipvideo.json"

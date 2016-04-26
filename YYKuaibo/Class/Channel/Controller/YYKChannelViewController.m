@@ -113,6 +113,10 @@ DefineLazyPropertyInitialization(NSMutableDictionary, channelPrograms)
             [self->_channelTableView reloadData];
             self.currentChannel = channels.firstObject;
         }
+        
+        if (self.currentChannel == nil && [self->_contentView isRefreshing]) {
+            [self->_contentView YYK_endPullToRefresh];
+        }
     }];
 }
 
