@@ -13,6 +13,7 @@
 @property (nonatomic) NSURL *imageURL;
 @property (nonatomic) NSString *title;
 @property (nonatomic) BOOL showPlayIcon;
+@property (nonatomic) YYKVideoSpec spec;
 
 //+ (CGFloat)heightRelativeToWidth:(CGFloat)width;
 

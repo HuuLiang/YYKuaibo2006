@@ -14,6 +14,7 @@
     UILabel *_titleLabel;
     UIImageView *_coverImageView;
     UIImageView *_iconImageView;
+    UILabel *_specLabel;
 }
 @end
 
@@ -105,5 +106,46 @@
         }
     }
     _iconImageView.hidden = !showPlayIcon;
+}
+
+- (void)setSpec:(YYKVideoSpec)spec {
+    _spec = spec;
+    
+    if (spec != YYKVideoSpecNone && !_specLabel) {
+        _specLabel = [[UILabel alloc] init];
+        _specLabel.textColor = [UIColor whiteColor];
+        _specLabel.backgroundColor = [UIColor darkPink];
+        _specLabel.font = [UIFont systemFontOfSize:13.];
+        _specLabel.textAlignment = NSTextAlignmentCenter;
+        _specLabel.layer.cornerRadius = 4;
+        _specLabel.layer.masksToBounds = YES;
+        [self addSubview:_specLabel];
+        {
+            [_specLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(self).offset(-10);
+                make.top.equalTo(self).offset(10);
+                make.size.mas_equalTo(CGSizeMake(30, 16));
+            }];
+        }
+    }
+    
+    NSString *specText;
+    switch (spec) {
+        case YYKVideoSpecNew:
+            specText = @"最新";
+            break;
+        case YYKVideoSpecHot:
+            specText = @"热门";
+            break;
+        case YYKVideoSpecHD:
+            specText = @"高清";
+            break;
+        case YYKVideoSpecFree:
+            specText = @"试播";
+            break;
+        default:
+            break;
+    }
+    _specLabel.text = specText;
 }
 @end

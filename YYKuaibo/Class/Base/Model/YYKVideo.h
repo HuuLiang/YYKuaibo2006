@@ -8,14 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, YYKVideoSpec) {
-    YYKVideoSpecNone,
-    YYKVideoSpecHot,
-    YYKVideoSpecNew,
-    YYKVideoSpecHD,
-    YYKVideoSpecFree
-};
-
 @interface YYKVideo : NSObject
 
 @property (nonatomic) NSNumber *programId;

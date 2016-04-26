@@ -120,6 +120,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
             
             cell.title = video.title;
             cell.imageURL = [NSURL URLWithString:video.coverImg];
+            cell.spec = video.spec.unsignedIntegerValue;
         }
         return cell;
     }

@@ -200,11 +200,13 @@ DefineLazyPropertyInitialization(NSMutableDictionary, channelPrograms)
         YYKProgram *program = programs[indexPath.row];
         cell.title = program.title;
         cell.imageURL = [NSURL URLWithString:program.coverImg];
+        cell.spec = program.spec.unsignedIntegerValue;
         cell.showPlayIcon = YES;
     } else {
         cell.title = nil;
         cell.imageURL = nil;
         cell.showPlayIcon = NO;
+        cell.spec = YYKVideoSpecNone;
     }
     return cell;
 }

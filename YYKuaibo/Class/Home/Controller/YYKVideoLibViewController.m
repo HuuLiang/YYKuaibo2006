@@ -139,9 +139,11 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
             cell.title = trialProgram.title;
             cell.imageURL = [NSURL URLWithString:trialProgram.coverImg];
             cell.showPlayIcon = YES;
+            cell.spec = YYKVideoSpecFree;
         } else {
             cell.title = nil;
             cell.imageURL = nil;
+            cell.spec = YYKVideoSpecNone;
         }
         return cell;
     } else {
@@ -155,9 +157,11 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
                     cell.title = program.title;
                     cell.imageURL = [NSURL URLWithString:program.coverImg];
                     cell.showPlayIcon = YES;
+                    cell.spec = program.spec.unsignedIntegerValue;
                 } else {
                     cell.title = nil;
                     cell.imageURL = nil;
+                    cell.spec = YYKVideoSpecNone;
                 }
                 return cell;
             } else {
@@ -226,7 +230,7 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     if (indexPath.section == YYKHomeSectionBanner) {
         return CGSizeMake(fullWidth, fullWidth/2);
     } else if (indexPath.section == YYKHomeSectionTrial) {
-        return CGSizeMake(halfWidth, halfWidth*3./5.);
+        return CGSizeMake(halfWidth, halfWidth);
     } else {
         NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
         if (programsIndex >= self.programModel.fetchedVideoAndAdProgramList.count) {
@@ -239,7 +243,7 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
         } else if (indexPath.row == 0) {
             return CGSizeMake(fullWidth, fullWidth/2);
         } else {
-            return CGSizeMake(halfWidth, halfWidth*3./5.);
+            return CGSizeMake(halfWidth, halfWidth);
         }
     }
 }

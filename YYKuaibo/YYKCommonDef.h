@@ -29,6 +29,14 @@ typedef NS_ENUM(NSUInteger, YYKPayPointType) {
     YYKPayPointTypeVIP,
     YYKPayPointTypeSVIP
 };
+
+typedef NS_ENUM(NSUInteger, YYKVideoSpec) {
+    YYKVideoSpecNone,
+    YYKVideoSpecHot,
+    YYKVideoSpecNew,
+    YYKVideoSpecHD,
+    YYKVideoSpecFree
+};
 // DLog
 #ifdef  DEBUG
 #define DLog(fmt,...) {NSLog((@"%s [Line:%d]" fmt),__PRETTY_FUNCTION__,__LINE__,##__VA_ARGS__);}
