@@ -15,7 +15,7 @@ static const CGFloat kCellHeight = 60;
 
 static const void *kPaymentButtonAssociatedKey = &kPaymentButtonAssociatedKey;
 
-@interface YYKPaymentPopView () <UITableViewDataSource,UITableViewDelegate>
+@interface YYKPaymentPopView () <UITableViewDataSource,UITableViewSeparatorDelegate>
 {
     UITableViewCell *_headerCell;
     UITableViewCell *_footerCell;
@@ -39,6 +39,8 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
         self.scrollEnabled = NO;
         self.layer.cornerRadius = lround(kScreenWidth*0.08);
         self.layer.masksToBounds = YES;
+        self.hasRowSeparator = YES;
+        self.separatorColor = [UIColor colorWithWhite:0.2 alpha:1];
     }
     return self;
 }
@@ -52,7 +54,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
         cellHeights += [self tableView:self heightForRowAtIndexPath:key];
     }];
     
-    cellHeights += [self tableView:self heightForHeaderInSection:1];
+//    cellHeights += [self tableView:self heightForHeaderInSection:1];
     return cellHeights;
 }
 
@@ -63,6 +65,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.cells.count inSection:1];
     UITableViewCell *cell = [[UITableViewCell alloc] init];
+    cell.backgroundColor = self.backgroundColor;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"payment_item_background"]];
@@ -109,6 +112,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.font = [UIFont boldSystemFontOfSize:lround(kScreenWidth*0.048)];
     titleLabel.text = title;
+    titleLabel.textColor = [UIColor whiteColor];
     [backgroundView addSubview:titleLabel];
     {
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -152,6 +156,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
     if (indexPath.section == 0) {
         if (!_headerCell) {
             _headerCell = [[UITableViewCell alloc] init];
+            _headerCell.backgroundColor = self.backgroundColor;
             _headerCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             _headerImageView = [[UIImageView alloc] init];
@@ -202,6 +207,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
     } else if (indexPath.section == 2) {
         if (!_footerCell) {
             _footerCell = [[UITableViewCell alloc] init];
+            _footerCell.backgroundColor = self.backgroundColor;
             _footerCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             _footerImageView = [[UIImageView alloc] initWithImage:_footerImage];
@@ -251,12 +257,12 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
     return headerView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 1) {
-        return 30;
-    }
-    return 0;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    if (section == 1) {
+//        return 30;
+//    }
+//    return 0;
+//}
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
@@ -266,6 +272,13 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
         paymentButton.highlighted = YES;
     }
     return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView hasBorderInSection:(NSUInteger)section {
+    if (section == 1) {
+        return YES;
+    }
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

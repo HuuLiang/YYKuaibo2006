@@ -39,10 +39,10 @@ static const void *kImageAppearingAnimationAssociatedKey = &kImageAppearingAnima
         }
         
         UIImageView *thisImageView = [aspectInfo instance];
-        thisImageView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9);
+//        thisImageView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9);
         thisImageView.alpha = 0;
         [UIView animateWithDuration:0.3 animations:^{
-            thisImageView.transform = CGAffineTransformIdentity;
+//            thisImageView.transform = CGAffineTransformIdentity;
             thisImageView.alpha = 1;
         }];
     } error:&error];

@@ -144,7 +144,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
         if ([video isKindOfClass:[YYKProgram class]] && ((YYKProgram *)video).type.unsignedIntegerValue == YYKProgramTypeSpread) {
             return CGSizeMake(fullWidth, fullWidth/5);
         } else {
-            return CGSizeMake(itemWidth, itemWidth * 1050./825.);
+            return CGSizeMake(itemWidth, itemWidth * 9./7.);
         }
     }
     return CGSizeZero;

@@ -19,7 +19,6 @@
 #import <BlocksKit+UIKit.h>
 #import <Masonry.h>
 #import <UIImageView+WebCache.h>
-#import <RESideMenu.h>
 
 #import "YYKCommonDef.h"
 #import "YYKConfig.h"

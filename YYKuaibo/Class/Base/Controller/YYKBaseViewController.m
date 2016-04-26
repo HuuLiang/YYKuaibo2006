@@ -38,6 +38,10 @@
 - (void)setBackgroundImage:(UIImage *)backgroundImage {
     _backgroundImage = backgroundImage;
     
+    if (![self shouldDisplayBackgroundImage]) {
+        return ;
+    }
+    
     if (backgroundImage && !_backgroundImageView) {
         _backgroundImageView = [[UIImageView alloc] init];
         _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -59,10 +63,18 @@
 - (void)switchToPlayProgram:(YYKProgram *)program {
     if (program.type.unsignedIntegerValue == YYKProgramTypeSpread) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:program.videoUrl]];
-    } else if (![YYKUtil isPaid] && program.spec.unsignedIntegerValue != YYKVideoSpecFree) {
+        return ;
+    }
+    
+    BOOL vipProgramButNoVIP = program.payPointType.unsignedIntegerValue == YYKPayPointTypeVIP && ![YYKUtil isVIP];
+    BOOL svipProgramButNoSVIP = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && ![YYKUtil isSVIP];
+    BOOL isFreeVideo = program.type.unsignedIntegerValue == YYKProgramTypeVideo && program.spec.unsignedIntegerValue == YYKVideoSpecFree;
+    
+    BOOL needPayment = !isFreeVideo && (vipProgramButNoVIP || svipProgramButNoSVIP);
+    if (needPayment) {
         [self payForProgram:program];
     } else if (program.type.unsignedIntegerValue == YYKProgramTypeVideo) {
-        if (program.spec.unsignedIntegerValue == YYKVideoSpecFree && ![YYKUtil isPaid]) {
+        if (isFreeVideo && (vipProgramButNoVIP || svipProgramButNoSVIP)) {
             [self playVideo:program withTimeControl:NO shouldPopPayment:YES];
         } else {
             [self playVideo:program];
@@ -150,6 +162,10 @@
         [[aspectInfo originalInvocation] setReturnValue:&rotate];
     } error:nil];
     return retVC;
+}
+
+- (BOOL)shouldDisplayBackgroundImage {
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {

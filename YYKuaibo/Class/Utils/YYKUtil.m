@@ -67,8 +67,8 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
     }];
 }
 
-+ (YYKPaymentInfo *)successfulPaymentInfo {
-    return [self.allPaymentInfos bk_match:^BOOL(id obj) {
++ (NSArray<YYKPaymentInfo *> *)allSuccessfulPaymentInfos {
+    return [self.allPaymentInfos bk_select:^BOOL(id obj) {
         YYKPaymentInfo *paymentInfo = obj;
         if (paymentInfo.paymentResult.unsignedIntegerValue == PAYRESULT_SUCCESS) {
             return YES;
@@ -77,9 +77,46 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
     }];
 }
 
-+ (BOOL)isPaid {
-    return [self successfulPaymentInfo] != nil;
+//+ (YYKPaymentInfo *)successfulPaymentInfo {
+//    return [self.allPaymentInfos bk_match:^BOOL(id obj) {
+//        YYKPaymentInfo *paymentInfo = obj;
+//        if (paymentInfo.paymentResult.unsignedIntegerValue == PAYRESULT_SUCCESS) {
+//            return YES;
+//        }
+//        return NO;
+//    }];
+//}
+
++ (BOOL)isVIP {
+    YYKPaymentInfo *vipPaymentInfo = [[self allSuccessfulPaymentInfos] bk_match:^BOOL(id obj) {
+        YYKPaymentInfo *paymentInfo = obj;
+        return paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeVIP;
+    }];
+    return vipPaymentInfo != nil;
 }
+
++ (BOOL)isSVIP {
+    YYKPaymentInfo *vipPaymentInfo = [[self allSuccessfulPaymentInfos] bk_match:^BOOL(id obj) {
+        YYKPaymentInfo *paymentInfo = obj;
+        return paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP;
+    }];
+    return vipPaymentInfo != nil;
+}
+
++ (BOOL)isNoVIP {
+    return ![self isVIP] && ![self isSVIP];
+}
+
++ (BOOL)isAnyVIP {
+    return [self isVIP] || [self isSVIP];
+}
+
++ (BOOL)isAllVIPs {
+    return [self isVIP] && [self isSVIP];
+}
+//+ (BOOL)isPaid {
+//    return [self successfulPaymentInfo] != nil;
+//}
 
 + (NSString *)userId {
     return [[NSUserDefaults standardUserDefaults] objectForKey:kRegisterKeyName];

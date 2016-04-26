@@ -61,6 +61,7 @@
     };
     
     _popView = [[YYKPaymentPopView alloc] init];
+    _popView.backgroundColor = [UIColor colorWithHexString:@"#121212"];
     _popView.headerImageURL = [NSURL URLWithString:[YYKSystemConfigModel sharedModel].hasDiscount ? [YYKSystemConfigModel sharedModel].discountImage : [YYKSystemConfigModel sharedModel].paymentImage];
     _popView.footerImage = [UIImage imageNamed:@"payment_footer"];
     
@@ -186,8 +187,14 @@
 }
 
 - (void)notifyPaymentResult:(PAYRESULT)result withPaymentInfo:(YYKPaymentInfo *)paymentInfo {
-    if (result == PAYRESULT_SUCCESS && [YYKUtil successfulPaymentInfo]) {
-        return ;
+    if (result == PAYRESULT_SUCCESS) {
+        if (paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeVIP && [YYKUtil isVIP]) {
+            return ;
+        }
+        
+        if (paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && [YYKUtil isSVIP]) {
+            return ;
+        }
     }
     
     NSDateFormatter *dateFormmater = [[NSDateFormatter alloc] init];

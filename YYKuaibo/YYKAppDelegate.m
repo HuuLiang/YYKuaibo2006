@@ -8,7 +8,10 @@
 
 #import "YYKAppDelegate.h"
 #import "YYKHomeViewController.h"
-#import "YYKSideMenuViewController.h"
+#import "YYKMineViewController.h"
+#import "YYKChannelViewController.h"
+#import "YYKVIPViewController.h"
+#import "YYKSpreadViewController.h"
 #import "YYKActivateModel.h"
 #import "YYKUserAccessModel.h"
 #import "YYKPaymentModel.h"
@@ -16,7 +19,7 @@
 #import "MobClick.h"
 #import "YYKLaunchView.h"
 
-@interface YYKAppDelegate ()
+@interface YYKAppDelegate () <UITabBarDelegate>
 
 @end
 
@@ -32,33 +35,55 @@
     
     YYKHomeViewController *homeVC = [[YYKHomeViewController alloc] init];
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeVC];
+    homeNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页"
+                                                       image:[UIImage imageNamed:@"tabbar_home_normal"]
+                                               selectedImage:nil];
     
-    YYKSideMenuViewController *sideMenuVC = [[YYKSideMenuViewController alloc] init];
-    UINavigationController *sideMenuNav = [[UINavigationController alloc] initWithRootViewController:sideMenuVC];
-//    sideMenuNav.navigationBarHidden = YES;
+    YYKChannelViewController *channelVC = [[YYKChannelViewController alloc] init];
+    channelVC.title = @"频道";
     
-    RESideMenu *sideMenu = [[RESideMenu alloc] initWithContentViewController:homeNav
-                                                      leftMenuViewController:sideMenuNav
-                                                     rightMenuViewController:nil];
-    sideMenu.delegate = sideMenuVC;
-    sideMenu.scaleContentView = NO;
-    sideMenu.scaleBackgroundImageView = NO;
-    sideMenu.scaleMenuView = NO;
-    sideMenu.fadeMenuView = NO;
-    sideMenu.parallaxEnabled = NO;
-    sideMenu.bouncesHorizontally = NO;
-    sideMenu.contentViewShadowEnabled = NO;
-//    sideMenu.contentViewShadowOffset = CGSizeMake(2.0, 0.0f);
-//    sideMenu.contentViewShadowOpacity = 0.8;
-//    sideMenu.contentViewShadowColor = [UIColor whiteColor];
-    sideMenu.contentViewInPortraitOffsetCenterX = kScreenWidth/2;
-    _window.rootViewController = sideMenu;
+    UINavigationController *channelNav = [[UINavigationController alloc] initWithRootViewController:channelVC];
+    channelNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:channelVC.title
+                                                          image:[UIImage imageNamed:@"tabbar_channel_normal"]
+                                                  selectedImage:nil];
+    
+    YYKVIPViewController *vipVC = [[YYKVIPViewController alloc] init];
+    vipVC.title = @"黑金VIP";
+    
+    UINavigationController *vipNav = [[UINavigationController alloc] initWithRootViewController:vipVC];
+    vipNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil
+                                                      image:[[UIImage imageNamed:@"tabbar_vip_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                                              selectedImage:[[UIImage imageNamed:@"tabbar_vip_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    vipNav.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
+    
+    YYKSpreadViewController *spreadVC = [[YYKSpreadViewController alloc] init];
+    spreadVC.title = @"精品";
+    
+    UINavigationController *spreadNav = [[UINavigationController alloc] initWithRootViewController:spreadVC];
+    spreadNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:spreadVC.title
+                                                         image:[UIImage imageNamed:@"tabbar_spread_normal"]
+                                                 selectedImage:nil];
+    
+    YYKMineViewController *mineVC = [[YYKMineViewController alloc] init];
+    UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
+    mineNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的"
+                                                           image:[UIImage imageNamed:@"tabbar_mine_normal"]
+                                                   selectedImage:nil];
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    tabBarController.viewControllers = @[homeNav, channelNav, vipNav, spreadNav, mineNav];
+    _window.rootViewController = tabBarController;
     return _window;
 }
 
 - (void)setupCommonStyles {
+    [[UITabBar appearance] setBarStyle:UIBarStyleBlack];
+    [[UITabBar appearance] setTranslucent:NO];
+    [[UITabBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#222222"]];
+//    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UITabBar appearance] setSelectedImageTintColor:[UIColor darkPink]];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
-//    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#12161d"]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHexString:@"#222222"]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.]}];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UISegmentedControl appearance] setTintColor:[UIColor colorWithHexString:@"#ff226f"]];
@@ -176,7 +201,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    if ([YYKUtil isPaid]) {
+    if ([YYKUtil isAllVIPs]) {
         return ;
     }
     
@@ -192,7 +217,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    if (![YYKUtil isPaid]) {
+    if (![YYKUtil isAllVIPs]) {
         [[YYKPaymentManager sharedManager] checkPayment];
     }
 }
@@ -219,4 +244,5 @@
     [[YYKPaymentManager sharedManager] handleOpenURL:url];
     return YES;
 }
+
 @end

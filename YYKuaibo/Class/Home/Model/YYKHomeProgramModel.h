@@ -10,7 +10,7 @@
 #import "YYKProgram.h"
 
 @interface YYKHomeProgramResponse : YYKURLResponse
-@property (nonatomic,retain) NSArray<YYKPrograms> *columnList;
+@property (nonatomic,retain) NSArray<YYKPrograms *> *columnList;
 @end
 
 @interface YYKHomeProgramModel : YYKEncryptedURLRequest

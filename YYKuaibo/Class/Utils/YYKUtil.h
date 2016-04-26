@@ -21,9 +21,16 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSArray<YYKPaymentInfo *> *)allPaymentInfos;
 + (NSArray<YYKPaymentInfo *> *)payingPaymentInfos;
 + (NSArray<YYKPaymentInfo *> *)paidNotProcessedPaymentInfos;
-+ (YYKPaymentInfo *)successfulPaymentInfo;
++ (NSArray<YYKPaymentInfo *> *)allSuccessfulPaymentInfos;
+//+ (YYKPaymentInfo *)successfulPaymentInfo;
 
-+ (BOOL)isPaid;
+//+ (BOOL)isPaid;
++ (BOOL)isNoVIP;
++ (BOOL)isAnyVIP;
++ (BOOL)isAllVIPs;
+
++ (BOOL)isVIP;
++ (BOOL)isSVIP;
 
 + (NSString *)accessId;
 + (NSString *)userId;

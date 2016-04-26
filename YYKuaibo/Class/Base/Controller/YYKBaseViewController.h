@@ -23,4 +23,6 @@
 - (void)payForProgram:(YYKProgram *)program;
 //- (void)onPaidNotification:(NSNotification *)notification;
 
+- (BOOL)shouldDisplayBackgroundImage;
+
 @end

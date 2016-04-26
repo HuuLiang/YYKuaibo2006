@@ -8,9 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, YYKPullToRefreshStyle) {
+    YYKPullToRefreshStyleDefault,
+    YYKPullToRefreshStyleDissolution
+};
+
 @interface UIScrollView (Refresh)
 
+@property (nonatomic) BOOL YYK_showLastUpdatedTime;
+@property (nonatomic) BOOL YYK_showStateLabel;
+@property (nonatomic,weak,readonly) UIView *YYK_refreshView;
+
 - (void)YYK_addPullToRefreshWithHandler:(void (^)(void))handler;
+- (void)YYK_addPullToRefreshWithStyle:(YYKPullToRefreshStyle)style handler:(void (^)(void))handler;
 - (void)YYK_triggerPullToRefresh;
 - (void)YYK_endPullToRefresh;
 

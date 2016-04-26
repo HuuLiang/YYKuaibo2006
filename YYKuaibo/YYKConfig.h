@@ -21,10 +21,14 @@
 #define YYK_UMENG_APP_ID         @"56e653d767e58e0eb7002156"
 
 #define YYK_HOME_VIDEO_URL              @"/iosvideo/homePage.htm"
-#define YYK_VIDEO_LIB_URL               @"/iosvideo/hotVideo.htm"
+//#define YYK_VIDEO_LIB_URL               @"/iosvideo/hotVideo.htm"
 #define YYK_HOT_VIDEO_URL               @"/iosvideo/hotFilm.htm"
+
+#define YYK_CHANNEL_URL                 @"/iosvideo/channelRanking.htm"
+#define YYK_CHANNEL_PROGRAM_URL         @"/iosvideo/program.htm"
+
+#define YYK_VIP_VIDEO_URL               @"/iosvideo/vipvideo.htm"
 #define YYK_APP_SPREAD_LIST_URL         @"/iosvideo/appSpreadList.htm"
-//#define YYK_APP_SPREAD_BOX_URL          @"/iosvideo/appSpreadBox.htm"
 
 #define YYK_ACTIVATE_URL                @"/iosvideo/activat.htm"
 #define YYK_SYSTEM_CONFIG_URL           @"/iosvideo/systemConfig.htm"
@@ -38,8 +42,11 @@
 
 #define YYK_STANDBY_BASE_URL                @"http://appcdn.mqu8.com"
 #define YYK_STANDBY_HOME_VIDEO_URL          @""
-#define YYK_STANDBY_VIDEO_LIB_URL           @"/static/iosvideo/hotVideo.json"
+//#define YYK_STANDBY_VIDEO_LIB_URL           @"/static/iosvideo/hotVideo.json"
 #define YYK_STANDBY_HOT_VIDEO_URL           @"/static/iosvideo/hotFilm.json"
+#define YYK_STANDBY_VIP_VIDEO_URL           @"/static/iosvideo/vipvideo.json"
+#define YYK_STANDBY_CHANNEL_URL             @"/static/iosvideo/channelRanking.json"
+#define YYK_STANDBY_CHANNEL_PROGRAM_URL     @"/static/iosvideo/program_%@_%@.json"
 #define YYK_STANDBY_APP_SPREAD_LIST_URL     @"/static/iosvideo/appSpreadList.json"
 #define YYK_STANDBY_SYSTEM_CONFIG_URL       @"/static/iosvideo/systemConfig.json"
 #define YYK_STANDBY_AGREEMENT_NOTPAID_URL   @"/static/iosvideo/agreement.html"

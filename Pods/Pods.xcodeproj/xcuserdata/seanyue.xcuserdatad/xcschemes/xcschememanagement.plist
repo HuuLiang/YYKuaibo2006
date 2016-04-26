@@ -34,12 +34,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods.xcscheme</key>
+		<key>ODRefreshControl.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>RESideMenu.xcscheme</key>
+		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -67,7 +67,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>27DCCD9A7D22AE0EA6C926C0646C2EDA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>410B25DF16EA5C5B3E2698F74F9625FB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4A532457CA8BD933295ADC8A2E814C98</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,12 +87,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>55E573FF084BEA4D667F1F56AC897EF0</key>
+		<key>5AD4D7310C75E080F77141F471DB0D38</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8EB4552FB505DCDD193BDDD0A2C7FEF0</key>
+		<key>7AF877BAA6F88D6C3A710A51372A8D9D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,17 +102,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A2D055C0D4EA152B8FF4FBA7FD9D1197</key>
+		<key>96060B403C8A7F1F53D2BC7C58E65A65</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B688DDD5742324ED990CDBA2A75D2D39</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C2E623CD282AE5782293C1AEAF86492C</key>
+		<key>9F4441DD26973CD6A7E99AC7AFC5F2DD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -113,11 +118,6 @@
 			<true/>
 		</dict>
 		<key>DBC9A0AF6D4571D059D2AF2422F2BD6E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FB5D7BA7D2D9D1063A641EADA286E5C6</key>
 		<dict>
 			<key>primary</key>
 			<true/>

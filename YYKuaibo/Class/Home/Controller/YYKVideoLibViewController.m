@@ -52,6 +52,10 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     layout.minimumInteritemSpacing = kDefaultCollectionViewInteritemSpace;
     layout.minimumLineSpacing = layout.minimumInteritemSpacing;
     
+    if ([layout respondsToSelector:@selector(setSectionHeadersPinToVisibleBounds:)]) {
+        [layout setSectionHeadersPinToVisibleBounds:YES];
+    }
+    
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     _layoutCollectionView.backgroundColor = self.view.backgroundColor;
     _layoutCollectionView.delegate = self;
@@ -222,7 +226,7 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     if (indexPath.section == YYKHomeSectionBanner) {
         return CGSizeMake(fullWidth, fullWidth/2);
     } else if (indexPath.section == YYKHomeSectionTrial) {
-        return CGSizeMake(halfWidth, halfWidth);
+        return CGSizeMake(halfWidth, halfWidth*3./5.);
     } else {
         NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
         if (programsIndex >= self.programModel.fetchedVideoAndAdProgramList.count) {
@@ -235,7 +239,7 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
         } else if (indexPath.row == 0) {
             return CGSizeMake(fullWidth, fullWidth/2);
         } else {
-            return CGSizeMake(halfWidth, halfWidth);
+            return CGSizeMake(halfWidth, halfWidth*3./5.);
         }
     }
 }

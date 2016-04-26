@@ -9,7 +9,6 @@
 #import "YYKHomeViewController.h"
 #import "YYKVideoLibViewController.h"
 #import "YYKHotVideoViewController.h"
-#import "YYKSideMenuViewController.h"
 
 @interface YYKHomeViewController () <UIPageViewControllerDelegate,UIPageViewControllerDataSource>
 {
@@ -52,15 +51,6 @@ DefineLazyPropertyInitialization(NSMutableArray, viewControllers)
                            options:NSKeyValueObservingOptionNew
                            context:nil];
     self.navigationItem.titleView = _segmentedControl;
-    
-    @weakify(self);
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"side_menu_icon"]
-                                                                                style:UIBarButtonItemStylePlain
-                                                                              handler:^(id sender)
-    {
-        @strongify(self);
-        [self.sideMenuViewController presentLeftMenuViewController];
-    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -106,14 +96,4 @@ DefineLazyPropertyInitialization(NSMutableArray, viewControllers)
         _segmentedControl.selectedSegmentIndex = [self.viewControllers indexOfObject:pageViewController.viewControllers.firstObject];
     }
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

@@ -19,10 +19,6 @@ typedef NS_ENUM(NSUInteger, YYKProgramType) {
     YYKProgramTypeTrial = 5
 };
 
-@protocol YYKProgramUrl <NSObject>
-
-@end
-
 @interface YYKProgramUrl : NSObject
 @property (nonatomic) NSNumber *programUrlId;
 @property (nonatomic) NSString *title;
@@ -31,29 +27,26 @@ typedef NS_ENUM(NSUInteger, YYKProgramType) {
 @property (nonatomic) NSNumber *height;
 @end
 
-@protocol YYKProgram <NSObject>
-
-@end
-
 @interface YYKProgram : YYKVideo
 //@property (nonatomic) NSNumber *payPointType; // 1、会员注册 2、付费
 @property (nonatomic) NSNumber *payPointType; // 1、会员注册 2、付费
 @property (nonatomic) NSNumber *type; // 1、视频 2、图片
-@property (nonatomic,retain) NSArray<YYKProgramUrl> *urlList; // type==2有集合，目前为图集url集合
-
-@end
-
-@protocol YYKPrograms <NSObject>
+@property (nonatomic,retain) NSArray<YYKProgramUrl *> *urlList; // type==2有集合，目前为图集url集合
 
 @end
 
 @interface YYKPrograms : YYKURLResponse
+
+@property (nonatomic) NSNumber *items;
+@property (nonatomic) NSNumber *page;
+@property (nonatomic) NSNumber *pageSize;
+
 @property (nonatomic) NSNumber *columnId;
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *columnImg;
 @property (nonatomic) NSString *columnDesc;
 @property (nonatomic) NSNumber *type; // 1、视频 2、图片
 @property (nonatomic) NSNumber *showNumber;
-@property (nonatomic,retain) NSArray<YYKProgram> *programList;
+@property (nonatomic,retain) NSArray<YYKProgram *> *programList;
 @end
 

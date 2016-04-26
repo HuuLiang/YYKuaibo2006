@@ -9,8 +9,8 @@
 #import "YYKEncryptedURLRequest.h"
 
 typedef NS_ENUM(NSUInteger, YYKVideoListSpace) {
-    YYKVideoListSpaceLib,
-    YYKVideoListSpaceHot
+    YYKVideoListSpaceHot,
+    YYKVideoListSpaceVIP
 };
 
 @class YYKVideos;
