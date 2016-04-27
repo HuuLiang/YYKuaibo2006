@@ -31,6 +31,7 @@ typedef NS_ENUM(NSUInteger, YYKHomeSection) {
     SDCycleScrollView *_bannerView;
 }
 @property (nonatomic,retain) YYKHomeProgramModel *programModel;
+@property (nonatomic) BOOL hasShownSpreadBanner;
 @end
 
 @implementation YYKVideoLibViewController
@@ -93,6 +94,13 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
         if (success) {
             [self->_layoutCollectionView reloadData];
             [self refreshBannerView];
+            
+            if (([YYKUtil launchSeq] >= 3 && [YYKUtil isNoVIP]) || [YYKUtil isAnyVIP]) {
+                if (!self.hasShownSpreadBanner) {
+                    [YYKUtil showSpreadBanner];
+                    self.hasShownSpreadBanner = YES;
+                }
+            }
         }
     }];
 }

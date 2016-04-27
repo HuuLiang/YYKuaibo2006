@@ -16,6 +16,7 @@
 #import "YYKUserAccessModel.h"
 #import "YYKPaymentModel.h"
 #import "YYKSystemConfigModel.h"
+#import "YYKAppSpreadBannerModel.h"
 #import "MobClick.h"
 #import "YYKLaunchView.h"
 
@@ -192,6 +193,7 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[YYKSystemConfigModel sharedModel].startupInstall]];
     }];
     
+    [[YYKAppSpreadBannerModel sharedModel] fetchAppSpreadWithCompletionHandler:nil];
     return YES;
 }
 

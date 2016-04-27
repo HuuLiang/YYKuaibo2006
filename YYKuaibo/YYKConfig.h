@@ -29,6 +29,7 @@
 
 #define YYK_VIP_VIDEO_URL               @"/iosvideo/vipvideo.htm"
 #define YYK_APP_SPREAD_LIST_URL         @"/iosvideo/appSpreadList.htm"
+#define YYK_APP_SPREAD_BANNER_URL       @"/iosvideo/appSpreadBanner.htm"
 
 #define YYK_ACTIVATE_URL                @"/iosvideo/activat.htm"
 #define YYK_SYSTEM_CONFIG_URL           @"/iosvideo/systemConfig.htm"
@@ -49,6 +50,7 @@
 #define YYK_STANDBY_CHANNEL_URL             @"/static/iosvideo/channelRanking.json"
 #define YYK_STANDBY_CHANNEL_PROGRAM_URL     @"/static/iosvideo/program_%@_%@.json"
 #define YYK_STANDBY_APP_SPREAD_LIST_URL     @"/static/iosvideo/appSpreadList.json"
+#define YYK_STANDBY_APP_SPREAD_BANNER_URL   @"/static/iosvideo/appSpreadBanner.json"
 #define YYK_STANDBY_SYSTEM_CONFIG_URL       @"/static/iosvideo/systemConfig.json"
 #define YYK_STANDBY_AGREEMENT_NOTPAID_URL   @"/static/iosvideo/agreement.html"
 #define YYK_STANDBY_AGREEMENT_PAID_URL      @"/static/iosvideo/agreement-paid.html"

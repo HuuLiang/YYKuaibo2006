@@ -147,5 +147,6 @@
             break;
     }
     _specLabel.text = specText;
+    _specLabel.hidden = specText.length == 0;
 }
 @end

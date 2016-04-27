@@ -75,8 +75,6 @@ DefineLazyPropertyInitialization(NSMutableArray, reusableCards)
     }
     
     card = [[YYKCard alloc] init];
-    card.layer.cornerRadius = 10;
-    card.layer.masksToBounds = YES;
     @weakify(self);
     [card bk_whenTapped:^{
         @strongify(self);

@@ -98,6 +98,11 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
     }];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [_layoutCollectionView reloadData];
+}
+
 - (void)loadHeaderImage {
     if ([YYKUtil isVIP]) {
         return ;
@@ -174,6 +179,17 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
         YYKProgram *appSpread = self.appSpreadModel.fetchedSpreads[indexPath.item];
         cell.title = appSpread.title;
         cell.imageURL = [NSURL URLWithString:appSpread.coverImg];
+        cell.isInstalled = NO;
+        
+        [YYKUtil checkAppInstalledWithBundleId:appSpread.specialDesc completionHandler:^(BOOL installed) {
+            if (installed) {
+                cell.isInstalled = YES;
+            }
+        }];
+    } else {
+        cell.title = nil;
+        cell.imageURL = nil;
+        cell.isInstalled = NO;
     }
     return cell;
 }

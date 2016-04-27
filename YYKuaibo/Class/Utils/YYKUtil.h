@@ -44,4 +44,8 @@ extern NSString *const kPaymentInfoKeyName;
 + (void)callPhoneNumber:(NSString *)phoneNum;
 + (NSUInteger)launchSeq;
 + (void)accumateLaunchSeq;
+
++ (void)showSpreadBanner;
++ (void)checkAppInstalledWithBundleId:(NSString *)bundleId completionHandler:(void (^)(BOOL))handler;
+
 @end

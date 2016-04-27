@@ -12,6 +12,9 @@
 #import "NSDate+Utilities.h"
 #import "YYKPaymentInfo.h"
 #import "YYKVideo.h"
+#import "YYKSpreadBannerViewController.h"
+#import "YYKAppSpreadBannerModel.h"
+#import "YYKApplicationManager.h"
 
 NSString *const kPaymentInfoKeyName = @"yykuaibov_paymentinfo_keyname";
 
@@ -176,4 +179,49 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
     NSUInteger launchSeq = [self launchSeq];
     [[NSUserDefaults standardUserDefaults] setObject:@(launchSeq+1) forKey:kLaunchSeqKeyName];
 }
+
++ (void)showSpreadBanner {
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSArray *spreads = [YYKAppSpreadBannerModel sharedModel].fetchedSpreads;
+        NSArray *allInstalledAppIds = [[YYKApplicationManager defaultManager] allInstalledAppIdentifiers];
+        NSArray *uninstalledSpreads = [spreads bk_select:^BOOL(id obj) {
+            return ![allInstalledAppIds containsObject:[obj specialDesc]];
+        }];
+        
+        if (uninstalledSpreads.count > 0) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                YYKSpreadBannerViewController *spreadVC = [[YYKSpreadBannerViewController alloc] initWithSpreads:uninstalledSpreads];
+                [spreadVC showInViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+            });
+        }
+    });
+}
+
++ (void)checkAppInstalledWithBundleId:(NSString *)bundleId completionHandler:(void (^)(BOOL))handler {
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        BOOL installed = [[[YYKApplicationManager defaultManager] allInstalledAppIdentifiers] bk_any:^BOOL(id obj) {
+            return [bundleId isEqualToString:obj];
+        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (handler) {
+                handler(installed);
+            }
+        });
+    });
+}
+
+//+ (void)checkAppsInstalledWithBundleIds:(NSArray<NSString *> *)bundleIds completionHandler:(void (^)(NSArray *))handler {
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        NSArray *allInstalledAppIds = [[YYKApplicationManager defaultManager] allInstalledAppIdentifiers];
+//        NSArray *installedAppIds = [allInstalledAppIds bk_select:^BOOL(id obj) {
+//            return [allInstalledAppIds containsObject:obj];
+//        }];
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (handler) {
+//                handler(installedAppIds);
+//            }
+//        });
+//    };
+//}
 @end

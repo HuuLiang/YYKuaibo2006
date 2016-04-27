@@ -24,6 +24,7 @@
 
 @property (nonatomic,readonly,retain) NSDictionary *paymentTypeMap;
 @property (nonatomic,copy) dispatch_block_t completionHandler;
+@property (nonatomic) NSUInteger closeSeq;
 @end
 
 @implementation YYKPaymentViewController
@@ -163,6 +164,11 @@
             self.completionHandler();
             self.completionHandler = nil;
         }
+        
+        ++self.closeSeq;
+        if (self.closeSeq == 2 && [YYKUtil isNoVIP]) {
+            [YYKUtil showSpreadBanner];
+        }
     }];
 }
 
@@ -210,6 +216,8 @@
         [self hidePayment];
         [[YYKHudManager manager] showHudWithText:@"支付成功"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kPaidNotificationName object:paymentInfo];
+        
+        [YYKUtil showSpreadBanner];
     } else if (result == PAYRESULT_ABANDON) {
         [[YYKHudManager manager] showHudWithText:@"支付取消"];
     } else {
