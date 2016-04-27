@@ -74,7 +74,14 @@
 }
 
 - (void)showInViewController:(UIViewController *)viewController {
-    if ([viewController.childViewControllers containsObject:self]) {
+    BOOL anySpreadBanner = [viewController.childViewControllers bk_any:^BOOL(id obj) {
+        if ([obj isKindOfClass:[self class]]) {
+            return YES;
+        }
+        return NO;
+    }];
+    
+    if (anySpreadBanner) {
         return ;
     }
     

@@ -4,7 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>YYKuaibo.xcscheme</key>
+		<key>YYKuaibo (iapppay simulator).xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
+		<key>YYKuaibo.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -23,6 +28,11 @@
 			<true/>
 		</dict>
 		<key>BCE256211C966A8E00133F4F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BCF346911CCAB9FD005DEFFF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
