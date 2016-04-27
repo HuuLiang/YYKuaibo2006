@@ -67,9 +67,9 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
     }
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.minimumInteritemSpacing = 15;
+    layout.minimumInteritemSpacing = 0;
     layout.minimumLineSpacing = layout.minimumInteritemSpacing;
-    layout.sectionInset = UIEdgeInsetsMake(layout.minimumInteritemSpacing, layout.minimumInteritemSpacing, layout.minimumInteritemSpacing, layout.minimumInteritemSpacing);
+//    layout.sectionInset = UIEdgeInsetsMake(layout.minimumInteritemSpacing, layout.minimumInteritemSpacing, layout.minimumInteritemSpacing, layout.minimumInteritemSpacing);
     
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     _layoutCollectionView.backgroundColor = [UIColor clearColor];
@@ -173,24 +173,32 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YYKSpreadCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSpreadCellReusableIdentifier forIndexPath:indexPath];
+    //YYKSpreadCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSpreadCellReusableIdentifier forIndexPath:indexPath];
     cell.backgroundColor = collectionView.backgroundColor;
     
     if (indexPath.item < self.appSpreadModel.fetchedSpreads.count) {
         YYKProgram *appSpread = self.appSpreadModel.fetchedSpreads[indexPath.item];
-        cell.title = appSpread.title;
         cell.imageURL = [NSURL URLWithString:appSpread.coverImg];
         cell.isInstalled = NO;
-        
-        [YYKUtil checkAppInstalledWithBundleId:appSpread.specialDesc completionHandler:^(BOOL installed) {
-            if (installed) {
-                cell.isInstalled = YES;
-            }
-        }];
     } else {
-        cell.title = nil;
         cell.imageURL = nil;
         cell.isInstalled = NO;
     }
+//        YYKProgram *appSpread = self.appSpreadModel.fetchedSpreads[indexPath.item];
+//        cell.title = appSpread.title;
+//        cell.imageURL = [NSURL URLWithString:appSpread.coverImg];
+//        cell.isInstalled = NO;
+//        
+//        [YYKUtil checkAppInstalledWithBundleId:appSpread.specialDesc completionHandler:^(BOOL installed) {
+//            if (installed) {
+//                cell.isInstalled = YES;
+//            }
+//        }];
+//    } else {
+//        cell.title = nil;
+//        cell.imageURL = nil;
+//        cell.isInstalled = NO;
+//    }
     return cell;
 }
 
@@ -202,9 +210,9 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionViewLayout;
     
     const CGFloat fullWidth = CGRectGetWidth(collectionView.bounds) - layout.sectionInset.left - layout.sectionInset.right;
-    const CGFloat itemWidth = (fullWidth - 2 * layout.minimumInteritemSpacing) / 3;
-    const CGFloat itemHeight = itemWidth + 20;
-    return CGSizeMake(itemWidth, itemHeight);
+//    const CGFloat itemWidth = (fullWidth - 2 * layout.minimumInteritemSpacing) / 3;
+//    const CGFloat itemHeight = itemWidth + 20;
+    return CGSizeMake(fullWidth, fullWidth * 0.4);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
