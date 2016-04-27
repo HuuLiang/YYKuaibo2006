@@ -115,23 +115,35 @@
                                    [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
                                } error:nil];
     
-    [UINavigationController aspect_hookSelector:@selector(shouldAutorotate)
-                                    withOptions:AspectPositionInstead
-                                     usingBlock:^(id<AspectInfo> aspectInfo)
-    {
-        UINavigationController *thisNav = [aspectInfo instance];
-        BOOL autoRotate = [thisNav.topViewController shouldAutorotate];
-        [[aspectInfo originalInvocation] setReturnValue:&autoRotate];
-     } error:nil];
+    [UITabBarController aspect_hookSelector:@selector(shouldAutorotate)
+                                withOptions:AspectPositionInstead
+                                 usingBlock:^(id<AspectInfo> aspectInfo){
+                                     UITabBarController *thisTabBarVC = [aspectInfo instance];
+                                     UIViewController *selectedVC = thisTabBarVC.selectedViewController;
+                                     
+                                     BOOL autoRotate = NO;
+                                     if ([selectedVC isKindOfClass:[UINavigationController class]]) {
+                                         autoRotate = [((UINavigationController *)selectedVC).topViewController shouldAutorotate];
+                                     } else {
+                                         autoRotate = [selectedVC shouldAutorotate];
+                                     }
+                                     [[aspectInfo originalInvocation] setReturnValue:&autoRotate];
+                                 } error:nil];
     
-    [UINavigationController aspect_hookSelector:@selector(supportedInterfaceOrientations)
-                                    withOptions:AspectPositionInstead
-                                     usingBlock:^(id<AspectInfo> aspectInfo)
-    {
-         UINavigationController *thisNav = [aspectInfo instance];
-         NSUInteger result = [thisNav.topViewController supportedInterfaceOrientations];
-         [[aspectInfo originalInvocation] setReturnValue:&result];
-     } error:nil];
+    [UITabBarController aspect_hookSelector:@selector(supportedInterfaceOrientations)
+                                withOptions:AspectPositionInstead
+                                 usingBlock:^(id<AspectInfo> aspectInfo){
+                                     UITabBarController *thisTabBarVC = [aspectInfo instance];
+                                     UIViewController *selectedVC = thisTabBarVC.selectedViewController;
+                                     
+                                     NSUInteger result = 0;
+                                     if ([selectedVC isKindOfClass:[UINavigationController class]]) {
+                                         result = [((UINavigationController *)selectedVC).topViewController supportedInterfaceOrientations];
+                                     } else {
+                                         result = [selectedVC supportedInterfaceOrientations];
+                                     }
+                                     [[aspectInfo originalInvocation] setReturnValue:&result];
+                                 } error:nil];
     
 }
 
