@@ -62,7 +62,7 @@
             [_memberButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self);
                 make.top.equalTo(_vipImageView.mas_bottom).offset(15);
-                make.width.equalTo(self).multipliedBy(0.4);
+                make.width.equalTo(self).multipliedBy(0.5);
                 make.height.mas_equalTo(44);
             }];
         }
