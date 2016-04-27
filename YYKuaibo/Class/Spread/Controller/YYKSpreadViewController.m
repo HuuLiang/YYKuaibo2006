@@ -67,7 +67,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
     }
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.minimumInteritemSpacing = 0;
+    layout.minimumInteritemSpacing = 2;
     layout.minimumLineSpacing = layout.minimumInteritemSpacing;
 //    layout.sectionInset = UIEdgeInsetsMake(layout.minimumInteritemSpacing, layout.minimumInteritemSpacing, layout.minimumInteritemSpacing, layout.minimumInteritemSpacing);
     
