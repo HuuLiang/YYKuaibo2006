@@ -118,7 +118,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
         
         if (success) {
             @weakify(self);
-            [self->_headerImageView sd_setImageWithURL:[NSURL URLWithString:systemConfigModel.channelTopImage]
+            [self->_headerImageView sd_setImageWithURL:[NSURL URLWithString:systemConfigModel.spreadTopImage]
                                              completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
              {
                  @strongify(self);

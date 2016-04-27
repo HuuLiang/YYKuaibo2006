@@ -24,6 +24,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         _coverImageView = [[UIImageView alloc] init];
+        _coverImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _coverImageView.clipsToBounds = YES;
         [self addSubview:_coverImageView];
         {
             [_coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
