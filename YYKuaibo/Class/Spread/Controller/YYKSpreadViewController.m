@@ -180,6 +180,12 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
         YYKProgram *appSpread = self.appSpreadModel.fetchedSpreads[indexPath.item];
         cell.imageURL = [NSURL URLWithString:appSpread.coverImg];
         cell.isInstalled = NO;
+        
+        [YYKUtil checkAppInstalledWithBundleId:appSpread.specialDesc completionHandler:^(BOOL installed) {
+            if (installed) {
+                cell.isInstalled = YES;
+            }
+        }];
     } else {
         cell.imageURL = nil;
         cell.isInstalled = NO;
@@ -189,11 +195,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
 //        cell.imageURL = [NSURL URLWithString:appSpread.coverImg];
 //        cell.isInstalled = NO;
 //        
-//        [YYKUtil checkAppInstalledWithBundleId:appSpread.specialDesc completionHandler:^(BOOL installed) {
-//            if (installed) {
-//                cell.isInstalled = YES;
-//            }
-//        }];
+
 //    } else {
 //        cell.title = nil;
 //        cell.imageURL = nil;
