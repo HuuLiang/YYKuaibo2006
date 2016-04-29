@@ -24,7 +24,6 @@ typedef void (^YYKPaymentCompletionHandler)(PAYRESULT payResult, YYKPaymentInfo 
            completionHandler:(YYKPaymentCompletionHandler)handler;
 
 - (void)handleOpenURL:(NSURL *)url;
-- (void)processPaymentInEnteringForeground;
 //- (void)checkPayment;
 
 @end

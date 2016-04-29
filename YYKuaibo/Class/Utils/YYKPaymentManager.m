@@ -46,6 +46,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 
 - (void)setup {
     [PayUitls getIntents].delegate = self;
+    [[PayUitls getIntents] PayEnterForeground];;
 //    [[YYKPaymentConfigModel sharedModel] fetchConfigWithCompletionHandler:^(BOOL success, id obj) {
 ////        [[IapppayAlphaKit sharedInstance] setAppAlipayScheme:kAlipaySchemeUrl];
 ////        [[IapppayAlphaKit sharedInstance] setAppId:[YYKPaymentConfig sharedConfig].iappPayInfo.appid mACID:YYK_CHANNEL_NO];
@@ -57,10 +58,6 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     [[PayUitls getIntents] paytoAli:url];
 //    [[IapppayAlphaKit sharedInstance] handleOpenUrl:url];
 //    [WXApi handleOpenURL:url delegate:self];
-}
-
-- (void)processPaymentInEnteringForeground {
-    [[PayUitls getIntents] PayEnterForeground];
 }
 
 - (BOOL)startPaymentWithType:(YYKPaymentType)type
@@ -83,7 +80,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     NSString *channelNo = YYK_CHANNEL_NO;
     channelNo = [channelNo substringFromIndex:channelNo.length-14];
     NSString *uuid = [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)];
-    NSString *orderNo = [NSString stringWithFormat:@"%@_%@$%@", channelNo, uuid, YYK_REST_APP_ID];
+    NSString *orderNo = [NSString stringWithFormat:@"%@_%@", channelNo, uuid];
     
     YYKPaymentInfo *paymentInfo = [[YYKPaymentInfo alloc] init];
     paymentInfo.orderId = orderNo;
@@ -108,7 +105,13 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     BOOL success = YES;
     if (type == YYKPaymentTypeVIAPay && (subType == YYKPaymentTypeAlipay || subType == YYKPaymentTypeWeChatPay)) {
         NSString *tradeName = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? @"黑金VIP会员" : @"VIP会员";
-        [[PayUitls getIntents] gotoPayByPackageId:kVIAPackageId andFee:(int)price andTradeName:tradeName andGoodsDetails:nil andScheme:kVIAPaySchemeUrl andchannelOrderId:orderNo andType:subType == YYKPaymentTypeAlipay ? 1 : 2];
+        [[PayUitls getIntents] gotoPayByPackageId:kVIAPackageId
+                                           andFee:(int)price
+                                     andTradeName:tradeName
+                                  andGoodsDetails:tradeName
+                                        andScheme:kVIAPaySchemeUrl
+                                andchannelOrderId:[orderNo stringByAppendingFormat:@"$%@", YYK_REST_APP_ID]
+                                          andType:subType == YYKPaymentTypeAlipay ? 1 : 2];
 //    if (type == YYKPaymentTypeWeChatPay) {
 //        @weakify(self);
 //        [[WeChatPayManager sharedInstance] startWithPayment:paymentInfo completionHandler:^(PAYRESULT payResult) {

@@ -233,7 +233,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    [[YYKPaymentManager sharedManager] processPaymentInEnteringForeground];
+    
 //    if (![YYKUtil isAllVIPs]) {
 //        [[YYKPaymentManager sharedManager] checkPayment];
 //    }
@@ -262,4 +262,8 @@
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    [[YYKPaymentManager sharedManager] handleOpenURL:url];
+    return YES;
+}
 @end
