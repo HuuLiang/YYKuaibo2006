@@ -26,20 +26,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>alipayscheme</string>
+			<string>viapayurlscheme</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>comyykuaibo2016appalipayurlscheme</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>weixin</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>wx4af04eb5b3dbfb56</string>
+				<string>comyykuaibov2appviapayurlscheme</string>
 			</array>
 		</dict>
 	</array>
@@ -49,6 +39,7 @@
 	<array>
 		<string>alipay</string>
 		<string>wechat</string>
+		<string>alipayqr</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

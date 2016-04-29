@@ -233,9 +233,10 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    if (![YYKUtil isAllVIPs]) {
-        [[YYKPaymentManager sharedManager] checkPayment];
-    }
+    [[YYKPaymentManager sharedManager] processPaymentInEnteringForeground];
+//    if (![YYKUtil isAllVIPs]) {
+//        [[YYKPaymentManager sharedManager] checkPayment];
+//    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

@@ -7,7 +7,7 @@
 //
 
 #import "UIView+Loading.h"
-#import <MBProgressHUD.h>
+#import "MBProgressHUD.h"
 
 static const void *kUILoadingViewAssociatedKey = &kUILoadingViewAssociatedKey;
 static const void *kUIProgressingViewAssociatedKey = &kUIProgressingViewAssociatedKey;
