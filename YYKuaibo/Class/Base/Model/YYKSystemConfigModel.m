@@ -138,14 +138,18 @@ NSString *const kSystemConfigModelSVipKeyPrice = @"yykuaibov_systemconfigModel_s
     //VIP价格
     if (!vipPayAmount) {
         NSString *vipPrice = [self PayAmountWithPriceMin:priceMin priceMax:priceMax priceExclude:priceExclude];
-        [defaults setObject:vipPrice forKey:kSystemConfigModelVipKeyPrice];
-        [defaults synchronize];
+        if (vipPrice) {
+            [defaults setObject:vipPrice forKey:kSystemConfigModelVipKeyPrice];
+            [defaults synchronize];
+        }
     }
     //SVIP价格
     if (!SVipPayAmount) {
         NSString *SVipPrice = [self PayAmountWithPriceMin:priceMin priceMax:priceMax priceExclude:priceExclude];
-        [defaults setObject:SVipPrice forKey:kSystemConfigModelSVipKeyPrice];
-        [defaults synchronize];
+        if (SVipPayAmount) {
+            [defaults setObject:SVipPrice forKey:kSystemConfigModelSVipKeyPrice];
+            [defaults synchronize];
+        }
     }
     
 }
