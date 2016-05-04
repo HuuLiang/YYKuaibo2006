@@ -9,6 +9,8 @@
 #import "YYKSystemConfigModel.h"
 #import "YYKProgram.h"
 
+NSString *const kSystemConfigModelKeyPrice = @"yykuaibov_systemconfigModel_keyprice";
+
 @implementation YYKSystemConfigResponse
 
 - (Class)confisElementClass {
@@ -53,69 +55,104 @@
                          standbyURLPath:YYK_STANDBY_SYSTEM_CONFIG_URL
                              withParams:nil
                         responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
-    {
-        @strongify(self);
-        
-        if (respStatus == YYKURLResponseSuccess) {
-            YYKSystemConfigResponse *resp = self.response;
-            
-            [resp.confis enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                YYKSystemConfig *config = obj;
-                
-                if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAY_AMOUNT]) {
-                    self.payAmount = config.value.integerValue;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SVIP_PAY_AMOUNT]) {
-                    self.svipPayAmount = config.value.integerValue;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAY_IMG]) {
-                    self.paymentImage = config.value;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SVIP_PAY_IMG]) {
-                    self.svipPaymentImage = config.value;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_DISCOUNT_IMG]) {
-                    self.discountImage = config.value;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAYMENT_TOP_IMAGE]) {
-                    self.channelTopImage = config.value;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_STARTUP_INSTALL]) {
-                    self.startupInstall = config.value;
-                    self.startupPrompt = config.memo;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_TOP_IMAGE]) {
-                    self.spreadTopImage = config.value;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_URL]) {
-                    self.spreadURL = config.value;
-//                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_LEFT_IMAGE]) {
-//                    self.spreadLeftImage = config.value;
-//                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_LEFT_URL]) {
-//                    self.spreadLeftUrl = config.value;
-//                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_RIGHT_IMAGE]) {
-//                    self.spreadRightImage = config.value;
-//                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_RIGHT_URL]) {
-//                    self.spreadRightUrl = config.value;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_CONTACT]) {
-                    self.contact = config.value;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_CONTACT_TIME]) {
-                    self.contactTime = config.value;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_DISCOUNT_AMOUNT]) {
-                    self.discountAmount = config.value.floatValue;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_DISCOUNT_LAUNCH_SEQ]) {
-                    self.discountLaunchSeq = config.value.integerValue;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_NOTIFICATION_LAUNCH_SEQ]) {
-                    self.notificationLaunchSeq = config.value.integerValue;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_NOTIFICATION_BACKGROUND_DELAY]) {
-                    self.notificationBackgroundDelay = config.value.integerValue;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_NOTIFICATION_TEXT]) {
-                    self.notificationText = config.value;
-                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_NOTIFICATION_REPEAT_TIMES]) {
-                    self.notificationRepeatTimes = config.value;
-                }
-            }];
-            
-            _loaded = YES;
-        }
-        
-        if (handler) {
-            handler(respStatus==YYKURLResponseSuccess);
-        }
-    }];
+                    {
+                        @strongify(self);
+                        
+                        if (respStatus == YYKURLResponseSuccess) {
+                            YYKSystemConfigResponse *resp = self.response;
+                            
+                            [resp.confis enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                                YYKSystemConfig *config = obj;
+                                
+                                if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAY_AMOUNT]) {
+                                    self.payAmount = config.value.integerValue;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SVIP_PAY_AMOUNT]) {
+                                    self.svipPayAmount = config.value.integerValue;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAY_IMG]) {
+                                    self.paymentImage = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SVIP_PAY_IMG]) {
+                                    self.svipPaymentImage = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_DISCOUNT_IMG]) {
+                                    self.discountImage = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAYMENT_TOP_IMAGE]) {
+                                    self.channelTopImage = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_STARTUP_INSTALL]) {
+                                    self.startupInstall = config.value;
+                                    self.startupPrompt = config.memo;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_TOP_IMAGE]) {
+                                    self.spreadTopImage = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_URL]) {
+                                    self.spreadURL = config.value;
+                                    //                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_LEFT_IMAGE]) {
+                                    //                    self.spreadLeftImage = config.value;
+                                    //                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_LEFT_URL]) {
+                                    //                    self.spreadLeftUrl = config.value;
+                                    //                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_RIGHT_IMAGE]) {
+                                    //                    self.spreadRightImage = config.value;
+                                    //                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_RIGHT_URL]) {
+                                    //                    self.spreadRightUrl = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_CONTACT]) {
+                                    self.contact = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_CONTACT_TIME]) {
+                                    self.contactTime = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_DISCOUNT_AMOUNT]) {
+                                    self.discountAmount = config.value.floatValue;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_DISCOUNT_LAUNCH_SEQ]) {
+                                    self.discountLaunchSeq = config.value.integerValue;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_NOTIFICATION_LAUNCH_SEQ]) {
+                                    self.notificationLaunchSeq = config.value.integerValue;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_NOTIFICATION_BACKGROUND_DELAY]) {
+                                    self.notificationBackgroundDelay = config.value.integerValue;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_NOTIFICATION_TEXT]) {
+                                    self.notificationText = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_NOTIFICATION_REPEAT_TIMES]) {
+                                    self.notificationRepeatTimes = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PRICE_MIN]){
+                                    self.priceMin = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PRICE_MAX]){
+                                    self.priceMax = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PRICE_EXCLUDE]){
+                                    self.priceExclude = config.value;
+                                }
+                            }];
+                            
+                            //
+                            _loaded = YES;
+                            [self savePayAmountWithPriceMain:self.priceMin priceMax:self.priceMax priceExclude:self.priceExclude];
+                        }
+                        
+                        if (handler) {
+                            handler(respStatus==YYKURLResponseSuccess);
+                        }
+                    }];
     return success;
+}
+//根据价格区间来设定价格
+- (void)savePayAmountWithPriceMain:(NSString *)priceMin priceMax:(NSString *)priceMax priceExclude:(NSString *)priceExclude {
+    
+    NSString *payAmount = [[NSUserDefaults standardUserDefaults] objectForKey:kSystemConfigModelKeyPrice];
+    if (payAmount != nil) {
+        return;
+    }
+    //把排除的价格添加到数组中
+    NSArray *priceExcludeArr = [priceExclude componentsSeparatedByString:@","];
+    
+    int price = 0;
+    NSString *priceStr = nil;
+    
+    do {
+        price = [priceMin intValue] + arc4random()%([priceMax intValue] - [priceMin intValue] +1);
+        price = price / 100;
+        
+      priceStr = [NSString stringWithFormat:@"%d",price];
+        
+    }while ([priceExcludeArr containsObject:priceStr] == YES);
+    
+        self.payAmount = price *100;
+    //本地存储
+        [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d",price] forKey:kSystemConfigModelKeyPrice];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    
 }
 
 - (NSUInteger)payAmount {
@@ -137,6 +174,9 @@
     if (program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && [YYKUtil isVIP] && ![YYKUtil isSVIP]) {
         return self.svipPayAmount;
     } else {
+        //从本地获取价格
+        NSString *payAmount = [[NSUserDefaults standardUserDefaults] objectForKey:kSystemConfigModelKeyPrice];
+        self.payAmount = [payAmount integerValue]*100;
         return self.payAmount;
     }
 }
