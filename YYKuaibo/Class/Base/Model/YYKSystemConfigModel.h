@@ -46,6 +46,11 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic) NSString *priceMax;
 @property (nonatomic) NSString *priceExclude;
 
+//SVIP价格区间
+@property (nonatomic) NSString *svipPriceMin;
+@property (nonatomic) NSString *svipPriceMax;
+@property (nonatomic) NSString *svipPriceExclude;
+
 
 //@property (nonatomic) NSString *spreadLeftImage;
 //@property (nonatomic) NSString *spreadLeftUrl;
