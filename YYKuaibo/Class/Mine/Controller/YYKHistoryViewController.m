@@ -7,7 +7,6 @@
 //
 
 #import "YYKHistoryViewController.h"
-#import "YYKVideo.h"
 #import "YYKHistoryCell.h"
 
 static NSString *const kHistoryCellReusableIdentifier = @"HistoryCellReusableIdentifier";
@@ -16,7 +15,7 @@ static NSString *const kHistoryCellReusableIdentifier = @"HistoryCellReusableIde
 {
     UITableView *_layoutTableView;
 }
-@property (nonatomic,retain) NSArray<YYKVideo *> *historyVideos;
+@property (nonatomic,retain) NSArray<YYKProgram *> *historyVideos;
 @end
 
 @implementation YYKHistoryViewController
@@ -59,7 +58,7 @@ static NSString *const kHistoryCellReusableIdentifier = @"HistoryCellReusableIde
 }
 
 - (void)reloadHistoryVideos {
-    self.historyVideos = [YYKVideo allPlayedVideos];
+    self.historyVideos = [YYKProgram allPlayedPrograms];
     [_layoutTableView reloadData];
 }
 
@@ -75,7 +74,7 @@ static NSString *const kHistoryCellReusableIdentifier = @"HistoryCellReusableIde
     cell.backgroundColor = tableView.backgroundColor;
     
     if (indexPath.row < self.historyVideos.count) {
-        YYKVideo *video = self.historyVideos[indexPath.row];
+        YYKProgram *video = self.historyVideos[indexPath.row];
         cell.imageURL = [NSURL URLWithString:video.coverImg];
         cell.title = video.title;
         cell.subtitle = video.playedDateString;
@@ -91,8 +90,8 @@ static NSString *const kHistoryCellReusableIdentifier = @"HistoryCellReusableIde
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.row < self.historyVideos.count) {
-        YYKVideo *video = self.historyVideos[indexPath.row];
-        [self playVideo:video];
+        YYKProgram *video = self.historyVideos[indexPath.row];
+        [self switchToPlayProgram:(YYKProgram *)video programLocation:indexPath.row inChannel:nil];
     }
 }
 @end

@@ -11,7 +11,6 @@
 extern NSString *const kPaymentInfoKeyName;
 
 @class YYKPaymentInfo;
-@class YYKVideo;
 
 @interface YYKUtil : NSObject
 
@@ -48,4 +47,6 @@ extern NSString *const kPaymentInfoKeyName;
 + (void)showSpreadBanner;
 + (void)checkAppInstalledWithBundleId:(NSString *)bundleId completionHandler:(void (^)(BOOL))handler;
 
++ (NSUInteger)currentTabPageIndex;
++ (NSUInteger)currentSubTabPageIndex;
 @end

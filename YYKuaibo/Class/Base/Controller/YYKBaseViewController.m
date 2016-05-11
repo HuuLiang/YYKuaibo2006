@@ -7,7 +7,6 @@
 //
 
 #import "YYKBaseViewController.h"
-#import "YYKProgram.h"
 #import "YYKPaymentViewController.h"
 #import "YYKVideoPlayerViewController.h"
 
@@ -21,10 +20,13 @@
 {
     UIImageView *_backgroundImageView;
 }
-- (UIViewController *)playerVCWithVideo:(YYKVideo *)video;
 @end
 
 @implementation YYKBaseViewController
+
+- (NSUInteger)currentIndex {
+    return 0;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -60,7 +62,7 @@
     DLog(@"%@ dealloc", [self class]);
 }
 
-- (void)switchToPlayProgram:(YYKProgram *)program {
+- (void)switchToPlayProgram:(YYKProgram *)program programLocation:(NSUInteger)programLocation inChannel:(YYKChannel *)channel {
     if (program.type.unsignedIntegerValue == YYKProgramTypeSpread) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:program.videoUrl]];
         return ;
@@ -72,21 +74,21 @@
     
     BOOL needPayment = !isFreeVideo && (vipProgramButNoVIP || svipProgramButNoSVIP);
     if (needPayment) {
-        [self payForProgram:program];
+        [self payForProgram:program programLocation:programLocation inChannel:channel];
     } else if (program.type.unsignedIntegerValue == YYKProgramTypeVideo) {
         if (isFreeVideo && (vipProgramButNoVIP || svipProgramButNoSVIP)) {
-            [self playVideo:program withTimeControl:NO shouldPopPayment:YES];
+            [self playVideo:program videoLocation:programLocation inChannel:channel withTimeControl:NO shouldPopPayment:YES];
         } else {
-            [self playVideo:program];
+            [self playVideo:program videoLocation:programLocation inChannel:channel withTimeControl:YES shouldPopPayment:NO];
         }
     }
 }
 
-- (void)playVideo:(YYKVideo *)video {
-    [self playVideo:video withTimeControl:YES shouldPopPayment:NO];
-}
+//- (void)playVideo:(YYKProgram *)video videoLocation {
+//    [self playVideo:video withTimeControl:YES shouldPopPayment:NO];
+//}
 
-//- (void)playVideo:(YYKVideo *)video withCloseAction:(YYKAction)closeAction {
+//- (void)playVideo:(YYKProgram *)video withCloseAction:(YYKAction)closeAction {
 //    UIViewController *videoPlayVC = [self playerVCWithVideo:video];
 //    videoPlayVC.hidesBottomBarWhenPushed = YES;
 //    [videoPlayVC aspect_hookSelector:@selector(viewDidDisappear:)
@@ -102,13 +104,18 @@
 //    [video didPlay];
 //}
 
-- (void)playVideo:(YYKVideo *)video withTimeControl:(BOOL)hasTimeControl shouldPopPayment:(BOOL)shouldPopPayment {
+- (void)playVideo:(YYKProgram *)video
+    videoLocation:(NSUInteger)videoLocation
+        inChannel:(YYKChannel *)channel
+  withTimeControl:(BOOL)hasTimeControl
+ shouldPopPayment:(BOOL)shouldPopPayment
+{
     if (hasTimeControl) {
         UIViewController *videoPlayVC = [self playerVCWithVideo:video];
         videoPlayVC.hidesBottomBarWhenPushed = YES;
         [self presentViewController:videoPlayVC animated:YES completion:nil];
     } else {
-        YYKVideoPlayerViewController *playerVC = [[YYKVideoPlayerViewController alloc] initWithVideo:video];
+        YYKVideoPlayerViewController *playerVC = [[YYKVideoPlayerViewController alloc] initWithVideo:video videoLocation:videoLocation channel:channel];
         playerVC.hidesBottomBarWhenPushed = YES;
         playerVC.shouldPopupPaymentIfNotPaid = shouldPopPayment;
         [self presentViewController:playerVC animated:YES completion:nil];
@@ -117,18 +124,18 @@
     [video didPlay];
 }
 
-- (void)payForProgram:(YYKProgram *)program {
-    [self payForProgram:program inView:self.view.window];
-}
-
-- (void)payForProgram:(YYKProgram *)program inView:(UIView *)view {
-    [[YYKPaymentViewController sharedPaymentVC] popupPaymentInView:view forProgram:program withCompletionHandler:nil];
+- (void)payForProgram:(YYKProgram *)program programLocation:(NSUInteger)programLocation inChannel:(YYKChannel *)channel {
+    [[YYKPaymentViewController sharedPaymentVC] popupPaymentInView:self.view.window
+                                                        forProgram:program
+                                                   programLocation:programLocation
+                                                         inChannel:channel
+                                             withCompletionHandler:nil];
 }
 
 - (void)payForPayPointType:(YYKPayPointType)payPointType {
     YYKProgram *program = [[YYKProgram alloc] init];
     program.payPointType = @(payPointType);
-    [self payForProgram:program];
+    [self payForProgram:program programLocation:0 inChannel:nil];
 }
 //- (void)onPaidNotification:(NSNotification *)notification {}
 
@@ -140,7 +147,7 @@
     return UIInterfaceOrientationMaskPortrait;
 }
 
-- (UIViewController *)playerVCWithVideo:(YYKVideo *)video {
+- (UIViewController *)playerVCWithVideo:(YYKProgram *)video {
     UIViewController *retVC;
     if (NSClassFromString(@"AVPlayerViewController")) {
         AVPlayerViewController *playerVC = [[AVPlayerViewController alloc] init];

@@ -14,6 +14,9 @@ static NSString *const kPaymentInfoOrderIdKeyName = @"yykuaibov_paymentinfo_orde
 static NSString *const kPaymentInfoOrderPriceKeyName = @"yykuaibov_paymentinfo_orderprice_keyname";
 static NSString *const kPaymentInfoContentIdKeyName = @"yykuaibov_paymentinfo_contentid_keyname";
 static NSString *const kPaymentInfoContentTypeKeyName = @"yykuaibov_paymentinfo_contenttype_keyname";
+static NSString *const kPaymentInfoContentLocationKeyName = @"yykuaibov_paymentinfo_contentlocation_keyname";
+static NSString *const kPaymentInfoColumnIdKeyName = @"yykuaibov_paymentinfo_columnid_keyname";
+static NSString *const kPaymentInfoColumnTypeKeyName = @"yykuaibov_paymentinfo_columntype_keyname";
 static NSString *const kPaymentInfoPayPointTypeKeyName = @"yykuaibov_paymentinfo_paypointtype_keyname";
 static NSString *const kPaymentInfoPaymentTypeKeyName = @"yykuaibov_paymentinfo_paymenttype_keyname";
 static NSString *const kPaymentInfoPaymentResultKeyName = @"yykuaibov_paymentinfo_paymentresult_keyname";
@@ -44,6 +47,9 @@ static NSString *const kPaymentInfoPaymentNotifyUrl = @"yykuaibov_paymentinfo_pa
     paymentInfo.orderPrice = payment[kPaymentInfoOrderPriceKeyName];
     paymentInfo.contentId = payment[kPaymentInfoContentIdKeyName];
     paymentInfo.contentType = payment[kPaymentInfoContentTypeKeyName];
+    paymentInfo.contentLocation = payment[kPaymentInfoContentLocationKeyName];
+    paymentInfo.columnId = payment[kPaymentInfoColumnIdKeyName];
+    paymentInfo.columnType = payment[kPaymentInfoColumnTypeKeyName];
     paymentInfo.payPointType = payment[kPaymentInfoPayPointTypeKeyName];
     paymentInfo.paymentType = payment[kPaymentInfoPaymentTypeKeyName];
     paymentInfo.paymentResult = payment[kPaymentInfoPaymentResultKeyName];
@@ -64,6 +70,9 @@ static NSString *const kPaymentInfoPaymentNotifyUrl = @"yykuaibov_paymentinfo_pa
     [payment safelySetObject:self.orderPrice forKey:kPaymentInfoOrderPriceKeyName];
     [payment safelySetObject:self.contentId forKey:kPaymentInfoContentIdKeyName];
     [payment safelySetObject:self.contentType forKey:kPaymentInfoContentTypeKeyName];
+    [payment safelySetObject:self.contentLocation forKey:kPaymentInfoContentLocationKeyName];
+    [payment safelySetObject:self.columnId forKey:kPaymentInfoColumnIdKeyName];
+    [payment safelySetObject:self.columnType forKey:kPaymentInfoColumnTypeKeyName];
     [payment safelySetObject:self.payPointType forKey:kPaymentInfoPayPointTypeKeyName];
     [payment safelySetObject:self.paymentType forKey:kPaymentInfoPaymentTypeKeyName];
     [payment safelySetObject:self.paymentResult forKey:kPaymentInfoPaymentResultKeyName];

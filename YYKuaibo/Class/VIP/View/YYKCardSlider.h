@@ -24,6 +24,7 @@
 @optional
 - (CGSize)cardSlider:(YYKCardSlider *)slider sizeOfCardAtIndex:(NSUInteger)index;
 - (void)cardSlider:(YYKCardSlider *)slider didSelectCardAtIndex:(NSUInteger)index;
+- (void)cardSliderDidEndSliding:(YYKCardSlider *)slider;
 
 @end
 

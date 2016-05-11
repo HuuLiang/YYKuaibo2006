@@ -7,19 +7,18 @@
 //
 
 #import "YYKEncryptedURLRequest.h"
-#import "YYKProgram.h"
 
 @interface YYKHomeProgramResponse : YYKURLResponse
-@property (nonatomic,retain) NSArray<YYKPrograms *> *columnList;
+@property (nonatomic,retain) NSArray<YYKChannel *> *columnList;
 @end
 
 @interface YYKHomeProgramModel : YYKEncryptedURLRequest
 
-@property (nonatomic,retain,readonly) NSArray<YYKPrograms *> *fetchedProgramList;
-@property (nonatomic,retain,readonly) NSArray<YYKPrograms *> *fetchedVideoAndAdProgramList;
+@property (nonatomic,retain,readonly) NSArray<YYKChannel *> *fetchedProgramList;
+@property (nonatomic,retain,readonly) NSArray<YYKChannel *> *fetchedVideoAndAdProgramList;
 
-@property (nonatomic,retain,readonly) NSArray<YYKProgram *> *fetchedBannerPrograms;
-@property (nonatomic,retain,readonly) NSArray<YYKProgram *> *fetchedTrialVideos;
+@property (nonatomic,retain,readonly) YYKChannel *fetchedBannerChannel;
+@property (nonatomic,retain,readonly) YYKChannel *fetchedTrialChannel;
 
 - (BOOL)fetchProgramsWithCompletionHandler:(YYKCompletionHandler)handler;
 

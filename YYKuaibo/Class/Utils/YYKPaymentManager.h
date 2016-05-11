@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class YYKProgram;
+@class YYKChannel;
 
 typedef void (^YYKPaymentCompletionHandler)(PAYRESULT payResult, YYKPaymentInfo *paymentInfo);
 
@@ -17,11 +18,13 @@ typedef void (^YYKPaymentCompletionHandler)(PAYRESULT payResult, YYKPaymentInfo 
 + (instancetype)sharedManager;
 
 - (void)setup;
-- (BOOL)startPaymentWithType:(YYKPaymentType)type
-                     subType:(YYKPaymentType)subType
-                       price:(NSUInteger)price
-                  forProgram:(YYKProgram *)program
-           completionHandler:(YYKPaymentCompletionHandler)handler;
+- (YYKPaymentInfo *)startPaymentWithType:(YYKPaymentType)type
+                                 subType:(YYKPaymentType)subType
+                                   price:(NSUInteger)price
+                              forProgram:(YYKProgram *)program
+                         programLocation:(NSUInteger)programLocation
+                               inChannel:(YYKChannel *)channel
+                       completionHandler:(YYKPaymentCompletionHandler)handler;
 
 - (void)handleOpenURL:(NSURL *)url;
 - (void)checkPayment;

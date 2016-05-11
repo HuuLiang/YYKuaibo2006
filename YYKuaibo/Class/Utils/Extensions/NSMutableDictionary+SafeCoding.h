@@ -11,5 +11,6 @@
 @interface NSMutableDictionary (SafeCoding)
 
 - (void)safelySetObject:(id)object forKey:(id <NSCopying>)key;
+- (void)safelySetUInt:(NSUInteger)uint forKey:(id <NSCopying>)key;
 
 @end

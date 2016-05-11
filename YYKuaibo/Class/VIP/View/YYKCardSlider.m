@@ -299,6 +299,11 @@ DefineLazyPropertyInitialization(NSMutableArray, reusableCards)
     }
 }
 
+- (void)notifyDelegateDidEndSliding {
+    if ([self.delegate respondsToSelector:@selector(cardSliderDidEndSliding:)]) {
+        [self.delegate cardSliderDidEndSliding:self];
+    }
+}
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -315,4 +320,7 @@ DefineLazyPropertyInitialization(NSMutableArray, reusableCards)
     }
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [self notifyDelegateDidEndSliding];
+}
 @end

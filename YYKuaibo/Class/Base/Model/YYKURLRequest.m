@@ -17,7 +17,7 @@
 @property (nonatomic,retain) AFHTTPRequestOperation *standbyRequestOp;
 
 -(BOOL)requestURLPath:(NSString *)urlPath
-           withParams:(NSDictionary *)params
+           withParams:(id)params
             isStandby:(BOOL)isStandBy
     shouldNotifyError:(BOOL)shouldNotifyError
       responseHandler:(YYKURLResponseHandler)responseHandler;
@@ -91,7 +91,7 @@
 }
 
 -(BOOL)requestURLPath:(NSString *)urlPath
-           withParams:(NSDictionary *)params
+           withParams:(id)params
             isStandby:(BOOL)isStandBy
     shouldNotifyError:(BOOL)shouldNotifyError
       responseHandler:(YYKURLResponseHandler)responseHandler
@@ -147,7 +147,7 @@
     return YES;
 }
 
-- (BOOL)requestURLPath:(NSString *)urlPath standbyURLPath:(NSString *)standbyUrlPath withParams:(NSDictionary *)params responseHandler:(YYKURLResponseHandler)responseHandler {
+- (BOOL)requestURLPath:(NSString *)urlPath standbyURLPath:(NSString *)standbyUrlPath withParams:(id)params responseHandler:(YYKURLResponseHandler)responseHandler {
     BOOL useStandbyRequest = standbyUrlPath.length > 0;
     BOOL success = [self requestURLPath:urlPath
                              withParams:params
@@ -166,7 +166,7 @@
     return success;
 }
 
--(BOOL)requestURLPath:(NSString *)urlPath withParams:(NSDictionary *)params responseHandler:(YYKURLResponseHandler)responseHandler
+-(BOOL)requestURLPath:(NSString *)urlPath withParams:(id)params responseHandler:(YYKURLResponseHandler)responseHandler
 {
     return [self requestURLPath:urlPath standbyURLPath:nil withParams:params responseHandler:responseHandler];
 }

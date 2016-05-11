@@ -37,6 +37,11 @@
 #define YYK_AGREEMENT_NOTPAID_URL       @"/iosvideo/agreement.html"
 #define YYK_AGREEMENT_PAID_URL          @"/iosvideo/agreement-paid.html"
 
+#define YYK_STATS_BASE_URL              @"http://120.24.252.114"
+#define YYK_STATS_CPC_URL               @"/stats/cpcs.service"
+#define YYK_STATS_TAB_URL               @"/stats/tabStat.service"
+#define YYK_STATS_PAY_URL               @"/stats/payRes.service"
+
 #define YYK_PAYMENT_COMMIT_URL          @"http://pay.iqu8.net/paycenter/qubaPr.json" //@"http://120.24.252.114:8084/paycenter/qubaPr.json" //
 #define YYK_PAYMENT_CONFIG_URL          @"http://pay.iqu8.net/paycenter/payConfig.json"
 #define YYK_STANDBY_PAYMENT_CONFIG_URL  @"http://appcdn.mqu8.com/static/iosvideo/payConfig_%@.json"

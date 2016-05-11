@@ -42,12 +42,20 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     [super viewDidLoad];
 
     // Do any additional setup after loading the view.
+    @weakify(self);
     _bannerView = [[SDCycleScrollView alloc] init];
     _bannerView.bannerImageViewContentMode = UIViewContentModeScaleAspectFill;
     _bannerView.autoScrollTimeInterval = 3;
     _bannerView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
     _bannerView.delegate = self;
     _bannerView.backgroundColor = [UIColor clearColor];
+    [_bannerView aspect_hookSelector:@selector(scrollViewDidEndDragging:willDecelerate:)
+                         withOptions:AspectPositionAfter
+                          usingBlock:^(id<AspectInfo> aspectInfo, UIScrollView *scrollView, BOOL decelerate)
+    {
+        @strongify(self);
+        [[YYKStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:0 forSlideCount:1];
+    } error:nil];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumInteritemSpacing = kDefaultCollectionViewInteritemSpace;
@@ -71,8 +79,7 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
             make.edges.equalTo(self.view);
         }];
     }
-    
-    @weakify(self);
+
     [_layoutCollectionView YYK_addPullToRefreshWithHandler:^{
         @strongify(self);
         [self loadPrograms];
@@ -108,7 +115,7 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
 - (void)refreshBannerView {
     NSMutableArray *imageUrlGroup = [NSMutableArray array];
     NSMutableArray *titlesGroup = [NSMutableArray array];
-    for (YYKProgram *bannerProgram in self.programModel.fetchedBannerPrograms) {
+    for (YYKProgram *bannerProgram in self.programModel.fetchedBannerChannel.programList) {
         [imageUrlGroup addObject:bannerProgram.coverImg];
         [titlesGroup addObject:bannerProgram.title];
     }
@@ -142,8 +149,8 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     } else if (indexPath.section == YYKHomeSectionTrial) {
         YYKVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVideoLibCellReusableIdentifier forIndexPath:indexPath];
         
-        if (indexPath.row < self.programModel.fetchedTrialVideos.count) {
-            YYKProgram *trialProgram = self.programModel.fetchedTrialVideos[indexPath.row];
+        if (indexPath.row < self.programModel.fetchedTrialChannel.programList.count) {
+            YYKProgram *trialProgram = self.programModel.fetchedTrialChannel.programList[indexPath.row];
             cell.title = trialProgram.title;
             cell.imageURL = [NSURL URLWithString:trialProgram.coverImg];
             cell.showPlayIcon = YES;
@@ -157,11 +164,11 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     } else {
         NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
         if (programsIndex < self.programModel.fetchedVideoAndAdProgramList.count) {
-            YYKPrograms *programs = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
-            if (programs.type.unsignedIntegerValue == YYKProgramTypeVideo) {
+            YYKChannel *channel = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
+            if (channel.type.unsignedIntegerValue == YYKProgramTypeVideo) {
                 YYKVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVideoLibCellReusableIdentifier forIndexPath:indexPath];
-                if (indexPath.row < programs.programList.count) {
-                    YYKProgram *program = programs.programList[indexPath.row];
+                if (indexPath.row < channel.programList.count) {
+                    YYKProgram *program = channel.programList[indexPath.row];
                     cell.title = program.title;
                     cell.imageURL = [NSURL URLWithString:program.coverImg];
                     cell.showPlayIcon = YES;
@@ -175,8 +182,8 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
             } else {
                 UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSpreadCellReusableIdentifier forIndexPath:indexPath];
                 
-                if (indexPath.row < programs.programList.count) {
-                    YYKProgram *program = programs.programList[indexPath.row];
+                if (indexPath.row < channel.programList.count) {
+                    YYKProgram *program = channel.programList[indexPath.row];
                     
                     if (!cell.backgroundView) {
                         cell.backgroundView = [[UIImageView alloc] init];
@@ -195,12 +202,12 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     if (section == YYKHomeSectionBanner) {
         return 1;
     } else if (section == YYKHomeSectionTrial) {
-        return self.programModel.fetchedTrialVideos.count;
+        return self.programModel.fetchedTrialChannel.programList.count;
     } else if (section >= YYKHomeSectionChannelOffset) {
         NSUInteger programsIndex = section - YYKHomeSectionChannelOffset;
         if (programsIndex < self.programModel.fetchedVideoAndAdProgramList.count) {
-            YYKPrograms *programs = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
-            return programs.programList.count;
+            YYKChannel *channel = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
+            return channel.programList.count;
         }
     }
     return 0;
@@ -218,10 +225,10 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
 
     NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
     if (programsIndex < self.programModel.fetchedVideoAndAdProgramList.count) {
-        YYKPrograms *programs = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
-        headerView.title = programs.name;
-        headerView.subtitle = programs.columnDesc;
-        headerView.iconURL = [NSURL URLWithString:programs.columnImg];
+        YYKChannel *channel = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
+        headerView.title = channel.name;
+        headerView.subtitle = channel.columnDesc;
+        headerView.iconURL = [NSURL URLWithString:channel.columnImg];
     }
     return headerView;
 }
@@ -245,8 +252,8 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
             return CGSizeZero;
         }
         
-        YYKPrograms *programs = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
-        if (programs.type.unsignedIntegerValue == YYKProgramTypeSpread) {
+        YYKChannel *channel = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
+        if (channel.type.unsignedIntegerValue == YYKProgramTypeSpread) {
             return CGSizeMake(fullWidth, fullWidth/5);
         } else if (indexPath.row == 0) {
             return CGSizeMake(fullWidth, fullWidth/2);
@@ -274,32 +281,55 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     return CGSizeMake(0, 40);
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [[YYKStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:0 forSlideCount:1];
+}
+
 #pragma mark - Delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == YYKHomeSectionBanner) {
         return ;
     } else if (indexPath.section == YYKHomeSectionTrial) {
-        if (indexPath.row < self.programModel.fetchedTrialVideos.count) {
-            YYKProgram *program = self.programModel.fetchedTrialVideos[indexPath.row];
-            [self switchToPlayProgram:program];
+        if (indexPath.row < self.programModel.fetchedTrialChannel.programList.count) {
+            YYKProgram *program = self.programModel.fetchedTrialChannel.programList[indexPath.row];
+            [self switchToPlayProgram:program programLocation:indexPath.row inChannel:self.programModel.fetchedTrialChannel];
+            
+            [[YYKStatsManager sharedManager] statsCPCWithProgram:program
+                                                 programLocation:indexPath.row
+                                                       inChannel:self.programModel.fetchedTrialChannel
+                                                     andTabIndex:self.tabBarController.selectedIndex
+                                                     subTabIndex:0];
+            
         }
     } else {
         NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
         if (programsIndex < self.programModel.fetchedVideoAndAdProgramList.count) {
-            YYKPrograms *programs = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
-            if (indexPath.row < programs.programList.count) {
-                YYKProgram *program = programs.programList[indexPath.row];
-                [self switchToPlayProgram:program];
+            YYKChannel *channel = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
+            if (indexPath.row < channel.programList.count) {
+                YYKProgram *program = channel.programList[indexPath.row];
+                [self switchToPlayProgram:program programLocation:indexPath.row inChannel:channel];
+                
+                [[YYKStatsManager sharedManager] statsCPCWithProgram:program
+                                                     programLocation:indexPath.row
+                                                           inChannel:channel
+                                                         andTabIndex:self.tabBarController.selectedIndex
+                                                         subTabIndex:0];
             }
         }
     }
 }
 
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
-    if (index < self.programModel.fetchedBannerPrograms.count) {
-        YYKProgram *program = self.programModel.fetchedBannerPrograms[index];
-        [self switchToPlayProgram:program];
+    if (index < self.programModel.fetchedBannerChannel.programList.count) {
+        YYKProgram *program = self.programModel.fetchedBannerChannel.programList[index];
+        [self switchToPlayProgram:program programLocation:index inChannel:self.programModel.fetchedBannerChannel];
+        
+        [[YYKStatsManager sharedManager] statsCPCWithProgram:program
+                                             programLocation:index
+                                                   inChannel:self.programModel.fetchedBannerChannel
+                                                 andTabIndex:self.tabBarController.selectedIndex
+                                                 subTabIndex:0];
     }
 }
 @end

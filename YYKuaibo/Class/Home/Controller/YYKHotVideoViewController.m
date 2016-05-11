@@ -7,7 +7,6 @@
 //
 
 #import "YYKHotVideoViewController.h"
-#import "YYKVideos.h"
 #import "YYKVideoListModel.h"
 #import "YYKVideoCell.h"
 
@@ -19,7 +18,7 @@ static NSString *const kSpreadCellReusableIdentifier = @"SpreadCellReusableIdent
     UICollectionView *_layoutCollectionView;
 }
 @property (nonatomic,retain) YYKVideoListModel *hotVideoModel;
-@property (nonatomic,retain) NSMutableArray<YYKVideo *> *videos;
+@property (nonatomic,retain) NSMutableArray<YYKProgram *> *videos;
 @end
 
 @implementation YYKHotVideoViewController
@@ -63,7 +62,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
 - (void)loadVideosWithRefreshFlag:(BOOL)isRefresh {
     @weakify(self);
     [self.hotVideoModel fetchVideosInSpace:YYKVideoListSpaceHot
-                                      page:isRefresh?1:self.hotVideoModel.fetchedVideos.page.unsignedIntegerValue+1
+                                      page:isRefresh?1:self.hotVideoModel.fetchedVideoChannel.page.unsignedIntegerValue+1
                      withCompletionHandler:^(BOOL success, id obj)
      {
          @strongify(self);
@@ -78,7 +77,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
                  [self.videos removeAllObjects];
              }
              
-             YYKVideos *videos = obj;
+             YYKChannel *videos = obj;
              [self.videos addObjectsFromArray:videos.programList];
              [self->_layoutCollectionView reloadData];
              
@@ -101,7 +100,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
         return nil;
     }
     
-    YYKVideo *video = self.videos[indexPath.item];
+    YYKProgram *video = self.videos[indexPath.item];
     if ([video isKindOfClass:[YYKProgram class]] && ((YYKProgram *)video).type.unsignedIntegerValue == YYKProgramTypeSpread) {
         UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSpreadCellReusableIdentifier forIndexPath:indexPath];
         
@@ -116,7 +115,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
         YYKVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kHotVideoCellReusableIdentifier forIndexPath:indexPath];
         
         if (indexPath.item < self.videos.count) {
-            YYKVideo *video = self.videos[indexPath.item];
+            YYKProgram *video = self.videos[indexPath.item];
             
             cell.title = video.title;
             cell.imageURL = [NSURL URLWithString:video.coverImg];
@@ -140,7 +139,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
     const CGFloat itemWidth = (fullWidth-layout.minimumInteritemSpacing)/2;
     
     if (indexPath.item < self.videos.count) {
-        YYKVideo *video = self.videos[indexPath.item];
+        YYKProgram *video = self.videos[indexPath.item];
         
         if ([video isKindOfClass:[YYKProgram class]] && ((YYKProgram *)video).type.unsignedIntegerValue == YYKProgramTypeSpread) {
             return CGSizeMake(fullWidth, fullWidth/5);
@@ -152,12 +151,21 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    YYKVideo *video = self.videos[indexPath.item];
+    YYKProgram *video = self.videos[indexPath.item];
     if ([video isKindOfClass:[YYKProgram class]] && ((YYKProgram *)video).type.unsignedIntegerValue == YYKProgramTypeSpread) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:video.videoUrl]];
     } else {
-        [self switchToPlayProgram:(YYKProgram *)video];
+        [self switchToPlayProgram:(YYKProgram *)video programLocation:indexPath.item inChannel:self.hotVideoModel.fetchedVideoChannel];
     }
+    
+    [[YYKStatsManager sharedManager] statsCPCWithProgram:(YYKProgram *)video
+                                         programLocation:indexPath.item
+                                               inChannel:self.hotVideoModel.fetchedVideoChannel
+                                             andTabIndex:self.tabBarController.selectedIndex
+                                             subTabIndex:1];
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [[YYKStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:1 forSlideCount:1];
+}
 @end

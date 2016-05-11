@@ -11,7 +11,7 @@
 @implementation YYKHomeProgramResponse
 
 - (Class)columnListElementClass {
-    return [YYKPrograms class];
+    return [YYKChannel class];
 }
 
 @end
@@ -69,35 +69,35 @@
 - (void)filterProgramTypes {
     _fetchedVideoAndAdProgramList = [self.fetchedProgramList bk_select:^BOOL(id obj)
                                      {
-                                         YYKProgramType type = ((YYKPrograms *)obj).type.unsignedIntegerValue;
+                                         YYKProgramType type = ((YYKChannel *)obj).type.unsignedIntegerValue;
                                          return type == YYKProgramTypeVideo || type == YYKProgramTypeSpread;
                                      }];
     
-    NSArray<YYKPrograms *> *bannerProgramList = [self.fetchedProgramList bk_select:^BOOL(id obj)
+    NSArray<YYKChannel *> *bannerChannels = [self.fetchedProgramList bk_select:^BOOL(id obj)
                                                 {
-                                                    YYKProgramType type = ((YYKPrograms *)obj).type.unsignedIntegerValue;
+                                                    YYKProgramType type = ((YYKChannel *)obj).type.unsignedIntegerValue;
                                                     return type == YYKProgramTypeBanner;
                                                 }];
     
-    NSMutableArray *bannerPrograms = [NSMutableArray array];
-    [bannerProgramList enumerateObjectsUsingBlock:^(YYKPrograms * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj.programList.count > 0) {
-            [bannerPrograms addObjectsFromArray:obj.programList];
-        }
-    }];
-    _fetchedBannerPrograms = bannerPrograms;
+//    NSMutableArray *bannerPrograms = [NSMutableArray array];
+//    [bannerProgramList enumerateObjectsUsingBlock:^(YYKChannel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        if (obj.programList.count > 0) {
+//            [bannerPrograms addObjectsFromArray:obj.programList];
+//        }
+//    }];
+    _fetchedBannerChannel = bannerChannels.firstObject;
     
-    NSArray<YYKPrograms *> *trailProgramList = [self.fetchedProgramList bk_select:^BOOL(id obj) {
-        YYKProgramType type = ((YYKPrograms *)obj).type.unsignedIntegerValue;
+    NSArray<YYKChannel *> *trailChannels = [self.fetchedProgramList bk_select:^BOOL(id obj) {
+        YYKProgramType type = ((YYKChannel *)obj).type.unsignedIntegerValue;
         return type == YYKProgramTypeTrial;
     }];
     
-    NSMutableArray<YYKProgram *> *trialPrograms = [NSMutableArray array];
-    [trailProgramList enumerateObjectsUsingBlock:^(YYKPrograms * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj.programList.count > 0) {
-            [trialPrograms addObjectsFromArray:obj.programList];
-        }
-    }];
-    _fetchedTrialVideos = trialPrograms;
+//    NSMutableArray<YYKProgram *> *trialPrograms = [NSMutableArray array];
+//    [trailProgramList enumerateObjectsUsingBlock:^(YYKChannel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        if (obj.programList.count > 0) {
+//            [trialPrograms addObjectsFromArray:obj.programList];
+//        }
+//    }];
+    _fetchedTrialChannel = trailChannels.firstObject;
 }
 @end

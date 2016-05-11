@@ -16,4 +16,9 @@
     }
 }
 
+- (void)safelySetUInt:(NSUInteger)uint forKey:(id <NSCopying>)key {
+    if (uint != NSNotFound) {
+        [self setObject:@(uint) forKey:key];
+    }
+}
 @end

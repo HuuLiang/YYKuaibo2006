@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "YYKURLResponse.h"
 
-@interface YYKChannel : NSObject
+@interface YYKChannel : YYKURLResponse
 
 @property (nonatomic) NSNumber *columnId;
+@property (nonatomic) NSNumber *realColumnId;
 @property (nonatomic) NSString *name;
+@property (nonatomic) NSString *columnDesc;
 @property (nonatomic) NSString *columnImg;
 @property (nonatomic) NSString *spreadUrl;
 @property (nonatomic) NSNumber *type;
@@ -19,5 +22,6 @@
 @property (nonatomic) NSNumber *items;
 @property (nonatomic) NSNumber *page;
 @property (nonatomic) NSNumber *pageSize;
+@property (nonatomic,retain) NSArray<YYKProgram *> *programList;
 
 @end

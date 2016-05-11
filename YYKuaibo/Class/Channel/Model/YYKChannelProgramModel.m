@@ -11,7 +11,7 @@
 @implementation YYKChannelProgramModel
 
 + (Class)responseClass {
-    return [YYKPrograms class];
+    return [YYKChannel class];
 }
 
 - (BOOL)fetchProgramsWithColumnId:(NSNumber *)columnId
@@ -35,15 +35,12 @@
                     {
                         @strongify(self);
                         
-                        YYKPrograms *programs;
+                        YYKChannel *channel;
                         if (respStatus == YYKURLResponseSuccess) {
-                            programs = (YYKPrograms *)self.response;
-                            self.fetchedPrograms = programs;
+                            channel = (YYKChannel *)self.response;
+                            self.fetchedChannel = channel;
                         }
-                        
-                        if (handler) {
-                            handler(respStatus==YYKURLResponseSuccess, programs);
-                        }
+                        SafelyCallBlock(handler,respStatus==YYKURLResponseSuccess,channel);
                     }];
     return success;
 }

@@ -7,7 +7,6 @@
 //
 
 #import "YYKEncryptedURLRequest.h"
-#import "YYKProgram.h"
 
 @interface YYKAppSpreadBannerResponse : YYKURLResponse
 @property (nonatomic,retain) NSArray<YYKProgram *> *programList;

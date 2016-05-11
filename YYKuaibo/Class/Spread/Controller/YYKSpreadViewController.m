@@ -176,8 +176,8 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
     //YYKSpreadCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSpreadCellReusableIdentifier forIndexPath:indexPath];
     cell.backgroundColor = collectionView.backgroundColor;
     
-    if (indexPath.item < self.appSpreadModel.fetchedSpreads.count) {
-        YYKProgram *appSpread = self.appSpreadModel.fetchedSpreads[indexPath.item];
+    if (indexPath.item < self.appSpreadModel.fetchedSpreadChannel.programList.count) {
+        YYKProgram *appSpread = self.appSpreadModel.fetchedSpreadChannel.programList[indexPath.item];
         cell.imageURL = [NSURL URLWithString:appSpread.coverImg];
         cell.isInstalled = NO;
         
@@ -205,7 +205,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.appSpreadModel.fetchedSpreads.count;
+    return self.appSpreadModel.fetchedSpreadChannel.programList.count;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -218,8 +218,17 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    YYKProgram *appSpread = self.appSpreadModel.fetchedSpreads[indexPath.item];
+    YYKProgram *appSpread = self.appSpreadModel.fetchedSpreadChannel.programList[indexPath.item];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appSpread.videoUrl]];
+    
+    [[YYKStatsManager sharedManager] statsCPCWithProgram:appSpread
+                                         programLocation:indexPath.item
+                                               inChannel:self.appSpreadModel.fetchedSpreadChannel
+                                             andTabIndex:self.tabBarController.selectedIndex
+                                             subTabIndex:NSNotFound];
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [[YYKStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
+}
 @end

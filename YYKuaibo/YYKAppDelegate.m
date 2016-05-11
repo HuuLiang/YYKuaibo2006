@@ -20,7 +20,7 @@
 #import "MobClick.h"
 #import "YYKLaunchView.h"
 
-@interface YYKAppDelegate () <UITabBarDelegate>
+@interface YYKAppDelegate () <UITabBarControllerDelegate>
 
 @end
 
@@ -76,6 +76,7 @@
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = @[homeNav, channelNav, vipNav, spreadNav, mineNav];
     tabBarController.tabBar.translucent = NO;
+    tabBarController.delegate = self;
     _window.rootViewController = tabBarController;
     return _window;
 }
@@ -175,6 +176,7 @@
     [self setupMobStatistics];
     [self setupCommonStyles];
     [self registerUserNotification];
+    [[YYKStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:10];
     [self.window makeKeyAndVisible];
     
     YYKLaunchView *launchView = [[YYKLaunchView alloc] init];
@@ -261,4 +263,14 @@
     return YES;
 }
 
+#pragma mark - UITabBarControllerDelegate
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    [[YYKStatsManager sharedManager] statsTabIndex:tabBarController.selectedIndex subTabIndex:[YYKUtil currentSubTabPageIndex] forClickCount:1];
+}
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    [[YYKStatsManager sharedManager] statsStopDurationAtTabIndex:tabBarController.selectedIndex subTabIndex:[YYKUtil currentSubTabPageIndex]];
+    return YES;
+}
 @end

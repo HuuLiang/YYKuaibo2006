@@ -8,7 +8,6 @@
 
 #import "YYKVIPViewController.h"
 #import "YYKCardSlider.h"
-#import "YYKVideos.h"
 #import "YYKVideoListModel.h"
 #import "YYKPaymentInfo.h"
 
@@ -76,14 +75,14 @@ DefineLazyPropertyInitialization(YYKVideoListModel, videoModel)
 #pragma mark - YYKCardSliderDelegate,YYKCardSliderDataSource
 
 - (NSUInteger)numberOfCardsInCardSlider:(YYKCardSlider *)slider {
-    return self.videoModel.fetchedVideos.programList.count;
+    return self.videoModel.fetchedVideoChannel.programList.count;
 }
 
 - (YYKCard *)cardSlider:(YYKCardSlider *)slider cardAtIndex:(NSUInteger)index {
     YYKCard *card = [slider dequeReusableCardAtIndex:index];
     
-    if (index < self.videoModel.fetchedVideos.programList.count) {
-        YYKVideo *video = self.videoModel.fetchedVideos.programList[index];
+    if (index < self.videoModel.fetchedVideoChannel.programList.count) {
+        YYKProgram *video = self.videoModel.fetchedVideoChannel.programList[index];
         card.imageURL = [NSURL URLWithString:video.coverImg];
         card.title = video.title;
         card.subtitle = video.specialDesc;
@@ -94,9 +93,19 @@ DefineLazyPropertyInitialization(YYKVideoListModel, videoModel)
 }
 
 - (void)cardSlider:(YYKCardSlider *)slider didSelectCardAtIndex:(NSUInteger)index {
-    if (index < self.videoModel.fetchedVideos.programList.count) {
-        YYKVideo *video = self.videoModel.fetchedVideos.programList[index];
-        [self switchToPlayProgram:(YYKProgram *)video];
+    if (index < self.videoModel.fetchedVideoChannel.programList.count) {
+        YYKProgram *video = self.videoModel.fetchedVideoChannel.programList[index];
+        [self switchToPlayProgram:video programLocation:index inChannel:self.videoModel.fetchedVideoChannel];
+        
+        [[YYKStatsManager sharedManager] statsCPCWithProgram:video
+                                             programLocation:index
+                                                   inChannel:self.videoModel.fetchedVideoChannel
+                                                 andTabIndex:self.tabBarController.selectedIndex
+                                                 subTabIndex:NSNotFound];
     }
+}
+
+- (void)cardSliderDidEndSliding:(YYKCardSlider *)slider {
+    [[YYKStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
 }
 @end

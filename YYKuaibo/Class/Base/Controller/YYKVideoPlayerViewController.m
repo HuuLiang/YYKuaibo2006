@@ -8,7 +8,6 @@
 
 #import "YYKVideoPlayerViewController.h"
 #import "YYKVideoPlayer.h"
-#import "YYKVideo.h"
 #import "YYKPaymentViewController.h"
 
 @interface YYKVideoPlayerViewController ()
@@ -20,10 +19,12 @@
 
 @implementation YYKVideoPlayerViewController
 
-- (instancetype)initWithVideo:(YYKVideo *)video {
+- (instancetype)initWithVideo:(YYKProgram *)video videoLocation:(NSUInteger)videoLocation channel:(YYKChannel *)channel {
     self = [self init];
     if (self) {
         _video = video;
+        _videoLocation = videoLocation;
+        _channel = channel;
         _shouldPopupPaymentIfNotPaid = YES;
     }
     return self;
@@ -71,7 +72,11 @@
 }
 
 - (void)dismissAndPopPayment {
-    [[YYKPaymentViewController sharedPaymentVC] popupPaymentInView:self.view.window forProgram:(YYKProgram *)self.video withCompletionHandler:nil];
+    [[YYKPaymentViewController sharedPaymentVC] popupPaymentInView:self.view.window
+                                                        forProgram:(YYKProgram *)self.video
+                                                   programLocation:self.videoLocation
+                                                         inChannel:self.channel
+                                             withCompletionHandler:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 //- (BOOL)shouldAutorotate {

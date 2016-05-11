@@ -7,6 +7,7 @@
 //
 
 #import "YYKChannel.h"
+#import "YYKProgram.h"
 
 @implementation YYKChannel
 
@@ -20,5 +21,9 @@
 
 - (NSUInteger)hash {
     return self.columnId.hash;
+}
+
+- (Class)programListElementClass {
+    return [YYKProgram class];
 }
 @end

@@ -11,6 +11,7 @@
 
 #import "NSObject+Properties.h"
 #import "NSString+md5.h"
+#import "NSString+crypt.h"
 #import "UIImage+color.h"
 #import "UIScrollView+Refresh.h"
 #import "UIColor+hexColor.h"

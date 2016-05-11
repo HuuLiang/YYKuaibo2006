@@ -53,6 +53,10 @@ DefineLazyPropertyInitialization(NSMutableArray, viewControllers)
     self.navigationItem.titleView = _segmentedControl;
 }
 
+- (NSUInteger)currentIndex {
+    return _segmentedControl.selectedSegmentIndex;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -66,6 +70,8 @@ DefineLazyPropertyInitialization(NSMutableArray, viewControllers)
         [_pageViewController setViewControllers:@[self.viewControllers[newValue.unsignedIntegerValue]]
                                       direction:newValue.unsignedIntegerValue>oldValue.unsignedIntegerValue?UIPageViewControllerNavigationDirectionForward:UIPageViewControllerNavigationDirectionReverse
                                        animated:YES completion:nil];
+        
+        [[YYKStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:newValue.unsignedIntegerValue forClickCount:1];
     }
 }
 

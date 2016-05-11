@@ -8,17 +8,10 @@
 
 #import "YYKAppSpreadModel.h"
 
-@implementation YYKAppSpreadResponse
-
-- (Class)programListElementClass {
-    return [YYKProgram class];
-}
-@end
-
 @implementation YYKAppSpreadModel
 
 + (Class)responseClass {
-    return [YYKAppSpreadResponse class];
+    return [YYKChannel class];
 }
 
 - (BOOL)fetchAppSpreadWithCompletionHandler:(YYKCompletionHandler)handler {
@@ -29,15 +22,14 @@
                     responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
     {
         @strongify(self);
-        NSArray *fetchedSpreads;
+        YYKChannel *fetchedSpreadChannel;
         if (respStatus == YYKURLResponseSuccess) {
-            YYKAppSpreadResponse *resp = self.response;
-            _fetchedSpreads = resp.programList;
-            fetchedSpreads = _fetchedSpreads;
+            fetchedSpreadChannel = self.response;
+            _fetchedSpreadChannel = fetchedSpreadChannel;
         }
         
         if (handler) {
-            handler(respStatus==YYKURLResponseSuccess, fetchedSpreads);
+            handler(respStatus==YYKURLResponseSuccess, fetchedSpreadChannel);
         }
     }];
     return ret;

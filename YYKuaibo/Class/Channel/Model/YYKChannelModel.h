@@ -7,7 +7,6 @@
 //
 
 #import "YYKEncryptedURLRequest.h"
-#import "YYKChannel.h"
 
 @interface YYKChannelResponse : YYKURLResponse
 @property (nonatomic,retain) NSMutableArray<YYKChannel *> *columnList;

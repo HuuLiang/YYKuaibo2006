@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YYKURLResponse.h"
-#import "YYKVideo.h"
 
 typedef NS_ENUM(NSUInteger, YYKProgramType) {
     YYKProgramTypeNone = 0,
@@ -27,26 +25,39 @@ typedef NS_ENUM(NSUInteger, YYKProgramType) {
 @property (nonatomic) NSNumber *height;
 @end
 
-@interface YYKProgram : YYKVideo
-//@property (nonatomic) NSNumber *payPointType; // 1、会员注册 2、付费
+@interface YYKProgram : NSObject
+
+@property (nonatomic) NSNumber *programId;
+@property (nonatomic) NSString *title;
+@property (nonatomic) NSString *specialDesc;
+@property (nonatomic) NSString *videoUrl;
+@property (nonatomic) NSString *coverImg;
+@property (nonatomic) NSNumber *spec;
 @property (nonatomic) NSNumber *payPointType; // 1、会员注册 2、付费
 @property (nonatomic) NSNumber *type; // 1、视频 2、图片
 @property (nonatomic,retain) NSArray<YYKProgramUrl *> *urlList; // type==2有集合，目前为图集url集合
 
+@property (nonatomic) NSDate *playedDate; // for history
+
++ (NSArray<YYKProgram *> *)allPlayedPrograms;
+- (void)didPlay;
+
+- (NSString *)playedDateString;
+
 @end
 
-@interface YYKPrograms : YYKURLResponse
-
-@property (nonatomic) NSNumber *items;
-@property (nonatomic) NSNumber *page;
-@property (nonatomic) NSNumber *pageSize;
-
-@property (nonatomic) NSNumber *columnId;
-@property (nonatomic) NSString *name;
-@property (nonatomic) NSString *columnImg;
-@property (nonatomic) NSString *columnDesc;
-@property (nonatomic) NSNumber *type; // 1、视频 2、图片
-@property (nonatomic) NSNumber *showNumber;
-@property (nonatomic,retain) NSArray<YYKProgram *> *programList;
-@end
+//@interface YYKPrograms : YYKURLResponse
+//
+//@property (nonatomic) NSNumber *items;
+//@property (nonatomic) NSNumber *page;
+//@property (nonatomic) NSNumber *pageSize;
+//
+//@property (nonatomic) NSNumber *columnId;
+//@property (nonatomic) NSString *name;
+//@property (nonatomic) NSString *columnImg;
+//@property (nonatomic) NSString *columnDesc;
+//@property (nonatomic) NSNumber *type; // 1、视频 2、图片
+//@property (nonatomic) NSNumber *showNumber;
+//@property (nonatomic,retain) NSArray<YYKProgram *> *programList;
+//@end
 

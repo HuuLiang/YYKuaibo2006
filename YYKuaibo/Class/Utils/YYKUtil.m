@@ -11,7 +11,6 @@
 #import <sys/sysctl.h>
 #import "NSDate+Utilities.h"
 #import "YYKPaymentInfo.h"
-#import "YYKVideo.h"
 #import "YYKSpreadBannerViewController.h"
 #import "YYKAppSpreadBannerModel.h"
 #import "YYKApplicationManager.h"
@@ -224,4 +223,29 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
 //        });
 //    };
 //}
+
++ (NSUInteger)currentTabPageIndex {
+    UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+    if ([rootVC isKindOfClass:[UITabBarController class]]) {
+        UITabBarController *tabVC = (UITabBarController *)rootVC;
+        return tabVC.selectedIndex;
+    }
+    return 0;
+}
+
++ (NSUInteger)currentSubTabPageIndex {
+    UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+    if ([rootVC isKindOfClass:[UITabBarController class]]) {
+        UITabBarController *tabVC = (UITabBarController *)rootVC;
+        if ([tabVC.selectedViewController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController *navVC = (UINavigationController *)tabVC.selectedViewController;
+            if ([navVC.visibleViewController isKindOfClass:[YYKBaseViewController class]]) {
+                YYKBaseViewController *baseVC = (YYKBaseViewController *)navVC.visibleViewController;
+                return [baseVC currentIndex];
+            }
+        }
+    }
+    return 0;
+}
+
 @end

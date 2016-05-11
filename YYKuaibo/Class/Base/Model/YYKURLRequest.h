@@ -36,7 +36,7 @@ typedef void (^YYKURLResponseHandler)(YYKURLResponseStatus respStatus, NSString 
 - (BOOL)shouldPostErrorNotification;
 - (YYKURLRequestMethod)requestMethod;
 
-- (BOOL)requestURLPath:(NSString *)urlPath withParams:(NSDictionary *)params responseHandler:(YYKURLResponseHandler)responseHandler;
+- (BOOL)requestURLPath:(NSString *)urlPath withParams:(id)params responseHandler:(YYKURLResponseHandler)responseHandler;
 
 - (BOOL)requestURLPath:(NSString *)urlPath standbyURLPath:(NSString *)standbyUrlPath withParams:(NSDictionary *)params responseHandler:(YYKURLResponseHandler)responseHandler;
 

@@ -8,22 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@class YYKProgram;
-@class YYKVideo;
-
 @interface YYKBaseViewController : UIViewController
 
 @property (nonatomic,retain) UIImage *backgroundImage;
 
-- (void)switchToPlayProgram:(YYKProgram *)program;
-- (void)playVideo:(YYKVideo *)video;
+- (void)switchToPlayProgram:(YYKProgram *)program programLocation:(NSUInteger)programLocation inChannel:(YYKChannel *)channel;
+//- (void)playVideo:(YYKVideo *)video;
 //- (void)playVideo:(YYKVideo *)video withCloseAction:(YYKAction)closeAction;
-- (void)playVideo:(YYKVideo *)video withTimeControl:(BOOL)hasTimeControl shouldPopPayment:(BOOL)shouldPopPayment;
+//- (void)playVideo:(YYKVideo *)video withTimeControl:(BOOL)hasTimeControl shouldPopPayment:(BOOL)shouldPopPayment;
 
-- (void)payForProgram:(YYKProgram *)program;
+//- (void)payForProgram:(YYKProgram *)program programLocation:(NSUInteger)programLocation inChannel:(YYKChannel *)channel;
 - (void)payForPayPointType:(YYKPayPointType)payPointType;
 //- (void)onPaidNotification:(NSNotification *)notification;
 
 - (BOOL)shouldDisplayBackgroundImage;
 
+// Override this method to specify sub index
+- (NSUInteger)currentIndex;
 @end

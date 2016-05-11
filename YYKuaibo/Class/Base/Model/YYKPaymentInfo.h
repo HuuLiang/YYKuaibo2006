@@ -22,6 +22,9 @@ typedef NS_ENUM(NSUInteger, YYKPaymentStatus) {
 @property (nonatomic) NSNumber *orderPrice;
 @property (nonatomic) NSNumber *contentId;
 @property (nonatomic) NSNumber *contentType;
+@property (nonatomic) NSNumber *contentLocation;
+@property (nonatomic) NSNumber *columnId;
+@property (nonatomic) NSNumber *columnType;
 @property (nonatomic) NSNumber *payPointType;
 @property (nonatomic) NSString *paymentTime;
 @property (nonatomic) NSNumber *paymentType;

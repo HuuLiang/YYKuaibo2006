@@ -11,7 +11,6 @@
 #import "YYKSystemConfigModel.h"
 #import "YYKPaymentModel.h"
 #import <objc/runtime.h>
-#import "YYKProgram.h"
 #import "YYKPaymentInfo.h"
 #import "YYKPaymentConfig.h"
 
@@ -20,15 +19,17 @@
 @property (nonatomic) NSNumber *payAmount;
 
 @property (nonatomic,retain) YYKProgram *programToPayFor;
-@property (nonatomic,retain) YYKPaymentInfo *paymentInfo;
+@property (nonatomic) NSUInteger programLocationToPayFor;
+@property (nonatomic,retain) YYKChannel *channelToPayFor;
 
-@property (nonatomic,readonly,retain) NSDictionary *paymentTypeMap;
+//@property (nonatomic,retain) YYKPaymentInfo *paymentInfo;
+
+//@property (nonatomic,readonly,retain) NSDictionary *paymentTypeMap;
 @property (nonatomic,copy) dispatch_block_t completionHandler;
 @property (nonatomic) NSUInteger closeSeq;
 @end
 
 @implementation YYKPaymentViewController
-@synthesize paymentTypeMap = _paymentTypeMap;
 
 + (instancetype)sharedPaymentVC {
     static YYKPaymentViewController *_sharedPaymentVC;
@@ -48,16 +49,7 @@
     void (^Pay)(YYKPaymentType type, YYKPaymentType subType) = ^(YYKPaymentType type, YYKPaymentType subType)
     {
         @strongify(self);
-        if (!self.payAmount) {
-            [[YYKHudManager manager] showHudWithText:@"无法获取价格信息,请检查网络配置！"];
-            return ;
-        }
-        
-        [self payForProgram:self.programToPayFor
-                      price:self.payAmount.unsignedIntegerValue
-                paymentType:type
-             paymentSubType:subType];
-        
+        [self payForPaymentType:type paymentSubType:subType];
         [self hidePayment];
     };
     
@@ -86,6 +78,16 @@
     _popView.closeAction = ^(id sender){
         @strongify(self);
         [self hidePayment];
+        
+        
+        [[YYKStatsManager sharedManager] statsPayWithOrderNo:nil
+                                                   payAction:YYKStatsPayActionClose
+                                                   payResult:PAYRESULT_UNKNOWN
+                                                  forProgram:self.programToPayFor
+                                             programLocation:self.programLocationToPayFor
+                                                   inChannel:self.channelToPayFor
+                                                 andTabIndex:[YYKUtil currentTabPageIndex]
+                                                 subTabIndex:[YYKUtil currentSubTabPageIndex]];
     };
     return _popView;
 }
@@ -105,7 +107,12 @@
     }
 }
 
-- (void)popupPaymentInView:(UIView *)view forProgram:(YYKProgram *)program withCompletionHandler:(void (^)(void))completionHandler; {
+- (void)popupPaymentInView:(UIView *)view
+                forProgram:(YYKProgram *)program
+           programLocation:(NSUInteger)programLocation
+                 inChannel:(YYKChannel *)channel
+     withCompletionHandler:(void (^)(void))completionHandler
+{
     self.completionHandler = completionHandler;
     
     if (self.view.superview) {
@@ -114,6 +121,8 @@
     
     self.payAmount = nil;
     self.programToPayFor = program;
+    self.programLocationToPayFor = programLocation;
+    self.channelToPayFor = channel;
     self.popView.headerImageURL = [NSURL URLWithString:[[YYKSystemConfigModel sharedModel] paymentImageWithProgram:program]];
     self.view.frame = view.bounds;
     self.view.alpha = 0;
@@ -165,6 +174,10 @@
             self.completionHandler = nil;
         }
         
+        self.programToPayFor = nil;
+        self.programLocationToPayFor = 0;
+        self.channelToPayFor = nil;
+        
         ++self.closeSeq;
         if (self.closeSeq == 2 && [YYKUtil isNoVIP]) {
             [YYKUtil showSpreadBanner];
@@ -172,20 +185,32 @@
     }];
 }
 
-- (void)payForProgram:(YYKProgram *)program
-                price:(NSUInteger)price
-          paymentType:(YYKPaymentType)paymentType
-       paymentSubType:(YYKPaymentType)paymentSubType
-{
+- (void)payForPaymentType:(YYKPaymentType)paymentType
+           paymentSubType:(YYKPaymentType)paymentSubType {
+    if (!self.payAmount) {
+        [[YYKHudManager manager] showHudWithText:@"无法获取价格信息,请检查网络配置！"];
+        return ;
+    }
+    
     @weakify(self);
-    [[YYKPaymentManager sharedManager] startPaymentWithType:paymentType
-                                                    subType:paymentSubType
-                                                     price:price
-                                                forProgram:program
-                                         completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
-        @strongify(self);
-        [self notifyPaymentResult:payResult withPaymentInfo:paymentInfo];
-    }];
+    YYKPaymentInfo *paymentInfo = [[YYKPaymentManager sharedManager] startPaymentWithType:paymentType
+                                                                                  subType:paymentSubType
+                                                                                    price:self.payAmount.unsignedIntegerValue
+                                                                               forProgram:self.programToPayFor
+                                                                          programLocation:self.programLocationToPayFor
+                                                                                inChannel:self.channelToPayFor
+                                                                        completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo)
+                                   {
+                                       @strongify(self);
+                                       [self notifyPaymentResult:payResult withPaymentInfo:paymentInfo];
+                                   }];
+    
+    if (paymentInfo) {
+        [[YYKStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo
+                                                    forPayAction:YYKStatsPayActionGoToPay
+                                                     andTabIndex:[YYKUtil currentTabPageIndex]
+                                                     subTabIndex:[YYKUtil currentSubTabPageIndex]];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -225,6 +250,11 @@
     }
     
     [[YYKPaymentModel sharedModel] commitPaymentInfo:paymentInfo];
+    
+    [[YYKStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo
+                                                forPayAction:YYKStatsPayActionPayBack
+                                                 andTabIndex:[YYKUtil currentTabPageIndex]
+                                                 subTabIndex:[YYKUtil currentSubTabPageIndex]];
 }
 
 @end

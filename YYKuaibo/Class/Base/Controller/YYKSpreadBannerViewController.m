@@ -8,7 +8,6 @@
 
 #import "YYKSpreadBannerViewController.h"
 #import <SDCycleScrollView.h>
-#import "YYKProgram.h"
 
 @interface YYKSpreadBannerViewController () <SDCycleScrollViewDelegate>
 {

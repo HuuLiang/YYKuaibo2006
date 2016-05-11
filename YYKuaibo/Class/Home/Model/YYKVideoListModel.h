@@ -13,11 +13,10 @@ typedef NS_ENUM(NSUInteger, YYKVideoListSpace) {
     YYKVideoListSpaceVIP
 };
 
-@class YYKVideos;
-
+@class YYKChannel;
 @interface YYKVideoListModel : YYKEncryptedURLRequest
 
-@property (nonatomic,retain,readonly) YYKVideos *fetchedVideos;
+@property (nonatomic,retain,readonly) YYKChannel *fetchedVideoChannel;
 
 - (BOOL)fetchVideosInSpace:(YYKVideoListSpace)space page:(NSUInteger)page withCompletionHandler:(YYKCompletionHandler)handler;
 @end

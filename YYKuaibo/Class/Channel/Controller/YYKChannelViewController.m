@@ -127,8 +127,8 @@ DefineLazyPropertyInitialization(NSMutableDictionary, channelPrograms)
     }
     
     @weakify(self);
-    NSUInteger pageNo = isRefresh ? 1 : self.programModel.fetchedPrograms.page.unsignedIntegerValue + 1;
-    [self.programModel fetchProgramsWithColumnId:channelId pageNo:pageNo pageSize:20 completionHandler:^(BOOL success, YYKPrograms *programs) {
+    NSUInteger pageNo = isRefresh ? 1 : self.programModel.fetchedChannel.page.unsignedIntegerValue + 1;
+    [self.programModel fetchProgramsWithColumnId:channelId pageNo:pageNo pageSize:20 completionHandler:^(BOOL success, YYKChannel *channel) {
         @strongify(self);
         if (!self) {
             return ;
@@ -143,17 +143,17 @@ DefineLazyPropertyInitialization(NSMutableDictionary, channelPrograms)
             
             NSMutableArray<YYKProgram *> *programsInChannel = [self.channelPrograms objectForKey:channelId];
             
-            if (programs.programList.count > 0) {
+            if (channel.programList.count > 0) {
                 if (!programsInChannel) {
                     programsInChannel = [NSMutableArray array];
                 }
                 
-                [programsInChannel addObjectsFromArray:programs.programList];
+                [programsInChannel addObjectsFromArray:channel.programList];
                 [self.channelPrograms setObject:programsInChannel forKey:channelId];
             }
             [self->_contentView reloadData];
             
-            if (programsInChannel.count >= programs.items.unsignedIntegerValue) {
+            if (programsInChannel.count >= channel.items.unsignedIntegerValue) {
                 [self->_contentView YYK_pagingRefreshNoMoreData];
             }
         }
@@ -225,7 +225,19 @@ DefineLazyPropertyInitialization(NSMutableDictionary, channelPrograms)
     NSArray<YYKProgram *> *programs = [self.channelPrograms objectForKey:self.currentChannel.columnId];
     if (indexPath.item < programs.count) {
         YYKProgram *program = programs[indexPath.item];
-        [self switchToPlayProgram:program];
+        [self switchToPlayProgram:program programLocation:indexPath.item inChannel:self.currentChannel];
+        
+        [[YYKStatsManager sharedManager] statsCPCWithProgram:program
+                                             programLocation:indexPath.item
+                                                   inChannel:self.currentChannel
+                                                 andTabIndex:self.tabBarController.selectedIndex
+                                                 subTabIndex:NSNotFound];
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (scrollView == _contentView) {
+        [[YYKStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
     }
 }
 
@@ -251,6 +263,8 @@ DefineLazyPropertyInitialization(NSMutableDictionary, channelPrograms)
     if (indexPath.row < self.channelModel.fetchedChannels.count) {
         YYKChannel *channel = self.channelModel.fetchedChannels[indexPath.row];
         [self setCurrentChannel:channel];
+        
+        [[YYKStatsManager sharedManager] statsCPCWithChannel:channel inTabIndex:self.tabBarController.selectedIndex];
     }
     
 }

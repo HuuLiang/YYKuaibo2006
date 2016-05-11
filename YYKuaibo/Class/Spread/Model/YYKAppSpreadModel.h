@@ -7,15 +7,14 @@
 //
 
 #import "YYKEncryptedURLRequest.h"
-#import "YYKProgram.h"
 
-@interface YYKAppSpreadResponse : YYKURLResponse
-@property (nonatomic,retain) NSArray<YYKProgram *> *programList;
-@end
+//@interface YYKAppSpreadResponse : YYKURLResponse
+//@property (nonatomic,retain) NSArray<YYKProgram *> *programList;
+//@end
 
 @interface YYKAppSpreadModel : YYKEncryptedURLRequest
 
-@property (nonatomic,retain,readonly) NSArray<YYKProgram *> *fetchedSpreads;
+@property (nonatomic,retain,readonly) YYKChannel *fetchedSpreadChannel;
 
 - (BOOL)fetchAppSpreadWithCompletionHandler:(YYKCompletionHandler)handler;
 

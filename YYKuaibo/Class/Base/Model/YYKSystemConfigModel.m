@@ -7,7 +7,6 @@
 //
 
 #import "YYKSystemConfigModel.h"
-#import "YYKProgram.h"
 
 @implementation YYKSystemConfigResponse
 

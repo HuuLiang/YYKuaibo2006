@@ -7,12 +7,11 @@
 //
 
 #import "YYKVideoListModel.h"
-#import "YYKVideos.h"
 
 @implementation YYKVideoListModel
 
 + (Class)responseClass {
-    return [YYKVideos class];
+    return [YYKChannel class];
 }
 
 - (BOOL)fetchVideosInSpace:(YYKVideoListSpace)space
@@ -30,10 +29,10 @@
             return ;
         }
         
-        YYKVideos *videos;
+        YYKChannel *videos;
         if (respStatus == YYKURLResponseSuccess) {
             videos = self.response;
-            self->_fetchedVideos = videos;
+            self->_fetchedVideoChannel = videos;
         }
         
         if (handler) {

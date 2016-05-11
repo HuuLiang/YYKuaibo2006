@@ -7,13 +7,12 @@
 //
 
 #import "YYKEncryptedURLRequest.h"
-#import "YYKProgram.h"
 
-typedef void (^YYKFetchChannelProgramCompletionHandler)(BOOL success, YYKPrograms *programs);
+typedef void (^YYKFetchChannelProgramCompletionHandler)(BOOL success, YYKChannel *channel);
 
 @interface YYKChannelProgramModel : YYKEncryptedURLRequest
 
-@property (nonatomic,retain) YYKPrograms *fetchedPrograms;
+@property (nonatomic,retain) YYKChannel *fetchedChannel;
 
 - (BOOL)fetchProgramsWithColumnId:(NSNumber *)columnId
                            pageNo:(NSUInteger)pageNo

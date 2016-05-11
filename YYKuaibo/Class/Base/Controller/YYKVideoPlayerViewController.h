@@ -10,9 +10,11 @@
 
 @interface YYKVideoPlayerViewController : YYKBaseViewController
 
-@property (nonatomic,retain,readonly) YYKVideo *video;
+@property (nonatomic,retain,readonly) YYKProgram *video;
+@property (nonatomic,readonly) NSUInteger videoLocation;
+@property (nonatomic,retain,readonly) YYKChannel *channel;
 @property (nonatomic) BOOL shouldPopupPaymentIfNotPaid;
 
-- (instancetype)initWithVideo:(YYKVideo *)video;
+- (instancetype)initWithVideo:(YYKProgram *)video videoLocation:(NSUInteger)videoLocation channel:(YYKChannel *)channel;
 
 @end

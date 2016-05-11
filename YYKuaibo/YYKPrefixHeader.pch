@@ -24,10 +24,16 @@
 #import "YYKConfig.h"
 #import "RACEXTScope.h"
 #import "YYKExtensions.h"
+
+#import "YYKProgram.h"
+#import "YYKChannel.h"
+
 #import "YYKUtil.h"
 #import "YYKErrorHandler.h"
 #import "YYKHudManager.h"
 #import "YYKPaymentManager.h"
 #import "YYKLocalNotificationManager.h"
-
+#import "DBHandler.h"
+#import "YYKNetworkInfo.h"
+#import "YYKStatsManager.h"
 #endif /* YYKPrefixHeader_pch */
