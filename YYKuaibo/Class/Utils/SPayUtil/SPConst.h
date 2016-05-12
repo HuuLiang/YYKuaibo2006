@@ -12,11 +12,13 @@
 /**
  *   商户密钥值
  */
-FOUNDATION_EXPORT NSString *const kSPconstSPaySignVal;
-
-FOUNDATION_EXPORT NSString *const kSPconstSPayMchId;
+//FOUNDATION_EXPORT NSString *const kSPconstSPaySignVal;
+//
+//FOUNDATION_EXPORT NSString *const kSPconstSPayMchId;
 
 FOUNDATION_EXPORT NSString *const kSPconstSPayWeChatService;
+
+//FOUNDATION_EXPORT NSString *const kSPconstSPayNotifyUrl;
 /**
  *  6.1.3	预下单接口地址
  */

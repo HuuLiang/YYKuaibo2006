@@ -15,17 +15,43 @@
 #import "SPConst.h"
 #import <XMLReader.h>
 
+@interface SPayUtil ()
+@property (nonatomic) NSString *mchId;
+@property (nonatomic) NSString *signKey;
+@property (nonatomic) NSString *notifyUrl;
+@end
+
 @implementation SPayUtil
 
-+ (void)payWithPaymentInfo:(YYKPaymentInfo *)paymentInfo
++ (instancetype)sharedInstance {
+    static dispatch_once_t onceToken;
+    static SPayUtil *_sharedInstance;
+    dispatch_once(&onceToken, ^{
+        _sharedInstance = [[self alloc] init];
+    });
+    return _sharedInstance;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        SPayClientWechatConfigModel *configModel = [[SPayClientWechatConfigModel alloc] init];
+        configModel.appScheme = @"wxd3a1cdf74d0c41b3";
+        configModel.wechatAppid = @"wxd3a1cdf74d0c41b3";
+        [[SPayClient sharedInstance] wechatpPayConfig:configModel];
+    }
+    return self;
+}
+
+- (void)payWithPaymentInfo:(YYKPaymentInfo *)paymentInfo
          completionHandler:(YYKPaymentCompletionHandler)completionHandler {
     NSString *service = @"unified.trade.pay";
-    NSString *mch_id = kSPconstSPayMchId;
+    NSString *mch_id = self.mchId;
     NSString *out_trade_no = paymentInfo.orderId;
-    NSString *body = @"VIP终身会员";
+    NSString *body = paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? @"黑金VIP会员" : @"VIP会员";
     NSInteger total_fee = paymentInfo.orderPrice.integerValue;
     NSString *mch_create_ip = [YYKUtil getIPAddress];
-    NSString *notify_url = @"http://127.0.0.1";
+    NSString *notify_url = self.notifyUrl;
     
     srand( (unsigned)time(0) );
     NSString *nonce_str  = [NSString stringWithFormat:@"%d", rand()];
@@ -37,6 +63,7 @@
                               version:nil
                               charset:nil
                               sign_type:nil
+                              sign_key:self.signKey
                               mch_id:mch_id
                               out_trade_no:out_trade_no
                               device_info:nil
@@ -118,7 +145,7 @@
      }];
 }
 
-+ (PAYRESULT)payResultWithPayState:(SPayClientConstEnumPayState)payState {
+- (PAYRESULT)payResultWithPayState:(SPayClientConstEnumPayState)payState {
     PAYRESULT payResult = PAYRESULT_FAIL;
     if (payState == SPayClientConstEnumPaySuccess) {
         payResult = PAYRESULT_SUCCESS;
@@ -128,17 +155,15 @@
     return payResult;
 }
 
-+ (void)applicationWillEnterForeground {
+- (void)applicationWillEnterForeground {
     [[SPayClient sharedInstance] applicationWillEnterForeground:[UIApplication sharedApplication]];
 }
 
-+ (void)setup {
-    SPayClientWechatConfigModel *configModel = [[SPayClientWechatConfigModel alloc] init];
-    configModel.appScheme = @"wxd3a1cdf74d0c41b3";
-    configModel.wechatAppid = @"wxd3a1cdf74d0c41b3";
-    [[SPayClient sharedInstance] wechatpPayConfig:configModel];
+- (void)registerMchId:(NSString *)mchId signKey:(NSString *)signKey notifyUrl:(NSString *)notifyUrl {
+    self.mchId = mchId;
+    self.signKey = signKey;
+    self.notifyUrl = notifyUrl;
 }
-
 //+ (BOOL)application:(UIApplication *)application
 //didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 //    SPayClientWechatConfigModel *configModel = [[SPayClientWechatConfigModel alloc] init];

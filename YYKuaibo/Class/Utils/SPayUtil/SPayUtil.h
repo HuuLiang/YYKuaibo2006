@@ -10,11 +10,12 @@
 
 @interface SPayUtil : NSObject
 
-+ (void)payWithPaymentInfo:(YYKPaymentInfo *)paymentInfo
-         completionHandler:(YYKPaymentCompletionHandler)completionHandler;
-+ (void)applicationWillEnterForeground;
-+ (void)setup;
++ (instancetype)sharedInstance;
 
+- (void)payWithPaymentInfo:(YYKPaymentInfo *)paymentInfo
+         completionHandler:(YYKPaymentCompletionHandler)completionHandler;
+- (void)applicationWillEnterForeground;
+- (void)registerMchId:(NSString *)mchId signKey:(NSString *)signKey notifyUrl:(NSString *)notifyUrl;
 //+ (BOOL)application:(UIApplication *)application
 //didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 //

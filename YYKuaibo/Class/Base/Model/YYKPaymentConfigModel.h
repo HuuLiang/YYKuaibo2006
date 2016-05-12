@@ -15,6 +15,6 @@
 
 + (instancetype)sharedModel;
 
-//- (BOOL)fetchConfigWithCompletionHandler:(YYKCompletionHandler)handler;
+- (BOOL)fetchConfigWithCompletionHandler:(YYKCompletionHandler)handler;
 
 @end

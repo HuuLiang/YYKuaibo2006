@@ -38,6 +38,7 @@
                           version:(NSString*)version
                           charset:(NSString*)charset
                         sign_type:(NSString*)sign_type
+                         sign_key:(NSString *)sign_key
                            mch_id:(NSString*)mch_id
                      out_trade_no:(NSString*)out_trade_no
                       device_info:(NSString*)device_info

@@ -26,7 +26,6 @@
 
 //static NSString *const kAlipaySchemeUrl = @"comyykuaibo2016appalipayurlscheme";
 static NSString *const kVIAPaySchemeUrl = @"comyykuaibov2appviapayurlscheme";
-static const NSUInteger kVIAPackageId = 5361;
 
 @interface YYKPaymentManager () <WXApiDelegate, stringDelegate>
 @property (nonatomic,retain) YYKPaymentInfo *paymentInfo;
@@ -50,7 +49,14 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 - (void)setup {
     [paySender getIntents].delegate = self;
     [[PayUitls getIntents] PayEnterForeground];
-    [SPayUtil setup];
+    
+    [[YYKPaymentConfigModel sharedModel] fetchConfigWithCompletionHandler:^(BOOL success, id obj) {
+        
+        [[SPayUtil sharedInstance] registerMchId:[YYKPaymentConfig sharedConfig].wftPayInfo.mchId
+                                         signKey:[YYKPaymentConfig sharedConfig].wftPayInfo.signKey
+                                       notifyUrl:[YYKPaymentConfig sharedConfig].wftPayInfo.notifyUrl];
+    }];
+    
 }
 
 - (void)handleOpenUrl:(NSURL *)url {
@@ -89,12 +95,12 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     paymentInfo.paymentResult = @(PAYRESULT_UNKNOWN);
     paymentInfo.paymentStatus = @(YYKPaymentStatusPaying);
     paymentInfo.reservedData = [YYKUtil paymentReservedData];
-    if (type == YYKPaymentTypeSPay) {
-        paymentInfo.appId = [YYKPaymentConfig sharedConfig].weixinInfo.appId;
-        paymentInfo.mchId = [YYKPaymentConfig sharedConfig].weixinInfo.mchId;
-        paymentInfo.signKey = [YYKPaymentConfig sharedConfig].weixinInfo.signKey;
-        paymentInfo.notifyUrl = [YYKPaymentConfig sharedConfig].weixinInfo.notifyUrl;
-    }
+//    if (type == YYKPaymentTypeSPay) {
+//        paymentInfo.appId = [YYKPaymentConfig sharedConfig].weixinInfo.appId;
+//        paymentInfo.mchId = [YYKPaymentConfig sharedConfig].weixinInfo.mchId;
+//        paymentInfo.signKey = [YYKPaymentConfig sharedConfig].weixinInfo.signKey;
+//        paymentInfo.notifyUrl = [YYKPaymentConfig sharedConfig].weixinInfo.notifyUrl;
+//    }
     [paymentInfo save];
     self.paymentInfo = paymentInfo;
     self.completionHandler = handler;
@@ -102,7 +108,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     BOOL success = YES;
     if (type == YYKPaymentTypeVIAPay && (subType == YYKPaymentTypeAlipay || subType == YYKPaymentTypeWeChatPay)) {
         NSString *tradeName = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? @"黑金VIP会员" : @"VIP会员";
-        [[PayUitls getIntents] gotoPayByPackageId:kVIAPackageId
+        [[PayUitls getIntents] gotoPayByPackageId:(int)[YYKPaymentConfig sharedConfig].syskPayInfo.packageId.integerValue
                                            andFee:(int)price
                                      andTradeName:tradeName
                                   andGoodsDetails:tradeName
@@ -145,7 +151,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 //                                                            payDelegate:self];
     } else if (type == YYKPaymentTypeSPay && (subType == YYKPaymentTypeAlipay || subType == YYKPaymentTypeWeChatPay)) {
         @weakify(self);
-        [SPayUtil payWithPaymentInfo:paymentInfo completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
+        [[SPayUtil sharedInstance] payWithPaymentInfo:paymentInfo completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
             @strongify(self);
             [self onPaymentResult:payResult];
             
@@ -188,7 +194,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 //}
 
 - (void)applicationWillEnterForeground {
-    [SPayUtil applicationWillEnterForeground];
+    [[SPayUtil sharedInstance] applicationWillEnterForeground];
 }
 
 - (void)onPaymentResult:(PAYRESULT)payResult {

@@ -66,13 +66,21 @@
 //    _popView.headerImageURL = [NSURL URLWithString:[YYKSystemConfigModel sharedModel].hasDiscount ? [YYKSystemConfigModel sharedModel].discountImage : [YYKSystemConfigModel sharedModel].paymentImage];
     _popView.footerImage = [UIImage imageNamed:@"payment_footer"];
     
-    [_popView addPaymentWithImage:[UIImage imageNamed:@"alipay_icon"] title:@"支付宝支付" available:YES action:^(id sender) {
-        Pay(YYKPaymentTypeVIAPay, YYKPaymentTypeAlipay);
-    }];
+    if ([YYKPaymentConfig sharedConfig].syskPayInfo.supportPayTypes.integerValue & YYKSubPayTypeAlipay) {
+        [_popView addPaymentWithImage:[UIImage imageNamed:@"alipay_icon"] title:@"支付宝支付" available:YES action:^(id sender) {
+            Pay(YYKPaymentTypeVIAPay, YYKPaymentTypeAlipay);
+        }];
+    }
     
-    [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信客户端支付" available:YES action:^(id sender) {
-        Pay(YYKPaymentTypeSPay, YYKPaymentTypeWeChatPay);
-    }];
+    if ([YYKPaymentConfig sharedConfig].syskPayInfo.supportPayTypes.integerValue & YYKSubPayTypeWeChat) {
+        [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信客户端支付" available:YES action:^(id sender) {
+            Pay(YYKPaymentTypeVIAPay, YYKPaymentTypeWeChatPay);
+        }];
+    } else if ([YYKPaymentConfig sharedConfig].wftPayInfo) {
+        [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信客户端支付" available:YES action:^(id sender) {
+            Pay(YYKPaymentTypeSPay, YYKPaymentTypeWeChatPay);
+        }];
+    }
     
 //    if (([YYKPaymentConfig sharedConfig].iappPayInfo.supportPayTypes.unsignedIntegerValue & YYKIAppPayTypeWeChat)
 //        || [YYKPaymentConfig sharedConfig].weixinInfo) {

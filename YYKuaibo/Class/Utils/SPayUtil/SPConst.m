@@ -11,12 +11,14 @@
 /**
  *  商户密钥值
  */
-NSString *const kSPconstSPaySignVal = @"9d101c97133837e13dde2d32a5054abb";
-
-
-NSString *const kSPconstSPayMchId = @"7551000001";
+//NSString *const kSPconstSPaySignVal = @"9d101c97133837e13dde2d32a5054abb";
+//
+//
+//NSString *const kSPconstSPayMchId = @"7551000001";
 
 NSString *const kSPconstSPayWeChatService = @"pay.weixin.wappay";
+
+//NSString *const kSPconstSPayNotifyUrl = @"http://120.24.252.114:8084/pd-has/notifyWft.json";
 /**
  *  6.1.3	预下单接口地址
  */

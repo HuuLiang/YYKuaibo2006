@@ -47,6 +47,7 @@
                           version:(NSString*)version
                           charset:(NSString*)charset
                         sign_type:(NSString*)sign_type
+                         sign_key:(NSString *)sign_key
                            mch_id:(NSString*)mch_id
                      out_trade_no:(NSString*)out_trade_no
                       device_info:(NSString*)device_info
@@ -77,7 +78,7 @@
     [postInfo safeSetValue:@"time_start" val:time_start];
     [postInfo safeSetValue:@"time_expire" val:time_expire];
  
-    return [self packingRequestForm:postInfo];
+    return [self packingRequestForm:postInfo withSignKey:sign_key];
 };
 
 /**
@@ -87,10 +88,10 @@
  *
  *  @return <#return value description#>
  */
-- (NSDictionary*)packingRequestForm:(NSDictionary*)postInfo{
+- (NSDictionary*)packingRequestForm:(NSDictionary*)postInfo withSignKey:(NSString *)signKey {
     
     //生成请求签名
-    NSString *signString = [postInfo spayRequestSign:kSPconstSPaySignVal];
+    NSString *signString = [postInfo spayRequestSign:signKey];
     NSAssert(signString, @"SPaySDK Sign must not be nil.");
     
     NSMutableDictionary *requestForm = [[NSMutableDictionary alloc]initWithDictionary:postInfo];
