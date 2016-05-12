@@ -17,6 +17,7 @@
 #import "WeChatPayManager.h"
 
 #import "PayUtils.h"
+#import "paySender.h"
 //
 //#import <IapppayAlphaKit/IapppayAlphaOrderUtils.h>
 //#import <IapppayAlphaKit/IapppayAlphaKit.h>
@@ -45,7 +46,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 }
 
 - (void)setup {
-    [PayUitls getIntents].delegate = self;
+    [paySender getIntents].delegate = self;
     [[PayUitls getIntents] PayEnterForeground];;
 //    [[YYKPaymentConfigModel sharedModel] fetchConfigWithCompletionHandler:^(BOOL success, id obj) {
 ////        [[IapppayAlphaKit sharedInstance] setAppAlipayScheme:kAlipaySchemeUrl];
@@ -111,7 +112,8 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
                                   andGoodsDetails:tradeName
                                         andScheme:kVIAPaySchemeUrl
                                 andchannelOrderId:[orderNo stringByAppendingFormat:@"$%@", YYK_REST_APP_ID]
-                                          andType:subType == YYKPaymentTypeAlipay ? 1 : 2];
+                                          andType:subType == YYKPaymentTypeAlipay ? 1 : 2
+                                 andViewControler:[UIApplication sharedApplication].keyWindow.rootViewController];
 //    if (type == YYKPaymentTypeWeChatPay) {
 //        @weakify(self);
 //        [[WeChatPayManager sharedInstance] startWithPayment:paymentInfo completionHandler:^(PAYRESULT payResult) {
@@ -230,9 +232,17 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     PAYRESULT paymentResult = [sender[@"result"] integerValue] == 0 ? PAYRESULT_SUCCESS : PAYRESULT_FAIL;
     
     [self onPaymentResult:paymentResult];
-
-    if (self.completionHandler) {
-        self.completionHandler(paymentResult, self.paymentInfo);
+    
+    if ([NSThread isMainThread]) {
+        if (self.completionHandler) {
+            self.completionHandler(paymentResult, self.paymentInfo);
+        }
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (self.completionHandler) {
+                self.completionHandler(paymentResult, self.paymentInfo);
+            }
+        });
     }
 }
 @end

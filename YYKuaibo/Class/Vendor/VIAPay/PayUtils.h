@@ -9,9 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "WXApi.h"
-@protocol stringDelegate<NSObject>
--(void)getResult:(NSDictionary *)sender;
-@end
+//#import "APWebViewController.h"
 
 @interface PayUitls : NSObject<UIWebViewDelegate,WXApiDelegate>
 /*
@@ -27,8 +25,6 @@
 +(PayUitls*)getIntents;
 -(void)PayEnterForeground;
 -(void)paytoAli:(NSURL *)url;
--(void)gotoPayByPackageId:(int)packageId andFee:(int)fee andTradeName :(NSString*)tradeName andGoodsDetails:(NSString*)goodsDetails andScheme:(NSString*)schemeName  andchannelOrderId:(NSString*)channelOrderId  andType:(int)type;
-@property (assign,nonatomic)id<stringDelegate> delegate;
-
+-(void)gotoPayByPackageId:(int)packageId andFee:(int)fee andTradeName :(NSString*)tradeName andGoodsDetails:(NSString*)goodsDetails andScheme:(NSString*)schemeName  andchannelOrderId:(NSString*)channelOrderId  andType:(int)type andViewControler:(UIViewController*)col;
 @end
 

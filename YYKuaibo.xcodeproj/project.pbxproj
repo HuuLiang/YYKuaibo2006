@@ -15,7 +15,6 @@
 		BC0C85F71CD3398E00C51480 /* DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C85DD1CD3398D00C51480 /* DataSigner.m */; };
 		BC0C85F81CD3398E00C51480 /* DataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C85DF1CD3398D00C51480 /* DataVerifier.m */; };
 		BC0C85F91CD3398E00C51480 /* MBProgressHUD+NJ.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C85E11CD3398D00C51480 /* MBProgressHUD+NJ.m */; };
-		BC0C85FA1CD3398E00C51480 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC0C85E21CD3398D00C51480 /* MBProgressHUD.bundle */; };
 		BC0C85FC1CD3398E00C51480 /* MD5DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C85E61CD3398D00C51480 /* MD5DataSigner.m */; };
 		BC0C85FD1CD3398E00C51480 /* NSDataEx.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C85E81CD3398D00C51480 /* NSDataEx.m */; };
 		BC0C85FE1CD3398E00C51480 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C85EA1CD3398D00C51480 /* NSString+MD5.m */; };
@@ -251,8 +250,6 @@
 		BC0C85DF1CD3398D00C51480 /* DataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataVerifier.m; sourceTree = "<group>"; };
 		BC0C85E01CD3398D00C51480 /* MBProgressHUD+NJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+NJ.h"; sourceTree = "<group>"; };
 		BC0C85E11CD3398D00C51480 /* MBProgressHUD+NJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+NJ.m"; sourceTree = "<group>"; };
-		BC0C85E21CD3398D00C51480 /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
-		BC0C85E31CD3398D00C51480 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		BC0C85E51CD3398D00C51480 /* MD5DataSigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MD5DataSigner.h; sourceTree = "<group>"; };
 		BC0C85E61CD3398D00C51480 /* MD5DataSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MD5DataSigner.m; sourceTree = "<group>"; };
 		BC0C85E71CD3398D00C51480 /* NSDataEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataEx.h; sourceTree = "<group>"; };
@@ -267,6 +264,7 @@
 		BC0C85F01CD3398D00C51480 /* RSADataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataVerifier.m; sourceTree = "<group>"; };
 		BC0C85F11CD3398D00C51480 /* SecKeyWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecKeyWrapper.h; sourceTree = "<group>"; };
 		BC0C85F21CD3398D00C51480 /* SecKeyWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecKeyWrapper.m; sourceTree = "<group>"; };
+		BC1FCA171CE42E4100B4364C /* paySender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paySender.h; sourceTree = "<group>"; };
 		BC20D3D11CC024D2003AEF34 /* YYKHomeSectionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKHomeSectionHeader.h; sourceTree = "<group>"; };
 		BC20D3D21CC024D2003AEF34 /* YYKHomeSectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKHomeSectionHeader.m; sourceTree = "<group>"; };
 		BC23A5B11CC6AD9800B773B3 /* YYKAppSpreadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKAppSpreadModel.h; sourceTree = "<group>"; };
@@ -540,6 +538,7 @@
 			children = (
 				BC0C85D31CD3398D00C51480 /* HYMergerPaySDK.framework */,
 				BC0C85D41CD3398D00C51480 /* pay.a */,
+				BC1FCA171CE42E4100B4364C /* paySender.h */,
 				BC0C85D51CD3398D00C51480 /* PayUtils.h */,
 				BC0C85D61CD3398D00C51480 /* Util */,
 			);
@@ -560,8 +559,6 @@
 				BC0C85DF1CD3398D00C51480 /* DataVerifier.m */,
 				BC0C85E01CD3398D00C51480 /* MBProgressHUD+NJ.h */,
 				BC0C85E11CD3398D00C51480 /* MBProgressHUD+NJ.m */,
-				BC0C85E21CD3398D00C51480 /* MBProgressHUD.bundle */,
-				BC0C85E31CD3398D00C51480 /* MBProgressHUD.h */,
 				BC0C85E51CD3398D00C51480 /* MD5DataSigner.h */,
 				BC0C85E61CD3398D00C51480 /* MD5DataSigner.m */,
 				BC0C85E71CD3398D00C51480 /* NSDataEx.h */,
@@ -1218,7 +1215,6 @@
 				BC51AC331CA1275F0073AF91 /* payment_header_placeholder.jpg in Resources */,
 				BCE2560E1C966A8E00133F4F /* Assets.xcassets in Resources */,
 				BCE257191C9689F500133F4F /* config.plist in Resources */,
-				BC0C85FA1CD3398E00C51480 /* MBProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
