@@ -169,7 +169,7 @@ NSString *const kSystemConfigModelSVipKeyPrice = @"yykuaibov_systemconfigModel_s
         return nil;
     }
     //把排除的价格添加到数组中
-    NSArray *priceExcludeArr = [priceExclude componentsSeparatedByString:@";"];
+    NSArray *priceExcludeArr = [priceExclude componentsSeparatedByString:@","];
     //过滤掉重复数据
     NSSet *priceExcludeSet = [NSSet setWithArray:priceExcludeArr];
     priceExcludeArr = [priceExcludeSet allObjects];
