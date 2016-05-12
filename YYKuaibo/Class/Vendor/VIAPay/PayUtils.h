@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "WXApi.h"
-//#import "APWebViewController.h"
 
 @interface PayUitls : NSObject<UIWebViewDelegate,WXApiDelegate>
 /*

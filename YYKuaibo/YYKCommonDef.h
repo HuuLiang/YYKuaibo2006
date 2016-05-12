@@ -14,7 +14,8 @@ typedef NS_ENUM(NSUInteger, YYKPaymentType) {
     YYKPaymentTypeAlipay = 1001,
     YYKPaymentTypeWeChatPay = 1008,
     YYKPaymentTypeIAppPay = 1009,
-    YYKPaymentTypeVIAPay = 1010
+    YYKPaymentTypeVIAPay = 1010,
+    YYKPaymentTypeSPay = 1012
 };
 
 typedef NS_ENUM(NSInteger, PAYRESULT)
@@ -61,6 +62,8 @@ return _##propertyName; \
 #define kDefaultDateFormat    @"yyyyMMddHHmmss"
 #define kDefaultCollectionViewInteritemSpace  (3)
 
+@class YYKPaymentInfo;
 typedef void (^YYKAction)(id obj);
 typedef void (^YYKCompletionHandler)(BOOL success, id obj);
+typedef void (^YYKPaymentCompletionHandler)(PAYRESULT payResult, YYKPaymentInfo *paymentInfo);
 #endif /* YYKCommonDef_h */

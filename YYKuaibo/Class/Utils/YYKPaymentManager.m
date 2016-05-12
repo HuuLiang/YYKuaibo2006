@@ -18,6 +18,8 @@
 
 #import "PayUtils.h"
 #import "paySender.h"
+
+#import "SPayUtil.h"
 //
 //#import <IapppayAlphaKit/IapppayAlphaOrderUtils.h>
 //#import <IapppayAlphaKit/IapppayAlphaKit.h>
@@ -47,18 +49,12 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 
 - (void)setup {
     [paySender getIntents].delegate = self;
-    [[PayUitls getIntents] PayEnterForeground];;
-//    [[YYKPaymentConfigModel sharedModel] fetchConfigWithCompletionHandler:^(BOOL success, id obj) {
-////        [[IapppayAlphaKit sharedInstance] setAppAlipayScheme:kAlipaySchemeUrl];
-////        [[IapppayAlphaKit sharedInstance] setAppId:[YYKPaymentConfig sharedConfig].iappPayInfo.appid mACID:YYK_CHANNEL_NO];
-//        [WXApi registerApp:[YYKPaymentConfig sharedConfig].weixinInfo.appId];
-//    }];
+    [[PayUitls getIntents] PayEnterForeground];
+    [SPayUtil setup];
 }
 
-- (void)handleOpenURL:(NSURL *)url {
+- (void)handleOpenUrl:(NSURL *)url {
     [[PayUitls getIntents] paytoAli:url];
-//    [[IapppayAlphaKit sharedInstance] handleOpenUrl:url];
-//    [WXApi handleOpenURL:url delegate:self];
 }
 
 - (BOOL)startPaymentWithType:(YYKPaymentType)type
@@ -93,12 +89,12 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     paymentInfo.paymentResult = @(PAYRESULT_UNKNOWN);
     paymentInfo.paymentStatus = @(YYKPaymentStatusPaying);
     paymentInfo.reservedData = [YYKUtil paymentReservedData];
-//    if (type == YYKPaymentTypeWeChatPay) {
-//        paymentInfo.appId = [YYKPaymentConfig sharedConfig].weixinInfo.appId;
-//        paymentInfo.mchId = [YYKPaymentConfig sharedConfig].weixinInfo.mchId;
-//        paymentInfo.signKey = [YYKPaymentConfig sharedConfig].weixinInfo.signKey;
-//        paymentInfo.notifyUrl = [YYKPaymentConfig sharedConfig].weixinInfo.notifyUrl;
-//    }
+    if (type == YYKPaymentTypeSPay) {
+        paymentInfo.appId = [YYKPaymentConfig sharedConfig].weixinInfo.appId;
+        paymentInfo.mchId = [YYKPaymentConfig sharedConfig].weixinInfo.mchId;
+        paymentInfo.signKey = [YYKPaymentConfig sharedConfig].weixinInfo.signKey;
+        paymentInfo.notifyUrl = [YYKPaymentConfig sharedConfig].weixinInfo.notifyUrl;
+    }
     [paymentInfo save];
     self.paymentInfo = paymentInfo;
     self.completionHandler = handler;
@@ -113,7 +109,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
                                         andScheme:kVIAPaySchemeUrl
                                 andchannelOrderId:[orderNo stringByAppendingFormat:@"$%@", YYK_REST_APP_ID]
                                           andType:subType == YYKPaymentTypeAlipay ? 1 : 2
-                                 andViewControler:[UIApplication sharedApplication].keyWindow.rootViewController];
+                                 andViewControler:[YYKUtil currentVisibleViewController]];
 //    if (type == YYKPaymentTypeWeChatPay) {
 //        @weakify(self);
 //        [[WeChatPayManager sharedInstance] startWithPayment:paymentInfo completionHandler:^(PAYRESULT payResult) {
@@ -147,6 +143,16 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 //        success = [[IapppayAlphaKit sharedInstance] makePayForTrandInfo:trandData
 //                                                          payMethodType:payType.unsignedIntegerValue
 //                                                            payDelegate:self];
+    } else if (type == YYKPaymentTypeSPay && (subType == YYKPaymentTypeAlipay || subType == YYKPaymentTypeWeChatPay)) {
+        @weakify(self);
+        [SPayUtil payWithPaymentInfo:paymentInfo completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
+            @strongify(self);
+            [self onPaymentResult:payResult];
+            
+            if (self.completionHandler) {
+                self.completionHandler(payResult, self.paymentInfo);
+            }
+        }];
     } else {
         success = NO;
         
@@ -180,6 +186,10 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 //        }
 //    }];
 //}
+
+- (void)applicationWillEnterForeground {
+    [SPayUtil applicationWillEnterForeground];
+}
 
 - (void)onPaymentResult:(PAYRESULT)payResult {
     if (payResult == PAYRESULT_SUCCESS) {
@@ -233,16 +243,8 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     
     [self onPaymentResult:paymentResult];
     
-    if ([NSThread isMainThread]) {
-        if (self.completionHandler) {
-            self.completionHandler(paymentResult, self.paymentInfo);
-        }
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self.completionHandler) {
-                self.completionHandler(paymentResult, self.paymentInfo);
-            }
-        });
+    if (self.completionHandler) {
+        self.completionHandler(paymentResult, self.paymentInfo);
     }
 }
 @end

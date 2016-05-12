@@ -10,20 +10,21 @@
 
 @class YYKProgram;
 
-typedef void (^YYKPaymentCompletionHandler)(PAYRESULT payResult, YYKPaymentInfo *paymentInfo);
-
 @interface YYKPaymentManager : NSObject
 
 + (instancetype)sharedManager;
 
-- (void)setup;
 - (BOOL)startPaymentWithType:(YYKPaymentType)type
                      subType:(YYKPaymentType)subType
                        price:(NSUInteger)price
                   forProgram:(YYKProgram *)program
            completionHandler:(YYKPaymentCompletionHandler)handler;
 
-- (void)handleOpenURL:(NSURL *)url;
+// Application delegate methods
+
+- (void)applicationWillEnterForeground;
+- (void)setup;
+- (void)handleOpenUrl:(NSURL *)url;
 //- (void)checkPayment;
 
 @end

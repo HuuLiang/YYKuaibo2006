@@ -71,7 +71,7 @@
     }];
     
     [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信客户端支付" available:YES action:^(id sender) {
-        Pay(YYKPaymentTypeVIAPay, YYKPaymentTypeWeChatPay);
+        Pay(YYKPaymentTypeSPay, YYKPaymentTypeWeChatPay);
     }];
     
 //    if (([YYKPaymentConfig sharedConfig].iappPayInfo.supportPayTypes.unsignedIntegerValue & YYKIAppPayTypeWeChat)

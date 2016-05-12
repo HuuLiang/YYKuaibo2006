@@ -48,4 +48,7 @@ extern NSString *const kPaymentInfoKeyName;
 + (void)showSpreadBanner;
 + (void)checkAppInstalledWithBundleId:(NSString *)bundleId completionHandler:(void (^)(BOOL))handler;
 
++ (NSString *)getIPAddress;
++ (UIViewController *)currentVisibleViewController;
+
 @end
