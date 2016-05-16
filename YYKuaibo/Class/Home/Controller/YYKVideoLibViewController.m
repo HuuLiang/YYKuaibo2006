@@ -54,7 +54,10 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
                           usingBlock:^(id<AspectInfo> aspectInfo, UIScrollView *scrollView, BOOL decelerate)
     {
         @strongify(self);
-        [[YYKStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:0 forSlideCount:1];
+        [[YYKStatsManager sharedManager] statsTabIndex:[YYKUtil currentTabPageIndex]
+                                           subTabIndex:[YYKUtil currentSubTabPageIndex]
+                                             forBanner:self.programModel.fetchedBannerChannel.columnId
+                                        withSlideCount:1];
     } error:nil];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];

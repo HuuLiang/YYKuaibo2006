@@ -13,7 +13,7 @@
 - (BOOL)statsPayWithStatsInfos:(NSArray<YYKStatsInfo *> *)statsInfos completionHandler:(YYKCompletionHandler)completionHandler {
     NSArray<NSDictionary *> *params = [self validateParamsWithStatsInfos:statsInfos shouldIncludeStatsType:NO];
     if (params.count == 0) {
-        SafelyCallBlock(completionHandler,NO,nil);
+        SafelyCallBlock(completionHandler,NO,@"No validated statsInfos to Commit!");
         return NO;
     }
     

@@ -46,7 +46,8 @@ static NSString *const kSuccessResponse = @"SUCCESS";
                              @"cpuV":@"",
                              @"appV":[YYKUtil appVersion],
                              @"appVN":@"",
-                             @"ccn":YYK_PACKAGE_CERTIFICATE};
+                             @"ccn":YYK_PACKAGE_CERTIFICATE,
+                             @"operator":[YYKNetworkInfo sharedInfo].carriarName ?: @""};
     
     BOOL success = [self requestURLPath:YYK_ACTIVATE_URL withParams:params responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage) {
         NSString *userId;

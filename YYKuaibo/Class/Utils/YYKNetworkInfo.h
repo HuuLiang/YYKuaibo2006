@@ -20,7 +20,9 @@ typedef NS_ENUM(NSInteger, YYKNetworkStatus) {
 @interface YYKNetworkInfo : NSObject
 
 @property (nonatomic,readonly) YYKNetworkStatus networkStatus;
+@property (nonatomic,readonly) NSString *carriarName;
 
 + (instancetype)sharedInfo;
+- (void)startMonitoring;
 
 @end

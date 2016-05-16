@@ -176,6 +176,7 @@
     [self setupMobStatistics];
     [self setupCommonStyles];
     [self registerUserNotification];
+    [[YYKNetworkInfo sharedInfo] startMonitoring];
     [[YYKStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:10];
     [self.window makeKeyAndVisible];
     

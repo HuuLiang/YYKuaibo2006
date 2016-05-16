@@ -112,7 +112,7 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
                 [YYKStatsInfo removeStatsInfos:cpcStats];
                 DLog(@"Commit CPC stats successfully!");
             } else {
-                DLog(@"Commit CPC stats with failure!");
+                DLog(@"Commit CPC stats with failure: %@", obj);
             }
         }];
     }
@@ -124,7 +124,7 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
                 [YYKStatsInfo removeStatsInfos:tabStats];
                 DLog(@"Commit TAB stats successfully");
             } else {
-                DLog(@"Commint TAB stats with failure!");
+                DLog(@"Commint TAB stats with failure: %@", obj);
             }
         }];
     }
@@ -136,7 +136,7 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
                 [YYKStatsInfo removeStatsInfos:payStats];
                 DLog(@"Commit PAY stats successfully!");
             } else {
-                DLog(@"Commit PAY stats with failure!");
+                DLog(@"Commit PAY stats with failure: %@", obj);
             }
         }];
     }
@@ -144,7 +144,7 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
 
 - (void)statsCPCWithChannel:(YYKChannel *)channel inTabIndex:(NSUInteger)tabIndex {
     YYKStatsInfo *statsInfo = [[YYKStatsInfo alloc] init];
-    statsInfo.tabpageId = @(tabIndex);
+    statsInfo.tabpageId = @(tabIndex+1);
     statsInfo.columnId = channel.realColumnId;
     statsInfo.columnType = channel.type;
     statsInfo.statsType = @(YYKStatsTypeColumnCPC);
@@ -164,14 +164,14 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
         statsInfo.columnId = channel.realColumnId;
         statsInfo.columnType = channel.type;
     }
-    statsInfo.tabpageId = @(tabIndex);
+    statsInfo.tabpageId = @(tabIndex+1);
     if (subTabIndex != NSNotFound) {
-        statsInfo.subTabpageId = @(subTabIndex);
+        statsInfo.subTabpageId = @(subTabIndex+1);
     }
     
     statsInfo.programId = program.programId;
     statsInfo.programType = program.type;
-    statsInfo.programLocation = @(programLocation);
+    statsInfo.programLocation = @(programLocation+1);
     statsInfo.statsType = @(YYKStatsTypeProgramCPC);
     [self addStats:statsInfo];
     
@@ -184,9 +184,9 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
         YYKStatsInfo *statsInfo = statsInfos.firstObject;
         if (!statsInfo) {
             statsInfo = [[YYKStatsInfo alloc] init];
-            statsInfo.tabpageId = @(tabIndex);
+            statsInfo.tabpageId = @(tabIndex+1);
             if (subTabIndex != NSNotFound) {
-                statsInfo.subTabpageId = @(subTabIndex);
+                statsInfo.subTabpageId = @(subTabIndex+1);
             }
             statsInfo.statsType = @(YYKStatsTypeTabCPC);
         }
@@ -204,9 +204,9 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
         YYKStatsInfo *statsInfo = statsInfos.firstObject;
         if (!statsInfo) {
             statsInfo = [[YYKStatsInfo alloc] init];
-            statsInfo.tabpageId = @(tabIndex);
+            statsInfo.tabpageId = @(tabIndex+1);
             if (subTabIndex != NSNotFound) {
-                statsInfo.subTabpageId = @(subTabIndex);
+                statsInfo.subTabpageId = @(subTabIndex+1);
             }
             statsInfo.statsType = @(YYKStatsTypeTabPanning);
         }
@@ -224,9 +224,9 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
         YYKStatsInfo *statsInfo = statsInfos.firstObject;
         if (!statsInfo) {
             statsInfo = [[YYKStatsInfo alloc] init];
-            statsInfo.tabpageId = @(tabIndex);
+            statsInfo.tabpageId = @(tabIndex+1);
             if (subTabIndex != NSNotFound) {
-                statsInfo.subTabpageId = @(subTabIndex);
+                statsInfo.subTabpageId = @(subTabIndex+1);
             }
             statsInfo.statsType = @(YYKStatsTypeTabStay);
         }
@@ -246,11 +246,11 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
         YYKStatsInfo *statsInfo = statsInfos.firstObject;
         if (!statsInfo) {
             statsInfo = [[YYKStatsInfo alloc] init];
-            statsInfo.tabpageId = @(tabIndex);
+            statsInfo.tabpageId = @(tabIndex+1);
             statsInfo.statsType = @(YYKStatsTypeBannerPanning);
             statsInfo.columnId = bannerColumnId;
             if (subTabIndex != NSNotFound) {
-                statsInfo.subTabpageId = @(subTabIndex);
+                statsInfo.subTabpageId = @(subTabIndex+1);
             }
         }
         
@@ -276,16 +276,17 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
 {
     dispatch_async(self.queue, ^{
         YYKStatsInfo *statsInfo = [[YYKStatsInfo alloc] init];
-        statsInfo.tabpageId = @(tabIndex);
+        statsInfo.tabpageId = @(tabIndex+1);
         if (subTabIndex != NSNotFound) {
-            statsInfo.subTabpageId = @(subTabIndex);
+            statsInfo.subTabpageId = @(subTabIndex+1);
         }
         statsInfo.columnId = channel.columnId;
         statsInfo.columnType = channel.type;
         statsInfo.programId = program.programId;
         statsInfo.programType = program.type;
-        statsInfo.programLocation = @(programLocation);
+        statsInfo.programLocation = @(programLocation+1);
         statsInfo.isPayPopup = @(1);
+        statsInfo.orderNo = orderNo;
         if (payAction == YYKStatsPayActionClose) {
             statsInfo.isPayPopupClose = @(1);
         } else if (payAction == YYKStatsPayActionGoToPay) {
@@ -314,9 +315,9 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
 {
     dispatch_async(self.queue, ^{
         YYKStatsInfo *statsInfo = [[YYKStatsInfo alloc] init];
-        statsInfo.tabpageId = @(tabIndex);
+        statsInfo.tabpageId = @(tabIndex+1);
         if (subTabIndex != NSNotFound) {
-            statsInfo.subTabpageId = @(subTabIndex);
+            statsInfo.subTabpageId = @(subTabIndex+1);
         }
         statsInfo.columnId = paymentInfo.columnId;
         statsInfo.columnType = paymentInfo.columnType;
@@ -324,6 +325,7 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
         statsInfo.programType = paymentInfo.contentType;
         statsInfo.programLocation = paymentInfo.contentLocation;
         statsInfo.isPayPopup = @(1);
+        statsInfo.orderNo = paymentInfo.orderId;
         if (payAction == YYKStatsPayActionClose) {
             statsInfo.isPayPopupClose = @(1);
         } else if (payAction == YYKStatsPayActionGoToPay) {

@@ -15,7 +15,7 @@
 {
     NSArray<NSDictionary *> *params = [self validateParamsWithStatsInfos:statsInfos];
     if (params.count == 0) {
-        SafelyCallBlock(completionHandler,NO,nil);
+        SafelyCallBlock(completionHandler,NO,@"No validated statsInfos to Commit!");
         return NO;
     }
     

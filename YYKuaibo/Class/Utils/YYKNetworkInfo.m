@@ -7,8 +7,9 @@
 //
 
 #import "YYKNetworkInfo.h"
-#import <AFNetworkReachabilityManager.h>
+#import <AFNetworking.h>
 
+@import SystemConfiguration;
 @import CoreTelephony;
 
 @interface YYKNetworkInfo ()
@@ -29,7 +30,12 @@ DefineLazyPropertyInitialization(CTTelephonyNetworkInfo, networkInfo)
     return _sharedInfo;
 }
 
+- (void)startMonitoring {
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+}
+
 - (YYKNetworkStatus)networkStatus {
+    
     AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
     if (status == AFNetworkReachabilityStatusNotReachable) {
         return YYKNetworkStatusNotReachable;
@@ -54,5 +60,9 @@ DefineLazyPropertyInitialization(CTTelephonyNetworkInfo, networkInfo)
         }
     }
     return YYKNetworkStatusUnknown;
+}
+
+- (NSString *)carriarName {
+    return self.networkInfo.subscriberCellularProvider.carrierName;
 }
 @end
