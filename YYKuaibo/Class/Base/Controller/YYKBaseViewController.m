@@ -25,7 +25,7 @@
 @implementation YYKBaseViewController
 
 - (NSUInteger)currentIndex {
-    return 0;
+    return NSNotFound;
 }
 
 - (void)viewDidLoad {
