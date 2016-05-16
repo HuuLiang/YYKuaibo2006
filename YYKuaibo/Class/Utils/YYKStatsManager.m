@@ -280,7 +280,7 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
         if (subTabIndex != NSNotFound) {
             statsInfo.subTabpageId = @(subTabIndex+1);
         }
-        statsInfo.columnId = channel.columnId;
+        statsInfo.columnId = channel.realColumnId;
         statsInfo.columnType = channel.type;
         statsInfo.programId = program.programId;
         statsInfo.programType = program.type;
