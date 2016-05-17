@@ -13,12 +13,6 @@
 #define db_name @"db.sqlite"
 #define LocalizedStr(key)  NSLocalizedString(key, @"")
 
-#if defined(DEBUG)
-#define DLog(fmt,...) {NSLog((@"%s [Line:%d]" fmt),__PRETTY_FUNCTION__,__LINE__,##__VA_ARGS__);}
-#else
-#define DLog(...)
-#endif
-
 @interface DBPersistentProperty : NSObject
 @property (nonatomic) NSString *propertyPath;
 @property (nonatomic) NSString *propertyType;

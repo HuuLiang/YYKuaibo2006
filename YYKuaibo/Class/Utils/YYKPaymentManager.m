@@ -79,7 +79,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     paymentInfo.orderPrice = @(price);
     paymentInfo.contentId = program.programId;
     paymentInfo.contentType = program.type;
-    paymentInfo.contentLocation = @(programLocation);
+    paymentInfo.contentLocation = @(programLocation+1);
     paymentInfo.columnId = channel.realColumnId;
     paymentInfo.columnType = channel.type;
     paymentInfo.payPointType = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && [YYKUtil isVIP] && ![YYKUtil isSVIP] ? @(YYKPayPointTypeSVIP) : @(YYKPayPointTypeVIP);

@@ -136,9 +136,10 @@ static NSString *const kEncryptionPassword = @"qb%stats_2016&";
 
 + (NSArray<YYKStatsInfo *> *)statsInfosWithStatsType:(YYKStatsType)statsType tabIndex:(NSUInteger)tabIndex subTabIndex:(NSUInteger)subTabIndex {
     return [[self statsInfosWithStatsType:statsType] bk_select:^BOOL(id obj) {
-        if ([[obj tabpageId] isEqualToNumber:@(tabIndex)]) {
-            NSUInteger statsSubTabIndex = [obj subTabpageId] == nil ? NSNotFound : [obj subTabpageId].unsignedIntegerValue;
-            if (statsSubTabIndex == subTabIndex) {
+        if ([[obj tabpageId] isEqualToNumber:@(tabIndex+1)]) {
+            NSUInteger statsSubPageId = [obj subTabpageId] == nil ? NSNotFound : [obj subTabpageId].unsignedIntegerValue;
+            if ((statsSubPageId == NSNotFound && subTabIndex == NSNotFound)
+                || (statsSubPageId == subTabIndex + 1)) {
                 return YES;
             }
         }

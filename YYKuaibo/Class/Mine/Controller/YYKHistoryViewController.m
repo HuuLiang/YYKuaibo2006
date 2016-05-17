@@ -67,6 +67,10 @@ static NSString *const kHistoryCellReusableIdentifier = @"HistoryCellReusableIde
     // Dispose of any resources that can be recreated.
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [[YYKStatsManager sharedManager] statsTabIndex:[YYKUtil currentTabPageIndex] subTabIndex:[YYKUtil currentSubTabPageIndex] forSlideCount:1];
+}
+
 #pragma mark - UITableViewDataSource,UITableViewDelegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
