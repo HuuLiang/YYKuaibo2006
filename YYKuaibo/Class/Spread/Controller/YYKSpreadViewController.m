@@ -219,7 +219,12 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     YYKProgram *appSpread = self.appSpreadModel.fetchedSpreadChannel.programList[indexPath.item];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appSpread.videoUrl]];
+    if (appSpread.offUrl.length > 0  && [YYKUtil isVIP]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appSpread.offUrl]];
+    } else {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appSpread.videoUrl]];
+    }
+    
     
     [[YYKStatsManager sharedManager] statsCPCWithProgram:appSpread
                                          programLocation:indexPath.item

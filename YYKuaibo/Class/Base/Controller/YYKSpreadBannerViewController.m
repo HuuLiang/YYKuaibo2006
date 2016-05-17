@@ -138,7 +138,11 @@
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
     if (index < _spreads.count) {
         YYKProgram *spread = _spreads[index];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:spread.videoUrl]];
+        if (spread.offUrl.length > 0 && [YYKUtil isVIP]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:spread.offUrl]];
+        } else {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:spread.videoUrl]];
+        }
     }
 }
 
