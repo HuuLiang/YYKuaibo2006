@@ -286,7 +286,7 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
             }
         }
     }
-    return 0;
+    return NSNotFound;
 }
 
 @end
