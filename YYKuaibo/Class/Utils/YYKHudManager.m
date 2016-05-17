@@ -7,7 +7,7 @@
 //
 
 #import "YYKHudManager.h"
-#import <MBProgressHUD.h>
+#import "MBProgressHUD.h"
 
 @interface YYKHudManager ()
 @property (nonatomic,retain) MBProgressHUD *textHud;

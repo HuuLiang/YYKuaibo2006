@@ -14,6 +14,7 @@
 #define YYK_CHANNEL_NO           [YYKConfiguration sharedConfig].channelNo
 #define YYK_REST_APP_ID          @"QUBA_2006"
 #define YYK_REST_PV              @140
+#define YYK_PAYMENT_PV           @200
 #define YYK_PACKAGE_CERTIFICATE  @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
 #define YYK_PAYMENT_RESERVE_DATA [NSString stringWithFormat:@"%@$%@", YYK_REST_APP_ID, YYK_CHANNEL_NO]
 
@@ -37,13 +38,13 @@
 #define YYK_AGREEMENT_NOTPAID_URL       @"/iosvideo/agreement.html"
 #define YYK_AGREEMENT_PAID_URL          @"/iosvideo/agreement-paid.html"
 
-#define YYK_STATS_BASE_URL              @"http://120.24.252.114"
+#define YYK_STATS_BASE_URL              @"http://stats.iqu8.cn"
 #define YYK_STATS_CPC_URL               @"/stats/cpcs.service"
 #define YYK_STATS_TAB_URL               @"/stats/tabStat.service"
 #define YYK_STATS_PAY_URL               @"/stats/payRes.service"
 
 #define YYK_PAYMENT_COMMIT_URL          @"http://pay.iqu8.net/paycenter/qubaPr.json" //@"http://120.24.252.114:8084/paycenter/qubaPr.json" //
-#define YYK_PAYMENT_CONFIG_URL          @"http://pay.iqu8.net/paycenter/payConfig.json"
+#define YYK_PAYMENT_CONFIG_URL          @"http://pay.iqu8.net/paycenter/payConfig.json"//@"http://120.24.252.114:8084/paycenter/payConfig.json"//
 #define YYK_STANDBY_PAYMENT_CONFIG_URL  @"http://appcdn.mqu8.com/static/iosvideo/payConfig_%@.json"
 
 #define YYK_STANDBY_BASE_URL                @"http://appcdn.mqu8.com"
@@ -71,6 +72,16 @@
 #define YYK_SYSTEM_CONFIG_STARTUP_INSTALL       @"START_INSTALL"
 #define YYK_SYSTEM_CONFIG_SPREAD_TOP_IMAGE      @"SPREAD_TOP_IMG"
 #define YYK_SYSTEM_CONFIG_SPREAD_URL            @"SPREAD_URL"
+#define YYK_SYSTEM_CONFIG_STATS_TIME_INTERVAL   @"STATS_TIME_INTERVAL"
+
+//价格区间
+#define YYK_SYSTEM_CONFIG_PRICE_MIN @"PAY_AMOUNT_RANGE_MIN"
+#define YYK_SYSTEM_CONFIG_PRICE_MAX @"PAY_AMOUNT_RANGE_MAX"
+#define YYK_SYSTEM_CONFIG_PRICE_EXCLUDE @"PAY_AMOUNT_RANGE_EXCLUDE"
+//SVIP价格区间
+#define YYK_SYSTEM_CONFIG_SVIPPRICE_MIN @"SVIP_PAY_AMOUNT_RANGE_MIN"
+#define YYK_SYSTEM_CONFIG_SVIPPRICE_MAX @"SVIP_PAY_AMOUNT_RANGE_MAX"
+#define YYK_SYSTEM_CONFIG_SVIPPRICE_EXCLUDE @"SVIP_PAY_AMOUNT_RANGE_EXCLUDE"
 
 //#define YYK_SYSTEM_CONFIG_HALF_PAY_SEQ          @"HALF_PAY_LAUNCH_SEQ"
 //#define YYK_SYSTEM_CONFIG_HALF_PAY_DELAY        @"HALF_PAY_LAUNCH_DELAY"

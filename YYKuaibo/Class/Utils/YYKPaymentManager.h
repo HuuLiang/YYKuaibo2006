@@ -11,8 +11,6 @@
 @class YYKProgram;
 @class YYKChannel;
 
-typedef void (^YYKPaymentCompletionHandler)(PAYRESULT payResult, YYKPaymentInfo *paymentInfo);
-
 @interface YYKPaymentManager : NSObject
 
 + (instancetype)sharedManager;
@@ -26,7 +24,11 @@ typedef void (^YYKPaymentCompletionHandler)(PAYRESULT payResult, YYKPaymentInfo 
                                inChannel:(YYKChannel *)channel
                        completionHandler:(YYKPaymentCompletionHandler)handler;
 
-- (void)handleOpenURL:(NSURL *)url;
-- (void)checkPayment;
+// Application delegate methods
+
+- (void)applicationWillEnterForeground;
+- (void)setup;
+- (void)handleOpenUrl:(NSURL *)url;
+//- (void)checkPayment;
 
 @end

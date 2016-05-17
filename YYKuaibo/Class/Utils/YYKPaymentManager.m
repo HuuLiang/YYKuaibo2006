@@ -15,12 +15,18 @@
 #import "WeChatPayQueryOrderRequest.h"
 #import "WeChatPayManager.h"
 
-#import <IapppayAlphaKit/IapppayAlphaOrderUtils.h>
-#import <IapppayAlphaKit/IapppayAlphaKit.h>
+#import "PayUtils.h"
+#import "paySender.h"
 
-static NSString *const kAlipaySchemeUrl = @"comyykuaibo2016appalipayurlscheme";
+#import "SPayUtil.h"
+//
+//#import <IapppayAlphaKit/IapppayAlphaOrderUtils.h>
+//#import <IapppayAlphaKit/IapppayAlphaKit.h>
 
-@interface YYKPaymentManager () <IapppayAlphaKitPayRetDelegate,WXApiDelegate>
+//static NSString *const kAlipaySchemeUrl = @"comyykuaibo2016appalipayurlscheme";
+static NSString *const kVIAPaySchemeUrl = @"comyykuaibov2appviapayurlscheme";
+
+@interface YYKPaymentManager () <WXApiDelegate, stringDelegate>
 @property (nonatomic,retain) YYKPaymentInfo *paymentInfo;
 @property (nonatomic,copy) YYKPaymentCompletionHandler completionHandler;
 @property (nonatomic,retain) WeChatPayQueryOrderRequest *wechatPayOrderQueryRequest;
@@ -42,16 +48,20 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 }
 
 - (void)setup {
+    [paySender getIntents].delegate = self;
+    [[PayUitls getIntents] PayEnterForeground];
+    
     [[YYKPaymentConfigModel sharedModel] fetchConfigWithCompletionHandler:^(BOOL success, id obj) {
-        [[IapppayAlphaKit sharedInstance] setAppAlipayScheme:kAlipaySchemeUrl];
-        [[IapppayAlphaKit sharedInstance] setAppId:[YYKPaymentConfig sharedConfig].iappPayInfo.appid mACID:YYK_CHANNEL_NO];
-        [WXApi registerApp:[YYKPaymentConfig sharedConfig].weixinInfo.appId];
+        
+        [[SPayUtil sharedInstance] registerMchId:[YYKPaymentConfig sharedConfig].wftPayInfo.mchId
+                                         signKey:[YYKPaymentConfig sharedConfig].wftPayInfo.signKey
+                                       notifyUrl:[YYKPaymentConfig sharedConfig].wftPayInfo.notifyUrl];
     }];
+    
 }
 
-- (void)handleOpenURL:(NSURL *)url {
-    [[IapppayAlphaKit sharedInstance] handleOpenUrl:url];
-//    [WXApi handleOpenURL:url delegate:self];
+- (void)handleOpenUrl:(NSURL *)url {
+    [[PayUitls getIntents] paytoAli:url];
 }
 
 - (YYKPaymentInfo *)startPaymentWithType:(YYKPaymentType)type
@@ -68,6 +78,10 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
         }
         return nil;
     }
+    
+#ifdef DEBUG
+    price = 1;
+#endif
     
     NSString *channelNo = YYK_CHANNEL_NO;
     channelNo = [channelNo substringFromIndex:channelNo.length-14];
@@ -87,12 +101,12 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     paymentInfo.paymentResult = @(PAYRESULT_UNKNOWN);
     paymentInfo.paymentStatus = @(YYKPaymentStatusPaying);
     paymentInfo.reservedData = [YYKUtil paymentReservedData];
-    if (type == YYKPaymentTypeWeChatPay) {
-        paymentInfo.appId = [YYKPaymentConfig sharedConfig].weixinInfo.appId;
-        paymentInfo.mchId = [YYKPaymentConfig sharedConfig].weixinInfo.mchId;
-        paymentInfo.signKey = [YYKPaymentConfig sharedConfig].weixinInfo.signKey;
-        paymentInfo.notifyUrl = [YYKPaymentConfig sharedConfig].weixinInfo.notifyUrl;
-    }
+//    if (type == YYKPaymentTypeSPay) {
+//        paymentInfo.appId = [YYKPaymentConfig sharedConfig].weixinInfo.appId;
+//        paymentInfo.mchId = [YYKPaymentConfig sharedConfig].weixinInfo.mchId;
+//        paymentInfo.signKey = [YYKPaymentConfig sharedConfig].weixinInfo.signKey;
+//        paymentInfo.notifyUrl = [YYKPaymentConfig sharedConfig].weixinInfo.notifyUrl;
+//    }
     [paymentInfo save];
     self.paymentInfo = paymentInfo;
     self.completionHandler = handler;
@@ -100,39 +114,59 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     self.payChannel = channel;
     
     BOOL success = YES;
-    if (type == YYKPaymentTypeWeChatPay) {
+    if (type == YYKPaymentTypeVIAPay && (subType == YYKPaymentTypeAlipay || subType == YYKPaymentTypeWeChatPay)) {
+        NSString *tradeName = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? @"黑金VIP会员" : @"VIP会员";
+        [[PayUitls getIntents] gotoPayByPackageId:(int)[YYKPaymentConfig sharedConfig].syskPayInfo.packageId.integerValue
+                                           andFee:(int)price
+                                     andTradeName:tradeName
+                                  andGoodsDetails:tradeName
+                                        andScheme:kVIAPaySchemeUrl
+                                andchannelOrderId:[orderNo stringByAppendingFormat:@"$%@", YYK_REST_APP_ID]
+                                          andType:subType == YYKPaymentTypeAlipay ? 1 : 2
+                                 andViewControler:[YYKUtil currentVisibleViewController]];
+//    if (type == YYKPaymentTypeWeChatPay) {
+//        @weakify(self);
+//        [[WeChatPayManager sharedInstance] startWithPayment:paymentInfo completionHandler:^(PAYRESULT payResult) {
+//            @strongify(self);
+//            if (self.completionHandler) {
+//                self.completionHandler(payResult, self.paymentInfo);
+//            }
+//        }];
+//    } else if (type == YYKPaymentTypeIAppPay) {
+//        NSDictionary *paymentTypeMapping = @{@(YYKPaymentTypeAlipay):@(IapppayAlphaKitAlipayPayType),
+//                                             @(YYKPaymentTypeWeChatPay):@(IapppayAlphaKitWeChatPayType)};
+//        NSNumber *payType = paymentTypeMapping[@(subType)];
+//        if (!payType) {
+//            return NO;
+//        }
+//        
+//        IapppayAlphaOrderUtils *order = [[IapppayAlphaOrderUtils alloc] init];
+//        order.appId = [YYKPaymentConfig sharedConfig].iappPayInfo.appid;
+//        order.cpPrivateKey = [YYKPaymentConfig sharedConfig].iappPayInfo.privateKey;
+//        order.cpOrderId = orderNo;
+//#ifdef DEBUG
+//        order.waresId = @"2";
+//#else
+//        order.waresId = [YYKPaymentConfig sharedConfig].iappPayInfo.waresid.stringValue;
+//#endif
+//        order.price = [NSString stringWithFormat:@"%.2f", price/100.];
+//        order.appUserId = [YYKUtil userId] ?: @"UnregisterUser";
+//        order.cpPrivateInfo = YYK_PAYMENT_RESERVE_DATA;
+//        
+//        NSString *trandData = [order getTrandData];
+//        success = [[IapppayAlphaKit sharedInstance] makePayForTrandInfo:trandData
+//                                                          payMethodType:payType.unsignedIntegerValue
+//                                                            payDelegate:self];
+    } else if (type == YYKPaymentTypeSPay && (subType == YYKPaymentTypeAlipay || subType == YYKPaymentTypeWeChatPay)) {
         @weakify(self);
-        [[WeChatPayManager sharedInstance] startWithPayment:paymentInfo completionHandler:^(PAYRESULT payResult) {
+        [[SPayUtil sharedInstance] payWithPaymentInfo:paymentInfo completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
             @strongify(self);
+            [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
+            
             if (self.completionHandler) {
                 self.completionHandler(payResult, self.paymentInfo);
             }
         }];
-    } else if (type == YYKPaymentTypeIAppPay) {
-        NSDictionary *paymentTypeMapping = @{@(YYKPaymentTypeAlipay):@(IapppayAlphaKitAlipayPayType),
-                                             @(YYKPaymentTypeWeChatPay):@(IapppayAlphaKitWeChatPayType)};
-        NSNumber *payType = paymentTypeMapping[@(subType)];
-        if (!payType) {
-            return nil;
-        }
-        
-        IapppayAlphaOrderUtils *order = [[IapppayAlphaOrderUtils alloc] init];
-        order.appId = [YYKPaymentConfig sharedConfig].iappPayInfo.appid;
-        order.cpPrivateKey = [YYKPaymentConfig sharedConfig].iappPayInfo.privateKey;
-        order.cpOrderId = orderNo;
-#ifdef DEBUG
-        order.waresId = @"2";
-#else
-        order.waresId = [YYKPaymentConfig sharedConfig].iappPayInfo.waresid.stringValue;
-#endif
-        order.price = [NSString stringWithFormat:@"%.2f", price/100.];
-        order.appUserId = [YYKUtil userId] ?: @"UnregisterUser";
-        order.cpPrivateInfo = YYK_PAYMENT_RESERVE_DATA;
-        
-        NSString *trandData = [order getTrandData];
-        success = [[IapppayAlphaKit sharedInstance] makePayForTrandInfo:trandData
-                                                          payMethodType:payType.unsignedIntegerValue
-                                                            payDelegate:self];
     } else {
         success = NO;
         
@@ -144,27 +178,31 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     return success ? paymentInfo : nil;
 }
 
-- (void)checkPayment {
-    NSArray<YYKPaymentInfo *> *payingPaymentInfos = [YYKUtil payingPaymentInfos];
-    [payingPaymentInfos enumerateObjectsUsingBlock:^(YYKPaymentInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        YYKPaymentType paymentType = obj.paymentType.unsignedIntegerValue;
-        if (paymentType == YYKPaymentTypeWeChatPay) {
-            if (obj.appId.length == 0 || obj.mchId.length == 0 || obj.signKey.length == 0 || obj.notifyUrl.length == 0) {
-                obj.appId = [YYKPaymentConfig sharedConfig].weixinInfo.appId;
-                obj.mchId = [YYKPaymentConfig sharedConfig].weixinInfo.mchId;
-                obj.signKey = [YYKPaymentConfig sharedConfig].weixinInfo.signKey;
-                obj.notifyUrl = [YYKPaymentConfig sharedConfig].weixinInfo.notifyUrl;
-            }
-            
-            [self.wechatPayOrderQueryRequest queryPayment:obj withCompletionHandler:^(BOOL success, NSString *trade_state, double total_fee) {
-                if ([trade_state isEqualToString:@"SUCCESS"]) {
-                    YYKPaymentViewController *paymentVC = [YYKPaymentViewController sharedPaymentVC];
-                    [paymentVC notifyPaymentResult:PAYRESULT_SUCCESS withPaymentInfo:obj];
-                    [self onPaymentResult:PAYRESULT_SUCCESS withPaymentInfo:obj];
-                }
-            }];
-        }
-    }];
+//- (void)checkPayment {
+//    NSArray<YYKPaymentInfo *> *payingPaymentInfos = [YYKUtil payingPaymentInfos];
+//    [payingPaymentInfos enumerateObjectsUsingBlock:^(YYKPaymentInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        YYKPaymentType paymentType = obj.paymentType.unsignedIntegerValue;
+//        if (paymentType == YYKPaymentTypeWeChatPay) {
+//            if (obj.appId.length == 0 || obj.mchId.length == 0 || obj.signKey.length == 0 || obj.notifyUrl.length == 0) {
+//                obj.appId = [YYKPaymentConfig sharedConfig].weixinInfo.appId;
+//                obj.mchId = [YYKPaymentConfig sharedConfig].weixinInfo.mchId;
+//                obj.signKey = [YYKPaymentConfig sharedConfig].weixinInfo.signKey;
+//                obj.notifyUrl = [YYKPaymentConfig sharedConfig].weixinInfo.notifyUrl;
+//            }
+//            
+//            [self.wechatPayOrderQueryRequest queryPayment:obj withCompletionHandler:^(BOOL success, NSString *trade_state, double total_fee) {
+//                if ([trade_state isEqualToString:@"SUCCESS"]) {
+//                    YYKPaymentViewController *paymentVC = [YYKPaymentViewController sharedPaymentVC];
+//                    [paymentVC notifyPaymentResult:PAYRESULT_SUCCESS withPaymentInfo:obj];
+//                    [self onPaymentResult:PAYRESULT_SUCCESS];
+//                }
+//            }];
+//        }
+//    }];
+//}
+
+- (void)applicationWillEnterForeground {
+    [[SPayUtil sharedInstance] applicationWillEnterForeground];
 }
 
 - (void)onPaymentResult:(PAYRESULT)payResult withPaymentInfo:(YYKPaymentInfo *)paymentInfo {
@@ -173,23 +211,23 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     }
 }
 
-#pragma mark - IapppayAlphaKitPayRetDelegate
-
-- (void)iapppayAlphaKitPayRetCode:(IapppayAlphaKitPayRetCode)statusCode resultInfo:(NSDictionary *)resultInfo {
-    NSDictionary *paymentStatusMapping = @{@(IapppayAlphaKitPayRetSuccessCode):@(PAYRESULT_SUCCESS),
-                                           @(IapppayAlphaKitPayRetFailedCode):@(PAYRESULT_FAIL),
-                                           @(IapppayAlphaKitPayRetCancelCode):@(PAYRESULT_ABANDON)};
-    NSNumber *paymentResult = paymentStatusMapping[@(statusCode)];
-    if (!paymentResult) {
-        paymentResult = @(PAYRESULT_UNKNOWN);
-    }
-    
-    [self onPaymentResult:paymentResult.integerValue withPaymentInfo:self.paymentInfo];
-    
-    if (self.completionHandler) {
-        self.completionHandler(paymentResult.integerValue, self.paymentInfo);
-    }
-}
+//#pragma mark - IapppayAlphaKitPayRetDelegate
+//
+//- (void)iapppayAlphaKitPayRetCode:(IapppayAlphaKitPayRetCode)statusCode resultInfo:(NSDictionary *)resultInfo {
+//    NSDictionary *paymentStatusMapping = @{@(IapppayAlphaKitPayRetSuccessCode):@(PAYRESULT_SUCCESS),
+//                                           @(IapppayAlphaKitPayRetFailedCode):@(PAYRESULT_FAIL),
+//                                           @(IapppayAlphaKitPayRetCancelCode):@(PAYRESULT_ABANDON)};
+//    NSNumber *paymentResult = paymentStatusMapping[@(statusCode)];
+//    if (!paymentResult) {
+//        paymentResult = @(PAYRESULT_UNKNOWN);
+//    }
+//    
+//    [self onPaymentResult:paymentResult.integerValue];
+//    
+//    if (self.completionHandler) {
+//        self.completionHandler(paymentResult.integerValue, self.paymentInfo);
+//    }
+//}
 
 #pragma mark - WeChat delegate
 
@@ -209,6 +247,18 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
         }
         [[WeChatPayManager sharedInstance] sendNotificationByResult:payResult];
         [self onPaymentResult:payResult withPaymentInfo:self.paymentInfo];
+    }
+}
+
+#pragma mark - stringDelegate
+
+- (void)getResult:(NSDictionary *)sender {
+    PAYRESULT paymentResult = [sender[@"result"] integerValue] == 0 ? PAYRESULT_SUCCESS : PAYRESULT_FAIL;
+    
+    [self onPaymentResult:paymentResult withPaymentInfo:self.paymentInfo];
+    
+    if (self.completionHandler) {
+        self.completionHandler(paymentResult, self.paymentInfo);
     }
 }
 @end

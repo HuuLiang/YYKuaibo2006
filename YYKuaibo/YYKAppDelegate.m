@@ -177,7 +177,7 @@
     [self setupCommonStyles];
     [self registerUserNotification];
     [[YYKNetworkInfo sharedInfo] startMonitoring];
-    [[YYKStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:10];
+    
     [self.window makeKeyAndVisible];
     
     YYKLaunchView *launchView = [[YYKLaunchView alloc] init];
@@ -196,10 +196,13 @@
     
     [[YYKPaymentModel sharedModel] startRetryingToCommitUnprocessedOrders];
     [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+        
+        [[YYKStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:[YYKSystemConfigModel sharedModel].loaded?[YYKSystemConfigModel sharedModel].statsTimeInterval : 180];
+        
         if (!success) {
             return ;
         }
-        
+
         if ([YYKSystemConfigModel sharedModel].startupInstall.length == 0
             || [YYKSystemConfigModel sharedModel].startupPrompt.length == 0) {
             return ;
@@ -236,9 +239,10 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    if (![YYKUtil isAllVIPs]) {
-        [[YYKPaymentManager sharedManager] checkPayment];
-    }
+    [[YYKPaymentManager sharedManager] applicationWillEnterForeground];
+//    if (![YYKUtil isAllVIPs]) {
+//        [[YYKPaymentManager sharedManager] checkPayment];
+//    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -255,15 +259,19 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    [[YYKPaymentManager sharedManager] handleOpenURL:url];
+    [[YYKPaymentManager sharedManager] handleOpenUrl:url];
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
-    [[YYKPaymentManager sharedManager] handleOpenURL:url];
+    [[YYKPaymentManager sharedManager] handleOpenUrl:url];
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    [[YYKPaymentManager sharedManager] handleOpenUrl:url];
+    return YES;
+}
 #pragma mark - UITabBarControllerDelegate
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {

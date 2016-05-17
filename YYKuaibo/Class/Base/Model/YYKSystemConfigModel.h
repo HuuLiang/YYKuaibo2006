@@ -10,7 +10,7 @@
 #import "YYKSystemConfig.h"
 
 @class YYKProgram;
-
+//支付弹框里面的图片以及商品的价格,及价格区间都在这里获取
 @interface YYKSystemConfigResponse : YYKURLResponse
 @property (nonatomic,retain) NSArray<YYKSystemConfig> *confis;
 @end
@@ -40,6 +40,18 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic) NSInteger notificationBackgroundDelay;
 @property (nonatomic) NSString *notificationText;
 @property (nonatomic) NSString *notificationRepeatTimes;
+
+//价格区间
+@property (nonatomic) NSString *priceMin;
+@property (nonatomic) NSString *priceMax;
+@property (nonatomic) NSString *priceExclude;
+
+//SVIP价格区间
+@property (nonatomic) NSString *svipPriceMin;
+@property (nonatomic) NSString *svipPriceMax;
+@property (nonatomic) NSString *svipPriceExclude;
+
+@property (nonatomic) NSUInteger statsTimeInterval;
 
 //@property (nonatomic) NSString *spreadLeftImage;
 //@property (nonatomic) NSString *spreadLeftUrl;

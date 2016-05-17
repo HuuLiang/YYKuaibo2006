@@ -50,7 +50,7 @@ static NSString *const kPaymentEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
                                    @"key":kSignKey,
                                    @"imsi":@"999999999999999",
                                    @"channelNo":YYK_CHANNEL_NO,
-                                   @"pV":YYK_REST_PV };
+                                   @"pV":YYK_PAYMENT_PV };
     
     NSString *sign = [signParams signWithDictionary:[self class].commonParams keyOrders:[self class].keyOrdersOfCommonParams];
     NSString *encryptedDataString = [params encryptedStringWithSign:sign password:kPaymentEncryptionPassword excludeKeys:@[@"key"]];
@@ -106,7 +106,7 @@ static NSString *const kPaymentEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
                              @"appId":YYK_REST_APP_ID,
                              @"versionNo":@([YYKUtil appVersion].integerValue),
                              @"status":statusDic[paymentInfo.paymentResult],
-                             @"pV":YYK_REST_PV,
+                             @"pV":YYK_PAYMENT_PV,
                              @"payTime":paymentInfo.paymentTime};
     
     BOOL success = [super requestURLPath:YYK_PAYMENT_COMMIT_URL
