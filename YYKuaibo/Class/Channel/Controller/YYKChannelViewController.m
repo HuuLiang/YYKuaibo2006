@@ -31,22 +31,7 @@ static const CGFloat kChannelTableViewWidth = 100;
 
 DefineLazyPropertyInitialization(YYKChannelModel, channelModel)
 DefineLazyPropertyInitialization(YYKChannelProgramModel, programModel)
-
-- (NSMutableDictionary<NSNumber *,NSMutableArray<YYKProgram *> *> *)channelPrograms {
-    if (_channelPrograms) {
-        return _channelPrograms;
-    }
-    
-    NSArray<YYKChannel *> *channels = self.programModel.cachedChannels;
-    _channelPrograms = [NSMutableDictionary dictionary];
-    [channels enumerateObjectsUsingBlock:^(YYKChannel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj.columnId && obj.programList) {
-            [_channelPrograms setObject:obj.programList.mutableCopy forKey:obj.columnId];
-        }
-    }];
-    
-    return _channelPrograms;
-}
+DefineLazyPropertyInitialization(NSMutableDictionary, channelPrograms)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -93,7 +78,7 @@ DefineLazyPropertyInitialization(YYKChannelProgramModel, programModel)
         }];
     }
     
-    self.currentChannel = self.channelModel.fetchedChannels.firstObject;
+//    self.currentChannel = self.channelModel.fetchedChannels.firstObject;
 
     [_contentView YYK_addPullToRefreshWithHandler:^{
         @strongify(self);
@@ -112,7 +97,7 @@ DefineLazyPropertyInitialization(YYKChannelProgramModel, programModel)
     [_contentView YYK_addPagingRefreshWithHandler:^{
         [self loadProgramsInChannel:self.currentChannel.columnId withRefresh:NO];
     }];
-    [_contentView YYK_pagingRefreshNoMoreData];
+//    [_contentView YYK_pagingRefreshNoMoreData];
     // Load data
     [_channelTableView YYK_triggerPullToRefresh];
 }
