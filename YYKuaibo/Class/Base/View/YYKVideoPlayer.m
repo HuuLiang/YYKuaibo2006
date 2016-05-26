@@ -15,6 +15,7 @@
     UILabel *_loadingLabel;
 }
 @property (nonatomic,retain) AVPlayer *player;
+@property (nonatomic) CMTime timeToResume;
 @end
 
 @implementation YYKVideoPlayer
@@ -51,6 +52,8 @@
         [self.player addObserver:self forKeyPath:@"status" options:0 context:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEndPlay) name:AVPlayerItemDidPlayToEndTimeNotification  object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     return self;
 }
@@ -88,5 +91,15 @@
     if (self.endPlayAction) {
         self.endPlayAction(self);
     }
+}
+
+- (void)applicationWillResignActive {
+    [self.player pause];
+    _timeToResume = self.player.currentTime;
+}
+
+- (void)applicationDidBecomeActive {
+    [self.player seekToTime:_timeToResume toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+    [self.player play];
 }
 @end
