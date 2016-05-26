@@ -44,6 +44,7 @@ typedef NS_ENUM(NSUInteger, YYKProgramType) {
 - (void)didPlay;
 
 - (NSString *)playedDateString;
+- (NSDictionary *)dictionaryRepresentation;
 
 @end
 

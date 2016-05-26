@@ -10,6 +10,7 @@
 #define YYKExtensions_h
 
 #import "NSObject+Properties.h"
+#import "NSObject+DictionaryRepresentation.h"
 #import "NSString+md5.h"
 #import "NSString+crypt.h"
 #import "UIImage+color.h"

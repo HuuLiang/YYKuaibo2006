@@ -24,4 +24,8 @@
 @property (nonatomic) NSNumber *pageSize;
 @property (nonatomic,retain) NSArray<YYKProgram *> *programList;
 
+//+ (BOOL)persistChannels:(NSArray<YYKChannel *> *)channels inSpace:(NSString *)spaceName withPrimaryKey:(NSString *)primaryKey clearBeforePersistence:(BOOL)shouldClear;
+//+ (NSArray<YYKChannel *> *)allPersistedChannelsInSpace:(NSString *)spaceName;
++ (NSString *)cryptPasswordForProperty:(NSString *)propertyName withInstance:(id)instance;
+
 @end

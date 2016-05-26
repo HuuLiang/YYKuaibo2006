@@ -37,7 +37,8 @@ typedef NS_ENUM(NSUInteger, YYKVideoSpec) {
     YYKVideoSpecHot,
     YYKVideoSpecNew,
     YYKVideoSpecHD,
-    YYKVideoSpecFree
+    YYKVideoSpecFree,
+    YYKVideoSpecVIP
 };
 // DLog
 #ifdef  DEBUG
@@ -64,6 +65,14 @@ return _##propertyName; \
 #define kPaidNotificationName @"yykuaibo_paid_notification"
 #define kDefaultDateFormat    @"yyyyMMddHHmmss"
 #define kDefaultCollectionViewInteritemSpace  (3)
+
+static NSString *const kChannelPersistenceSpace = @"yykuaibo_1";
+static NSString *const kChannelProgramPersistenceSpace = @"yykuaibo_2";
+static NSString *const kHomePersistenceSpace = @"yykuaibo_3";
+static NSString *const kVIPPersistenceSpace = @"yykuaibo_4";
+
+static NSString *const kPersistenceCryptPassword = @"#%Q%$#afaf3134134";
+static NSString *const kChannelPrimaryKey = @"columnId";
 
 @class YYKPaymentInfo;
 typedef void (^YYKAction)(id obj);

@@ -60,7 +60,7 @@
 
 - (void)setImageURL:(NSURL *)imageURL {
     _imageURL = imageURL;
-    [_thumbImageView sd_setImageWithURL:imageURL];
+    [_thumbImageView sd_setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"placeholder_1_1"]];
 }
 
 - (void)setTitle:(NSString *)title {

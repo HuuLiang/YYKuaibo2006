@@ -94,7 +94,8 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
 + (BOOL)isVIP {
     YYKPaymentInfo *vipPaymentInfo = [[self allSuccessfulPaymentInfos] bk_match:^BOOL(id obj) {
         YYKPaymentInfo *paymentInfo = obj;
-        return paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeVIP;
+        return paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeVIP
+        || paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP;
     }];
     return vipPaymentInfo != nil;
 }

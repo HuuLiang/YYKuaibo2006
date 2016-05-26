@@ -13,6 +13,7 @@ typedef void (^YYKFetchChannelProgramCompletionHandler)(BOOL success, YYKChannel
 @interface YYKChannelProgramModel : YYKEncryptedURLRequest
 
 @property (nonatomic,retain) YYKChannel *fetchedChannel;
+@property (nonatomic,retain,readonly) NSArray<YYKChannel *> *cachedChannels;
 
 - (BOOL)fetchProgramsWithColumnId:(NSNumber *)columnId
                            pageNo:(NSUInteger)pageNo

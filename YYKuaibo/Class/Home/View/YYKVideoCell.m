@@ -24,6 +24,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         _coverImageView = [[UIImageView alloc] init];
+        [_coverImageView YPB_addAnimationForImageAppearing];
         _coverImageView.contentMode = UIViewContentModeScaleAspectFill;
         _coverImageView.clipsToBounds = YES;
         [self addSubview:_coverImageView];
@@ -73,7 +74,7 @@
 
 - (void)setImageURL:(NSURL *)imageURL {
     _imageURL = imageURL;
-    [_coverImageView sd_setImageWithURL:imageURL];
+    [_coverImageView sd_setImageWithURL:imageURL placeholderImage:self.placeholderImage];
 }
 
 - (void)setShowPlayIcon:(BOOL)showPlayIcon {
@@ -144,6 +145,9 @@
             break;
         case YYKVideoSpecFree:
             specText = @"试播";
+            break;
+        case YYKVideoSpecVIP:
+            specText = @"黑金";
             break;
         default:
             break;

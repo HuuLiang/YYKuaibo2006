@@ -84,7 +84,7 @@
 
 - (void)setImageURL:(NSURL *)imageURL {
     _imageURL = imageURL;
-    [_thumbImageView sd_setImageWithURL:imageURL];
+    [_thumbImageView sd_setImageWithURL:imageURL placeholderImage:self.placeholderImage];
 }
 
 - (void)setIsInstalled:(BOOL)isInstalled {

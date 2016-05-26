@@ -22,15 +22,12 @@
     return [YYKHomeProgramResponse class];
 }
 
-+ (BOOL)shouldPersistURLResponse {
-    return YES;
-}
-
 - (instancetype)init {
     self = [super init];
     if (self) {
-        YYKHomeProgramResponse *resp = (YYKHomeProgramResponse *)self.response;
-        _fetchedProgramList = resp.columnList;
+        _fetchedProgramList = [YYKChannel allPersistedObjectsInSpace:kHomePersistenceSpace withDecryptBlock:^NSString *(NSString *propertyName, id instance) {
+            return [YYKChannel cryptPasswordForProperty:propertyName withInstance:instance];
+        }];
         
         [self filterProgramTypes];
     }
@@ -57,6 +54,14 @@
                             self->_fetchedProgramList = programs;
                             
                             [self filterProgramTypes];
+                            
+                            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                                if (![YYKChannel persist:self->_fetchedProgramList inSpace:kHomePersistenceSpace withPrimaryKey:kChannelPrimaryKey clearBeforePersistence:YES encryptBlock:^NSString *(NSString *propertyName, id instance) {
+                                    return [YYKChannel cryptPasswordForProperty:propertyName withInstance:instance];
+                                }]) {
+                                    DLog(@"Fail to persist in %@", NSStringFromClass([self class]));
+                                }
+                            });
                         }
                         
                         if (handler) {

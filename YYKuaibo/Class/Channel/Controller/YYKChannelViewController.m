@@ -31,7 +31,22 @@ static const CGFloat kChannelTableViewWidth = 100;
 
 DefineLazyPropertyInitialization(YYKChannelModel, channelModel)
 DefineLazyPropertyInitialization(YYKChannelProgramModel, programModel)
-DefineLazyPropertyInitialization(NSMutableDictionary, channelPrograms)
+
+- (NSMutableDictionary<NSNumber *,NSMutableArray<YYKProgram *> *> *)channelPrograms {
+    if (_channelPrograms) {
+        return _channelPrograms;
+    }
+    
+    NSArray<YYKChannel *> *channels = self.programModel.cachedChannels;
+    _channelPrograms = [NSMutableDictionary dictionary];
+    [channels enumerateObjectsUsingBlock:^(YYKChannel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.columnId && obj.programList) {
+            [_channelPrograms setObject:obj.programList.mutableCopy forKey:obj.columnId];
+        }
+    }];
+    
+    return _channelPrograms;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -78,6 +93,8 @@ DefineLazyPropertyInitialization(NSMutableDictionary, channelPrograms)
         }];
     }
     
+    self.currentChannel = self.channelModel.fetchedChannels.firstObject;
+
     [_contentView YYK_addPullToRefreshWithHandler:^{
         @strongify(self);
         if (!self) {
@@ -95,6 +112,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, channelPrograms)
     [_contentView YYK_addPagingRefreshWithHandler:^{
         [self loadProgramsInChannel:self.currentChannel.columnId withRefresh:NO];
     }];
+    [_contentView YYK_pagingRefreshNoMoreData];
     // Load data
     [_channelTableView YYK_triggerPullToRefresh];
 }
@@ -194,6 +212,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, channelPrograms)
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YYKVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kChannelCollectionViewCellReusableIdentifier forIndexPath:indexPath];
+    cell.placeholderImage = [UIImage imageNamed:@"placeholder_5_3"];
     
     NSArray<YYKProgram *> *programs = [self.channelPrograms objectForKey:self.currentChannel.columnId];
     if (indexPath.row < programs.count) {

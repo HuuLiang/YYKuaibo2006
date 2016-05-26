@@ -27,7 +27,6 @@
 // Application delegate methods
 
 - (void)applicationWillEnterForeground;
-- (void)setup;
 - (void)handleOpenUrl:(NSURL *)url;
 //- (void)checkPayment;
 

@@ -119,6 +119,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
         if (success) {
             @weakify(self);
             [self->_headerImageView sd_setImageWithURL:[NSURL URLWithString:systemConfigModel.spreadTopImage]
+                                      placeholderImage:[UIImage imageNamed:@"placeholder_5_1"]
                                              completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
              {
                  @strongify(self);
@@ -175,6 +176,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
     YYKSpreadCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSpreadCellReusableIdentifier forIndexPath:indexPath];
     //YYKSpreadCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSpreadCellReusableIdentifier forIndexPath:indexPath];
     cell.backgroundColor = collectionView.backgroundColor;
+    cell.placeholderImage = [UIImage imageNamed:@"placeholder_5_2"];
     
     if (indexPath.item < self.appSpreadModel.fetchedSpreadChannel.programList.count) {
         YYKProgram *appSpread = self.appSpreadModel.fetchedSpreadChannel.programList[indexPath.item];

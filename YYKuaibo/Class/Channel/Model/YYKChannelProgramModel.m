@@ -14,6 +14,12 @@
     return [YYKChannel class];
 }
 
+- (NSArray<YYKChannel *> *)cachedChannels {
+    return [YYKChannel allPersistedObjectsInSpace:kChannelProgramPersistenceSpace withDecryptBlock:^NSString *(NSString *propertyName, id instance) {
+        return [YYKChannel cryptPasswordForProperty:propertyName withInstance:instance];
+    }];
+}
+
 - (BOOL)fetchProgramsWithColumnId:(NSNumber *)columnId
                            pageNo:(NSUInteger)pageNo
                          pageSize:(NSUInteger)pageSize
@@ -39,6 +45,17 @@
                         if (respStatus == YYKURLResponseSuccess) {
                             channel = (YYKChannel *)self.response;
                             self.fetchedChannel = channel;
+                            
+                            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                                if (![YYKChannel persist:@[channel]
+                                                 inSpace:kChannelProgramPersistenceSpace
+                                          withPrimaryKey:kChannelPrimaryKey
+                                  clearBeforePersistence:NO encryptBlock:^NSString *(NSString *propertyName, id instance) {
+                                      return [YYKChannel cryptPasswordForProperty:propertyName withInstance:instance];
+                                  }]) {
+                                      DLog(@"Persist Channel Program fails");
+                                }
+                            });
                         }
                         SafelyCallBlock(handler,respStatus==YYKURLResponseSuccess,channel);
                     }];

@@ -11,6 +11,7 @@
 @interface YYKVideoCell : UICollectionViewCell
 
 @property (nonatomic) NSURL *imageURL;
+@property (nonatomic) UIImage *placeholderImage;
 @property (nonatomic) NSString *title;
 @property (nonatomic) BOOL showPlayIcon;
 @property (nonatomic) YYKVideoSpec spec;

@@ -35,13 +35,15 @@
     _window.backgroundColor              = [UIColor whiteColor];
     
     YYKHomeViewController *homeVC = [[YYKHomeViewController alloc] init];
+    homeVC.title = @"AV大片";
+    
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeVC];
-    homeNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页"
+    homeNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:homeVC.title
                                                        image:[UIImage imageNamed:@"tabbar_home_normal"]
                                                selectedImage:nil];
     
     YYKChannelViewController *channelVC = [[YYKChannelViewController alloc] init];
-    channelVC.title = @"频道";
+    channelVC.title = @"AV片库";
     
     UINavigationController *channelNav = [[UINavigationController alloc] initWithRootViewController:channelVC];
     channelNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:channelVC.title

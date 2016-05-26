@@ -258,7 +258,13 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     [self onPaymentResult:paymentResult withPaymentInfo:self.paymentInfo];
     
     if (self.completionHandler) {
-        self.completionHandler(paymentResult, self.paymentInfo);
+        if ([NSThread currentThread].isMainThread) {
+            self.completionHandler(paymentResult, self.paymentInfo);
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.completionHandler(paymentResult, self.paymentInfo);
+            });
+        }
     }
 }
 @end

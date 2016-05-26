@@ -11,6 +11,7 @@
 @interface YYKSpreadCell : UICollectionViewCell
 
 @property (nonatomic) NSURL *imageURL;
+@property (nonatomic) UIImage *placeholderImage;
 //@property (nonatomic) NSString *title;
 @property (nonatomic) BOOL isInstalled;
 

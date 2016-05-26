@@ -64,7 +64,10 @@
     _imageURL = imageURL;
     
     @weakify(self);
-    [_thumbImageView sd_setImageWithURL:imageURL completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [_thumbImageView sd_setImageWithURL:imageURL
+                       placeholderImage:self.placeholderImage
+                              completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+     {
         @strongify(self);
         if (image) {
             _vipIconImageView.image = self.lightedDiamond ? [UIImage imageNamed:@"vip_lighted_diamond"] : [UIImage imageNamed:@"vip_grey_diamond"];

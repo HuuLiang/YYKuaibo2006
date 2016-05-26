@@ -30,7 +30,7 @@ static NSString *const kVideoHistoryKeyName = @"yykuaibov_video_history_keyname"
     return playedPrograms.count > 0 ? playedPrograms : nil;
 }
 
-- (NSDictionary *)persistentEntry {
+- (NSDictionary *)dictionaryRepresentation {
     NSMutableDictionary *entry = [NSMutableDictionary dictionary];
     [entry safelySetObject:self.programId forKey:@"programId"];
     [entry safelySetObject:self.title forKey:@"title"];
@@ -39,6 +39,8 @@ static NSString *const kVideoHistoryKeyName = @"yykuaibov_video_history_keyname"
     [entry safelySetObject:self.coverImg forKey:@"coverImg"];
     [entry safelySetObject:self.spec forKey:@"spec"];
     [entry safelySetObject:self.type forKey:@"type"];
+    [entry safelySetObject:self.payPointType forKey:@"payPointType"];
+    [entry safelySetObject:self.offUrl forKey:@"offUrl"];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:kDefaultDateFormat];
@@ -56,6 +58,8 @@ static NSString *const kVideoHistoryKeyName = @"yykuaibov_video_history_keyname"
     program.coverImg = entry[@"coverImg"];
     program.spec = entry[@"spec"];
     program.type = entry[@"type"];
+    program.payPointType = entry[@"payPointType"];
+    program.offUrl = entry[@"offUrl"];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:kDefaultDateFormat];
@@ -82,7 +86,7 @@ static NSString *const kVideoHistoryKeyName = @"yykuaibov_video_history_keyname"
     if (existingProgram) {
         [historyM removeObject:existingProgram];
     }
-    [historyM addObject:self.persistentEntry];
+    [historyM addObject:self.dictionaryRepresentation];
     
     [[NSUserDefaults standardUserDefaults] setObject:historyM forKey:kVideoHistoryKeyName];
     [[NSUserDefaults standardUserDefaults] synchronize];

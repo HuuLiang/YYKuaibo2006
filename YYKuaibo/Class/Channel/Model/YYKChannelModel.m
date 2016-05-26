@@ -29,8 +29,9 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        YYKChannelResponse *resp = self.response;
-        _fetchedChannels = resp.columnList;
+        _fetchedChannels = [YYKChannel allPersistedObjectsInSpace:kChannelPersistenceSpace withDecryptBlock:^NSString *(NSString *propertyName, id instance) {
+            return [YYKChannel cryptPasswordForProperty:propertyName withInstance:instance];
+        }];
     }
     return self;
 }
@@ -46,6 +47,14 @@
                         if (respStatus == YYKURLResponseSuccess) {
                             YYKChannelResponse *channelResp = (YYKChannelResponse *)self.response;
                             self->_fetchedChannels = channelResp.columnList;
+                            
+                            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                                if (![YYKChannel persist:self->_fetchedChannels inSpace:kChannelPersistenceSpace withPrimaryKey:kChannelPrimaryKey clearBeforePersistence:YES encryptBlock:^NSString *(NSString *propertyName, id instance) {
+                                    return [YYKChannel cryptPasswordForProperty:propertyName withInstance:instance];
+                                }]) {
+                                    DLog(@"Persistent Channels fails");
+                                }
+                            });
                             
                             if (handler) {
                                 handler(YES, self->_fetchedChannels);

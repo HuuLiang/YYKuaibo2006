@@ -14,6 +14,16 @@
     return [YYKChannel class];
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _fetchedVideoChannel = [YYKChannel allPersistedObjectsInSpace:kVIPPersistenceSpace withDecryptBlock:^NSString *(NSString *propertyName, id instance) {
+            return [YYKChannel cryptPasswordForProperty:propertyName withInstance:instance];
+        }].firstObject;
+    }
+    return self;
+}
+
 - (BOOL)fetchVideosInSpace:(YYKVideoListSpace)space
                       page:(NSUInteger)page
      withCompletionHandler:(YYKCompletionHandler)handler
@@ -33,6 +43,16 @@
         if (respStatus == YYKURLResponseSuccess) {
             videos = self.response;
             self->_fetchedVideoChannel = videos;
+            
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                if (![YYKChannel persist:@[videos] inSpace:kVIPPersistenceSpace
+                          withPrimaryKey:kChannelPrimaryKey clearBeforePersistence:YES encryptBlock:^NSString *(NSString *propertyName, id instance) {
+                              return [YYKChannel cryptPasswordForProperty:propertyName withInstance:instance];
+                          }])
+                {
+                    DLog(@"Persistence video list fails")
+                }
+            });
         }
         
         if (handler) {

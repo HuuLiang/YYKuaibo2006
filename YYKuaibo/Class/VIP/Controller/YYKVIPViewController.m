@@ -16,6 +16,7 @@
     YYKCardSlider *_contentView;
 }
 @property (nonatomic,retain) YYKVideoListModel *videoModel;
+@property (nonatomic) BOOL initialLoad;
 @end
 
 @implementation YYKVIPViewController
@@ -38,7 +39,7 @@ DefineLazyPropertyInitialization(YYKVideoListModel, videoModel)
     }];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
-    
+
     [self loadVideos];
 }
 
@@ -61,8 +62,9 @@ DefineLazyPropertyInitialization(YYKVideoListModel, videoModel)
         [self.view endLoading];
         self.navigationItem.rightBarButtonItem.enabled = YES;
         
-        if (success) {
+        if (success || !self.initialLoad) {
             [self->_contentView reloadData];
+            self.initialLoad = YES;
         }
     }];
 }
@@ -80,6 +82,7 @@ DefineLazyPropertyInitialization(YYKVideoListModel, videoModel)
 
 - (YYKCard *)cardSlider:(YYKCardSlider *)slider cardAtIndex:(NSUInteger)index {
     YYKCard *card = [slider dequeReusableCardAtIndex:index];
+    card.placeholderImage = [UIImage imageNamed:@"placeholder_7_9"];
     
     if (index < self.videoModel.fetchedVideoChannel.programList.count) {
         YYKProgram *video = self.videoModel.fetchedVideoChannel.programList[index];

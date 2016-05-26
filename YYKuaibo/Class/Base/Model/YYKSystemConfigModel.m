@@ -8,8 +8,9 @@
 
 #import "YYKSystemConfigModel.h"
 
-NSString *const kSystemConfigModelVipKeyPrice = @"yykuaibov_systemconfigModel_vip_keyprice";
-NSString *const kSystemConfigModelSVipKeyPrice = @"yykuaibov_systemconfigModel_svip_keyprice";
+static NSString *const kSystemConfigModelVipKeyPrice = @"yykuaibov_systemconfigModel_vip_keyprice";
+static NSString *const kSystemConfigModelSVipKeyPrice = @"yykuaibov_systemconfigModel_svip_keyprice";
+static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconfigModel_allvip_keyprice";
 
 @implementation YYKSystemConfigResponse
 
@@ -68,6 +69,8 @@ NSString *const kSystemConfigModelSVipKeyPrice = @"yykuaibov_systemconfigModel_s
                                     self.payAmount = config.value.integerValue;
                                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SVIP_PAY_AMOUNT]) {
                                     self.svipPayAmount = config.value.integerValue;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_ALLVIP_PAY_AMOUNT]) {
+                                    self.allVIPPayAmount = config.value.integerValue;
                                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAY_IMG]) {
                                     self.paymentImage = config.value;
                                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SVIP_PAY_IMG]) {
@@ -119,6 +122,12 @@ NSString *const kSystemConfigModelSVipKeyPrice = @"yykuaibov_systemconfigModel_s
                                     self.svipPriceMax = config.value;
                                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SVIPPRICE_EXCLUDE]){
                                     self.svipPriceExclude = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_ALLVIP_PRICE_MIN]) {
+                                    self.allVIPPriceMin = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_ALLVIP_PRICE_MAX]) {
+                                    self.allVIPPriceMax = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_ALLVIP_EXCLUDE]) {
+                                    self.allVIPPriceExclude = config.value;
                                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_STATS_TIME_INTERVAL]) {
                                     self.statsTimeInterval = config.value.integerValue;
                                 }
@@ -143,12 +152,12 @@ NSString *const kSystemConfigModelSVipKeyPrice = @"yykuaibov_systemconfigModel_s
     
     NSString *vipPayAmount = [defaults objectForKey:kSystemConfigModelVipKeyPrice];
     NSString *SVipPayAmount = [defaults objectForKey:kSystemConfigModelSVipKeyPrice];
+    NSString *allVipPayAmount = [defaults objectForKey:kSystemConfigModelALLVipKeyPrice];
     //VIP价格
     if (!vipPayAmount) {
         NSString *vipPrice = [self PayAmountWithPriceMin:_priceMin priceMax:_priceMax priceExclude:_priceExclude];
         if (vipPrice) {
             [defaults setObject:vipPrice forKey:kSystemConfigModelVipKeyPrice];
-            [defaults synchronize];
         }
     }
     //SVIP价格
@@ -156,10 +165,16 @@ NSString *const kSystemConfigModelSVipKeyPrice = @"yykuaibov_systemconfigModel_s
         NSString *SVipPrice = [self PayAmountWithPriceMin:_svipPriceMin priceMax:_svipPriceMax priceExclude:_svipPriceExclude];
         if (SVipPrice) {
             [defaults setObject:SVipPrice forKey:kSystemConfigModelSVipKeyPrice];
-            [defaults synchronize];
         }
     }
     
+    if (!allVipPayAmount) {
+        NSString *allVipPrice = [self PayAmountWithPriceMin:_allVIPPriceMin priceMax:_allVIPPriceMax priceExclude:_allVIPPriceExclude];
+        if (allVipPrice) {
+            [defaults setObject:allVipPrice forKey:kSystemConfigModelALLVipKeyPrice];
+        }
+    }
+    [defaults synchronize];
 }
 //生成随机价格
 - (NSString *)PayAmountWithPriceMin:(NSString *)priceMin priceMax:(NSString *)priceMax priceExclude:(NSString *)priceExclude {
@@ -222,6 +237,16 @@ NSString *const kSystemConfigModelSVipKeyPrice = @"yykuaibov_systemconfigModel_s
     }
 }
 
+- (NSUInteger)allVIPPayAmount {
+    NSString *allVipPayAmount = [[NSUserDefaults standardUserDefaults] objectForKey:kSystemConfigModelALLVipKeyPrice];
+    
+    if (allVipPayAmount) {
+        return allVipPayAmount.integerValue;
+    } else {
+        return _allVIPPayAmount;
+    }
+}
+
 - (BOOL)hasDiscount {
     if (self.discountAmount > 0 && self.discountAmount <= 1 && self.discountLaunchSeq >= 0 && [YYKUtil launchSeq] >= self.discountLaunchSeq) {
         return YES;
@@ -230,18 +255,20 @@ NSString *const kSystemConfigModelSVipKeyPrice = @"yykuaibov_systemconfigModel_s
 }
 
 - (NSUInteger)paymentPriceWithProgram:(YYKProgram *)program {
-    if (program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && [YYKUtil isVIP] && ![YYKUtil isSVIP]) {
+    if (program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && /*[YYKUtil isVIP] &&*/ ![YYKUtil isSVIP]) {
         
-        return self.svipPayAmount;
-        
+        if ([YYKUtil isVIP]) {
+            return self.svipPayAmount;
+        } else {
+            return self.allVIPPayAmount;
+        }
     } else {
-        
         return self.payAmount;
     }
 }
 
 - (NSString *)paymentImageWithProgram:(YYKProgram *)program {
-    if (program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && [YYKUtil isVIP] && ![YYKUtil isSVIP]) {
+    if (program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && /*[YYKUtil isVIP] &&*/ ![YYKUtil isSVIP]) {
         return self.svipPaymentImage;
     } else if ([self hasDiscount]) {
         return self.discountImage;

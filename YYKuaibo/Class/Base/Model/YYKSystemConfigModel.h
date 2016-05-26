@@ -21,6 +21,8 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 
 @property (nonatomic) NSUInteger payAmount;
 @property (nonatomic) NSUInteger svipPayAmount;
+@property (nonatomic) NSUInteger allVIPPayAmount;
+
 @property (nonatomic) NSString *paymentImage;
 @property (nonatomic) NSString *svipPaymentImage;
 @property (nonatomic) NSString *discountImage;
@@ -50,6 +52,10 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic) NSString *svipPriceMin;
 @property (nonatomic) NSString *svipPriceMax;
 @property (nonatomic) NSString *svipPriceExclude;
+
+@property (nonatomic) NSString *allVIPPriceMin;
+@property (nonatomic) NSString *allVIPPriceMax;
+@property (nonatomic) NSString *allVIPPriceExclude;
 
 @property (nonatomic) NSUInteger statsTimeInterval;
 

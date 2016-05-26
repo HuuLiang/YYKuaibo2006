@@ -41,6 +41,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
         self.layer.masksToBounds = YES;
         self.hasRowSeparator = YES;
         self.separatorColor = [UIColor colorWithWhite:0.2 alpha:1];
+        self.priceColor = [UIColor redColor];
     }
     return self;
 }
@@ -170,15 +171,15 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
             }
             
             _priceLabel = [[UILabel alloc] init];
-            _priceLabel.textColor = [UIColor redColor];
-            _priceLabel.font = [UIFont boldSystemFontOfSize:18.];
+            _priceLabel.textColor = self.priceColor;
+            _priceLabel.font = [UIFont boldSystemFontOfSize:28.];
             _priceLabel.textAlignment = NSTextAlignmentCenter;
             [self priceLabelShowPrice:_showPrice];
             [_headerImageView addSubview:_priceLabel];
             {
                 [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 //                    make.top.equalTo(_headerImageView.mas_centerY).multipliedBy(1.15);
-                    make.centerY.equalTo(_headerImageView).multipliedBy(1.6);
+                    make.centerY.equalTo(_headerImageView).multipliedBy(1.55);
                     make.centerX.equalTo(_headerImageView).multipliedBy(1.6);
                     make.width.equalTo(_headerImageView).multipliedBy(0.2);
                 }];

@@ -17,6 +17,7 @@
 //@property (nonatomic,copy) JQKPaymentAction paymentAction;
 @property (nonatomic,copy) YYKAction closeAction;
 @property (nonatomic) NSNumber *showPrice;
+@property (nonatomic) UIColor *priceColor;
 
 - (void)addPaymentWithImage:(UIImage *)image title:(NSString *)title available:(BOOL)available action:(YYKAction)action;
 - (CGFloat)viewHeightRelativeToWidth:(CGFloat)width;
