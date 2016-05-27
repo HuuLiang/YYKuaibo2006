@@ -6,12 +6,12 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "zhifuicon_z@2.png",
+      "filename" : "zhi-@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "zhifu_z@3.png",
+      "filename" : "zhi-@3x.png",
       "scale" : "3x"
     }
   ],

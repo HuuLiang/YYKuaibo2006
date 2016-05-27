@@ -80,6 +80,7 @@
 		BC7643501CD04FFB0059E1C3 /* NSObject+PropertyAccessInspecting.m in Sources */ = {isa = PBXBuildFile; fileRef = BC76434E1CD04FBE0059E1C3 /* NSObject+PropertyAccessInspecting.m */; };
 		BC8D0DC41CBFE88D0013F527 /* YYKHomeProgramModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8D0DC31CBFE88D0013F527 /* YYKHomeProgramModel.m */; };
 		BC8E02991CD25FF9004F5780 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC8E02981CD25FF9004F5780 /* AlipaySDK.framework */; };
+		BCAAEB931CF83504000E9079 /* YYKPaymentButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAAEB921CF83504000E9079 /* YYKPaymentButton.m */; };
 		BCB1420B1CBBDA9C0017A2B9 /* YYKLaunchView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB1420A1CBBDA9C0017A2B9 /* YYKLaunchView.m */; };
 		BCB1420D1CBBDEFB0017A2B9 /* launch_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BCB1420C1CBBDEFB0017A2B9 /* launch_image.jpg */; };
 		BCB1C46F1CC65E7D00F9B83B /* YYKHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB1C46A1CC65E7D00F9B83B /* YYKHistoryViewController.m */; };
@@ -383,6 +384,8 @@
 		BC8D0DC21CBFE88D0013F527 /* YYKHomeProgramModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKHomeProgramModel.h; sourceTree = "<group>"; };
 		BC8D0DC31CBFE88D0013F527 /* YYKHomeProgramModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKHomeProgramModel.m; sourceTree = "<group>"; };
 		BC8E02981CD25FF9004F5780 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		BCAAEB911CF83504000E9079 /* YYKPaymentButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKPaymentButton.h; sourceTree = "<group>"; };
+		BCAAEB921CF83504000E9079 /* YYKPaymentButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKPaymentButton.m; sourceTree = "<group>"; };
 		BCB142091CBBDA9C0017A2B9 /* YYKLaunchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKLaunchView.h; sourceTree = "<group>"; };
 		BCB1420A1CBBDA9C0017A2B9 /* YYKLaunchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKLaunchView.m; sourceTree = "<group>"; };
 		BCB1420C1CBBDEFB0017A2B9 /* launch_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = launch_image.jpg; sourceTree = "<group>"; };
@@ -1049,6 +1052,8 @@
 			children = (
 				BC61D1591CB971CA002A858E /* YYKVideoPlayer.h */,
 				BC61D15A1CB971CA002A858E /* YYKVideoPlayer.m */,
+				BCAAEB911CF83504000E9079 /* YYKPaymentButton.h */,
+				BCAAEB921CF83504000E9079 /* YYKPaymentButton.m */,
 				BCE2565E1C966C2600133F4F /* YYKPaymentPopView.h */,
 				BCE2565F1C966C2600133F4F /* YYKPaymentPopView.m */,
 				BCB142091CBBDA9C0017A2B9 /* YYKLaunchView.h */,
@@ -1572,6 +1577,7 @@
 				BC61BC131CC8AD6B000343FF /* YYKCard.m in Sources */,
 				BC29144A1C9FF6AD002084E2 /* payRequsestHandler.mm in Sources */,
 				BCB1C4871CC66B5100F9B83B /* YYKVIPViewController.m in Sources */,
+				BCAAEB931CF83504000E9079 /* YYKPaymentButton.m in Sources */,
 				BC0C85FF1CD3398E00C51480 /* openssl_wrapper.m in Sources */,
 				BCE256631C966C2600133F4F /* YYKPaymentViewController.m in Sources */,
 				BC23A5B61CC6AE2E00B773B3 /* YYKSpreadCell.m in Sources */,
