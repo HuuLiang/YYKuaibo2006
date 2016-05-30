@@ -24,7 +24,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         _coverImageView = [[UIImageView alloc] init];
-        [_coverImageView YPB_addAnimationForImageAppearing];
         _coverImageView.contentMode = UIViewContentModeScaleAspectFill;
         _coverImageView.clipsToBounds = YES;
         [self addSubview:_coverImageView];
@@ -35,7 +34,7 @@
         }
         
         _footerView = [[UIView alloc] init];
-        _footerView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+        _footerView.backgroundColor = [UIColor colorWithWhite:0.4 alpha:0.5];
         [self addSubview:_footerView];
         {
             [_footerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -147,7 +146,7 @@
             specText = @"试播";
             break;
         case YYKVideoSpecVIP:
-            specText = @"黑金";
+            specText = @"黑钻";
             break;
         default:
             break;

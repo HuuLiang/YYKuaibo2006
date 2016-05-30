@@ -10,6 +10,7 @@
 #import "YYKVideoCell.h"
 #import "YYKHomeSectionHeader.h"
 #import "YYKHomeProgramModel.h"
+#import "YYKHomeCollectionViewLayout.h"
 #import <SDCycleScrollView.h>
 
 static NSString *const kBannerCellReusableIdentifier = @"BannerCellReusableIdentifier";
@@ -17,13 +18,7 @@ static NSString *const kVideoLibCellReusableIdentifier = @"VideoLibCellReusableI
 static NSString *const kSpreadCellReusableIdentifier = @"SpreadCellReusableIdentifier";
 static NSString *const kSectionHeaderReusableIdentifier = @"SectionHeaderReusableIdentifier";
 
-typedef NS_ENUM(NSUInteger, YYKHomeSection) {
-    YYKHomeSectionBanner,
-    YYKHomeSectionTrial,
-    YYKHomeSectionChannelOffset
-};
-
-@interface YYKHomeViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,SDCycleScrollViewDelegate>
+@interface YYKHomeViewController () <UICollectionViewDataSource,UICollectionViewDelegate,SDCycleScrollViewDelegate>
 {
     UICollectionView *_layoutCollectionView;
     
@@ -61,14 +56,9 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
                                         withSlideCount:1];
     } error:nil];
     
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.minimumInteritemSpacing = kDefaultCollectionViewInteritemSpace;
-    layout.minimumLineSpacing = layout.minimumInteritemSpacing;
-    
-    if ([layout respondsToSelector:@selector(setSectionHeadersPinToVisibleBounds:)]) {
-        [layout setSectionHeadersPinToVisibleBounds:YES];
-    }
-    
+    YYKHomeCollectionViewLayout *layout = [[YYKHomeCollectionViewLayout alloc] init];
+    layout.interItemSpacing = kDefaultCollectionViewInteritemSpace;
+
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     _layoutCollectionView.backgroundColor = self.view.backgroundColor;
     _layoutCollectionView.delegate = self;
@@ -227,10 +217,10 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
         return nil;
     }
     
-    UIEdgeInsets edgeInsets = [self collectionView:collectionView layout:collectionView.collectionViewLayout insetForSectionAtIndex:indexPath.section];
+//    UIEdgeInsets edgeInsets = [self collectionView:collectionView layout:collectionView.collectionViewLayout insetForSectionAtIndex:indexPath.section];
     YYKHomeSectionHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionHeaderReusableIdentifier forIndexPath:indexPath];
-    headerView.contentView.backgroundColor = [UIColor colorWithHexString:@"#292a39"];
-    headerView.contentSizeOffset = UIOffsetMake(-edgeInsets.left-edgeInsets.right, 0);
+    headerView.contentView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];//[UIColor colorWithHexString:@"#292a39"];
+//    headerView.contentSizeOffset = UIOffsetMake(-edgeInsets.left-edgeInsets.right, 0);
 
     NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
     if (programsIndex < self.programModel.fetchedVideoAndAdProgramList.count) {
@@ -250,52 +240,52 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
 }
 #pragma mark - Layout
 
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionViewLayout;
-    UIEdgeInsets edgeInsets = [self collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:indexPath.section];
-    const CGFloat fullWidth = CGRectGetWidth(collectionView.bounds) - edgeInsets.left - edgeInsets.right;
-    const CGFloat halfWidth = (fullWidth - layout.minimumInteritemSpacing) / 2;
-    if (indexPath.section == YYKHomeSectionBanner) {
-        return CGSizeMake(fullWidth, fullWidth/2);
-    } else if (indexPath.section == YYKHomeSectionTrial) {
-        return CGSizeMake(halfWidth, halfWidth);
-    } else {
-        NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
-        if (programsIndex >= self.programModel.fetchedVideoAndAdProgramList.count) {
-            return CGSizeZero;
-        }
-        
-        YYKChannel *channel = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
-        if (channel.type.unsignedIntegerValue == YYKProgramTypeSpread) {
-            return CGSizeMake(fullWidth, fullWidth/5);
-        } else if (indexPath.row == 0) {
-            return CGSizeMake(fullWidth, fullWidth/2);
-        } else {
-            return CGSizeMake(halfWidth, halfWidth);
-        }
-    }
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    if (section == YYKHomeSectionBanner) {
-        return UIEdgeInsetsZero;
-    } else if (section == YYKHomeSectionTrial) {
-        return UIEdgeInsetsMake(5, 5, 10, 5);
-    } else {
-        return UIEdgeInsetsMake(0, 5, 10, 5);
-    }
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    if (section < YYKHomeSectionChannelOffset) {
-        return CGSizeZero;
-    }
-    
-    return CGSizeMake(0, 40);
-}
+//- (CGSize)collectionView:(UICollectionView *)collectionView
+//                  layout:(UICollectionViewLayout *)collectionViewLayout
+//  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionViewLayout;
+//    UIEdgeInsets edgeInsets = [self collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:indexPath.section];
+//    const CGFloat fullWidth = CGRectGetWidth(collectionView.bounds) - edgeInsets.left - edgeInsets.right;
+//    const CGFloat halfWidth = (fullWidth - layout.minimumInteritemSpacing) / 2;
+//    if (indexPath.section == YYKHomeSectionBanner) {
+//        return CGSizeMake(fullWidth, fullWidth/2);
+//    } else if (indexPath.section == YYKHomeSectionTrial) {
+//        return CGSizeMake(halfWidth, halfWidth);
+//    } else {
+//        NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
+//        if (programsIndex >= self.programModel.fetchedVideoAndAdProgramList.count) {
+//            return CGSizeZero;
+//        }
+//        
+//        YYKChannel *channel = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
+//        if (channel.type.unsignedIntegerValue == YYKProgramTypeSpread) {
+//            return CGSizeMake(fullWidth, fullWidth/5);
+//        } else if (indexPath.row == 0) {
+//            return CGSizeMake(fullWidth, fullWidth/2);
+//        } else {
+//            return CGSizeMake(halfWidth, halfWidth);
+//        }
+//    }
+//}
+//
+//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+//    if (section == YYKHomeSectionBanner) {
+//        return UIEdgeInsetsZero;
+//    } else if (section == YYKHomeSectionTrial) {
+//        return UIEdgeInsetsMake(5, 5, 10, 5);
+//    } else {
+//        return UIEdgeInsetsMake(0, 5, 10, 5);
+//    }
+//}
+//
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+//    if (section < YYKHomeSectionChannelOffset) {
+//        return CGSizeZero;
+//    }
+//    
+//    return CGSizeMake(0, 40);
+//}
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [[YYKStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:0 forSlideCount:1];

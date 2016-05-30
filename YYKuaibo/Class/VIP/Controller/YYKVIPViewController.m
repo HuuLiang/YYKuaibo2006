@@ -26,6 +26,9 @@ DefineLazyPropertyInitialization(YYKVideoListModel, videoModel)
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.view.backgroundColor = [UIColor colorWithWhite:0.75 alpha:1];
+    
     _contentView = [[YYKCardSlider alloc] initWithFrame:self.view.bounds];
     _contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     _contentView.delegate = self;

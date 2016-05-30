@@ -17,7 +17,7 @@ static const void *kYYKShowStateAssociatedKey = &kYYKShowStateAssociatedKey;
 @implementation UIScrollView (Refresh)
 
 - (UIColor *)YYK_refreshTextColor {
-    return [UIColor colorWithWhite:0.8 alpha:1];
+    return [UIColor colorWithWhite:0.5 alpha:1];
 }
 
 - (BOOL)isRefreshing {

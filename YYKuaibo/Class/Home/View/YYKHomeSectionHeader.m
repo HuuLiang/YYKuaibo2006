@@ -25,11 +25,9 @@
         [self addSubview:_contentView];
         
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.textColor = [UIColor whiteColor];
         [_contentView addSubview:_titleLabel];
         
         _subtitleLabel = [[UILabel alloc] init];
-        _subtitleLabel.textColor = _titleLabel.textColor;
         [_contentView addSubview:_subtitleLabel];
         
         _iconImageView = [[UIImageView alloc] init];
@@ -41,10 +39,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    _contentView.frame = CGRectMake(CGRectGetMinX(self.bounds)-_contentSizeOffset.horizontal/2,
-                                    CGRectGetMinY(self.bounds)-_contentSizeOffset.vertical/2,
-                                    CGRectGetWidth(self.bounds)+_contentSizeOffset.horizontal,
-                                    CGRectGetHeight(self.bounds)+_contentSizeOffset.vertical);
+    _contentView.frame = self.bounds;
     
     _subtitleLabel.font = [UIFont systemFontOfSize:CGRectGetHeight(_contentView.frame)*0.4];
     _titleLabel.font = _subtitleLabel.font;

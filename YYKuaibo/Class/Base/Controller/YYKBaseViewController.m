@@ -31,31 +31,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.backgroundImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"background" ofType:@"jpg"]];
-//    self.view.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
+    self.view.backgroundColor = [UIColor colorWithWhite:0.94 alpha:1];
+//    self.backgroundImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"background" ofType:@"jpg"]];
 }
 
-- (void)setBackgroundImage:(UIImage *)backgroundImage {
-    _backgroundImage = backgroundImage;
-    
-    if (![self shouldDisplayBackgroundImage]) {
-        return ;
-    }
-    
-    if (backgroundImage && !_backgroundImageView) {
-        _backgroundImageView = [[UIImageView alloc] init];
-        _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-        [self.view insertSubview:_backgroundImageView atIndex:0];
-        {
-            [_backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(self.view);
-            }];
-        }
-    }
-    _backgroundImageView.image = backgroundImage;
-}
+//- (void)setBackgroundImage:(UIImage *)backgroundImage {
+//    _backgroundImage = backgroundImage;
+//    
+//    if (![self shouldDisplayBackgroundImage]) {
+//        return ;
+//    }
+//    
+//    if (backgroundImage && !_backgroundImageView) {
+//        _backgroundImageView = [[UIImageView alloc] init];
+//        _backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+//        [self.view insertSubview:_backgroundImageView atIndex:0];
+//        {
+//            [_backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.edges.equalTo(self.view);
+//            }];
+//        }
+//    }
+//    _backgroundImageView.image = backgroundImage;
+//}
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
@@ -176,9 +174,9 @@
     return retVC;
 }
 
-- (BOOL)shouldDisplayBackgroundImage {
-    return YES;
-}
+//- (BOOL)shouldDisplayBackgroundImage {
+//    return YES;
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

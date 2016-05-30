@@ -33,6 +33,8 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification) name:kPaidNotificationName object:nil];
     
     if (![YYKUtil isVIP]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        
         _headerImageView = [[UIImageView alloc] init];
         _headerImageView.userInteractionEnabled = YES;
         
@@ -159,6 +161,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
 - (void)onPaidNotification {
     [_headerImageView removeFromSuperview];
     _headerImageView = nil;
+    self.edgesForExtendedLayout = UIRectEdgeAll;
     
     [_layoutCollectionView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);

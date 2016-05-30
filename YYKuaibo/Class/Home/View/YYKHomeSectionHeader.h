@@ -13,7 +13,6 @@
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSString *subtitle;
 @property (nonatomic) NSURL *iconURL;
-@property (nonatomic) UIOffset contentSizeOffset;
 
 @property (nonatomic,retain,readonly) UIView *contentView;
 @end

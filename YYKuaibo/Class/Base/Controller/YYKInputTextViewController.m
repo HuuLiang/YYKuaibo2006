@@ -21,6 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     _inputTextView = [[UITextView alloc] init];
     _inputTextView.font = [UIFont systemFontOfSize:14.];

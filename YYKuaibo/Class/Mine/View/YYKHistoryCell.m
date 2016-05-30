@@ -34,7 +34,7 @@
         
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:16.];
-        _titleLabel.textColor = [UIColor colorWithWhite:0.8 alpha:1];
+        _titleLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
         [self addSubview:_titleLabel];
         {
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

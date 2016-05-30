@@ -43,7 +43,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.automaticallyAdjustsScrollViewInsets = [YYKUtil isAllVIPs];
     
     _layoutTableView = [[UITableView alloc] init];
     _layoutTableView.backgroundColor = self.view.backgroundColor;
@@ -104,6 +104,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
     if ([YYKUtil isAllVIPs]) {
         self.navigationController.navigationBarHidden = NO;
     }
+    self.automaticallyAdjustsScrollViewInsets = [YYKUtil isAllVIPs];
     
     [_layoutTableView reloadData];
 }
@@ -152,7 +153,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
     if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP) {
         YYKMineVIPCell *vipCell = [tableView dequeueReusableCellWithIdentifier:kSideMenuVIPCellReusableIdentifier forIndexPath:indexPath];
         vipCell.vipImage = [YYKUtil isVIP] && ![YYKUtil isSVIP] ? [UIImage imageNamed:@"svip_text"] : [UIImage imageNamed:@"vip_text"];
-        vipCell.memberTitle = [YYKUtil isVIP] && ![YYKUtil isSVIP] ? @"成为黑金VIP会员" : @"成为VIP会员";
+        vipCell.memberTitle = [YYKUtil isVIP] && ![YYKUtil isSVIP] ? @"成为黑钻VIP会员" : @"成为VIP会员";
         cell = vipCell;
         
         @weakify(self);
@@ -171,7 +172,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
         cell = [tableView dequeueReusableCellWithIdentifier:kSideMenuNormalCellReusableIdentifier];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kSideMenuNormalCellReusableIdentifier];
-            cell.textLabel.textColor = [UIColor colorWithWhite:0.9 alpha:1];
+            cell.textLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         cell.detailTextLabel.text = nil;

@@ -115,7 +115,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     
     BOOL success = YES;
     if (type == YYKPaymentTypeVIAPay && (subType == YYKPaymentTypeAlipay || subType == YYKPaymentTypeWeChatPay)) {
-        NSString *tradeName = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? @"黑金VIP会员" : @"VIP会员";
+        NSString *tradeName = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? @"黑钻VIP会员" : @"VIP会员";
         [[PayUitls getIntents] gotoPayByPackageId:(int)[YYKPaymentConfig sharedConfig].syskPayInfo.packageId.integerValue
                                            andFee:(int)price
                                      andTradeName:tradeName

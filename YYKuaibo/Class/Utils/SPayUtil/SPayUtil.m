@@ -48,7 +48,7 @@
     NSString *service = @"unified.trade.pay";
     NSString *mch_id = self.mchId;
     NSString *out_trade_no = paymentInfo.orderId;
-    NSString *body = paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? @"黑金VIP会员" : @"VIP会员";
+    NSString *body = paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? @"黑钻VIP会员" : @"VIP会员";
     NSInteger total_fee = paymentInfo.orderPrice.integerValue;
     NSString *mch_create_ip = [YYKUtil getIPAddress];
     NSString *notify_url = self.notifyUrl;
