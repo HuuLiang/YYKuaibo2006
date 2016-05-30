@@ -11,6 +11,7 @@
 #import "YYKVideoListModel.h"
 
 static NSString *const kVideoLibCellReusableIdentifier = @"VideoLibCellReusableIdentifier";
+static const CGFloat kVideoLibImageScale = 1;
 
 @interface YYKVideoLibViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
@@ -107,6 +108,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
         cell.title = video.title;
         cell.imageURL = [NSURL URLWithString:video.coverImg];
         cell.spec = video.spec.unsignedIntegerValue;
+        cell.showPlayIcon = YES;
     }
     return cell;
 }
@@ -118,7 +120,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionViewLayout;
     const CGFloat width = (CGRectGetWidth(collectionView.bounds) - layout.minimumInteritemSpacing - layout.sectionInset.left - layout.sectionInset.right)/2;
-    const CGFloat height = width * 0.8;
+    const CGFloat height = width / kVideoLibImageScale;
     return CGSizeMake(width, height);
 }
 
