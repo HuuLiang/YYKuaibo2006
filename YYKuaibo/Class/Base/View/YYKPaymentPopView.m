@@ -25,9 +25,9 @@ static const CGFloat kFooterImageScale = 519./32.;
 static NSString *const kPayPointTypeCellReusableIdentifier = @"PayPointTypeCellReusableIdentifier";
 
 #define kTitleCellHeight MIN(kScreenHeight * 0.08, 50)
-#define kPaymentCellHeight MIN(kScreenHeight * 0.15, 70)
+#define kPaymentCellHeight MIN(kScreenHeight * 0.15, 60)
 #define kPayPointTypeCellHeight MIN(kScreenHeight * 0.1, 60)
-#define kReservedCellHeight (kScreenHeight * 0.05)
+#define kReservedCellHeight (kScreenHeight * 0.03)
 
 static const void *kPaymentButtonAssociatedKey = &kPaymentButtonAssociatedKey;
 
@@ -83,7 +83,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
     }
     cellHeights += kReservedCellHeight;
 //    cellHeights += [self tableView:self heightForHeaderInSection:1];
-    return cellHeights;
+    return lround(cellHeights);
 }
 
 - (void)addPaymentWithImage:(UIImage *)image
@@ -134,7 +134,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
 - (void)setPayPointType:(YYKPayPointType)payPointType {
     _payPointType = payPointType;
     self.headerImageURL = [NSURL URLWithString:[[YYKSystemConfigModel sharedModel] paymentImageWithPayPointType:payPointType]];
-    [self reloadSections:[NSIndexSet indexSetWithIndex:PayPointTypeSection] withRowAnimation:UITableViewRowAnimationNone];
+//    [self reloadSections:[NSIndexSet indexSetWithIndex:PayPointTypeSection] withRowAnimation:UITableViewRowAnimationNone];
     [self selectRowAtIndexPath:[NSIndexPath indexPathForRow:payPointType==YYKPayPointTypeSVIP?1:0 inSection:PayPointTypeSection] animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
@@ -207,7 +207,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
             cell.showOnlyTitle = isUpgrade;
             cell.userInteractionEnabled = !isUpgrade;
             if (isUpgrade) {
-                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"你是普通VIP，咱不能观看黑钻VIP区的视频！" attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
+                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"你是普通VIP，暂不能观看黑钻VIP区的视频！" attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
                 [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(2, 5)];
                 cell.placeholder = attrString;
             } else {

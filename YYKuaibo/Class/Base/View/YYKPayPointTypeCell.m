@@ -80,10 +80,6 @@
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    if (_showOnlyTitle) {
-        [super setSelected:NO animated:animated];
-        return ;
-    }
     [super setSelected:selected animated:animated];
     
     _selectImageView.image = selected ? [UIImage imageNamed:@"vip_type_selected_icon"] : [UIImage imageNamed:@"vip_type_normal_icon"];

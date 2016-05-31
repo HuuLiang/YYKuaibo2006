@@ -142,8 +142,9 @@
     self.view.frame = view.bounds;
     self.view.alpha = 0;
     
+    UIView *hudView = [YYKHudManager manager].hudView;
     if (view == [UIApplication sharedApplication].keyWindow) {
-        [view insertSubview:self.view belowSubview:[YYKHudManager manager].hudView];
+        [view insertSubview:self.view belowSubview:hudView];
     } else {
         [view addSubview:self.view];
     }
