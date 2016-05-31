@@ -34,7 +34,6 @@
 		BC29144B1C9FF6AD002084E2 /* WeChatPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2914461C9FF6AD002084E2 /* WeChatPayManager.m */; };
 		BC29144C1C9FF6AD002084E2 /* WXUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC2914481C9FF6AD002084E2 /* WXUtil.mm */; };
 		BC29144F1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC29144E1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m */; };
-		BC2999B61CC0F09600000F81 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC2999B51CC0F09600000F81 /* background.jpg */; };
 		BC2A0B411CB8D79D00B7D397 /* YYKLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2A0B401CB8D79D00B7D397 /* YYKLocalNotificationManager.m */; };
 		BC2FB7791CDA0A5700645070 /* DBHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2FB7751CDA0A5700645070 /* DBHandler.m */; };
 		BC2FB77A1CDA0A5700645070 /* DBTableVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2FB7781CDA0A5700645070 /* DBTableVersion.m */; };
@@ -224,7 +223,6 @@
 		BCF346E41CCAB9FD005DEFFF /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE2571D1C968AED00133F4F /* libMobClickLibrary.a */; };
 		BCF346E51CCAB9FD005DEFFF /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE257211C968AED00133F4F /* libWeChatSDK.a */; };
 		BCF346E71CCAB9FD005DEFFF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCE2560F1C966A8E00133F4F /* LaunchScreen.storyboard */; };
-		BCF346E81CCAB9FD005DEFFF /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC2999B51CC0F09600000F81 /* background.jpg */; };
 		BCF346E91CCAB9FD005DEFFF /* launch_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BCB1420C1CBBDEFB0017A2B9 /* launch_image.jpg */; };
 		BCF346EA1CCAB9FD005DEFFF /* payment_header_placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC51AC321CA1275F0073AF91 /* payment_header_placeholder.jpg */; };
 		BCF346EC1CCAB9FD005DEFFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCE2560D1C966A8E00133F4F /* Assets.xcassets */; };
@@ -305,7 +303,6 @@
 		BC2914481C9FF6AD002084E2 /* WXUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WXUtil.mm; sourceTree = "<group>"; };
 		BC29144D1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeChatPayQueryOrderRequest.h; sourceTree = "<group>"; };
 		BC29144E1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeChatPayQueryOrderRequest.m; sourceTree = "<group>"; };
-		BC2999B51CC0F09600000F81 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		BC2A0B3F1CB8D79D00B7D397 /* YYKLocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKLocalNotificationManager.h; sourceTree = "<group>"; };
 		BC2A0B401CB8D79D00B7D397 /* YYKLocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKLocalNotificationManager.m; sourceTree = "<group>"; };
 		BC2FB7741CDA0A5700645070 /* DBHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBHandler.h; sourceTree = "<group>"; };
@@ -681,7 +678,6 @@
 		BC660B051C9720BB00E04D23 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BC2999B51CC0F09600000F81 /* background.jpg */,
 				BCB1420C1CBBDEFB0017A2B9 /* launch_image.jpg */,
 				BC51AC321CA1275F0073AF91 /* payment_header_placeholder.jpg */,
 			);
@@ -1327,7 +1323,6 @@
 			files = (
 				BC69B1F11CE454680020B112 /* SPaySDKResource.bundle in Resources */,
 				BCE256111C966A8E00133F4F /* LaunchScreen.storyboard in Resources */,
-				BC2999B61CC0F09600000F81 /* background.jpg in Resources */,
 				BCB1420D1CBBDEFB0017A2B9 /* launch_image.jpg in Resources */,
 				BC51AC331CA1275F0073AF91 /* payment_header_placeholder.jpg in Resources */,
 				BCE2560E1C966A8E00133F4F /* Assets.xcassets in Resources */,
@@ -1355,7 +1350,6 @@
 			files = (
 				BC69B1F31CE4547E0020B112 /* SPaySDKResource.bundle in Resources */,
 				BCF346E71CCAB9FD005DEFFF /* LaunchScreen.storyboard in Resources */,
-				BCF346E81CCAB9FD005DEFFF /* background.jpg in Resources */,
 				BCF346E91CCAB9FD005DEFFF /* launch_image.jpg in Resources */,
 				BCF346EA1CCAB9FD005DEFFF /* payment_header_placeholder.jpg in Resources */,
 				BCF346EC1CCAB9FD005DEFFF /* Assets.xcassets in Resources */,

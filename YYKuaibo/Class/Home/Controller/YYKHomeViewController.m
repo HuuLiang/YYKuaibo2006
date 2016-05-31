@@ -44,7 +44,7 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     _bannerView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
     _bannerView.delegate = self;
     _bannerView.backgroundColor = [UIColor clearColor];
-    _bannerView.placeholderImage = [UIImage imageNamed:@"placeholder_2_1"];
+    _bannerView.placeholderImage = [UIImage imageNamed:@"placeholder_1_1"];
     [_bannerView aspect_hookSelector:@selector(scrollViewDidEndDragging:willDecelerate:)
                          withOptions:AspectPositionAfter
                           usingBlock:^(id<AspectInfo> aspectInfo, UIScrollView *scrollView, BOOL decelerate)
@@ -164,7 +164,7 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
             YYKChannel *channel = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
             if (channel.type.unsignedIntegerValue == YYKProgramTypeVideo) {
                 YYKVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVideoLibCellReusableIdentifier forIndexPath:indexPath];
-                cell.placeholderImage = indexPath.row == 0 ? [UIImage imageNamed:@"placeholder_2_1"] : [UIImage imageNamed:@"placeholder_1_1"];
+                cell.placeholderImage = indexPath.row == 0 ? [UIImage imageNamed:@"placeholder_3_5"] : [UIImage imageNamed:@"placeholder_1_1"];
                 
                 if (indexPath.row < channel.programList.count) {
                     YYKProgram *program = channel.programList[indexPath.row];

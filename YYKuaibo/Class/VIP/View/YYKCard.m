@@ -23,6 +23,8 @@
     self = [super init];
     if (self) {
         _thumbImageView = [[UIImageView alloc] init];
+        _thumbImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _thumbImageView.clipsToBounds = YES;
         [_thumbImageView YPB_addAnimationForImageAppearing];
         [self addSubview:_thumbImageView];
         {

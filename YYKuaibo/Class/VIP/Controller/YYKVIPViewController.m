@@ -85,7 +85,7 @@ DefineLazyPropertyInitialization(YYKVideoListModel, videoModel)
 
 - (YYKCard *)cardSlider:(YYKCardSlider *)slider cardAtIndex:(NSUInteger)index {
     YYKCard *card = [slider dequeReusableCardAtIndex:index];
-    card.placeholderImage = [UIImage imageNamed:@"placeholder_7_9"];
+    card.placeholderImage = [UIImage imageNamed:@"placeholder_1_1"];
     
     if (index < self.videoModel.fetchedVideoChannel.programList.count) {
         YYKProgram *video = self.videoModel.fetchedVideoChannel.programList[index];

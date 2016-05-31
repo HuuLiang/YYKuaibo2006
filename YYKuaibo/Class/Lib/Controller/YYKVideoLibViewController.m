@@ -102,6 +102,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YYKVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVideoLibCellReusableIdentifier forIndexPath:indexPath];
+    cell.placeholderImage = [UIImage imageNamed:@"placeholder_1_1"];
     
     if (indexPath.row < self.videos.count) {
         YYKProgram *video = self.videos[indexPath.item];
