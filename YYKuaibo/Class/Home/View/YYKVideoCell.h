@@ -16,6 +16,7 @@
 @property (nonatomic) BOOL showPlayIcon;
 @property (nonatomic) YYKVideoSpec spec;
 
-//+ (CGFloat)heightRelativeToWidth:(CGFloat)width;
++ (CGFloat)heightRelativeToWidth:(CGFloat)width withScale:(CGFloat)scale;
++ (CGFloat)titleHeight;
 
 @end

@@ -7,10 +7,11 @@
 //
 
 #import "YYKHomeCollectionViewLayout.h"
+#import "YYKVideoCell.h"
 
 static const CGFloat kLandscaleItemScale = 2;
 //static const CGFloat kPortaitItemScale = 7./9.;
-static const CGFloat kNormalItemScale = 5./4.;
+static const CGFloat kNormalItemImageScale = 5./3.;
 static const CGFloat kHeaderHeight = 40;
 
 typedef NSMutableDictionary<NSIndexPath *, UICollectionViewLayoutAttributes *> LayoutAttributesDictionary;
@@ -125,11 +126,12 @@ DefineLazyPropertyInitialization(LayoutAttributesDictionary, headerLayoutAttribu
     if (indexPath.section == YYKHomeSectionBanner) {
         itemSize = CGSizeMake(CGRectGetWidth(self.collectionView.bounds), CGRectGetWidth(self.collectionView.bounds) / kLandscaleItemScale);
     } else if (indexPath.section == YYKHomeSectionTrial) {
-        itemSize = CGSizeMake(halfWidth, halfWidth/kNormalItemScale);
+        itemSize = CGSizeMake(halfWidth, [YYKVideoCell heightRelativeToWidth:halfWidth withScale:kNormalItemImageScale]);
     } else {
         if (indexPath.item == 0) {
-            const CGFloat itemHeight = (fullWidth - self.interItemSpacing) / kNormalItemScale + self.interItemSpacing;
             const CGFloat itemWidth = halfWidth;
+            const CGFloat itemHeight = (fullWidth - self.interItemSpacing) / kNormalItemImageScale + 2 * [YYKVideoCell titleHeight] + self.interItemSpacing;
+            
             itemSize = CGSizeMake(itemWidth, itemHeight);
 //            const CGFloat item0Height = (2 * fullWidth - self.interItemSpacing) / (2 * kPortaitItemScale + 1);
 //            const CGFloat item0Width = item0Height * kPortaitItemScale;
@@ -137,7 +139,7 @@ DefineLazyPropertyInitialization(LayoutAttributesDictionary, headerLayoutAttribu
 //            const CGFloat item12Size = (item0Height - self.interItemSpacing) / 2;
 //            itemSize = indexPath.item == 0 ? CGSizeMake(item0Width, item0Height) : CGSizeMake(item12Size, item12Size);
         } else {
-            itemSize = CGSizeMake(halfWidth, halfWidth/kNormalItemScale);
+            itemSize = CGSizeMake(halfWidth, [YYKVideoCell heightRelativeToWidth:halfWidth withScale:kNormalItemImageScale]);
         }
     }
     return itemSize;

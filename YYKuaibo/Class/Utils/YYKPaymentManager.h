@@ -19,6 +19,7 @@
 - (YYKPaymentInfo *)startPaymentWithType:(YYKPaymentType)type
                                  subType:(YYKPaymentType)subType
                                    price:(NSUInteger)price
+                            payPointType:(YYKPayPointType)payPointType
                               forProgram:(YYKProgram *)program
                          programLocation:(NSUInteger)programLocation
                                inChannel:(YYKChannel *)channel

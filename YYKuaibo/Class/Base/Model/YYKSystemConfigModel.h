@@ -22,6 +22,8 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic) NSUInteger payAmount;
 @property (nonatomic) NSUInteger svipPayAmount;
 @property (nonatomic) NSUInteger allVIPPayAmount;
+@property (nonatomic) NSUInteger originalPayAmount;
+@property (nonatomic) NSUInteger originalSVIPPayAmount;
 
 @property (nonatomic) NSString *paymentImage;
 @property (nonatomic) NSString *svipPaymentImage;
@@ -71,6 +73,8 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(YYKFetchSystemConfigCompletionHandler)handler;
 - (NSUInteger)paymentPriceWithProgram:(YYKProgram *)program;
+- (NSUInteger)paymentPriceWithPayPointType:(YYKPayPointType)payPointType;
 - (NSString *)paymentImageWithProgram:(YYKProgram *)program;
+- (NSString *)paymentImageWithPayPointType:(YYKPayPointType)payPointType;
 
 @end

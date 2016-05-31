@@ -12,12 +12,9 @@
 
 @property (nonatomic) NSURL *headerImageURL;
 
-//@property (nonatomic,retain) UIImage *headerImage;
 @property (nonatomic,retain) UIImage *titleImage;
-//@property (nonatomic,copy) JQKPaymentAction paymentAction;
 @property (nonatomic,copy) YYKAction closeAction;
-@property (nonatomic) NSNumber *showPrice;
-@property (nonatomic) UIColor *priceColor;
+@property (nonatomic) YYKPayPointType payPointType;
 
 - (void)addPaymentWithImage:(UIImage *)image title:(NSString *)title backgroundColor:(UIColor *)backgroundColor action:(YYKAction)action;
 - (CGFloat)viewHeightRelativeToWidth:(CGFloat)width;

@@ -219,7 +219,8 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     
 //    UIEdgeInsets edgeInsets = [self collectionView:collectionView layout:collectionView.collectionViewLayout insetForSectionAtIndex:indexPath.section];
     YYKHomeSectionHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionHeaderReusableIdentifier forIndexPath:indexPath];
-    headerView.contentView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];//[UIColor colorWithHexString:@"#292a39"];
+    headerView.contentView.backgroundColor = [UIColor whiteColor];//[UIColor colorWithHexString:@"#292a39"];
+    headerView.textColor = [UIColor redColor];
 //    headerView.contentSizeOffset = UIOffsetMake(-edgeInsets.left-edgeInsets.right, 0);
 
     NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
@@ -234,6 +235,7 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
         }];
         if (svip) {
             headerView.contentView.backgroundColor = [UIColor darkPink];
+            headerView.textColor = [UIColor whiteColor];
         }
     }
     return headerView;

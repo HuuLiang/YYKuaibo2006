@@ -14,5 +14,7 @@
 @property (nonatomic) NSString *subtitle;
 @property (nonatomic) NSURL *iconURL;
 
+@property (nonatomic) UIColor *textColor;
+
 @property (nonatomic,retain,readonly) UIView *contentView;
 @end

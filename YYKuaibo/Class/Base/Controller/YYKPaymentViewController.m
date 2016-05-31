@@ -137,7 +137,8 @@
     self.programToPayFor = program;
     self.programLocationToPayFor = programLocation;
     self.channelToPayFor = channel;
-    self.popView.headerImageURL = [NSURL URLWithString:[[YYKSystemConfigModel sharedModel] paymentImageWithProgram:program]];
+    self.popView.payPointType = program.payPointType.unsignedIntegerValue;
+    //self.popView.headerImageURL = [NSURL URLWithString:[[YYKSystemConfigModel sharedModel] paymentImageWithProgram:program]];
     self.view.frame = view.bounds;
     self.view.alpha = 0;
     
@@ -174,7 +175,7 @@
 //    payAmount = @(0.1);
 //#endif
     _payAmount = payAmount;
-    self.popView.showPrice = @(payAmount.doubleValue / 100);
+    //self.popView.showPrice = @(payAmount.doubleValue / 100);
 }
 
 - (void)hidePayment {
@@ -201,15 +202,17 @@
 
 - (void)payForPaymentType:(YYKPaymentType)paymentType
            paymentSubType:(YYKPaymentType)paymentSubType {
-    if (!self.payAmount) {
+    @weakify(self);
+    YYKPayPointType payPointType = self.popView.payPointType;
+    NSUInteger price = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:payPointType];
+    if (price == 0) {
         [[YYKHudManager manager] showHudWithText:@"无法获取价格信息,请检查网络配置！"];
         return ;
     }
-    
-    @weakify(self);
     YYKPaymentInfo *paymentInfo = [[YYKPaymentManager sharedManager] startPaymentWithType:paymentType
                                                                                   subType:paymentSubType
-                                                                                    price:self.payAmount.unsignedIntegerValue
+                                                                                    price:price
+                                                                             payPointType:payPointType
                                                                                forProgram:self.programToPayFor
                                                                           programLocation:self.programLocationToPayFor
                                                                                 inChannel:self.channelToPayFor

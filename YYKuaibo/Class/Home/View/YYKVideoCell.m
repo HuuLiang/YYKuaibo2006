@@ -23,29 +23,21 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        _coverImageView = [[UIImageView alloc] init];
-        _coverImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _coverImageView.clipsToBounds = YES;
-        [self addSubview:_coverImageView];
-        {
-            [_coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(self);
-            }];
-        }
+        self.backgroundColor = [UIColor whiteColor];
         
         _footerView = [[UIView alloc] init];
-        _footerView.backgroundColor = [UIColor colorWithWhite:0.4 alpha:0.5];
+//        _footerView.backgroundColor = [UIColor colorWithWhite:0.4 alpha:0.5];
         [self addSubview:_footerView];
         {
             [_footerView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.right.bottom.equalTo(self);
-                make.height.mas_equalTo([[self class] footerHeight]);
+                make.height.mas_equalTo([[self class] titleHeight]);
             }];
         }
 
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:15.];
-        _titleLabel.textColor = [UIColor colorWithWhite:0.9 alpha:1];
+        //_titleLabel.textColor = [UIColor colorWithWhite:0.9 alpha:1];
         [_footerView addSubview:_titleLabel];
         {
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -54,12 +46,20 @@
                 make.right.equalTo(_footerView).offset(-5);
             }];
         }
+        
+        _coverImageView = [[UIImageView alloc] init];
+        _coverImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _coverImageView.clipsToBounds = YES;
+        [self addSubview:_coverImageView];
+        {
+            [_coverImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.top.equalTo(self);
+                make.bottom.equalTo(_footerView.mas_top);
+            }];
+        }
+        
     }
     return self;
-}
-
-+ (CGFloat)footerHeight {
-    return 30;
 }
 
 //+ (CGFloat)heightRelativeToWidth:(CGFloat)width {
@@ -94,7 +94,7 @@
             }
             
             [_titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_footerView).offset([[self class] footerHeight]*iconHeightScale + 10);
+                make.left.equalTo(_footerView).offset([[self class] titleHeight]*iconHeightScale + 10);
             }];
 //            [_titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
 //                make.left.equalTo(_iconImageView.mas_right).offset(5);
@@ -153,5 +153,17 @@
     }
     _specLabel.text = specText;
     _specLabel.hidden = specText.length == 0;
+}
+
++ (CGFloat)heightRelativeToWidth:(CGFloat)width withScale:(CGFloat)scale {
+    if (scale == 0) {
+        return [self titleHeight];
+    }
+    
+    return width / scale + [self titleHeight];
+}
+
++ (CGFloat)titleHeight {
+    return 30;
 }
 @end

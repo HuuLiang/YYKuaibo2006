@@ -8,13 +8,25 @@
 
 #import "YYKPaymentPopView.h"
 #import "YYKPaymentButton.h"
+#import "YYKPayPointTypeCell.h"
+#import "YYKSystemConfigModel.h"
 #import <objc/runtime.h>
+
+typedef NS_ENUM(NSUInteger, YYKPaymentPopViewSection) {
+    HeaderImageSection,
+    TitleSection,
+    PayPointTypeSection,
+    PaymentTypeSection,
+    SectionCount
+};
 
 static const CGFloat kHeaderImageScale = 1037./680.;
 static const CGFloat kFooterImageScale = 519./32.;
+static NSString *const kPayPointTypeCellReusableIdentifier = @"PayPointTypeCellReusableIdentifier";
 
 #define kTitleCellHeight MIN(kScreenHeight * 0.08, 50)
-#define kNormalCellHeight MIN(kScreenHeight * 0.15, 70)
+#define kPaymentCellHeight MIN(kScreenHeight * 0.15, 70)
+#define kPayPointTypeCellHeight MIN(kScreenHeight * 0.1, 60)
 #define kReservedCellHeight (kScreenHeight * 0.05)
 
 static const void *kPaymentButtonAssociatedKey = &kPaymentButtonAssociatedKey;
@@ -43,24 +55,32 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
         self.scrollEnabled = NO;
         self.layer.cornerRadius = lround(kScreenWidth*0.08);
         self.layer.masksToBounds = YES;
-//        self.hasRowSeparator = YES;
-//        self.hasSectionBorder = YES;
         self.separatorColor = [UIColor colorWithWhite:0.2 alpha:1];
-        self.priceColor = [UIColor redColor];
         self.backgroundColor = [UIColor colorWithWhite:0.96 alpha:1];
+        self.separatorColor = [UIColor lightGrayColor];
+        [self registerClass:[YYKPayPointTypeCell class] forCellReuseIdentifier:kPayPointTypeCellReusableIdentifier];
     }
     return self;
 }
 
 - (CGFloat)viewHeightRelativeToWidth:(CGFloat)width {
     const CGFloat headerImageHeight = width / kHeaderImageScale;
-    const CGFloat titleImageHeight = kTitleCellHeight;
-    
-    __block CGFloat cellHeights = headerImageHeight+titleImageHeight;
-    [self.cells enumerateKeysAndObjectsUsingBlock:^(NSIndexPath * _Nonnull key, UITableViewCell * _Nonnull obj, BOOL * _Nonnull stop) {
-        cellHeights += [self tableView:self heightForRowAtIndexPath:key];
-    }];
-    
+//    const CGFloat titleImageHeight = kTitleCellHeight;
+//    
+//    __block CGFloat cellHeights = headerImageHeight+titleImageHeight;
+//    [self.cells enumerateKeysAndObjectsUsingBlock:^(NSIndexPath * _Nonnull key, UITableViewCell * _Nonnull obj, BOOL * _Nonnull stop) {
+//        cellHeights += [self tableView:self heightForRowAtIndexPath:key];
+//    }];
+//
+    __block CGFloat cellHeights = headerImageHeight;
+    NSUInteger numberOfSections = [self numberOfSections];
+    for (NSUInteger section = 1; section < numberOfSections; ++section) {
+        NSUInteger numberOfItems = [self tableView:self numberOfRowsInSection:section];
+        for (NSUInteger item = 0; item < numberOfItems; ++item) {
+            CGFloat itemHeight = [self tableView:self heightForRowAtIndexPath:[NSIndexPath indexPathForRow:item inSection:section]];
+            cellHeights += itemHeight;
+        }
+    }
     cellHeights += kReservedCellHeight;
 //    cellHeights += [self tableView:self heightForHeaderInSection:1];
     return cellHeights;
@@ -71,7 +91,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
             backgroundColor:(UIColor *)backgroundColor
                      action:(YYKAction)action
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.cells.count inSection:2];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.cells.count inSection:PaymentTypeSection];
     UITableViewCell *cell = [[UITableViewCell alloc] init];
     cell.backgroundColor = self.backgroundColor;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -103,52 +123,6 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
         }
     } forControlEvents:UIControlEventTouchUpInside];
     
-//    UIImageView *imageView = [[UIImageView alloc] initWithImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-//    [cell addSubview:imageView];
-//    {
-//        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.centerY.equalTo(cell);
-//            make.left.equalTo(cell).offset(10);
-//            make.height.equalTo(cell).multipliedBy(0.7);
-//            make.width.equalTo(imageView.mas_height);
-//        }];
-//    }
-//    
-//    UIButton *button;
-//    if (available) {
-//        button = [[UIButton alloc] init];
-//        objc_setAssociatedObject(cell, kPaymentButtonAssociatedKey, button, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-//        
-//        UIImage *image = [UIImage imageNamed:@"payment_normal_button"];
-//        [button setBackgroundImage:image forState:UIControlStateNormal];
-//        [button setBackgroundImage:[UIImage imageNamed:@"payment_highlight_button"] forState:UIControlStateHighlighted];
-//        [cell addSubview:button];
-//        {
-//            [button mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.centerY.right.height.equalTo(cell);
-//                make.width.equalTo(button.mas_height).multipliedBy(image.size.width/image.size.height);
-//            }];
-//        }
-//        [button bk_addEventHandler:^(id sender) {
-//            if (action) {
-//                action(sender);
-//            }
-//        } forControlEvents:UIControlEventTouchUpInside];
-//    }
-//    
-//    UILabel *titleLabel = [[UILabel alloc] init];
-//    titleLabel.font = [UIFont boldSystemFontOfSize:lround(kScreenWidth*0.048)];
-//    titleLabel.text = title;
-//    titleLabel.textColor = [UIColor whiteColor];
-//    [backgroundView addSubview:titleLabel];
-//    {
-//        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.equalTo(imageView.mas_right).offset(10);
-//            make.centerY.equalTo(backgroundView);
-//            make.right.equalTo(button?button.mas_left:backgroundView);
-//        }];
-//    }
-    
     [self.cells setObject:cell forKey:indexPath];
 }
 
@@ -157,30 +131,21 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
     [_headerImageView sd_setImageWithURL:headerImageURL placeholderImage:[UIImage imageNamed:@"payment_header_placeholder"] options:SDWebImageDelayPlaceholder];
 }
 
-- (void)setShowPrice:(NSNumber *)showPrice {
-    _showPrice = showPrice;
-    [self priceLabelShowPrice:showPrice];
-}
-
-- (void)priceLabelShowPrice:(NSNumber *)showPrice {
-    if (showPrice == nil) {
-        _priceLabel.text = nil;
-        return ;
-    }
-    
-    double price = showPrice.doubleValue;
-    BOOL showInteger = (NSUInteger)(price * 100) % 100 == 0;
-    _priceLabel.text = showInteger ? [NSString stringWithFormat:@"%ld", (unsigned long)price] : [NSString stringWithFormat:@"%.2f", price];
+- (void)setPayPointType:(YYKPayPointType)payPointType {
+    _payPointType = payPointType;
+    self.headerImageURL = [NSURL URLWithString:[[YYKSystemConfigModel sharedModel] paymentImageWithPayPointType:payPointType]];
+    [self reloadSections:[NSIndexSet indexSetWithIndex:PayPointTypeSection] withRowAnimation:UITableViewRowAnimationNone];
+    [self selectRowAtIndexPath:[NSIndexPath indexPathForRow:payPointType==YYKPayPointTypeSVIP?1:0 inSection:PayPointTypeSection] animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
 #pragma mark - UITableViewDataSource,UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return SectionCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
+    if (indexPath.section == HeaderImageSection) {
         if (!_headerCell) {
             _headerCell = [[UITableViewCell alloc] init];
             _headerCell.backgroundColor = self.backgroundColor;
@@ -195,22 +160,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
                     make.edges.equalTo(_headerCell);
                 }];
             }
-            
-            _priceLabel = [[UILabel alloc] init];
-            _priceLabel.textColor = self.priceColor;
-            _priceLabel.font = [UIFont boldSystemFontOfSize:MIN(20, kScreenWidth*0.05)];
-            _priceLabel.textAlignment = NSTextAlignmentCenter;
-            [self priceLabelShowPrice:_showPrice];
-            [_headerImageView addSubview:_priceLabel];
-            {
-                [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//                    make.top.equalTo(_headerImageView.mas_centerY).multipliedBy(1.15);
-                    make.centerY.equalTo(_headerImageView).multipliedBy(1.6);
-                    make.centerX.equalTo(_headerImageView).multipliedBy(1.6);
-                    make.width.equalTo(_headerImageView).multipliedBy(0.2);
-                }];
-            }
-            
+
             UIButton *closeButton = [[UIButton alloc] init];
             closeButton.contentEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
             [closeButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
@@ -231,7 +181,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
             } forControlEvents:UIControlEventTouchUpInside];
         }
         return _headerCell;
-    } else if (indexPath.section == 1) {
+    } else if (indexPath.section == TitleSection) {
         if (!_titleCell) {
             _titleCell = [[UITableViewCell alloc] init];
             _titleCell.backgroundColor = self.backgroundColor;
@@ -248,6 +198,35 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
             }
         }
         return _titleCell;
+    } else if (indexPath.section == PayPointTypeSection) {
+        YYKPayPointTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:kPayPointTypeCellReusableIdentifier forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        BOOL isUpgrade = [YYKUtil isVIP] && ![YYKUtil isSVIP];
+        if (indexPath.row == 0) {
+            cell.showOnlyTitle = isUpgrade;
+            cell.userInteractionEnabled = !isUpgrade;
+            if (isUpgrade) {
+                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"你是普通VIP，咱不能观看黑钻VIP区的视频！" attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
+                [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(2, 5)];
+                cell.placeholder = attrString;
+            } else {
+                cell.titleLabel.textColor = [UIColor blackColor];
+                cell.titleLabel.text = @"普通VIP";
+                cell.subtitleLabel.text = @"可观看除黑钻区的所有视频";
+                cell.currentPrice = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:YYKPayPointTypeVIP] / 100.;
+                cell.originalPrice = [YYKSystemConfigModel sharedModel].originalPayAmount / 100.;
+            }
+        } else {
+            cell.userInteractionEnabled = YES;
+            cell.titleLabel.text = isUpgrade ? @"升级成为黑钻VIP" : @"黑钻VIP";
+            cell.subtitleLabel.text = @"可观看所有视频";
+            cell.currentPrice = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:YYKPayPointTypeSVIP] / 100.;
+            cell.originalPrice = [YYKSystemConfigModel sharedModel].originalSVIPPayAmount / 100.;
+            cell.titleLabel.textColor = [UIColor redColor];
+            cell.showOnlyTitle = NO;
+        }
+        return cell;
     } else {
         NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
         return self.cells[cellIndexPath];
@@ -256,7 +235,9 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 2) {
+    if (section == PayPointTypeSection) {
+        return 2;
+    } else if (section == PaymentTypeSection) {
         return self.cells.count;
     } else {
         return 1;
@@ -264,34 +245,16 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
+    if (indexPath.section == HeaderImageSection) {
         return CGRectGetWidth(tableView.bounds) / kHeaderImageScale;
-    } else if (indexPath.section == 1) {
+    } else if (indexPath.section == TitleSection) {
         return kTitleCellHeight;
+    } else if (indexPath.section == PayPointTypeSection) {
+        return kPayPointTypeCellHeight;
     } else {
-        return kNormalCellHeight;
+        return kPaymentCellHeight;
     }
 }
-
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    UIView *headerView = [[UIView alloc] init];
-//    
-//    UIImageView *paymentHeader = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"payment_section"]];
-//    [headerView addSubview:paymentHeader];
-//    {
-//        [paymentHeader mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.edges.equalTo(headerView);
-//        }];
-//    }
-//    return headerView;
-//}
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    if (section == 1) {
-//        return 30;
-//    }
-//    return 0;
-//}
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
@@ -303,13 +266,6 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
     return YES;
 }
 
-//- (BOOL)tableView:(UITableView *)tableView hasBorderInSection:(NSUInteger)section {
-//    if (section == 2) {
-//        return YES;
-//    }
-//    return NO;
-//}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     UITableViewCell *cell = self.cells[cellIndexPath];
@@ -317,6 +273,16 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
         UIButton *paymentButton = objc_getAssociatedObject(cell, kPaymentButtonAssociatedKey);
         paymentButton.highlighted = NO;
         [paymentButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    } else if (indexPath.section == PayPointTypeSection) {
+        self.payPointType = indexPath.row == 1 ? YYKPayPointTypeSVIP : YYKPayPointTypeVIP;   
     }
+}
+
+//- (BOOL)tableView:(UITableView *)tableView hasBorderInSection:(NSUInteger)section {
+//    return section == PayPointTypeSection;
+//}
+
+- (BOOL)tableView:(UITableView *)tableView hasSeparatorBetweenIndexPath:(NSIndexPath *)lowerIndexPath andIndexPath:(NSIndexPath *)upperIndexPath {
+    return lowerIndexPath.section == PayPointTypeSection;
 }
 @end

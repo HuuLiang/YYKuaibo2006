@@ -75,6 +75,10 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
                                     self.paymentImage = config.value;
                                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SVIP_PAY_IMG]) {
                                     self.svipPaymentImage = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_ORIGINAL_PAY_AMOUNT]) {
+                                    self.originalPayAmount = config.value.integerValue;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_ORIGINAL_SVIP_PAY_AMOUNT]) {
+                                    self.originalSVIPPayAmount = config.value.integerValue;
                                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_DISCOUNT_IMG]) {
                                     self.discountImage = config.value;
                                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_PAYMENT_TOP_IMAGE]) {
@@ -255,7 +259,11 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
 }
 
 - (NSUInteger)paymentPriceWithProgram:(YYKProgram *)program {
-    if (program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && /*[YYKUtil isVIP] &&*/ ![YYKUtil isSVIP]) {
+    return [self paymentPriceWithPayPointType:program.payPointType.unsignedIntegerValue];
+}
+
+- (NSUInteger)paymentPriceWithPayPointType:(YYKPayPointType)payPointType {
+    if (payPointType == YYKPayPointTypeSVIP && /*[YYKUtil isVIP] &&*/ ![YYKUtil isSVIP]) {
         
         if ([YYKUtil isVIP]) {
             return self.svipPayAmount;
@@ -268,7 +276,11 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
 }
 
 - (NSString *)paymentImageWithProgram:(YYKProgram *)program {
-    if (program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && /*[YYKUtil isVIP] &&*/ ![YYKUtil isSVIP]) {
+    return [self paymentImageWithPayPointType:program.payPointType.unsignedIntegerValue];
+}
+
+- (NSString *)paymentImageWithPayPointType:(YYKPayPointType)payPointType {
+    if (payPointType == YYKPayPointTypeSVIP && /*[YYKUtil isVIP] &&*/ ![YYKUtil isSVIP]) {
         return self.svipPaymentImage;
     } else if ([self hasDiscount]) {
         return self.discountImage;

@@ -67,6 +67,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 - (YYKPaymentInfo *)startPaymentWithType:(YYKPaymentType)type
                                  subType:(YYKPaymentType)subType
                                    price:(NSUInteger)price
+                            payPointType:(YYKPayPointType)payPointType
                               forProgram:(YYKProgram *)program
                          programLocation:(NSUInteger)programLocation
                                inChannel:(YYKChannel *)channel
@@ -96,17 +97,11 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     paymentInfo.contentLocation = @(programLocation+1);
     paymentInfo.columnId = channel.realColumnId;
     paymentInfo.columnType = channel.type;
-    paymentInfo.payPointType = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? @(YYKPayPointTypeSVIP) : @(YYKPayPointTypeVIP);
+    paymentInfo.payPointType = payPointType == YYKPayPointTypeSVIP ? @(YYKPayPointTypeSVIP) : @(YYKPayPointTypeVIP);
     paymentInfo.paymentType = @(type);
     paymentInfo.paymentResult = @(PAYRESULT_UNKNOWN);
     paymentInfo.paymentStatus = @(YYKPaymentStatusPaying);
     paymentInfo.reservedData = [YYKUtil paymentReservedData];
-//    if (type == YYKPaymentTypeSPay) {
-//        paymentInfo.appId = [YYKPaymentConfig sharedConfig].weixinInfo.appId;
-//        paymentInfo.mchId = [YYKPaymentConfig sharedConfig].weixinInfo.mchId;
-//        paymentInfo.signKey = [YYKPaymentConfig sharedConfig].weixinInfo.signKey;
-//        paymentInfo.notifyUrl = [YYKPaymentConfig sharedConfig].weixinInfo.notifyUrl;
-//    }
     [paymentInfo save];
     self.paymentInfo = paymentInfo;
     self.completionHandler = handler;

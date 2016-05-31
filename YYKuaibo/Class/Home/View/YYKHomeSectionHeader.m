@@ -41,7 +41,7 @@
     
     _contentView.frame = self.bounds;
     
-    _subtitleLabel.font = [UIFont systemFontOfSize:CGRectGetHeight(_contentView.frame)*0.4];
+    _subtitleLabel.font = [UIFont boldSystemFontOfSize:CGRectGetHeight(_contentView.frame)*0.4];
     _titleLabel.font = _subtitleLabel.font;
     
     const CGSize subtitleSize = [_subtitleLabel.text sizeWithAttributes:@{NSFontAttributeName:_subtitleLabel.font}];
@@ -70,6 +70,12 @@
                                       (CGRectGetHeight(_contentView.bounds)-imageHeight)/2,
                                       imageWidth, imageHeight);
     
+}
+
+- (void)setTextColor:(UIColor *)textColor {
+    _textColor = textColor;
+    _titleLabel.textColor = textColor;
+    _subtitleLabel.textColor = textColor;
 }
 
 - (void)setTitle:(NSString *)title {
