@@ -11,7 +11,7 @@
 #import "YYKVideoListModel.h"
 
 static NSString *const kVideoLibCellReusableIdentifier = @"VideoLibCellReusableIdentifier";
-static const CGFloat kVideoLibImageScale = 1;
+static const CGFloat kVideoLibImageScale = 5./4.;
 
 @interface YYKVideoLibViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {

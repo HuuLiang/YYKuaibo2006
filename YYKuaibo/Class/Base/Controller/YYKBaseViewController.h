@@ -21,7 +21,7 @@
 - (void)payForPayPointType:(YYKPayPointType)payPointType;
 //- (void)onPaidNotification:(NSNotification *)notification;
 
-- (BOOL)shouldDisplayBackgroundImage;
+//- (BOOL)shouldDisplayBackgroundImage;
 
 // Override this method to specify sub index
 - (NSUInteger)currentIndex;
