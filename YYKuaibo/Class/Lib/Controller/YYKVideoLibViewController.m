@@ -59,6 +59,13 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
 }
 
 - (void)loadMoviesWithRefreshFlag:(BOOL)isRefresh {
+    if (!isRefresh && ![YYKUtil isVIP] && self.videoModel.fetchedVideoChannel.page.unsignedIntegerValue > 3) {
+        [_layoutCollectionView YYK_endPullToRefresh];
+        [_layoutCollectionView YYK_setPagingRefreshText:@"成为VIP后，上拉或点击加载更多"];
+        [self payForPayPointType:YYKPayPointTypeVIP];
+        return ;
+    }
+    
     @weakify(self);
     [self.videoModel fetchVideosInSpace:YYKVideoListSpaceHot
                                    page:isRefresh?1:self.videoModel.fetchedVideoChannel.page.unsignedIntegerValue+1

@@ -126,4 +126,11 @@ static const void *kYYKShowStateAssociatedKey = &kYYKShowStateAssociatedKey;
 - (void)YYK_pagingRefreshNoMoreData {
     [self.footer endRefreshingWithNoMoreData];
 }
+
+- (void)YYK_setPagingRefreshText:(NSString *)text {
+    if ([self.footer isKindOfClass:[MJRefreshAutoNormalFooter class]]) {
+        MJRefreshAutoNormalFooter *footer = (MJRefreshAutoNormalFooter *)self.footer;
+        [footer setTitle:text forState:MJRefreshStateIdle];
+    }
+}
 @end

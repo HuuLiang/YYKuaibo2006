@@ -260,6 +260,7 @@
         [[YYKHudManager manager] showHudWithText:@"支付成功"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kPaidNotificationName object:paymentInfo];
         
+        [self.popView reloadData];
         [YYKUtil showSpreadBanner];
     } else if (result == PAYRESULT_ABANDON) {
         [[YYKHudManager manager] showHudWithText:@"支付取消"];

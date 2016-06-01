@@ -207,8 +207,8 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
             cell.showOnlyTitle = isUpgrade;
             cell.userInteractionEnabled = !isUpgrade;
             if (isUpgrade) {
-                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"你是普通VIP，暂不能观看黑钻VIP区的视频！" attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
-                [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(2, 5)];
+                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"亲，您是普通VIP会员\n不能观看黑钻VIP区的视频哦~~~" attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
+                [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(4, 7)];
                 cell.placeholder = attrString;
             } else {
                 cell.titleLabel.textColor = [UIColor blackColor];

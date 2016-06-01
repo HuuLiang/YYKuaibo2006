@@ -30,17 +30,7 @@
                 make.width.equalTo(_selectImageView.mas_height);
             }];
         }
-        
-        _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:18.];
-        [self addSubview:_titleLabel];
-        {
-            [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_selectImageView.mas_right).offset(5);
-                make.centerY.equalTo(self);
-            }];
-        }
-        
+
         _priceLabel = [[UILabel alloc] init];
         _priceLabel.textColor = [UIColor redColor];
         _priceLabel.font = [UIFont systemFontOfSize:16.];
@@ -63,16 +53,27 @@
             }];
         }
         
+        _titleLabel = [[UILabel alloc] init];
+        _titleLabel.font = [UIFont systemFontOfSize:MIN(18, kScreenWidth*0.05)];
+        [self addSubview:_titleLabel];
+        {
+            [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_selectImageView.mas_right).offset(15);
+                make.right.equalTo(_priceLabel.mas_left).offset(-5).priority(MASLayoutPriorityFittingSizeLevel);
+                make.bottom.equalTo(self.mas_centerY);
+            }];
+        }
+        
         _subtitleLabel = [[UILabel alloc] init];
         _subtitleLabel.textColor = [UIColor grayColor];
-        _subtitleLabel.font = [UIFont systemFontOfSize:14.];
-
+        _subtitleLabel.font = [UIFont systemFontOfSize:12.];
         [self addSubview:_subtitleLabel];
         {
             [_subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_titleLabel.mas_right).offset(5);
-                make.right.equalTo(_priceLabel.mas_left).offset(-5).priority(MASLayoutPriorityFittingSizeLevel);
-                make.centerY.equalTo(self);
+//                make.left.equalTo(_titleLabel.mas_right).offset(5);
+//                make.right.lessThanOrEqualTo(_priceLabel.mas_left).offset(-5);//.priority(MASLayoutPriorityDefaultMedium);
+                make.left.right.equalTo(_titleLabel);
+                make.top.equalTo(_titleLabel.mas_bottom).offset(lround(kScreenWidth*0.01));
             }];
         }
     }
@@ -125,13 +126,13 @@
     }
     
     _placeholderLabel = [[UILabel alloc] init];
-    _placeholderLabel.font = [UIFont systemFontOfSize:16.];
+    _placeholderLabel.font = [UIFont systemFontOfSize:MIN(16, kScreenWidth * 0.04)];
+    _placeholderLabel.numberOfLines = 2;
+    _placeholderLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_placeholderLabel];
     {
         [_placeholderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self).offset(15);
-            make.right.equalTo(self).offset(-15);
-            make.centerY.equalTo(self);
+            make.center.equalTo(self);
         }];
     }
     return _placeholderLabel;

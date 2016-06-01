@@ -27,5 +27,5 @@ typedef NS_ENUM(NSUInteger, YYKPullToRefreshStyle) {
 
 - (void)YYK_addPagingRefreshWithHandler:(void (^)(void))handler;
 - (void)YYK_pagingRefreshNoMoreData;
-
+- (void)YYK_setPagingRefreshText:(NSString *)text;
 @end
