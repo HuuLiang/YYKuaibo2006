@@ -266,6 +266,13 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
     return YES;
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == PayPointTypeSection) {
+        return indexPath;
+    }
+    return nil;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     UITableViewCell *cell = self.cells[cellIndexPath];
