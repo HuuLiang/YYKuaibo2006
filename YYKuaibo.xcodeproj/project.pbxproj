@@ -1817,9 +1817,9 @@
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/SPaySDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yykuaibov2.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lulukuaibo.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9dfd1895-62aa-4013-ba89-8d870e44d41a";
+				PROVISIONING_PROFILE = "ca6a68bf-26dd-4c0f-8956-bb834aa049f0";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1849,9 +1849,9 @@
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/SPaySDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yykuaibov2.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lulukuaibo.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9dfd1895-62aa-4013-ba89-8d870e44d41a";
+				PROVISIONING_PROFILE = "ca6a68bf-26dd-4c0f-8956-bb834aa049f0";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
