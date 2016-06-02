@@ -199,7 +199,11 @@
     [[YYKPaymentModel sharedModel] startRetryingToCommitUnprocessedOrders];
     [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
         
-        [[YYKStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:[YYKSystemConfigModel sharedModel].loaded?[YYKSystemConfigModel sharedModel].statsTimeInterval : 180];
+        NSUInteger statsTimeInterval = 180;
+        if ([YYKSystemConfigModel sharedModel].loaded && [YYKSystemConfigModel sharedModel].statsTimeInterval > 0) {
+            statsTimeInterval = [YYKSystemConfigModel sharedModel].statsTimeInterval;
+        }
+        [[YYKStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
         
         if (!success) {
             return ;

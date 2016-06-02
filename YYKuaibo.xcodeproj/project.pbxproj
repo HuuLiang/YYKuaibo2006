@@ -47,7 +47,6 @@
 		BC42C3551CE0946E00ECCD65 /* DBPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = BC42C3541CE0946E00ECCD65 /* DBPersistence.m */; };
 		BC42C3561CE096A600ECCD65 /* DBPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = BC42C3541CE0946E00ECCD65 /* DBPersistence.m */; };
 		BC51AC311CA0F7530073AF91 /* YYKVideoListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC51AC301CA0F7530073AF91 /* YYKVideoListModel.m */; };
-		BC51AC331CA1275F0073AF91 /* payment_header_placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC51AC321CA1275F0073AF91 /* payment_header_placeholder.jpg */; };
 		BC51AC361CA12E6B0073AF91 /* YYKPaymentConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC51AC351CA12E6B0073AF91 /* YYKPaymentConfigModel.m */; };
 		BC51AC391CA1316A0073AF91 /* YYKPaymentConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BC51AC381CA1316A0073AF91 /* YYKPaymentConfig.m */; };
 		BC61BC101CC8AD53000343FF /* YYKCardSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = BC61BC0F1CC8AD53000343FF /* YYKCardSlider.m */; };
@@ -225,7 +224,6 @@
 		BCF346E51CCAB9FD005DEFFF /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE257211C968AED00133F4F /* libWeChatSDK.a */; };
 		BCF346E71CCAB9FD005DEFFF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCE2560F1C966A8E00133F4F /* LaunchScreen.storyboard */; };
 		BCF346E91CCAB9FD005DEFFF /* launch_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BCB1420C1CBBDEFB0017A2B9 /* launch_image.jpg */; };
-		BCF346EA1CCAB9FD005DEFFF /* payment_header_placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC51AC321CA1275F0073AF91 /* payment_header_placeholder.jpg */; };
 		BCF346EC1CCAB9FD005DEFFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCE2560D1C966A8E00133F4F /* Assets.xcassets */; };
 		BCF346ED1CCAB9FD005DEFFF /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCE257181C9689F500133F4F /* config.plist */; };
 /* End PBXBuildFile section */
@@ -321,7 +319,6 @@
 		BC42C3541CE0946E00ECCD65 /* DBPersistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPersistence.m; sourceTree = "<group>"; };
 		BC51AC2F1CA0F7530073AF91 /* YYKVideoListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVideoListModel.h; sourceTree = "<group>"; };
 		BC51AC301CA0F7530073AF91 /* YYKVideoListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVideoListModel.m; sourceTree = "<group>"; };
-		BC51AC321CA1275F0073AF91 /* payment_header_placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = payment_header_placeholder.jpg; sourceTree = "<group>"; };
 		BC51AC341CA12E6B0073AF91 /* YYKPaymentConfigModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKPaymentConfigModel.h; sourceTree = "<group>"; };
 		BC51AC351CA12E6B0073AF91 /* YYKPaymentConfigModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKPaymentConfigModel.m; sourceTree = "<group>"; };
 		BC51AC371CA1316A0073AF91 /* YYKPaymentConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKPaymentConfig.h; sourceTree = "<group>"; };
@@ -682,7 +679,6 @@
 			isa = PBXGroup;
 			children = (
 				BCB1420C1CBBDEFB0017A2B9 /* launch_image.jpg */,
-				BC51AC321CA1275F0073AF91 /* payment_header_placeholder.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1329,7 +1325,6 @@
 				BC69B1F11CE454680020B112 /* SPaySDKResource.bundle in Resources */,
 				BCE256111C966A8E00133F4F /* LaunchScreen.storyboard in Resources */,
 				BCB1420D1CBBDEFB0017A2B9 /* launch_image.jpg in Resources */,
-				BC51AC331CA1275F0073AF91 /* payment_header_placeholder.jpg in Resources */,
 				BCE2560E1C966A8E00133F4F /* Assets.xcassets in Resources */,
 				BCE257191C9689F500133F4F /* config.plist in Resources */,
 			);
@@ -1356,7 +1351,6 @@
 				BC69B1F31CE4547E0020B112 /* SPaySDKResource.bundle in Resources */,
 				BCF346E71CCAB9FD005DEFFF /* LaunchScreen.storyboard in Resources */,
 				BCF346E91CCAB9FD005DEFFF /* launch_image.jpg in Resources */,
-				BCF346EA1CCAB9FD005DEFFF /* payment_header_placeholder.jpg in Resources */,
 				BCF346EC1CCAB9FD005DEFFF /* Assets.xcassets in Resources */,
 				BCF346ED1CCAB9FD005DEFFF /* config.plist in Resources */,
 			);

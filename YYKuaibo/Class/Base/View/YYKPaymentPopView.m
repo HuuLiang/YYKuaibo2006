@@ -128,7 +128,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
 
 - (void)setHeaderImageURL:(NSURL *)headerImageURL {
     _headerImageURL = headerImageURL;
-    [_headerImageView sd_setImageWithURL:headerImageURL placeholderImage:[UIImage imageNamed:@"payment_header_placeholder"] options:SDWebImageDelayPlaceholder];
+    [_headerImageView sd_setImageWithURL:headerImageURL];
 }
 
 - (void)setPayPointType:(YYKPayPointType)payPointType {
@@ -152,8 +152,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
             _headerCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             _headerImageView = [[UIImageView alloc] init];
-            [_headerImageView sd_setImageWithURL:_headerImageURL
-                                placeholderImage:[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"payment_header_placeholder" ofType:@"jpg"]]];
+            [_headerImageView sd_setImageWithURL:_headerImageURL];
             [_headerCell addSubview:_headerImageView];
             {
                 [_headerImageView mas_makeConstraints:^(MASConstraintMaker *make) {
