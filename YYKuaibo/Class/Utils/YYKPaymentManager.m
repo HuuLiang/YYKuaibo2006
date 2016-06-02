@@ -48,8 +48,8 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 }
 
 - (void)setup {
+    [[PayUitls getIntents] initSdk];
     [paySender getIntents].delegate = self;
-    [[PayUitls getIntents] PayEnterForeground];
     
     [[YYKPaymentConfigModel sharedModel] fetchConfigWithCompletionHandler:^(BOOL success, id obj) {
         
@@ -111,14 +111,13 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     BOOL success = YES;
     if (type == YYKPaymentTypeVIAPay && (subType == YYKPaymentTypeAlipay || subType == YYKPaymentTypeWeChatPay)) {
         NSString *tradeName = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? @"黑钻VIP会员" : @"VIP会员";
-        [[PayUitls getIntents] gotoPayByPackageId:(int)[YYKPaymentConfig sharedConfig].syskPayInfo.packageId.integerValue
-                                           andFee:(int)price
-                                     andTradeName:tradeName
-                                  andGoodsDetails:tradeName
-                                        andScheme:kVIAPaySchemeUrl
-                                andchannelOrderId:[orderNo stringByAppendingFormat:@"$%@", YYK_REST_APP_ID]
-                                          andType:subType == YYKPaymentTypeAlipay ? 1 : 2
-                                 andViewControler:[YYKUtil currentVisibleViewController]];
+        [[PayUitls getIntents]   gotoPayByFee:@(price).stringValue
+                                 andTradeName:tradeName
+                              andGoodsDetails:tradeName
+                                    andScheme:kVIAPaySchemeUrl
+                            andchannelOrderId:[orderNo stringByAppendingFormat:@"$%@", YYK_REST_APP_ID]
+                                      andType:subType == YYKPaymentTypeAlipay ? @"1" : @"2"
+                             andViewControler:[YYKUtil currentVisibleViewController]];
 //    if (type == YYKPaymentTypeWeChatPay) {
 //        @weakify(self);
 //        [[WeChatPayManager sharedInstance] startWithPayment:paymentInfo completionHandler:^(PAYRESULT payResult) {

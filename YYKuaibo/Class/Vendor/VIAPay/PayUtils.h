@@ -1,6 +1,5 @@
 //
 //  PayUtils.h
-//  AliSDKDemo
 //
 //  Created by hcl on 16/1/20.
 //  Copyright © 2016年 Alipay.com. All rights reserved.
@@ -22,8 +21,8 @@
  *type 1:支付宝支付  2:微信支付
  */
 +(PayUitls*)getIntents;
--(void)PayEnterForeground;
 -(void)paytoAli:(NSURL *)url;
--(void)gotoPayByPackageId:(int)packageId andFee:(int)fee andTradeName :(NSString*)tradeName andGoodsDetails:(NSString*)goodsDetails andScheme:(NSString*)schemeName  andchannelOrderId:(NSString*)channelOrderId  andType:(int)type andViewControler:(UIViewController*)col;
+-(void)initSdk;
+-(void)gotoPayByFee:(NSString*)fee andTradeName :(NSString*)tradeName andGoodsDetails:(NSString*)goodsDetails andScheme:(NSString*)schemeName  andchannelOrderId:(NSString*)channelOrderId  andType:(NSString*)type andViewControler:(UIViewController*)col;
 @end
 

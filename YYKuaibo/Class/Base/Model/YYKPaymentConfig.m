@@ -100,14 +100,14 @@ static NSString *const kPaymentConfigKeyName = @"yykuaibo_payment_config_key_nam
 
 + (instancetype)defaultConfig {
     YYKVIAPayConfig *config = [[self alloc] init];
-    config.packageId = @"5361";
-    config.supportPayTypes = @3;
+    //config.packageId = @"5361";
+    config.supportPayTypes = @(YYKSubPayTypeAlipay);
     return config;
 }
 
 - (NSDictionary *)dictionaryRepresentation {
     NSMutableDictionary *dicRep = [NSMutableDictionary dictionary];
-    [dicRep safelySetObject:self.packageId forKey:@"packageId"];
+//    [dicRep safelySetObject:self.packageId forKey:@"packageId"];
     [dicRep safelySetObject:self.supportPayTypes forKey:@"supportPayTypes"];
     return dicRep;
 }
@@ -124,6 +124,14 @@ static NSString *const kPaymentConfigKeyName = @"yykuaibo_payment_config_key_nam
 @end
 
 @implementation YYKSPayConfig
+
++ (instancetype)defaultConfig {
+    YYKSPayConfig *config = [[self alloc] init];
+    config.mchId = @"5712000010";
+    config.notifyUrl = @"http://phas.ihuiyx.com/pd-has/notifyWft.json";
+    config.signKey = @"5afe11de0df374f5f78839db1904ff0d";
+    return config;
+}
 
 - (NSDictionary *)dictionaryRepresentation {
     NSMutableDictionary *dicRep = [NSMutableDictionary dictionary];
@@ -230,6 +238,7 @@ static YYKPaymentConfig *_shardConfig;
     
     if (!self.syskPayInfo && !self.wftPayInfo) {
         self.syskPayInfo = [YYKVIAPayConfig defaultConfig];
+        self.wftPayInfo = [YYKSPayConfig defaultConfig];
     }
 }
 
@@ -245,9 +254,6 @@ static YYKPaymentConfig *_shardConfig;
 
 - (void)setAsCurrentConfig {
     YYKPaymentConfig *currentConfig = [[self class] sharedConfig];
-//    currentConfig.weixinInfo = self.weixinInfo;
-//    currentConfig.iappPayInfo = self.iappPayInfo;
-//    currentConfig.alipayInfo = self.alipayInfo;
     currentConfig.syskPayInfo = self.syskPayInfo;
     currentConfig.wftPayInfo = self.wftPayInfo;
     
