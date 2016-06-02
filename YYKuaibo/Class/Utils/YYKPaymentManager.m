@@ -81,7 +81,11 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     }
     
 #ifdef DEBUG
-    price = 1;
+    if (payPointType == YYKPayPointTypeSVIP) {
+        price = 2;
+    } else {
+        price = 1;
+    }
 #endif
     
     NSString *channelNo = YYK_CHANNEL_NO;
