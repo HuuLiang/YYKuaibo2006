@@ -206,7 +206,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 }
 
 - (void)onPaymentResult:(PAYRESULT)payResult withPaymentInfo:(YYKPaymentInfo *)paymentInfo {
-    if (payResult == PAYRESULT_SUCCESS) {
+    if (payResult == PAYRESULT_SUCCESS && [YYKSystemConfigModel sharedModel].notificationLaunchSeq > 0) {
         [[YYKLocalNotificationManager sharedManager] cancelAllNotifications];
     }
 }

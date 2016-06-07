@@ -177,7 +177,7 @@
     [[YYKErrorHandler sharedHandler] initialize];
     [self setupMobStatistics];
     [self setupCommonStyles];
-    [self registerUserNotification];
+//    [self registerUserNotification];
     [[YYKNetworkInfo sharedInfo] startMonitoring];
     
     [self.window makeKeyAndVisible];
@@ -205,6 +205,9 @@
         }
         [[YYKStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
         
+        if ([YYKSystemConfigModel sharedModel].notificationLaunchSeq > 0) {
+            [self registerUserNotification];
+        }
         if (!success) {
             return ;
         }
@@ -229,7 +232,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    if ([YYKUtil isAllVIPs]) {
+    if ([YYKUtil isAllVIPs] || [YYKSystemConfigModel sharedModel].notificationLaunchSeq <= 0) {
         return ;
     }
     
