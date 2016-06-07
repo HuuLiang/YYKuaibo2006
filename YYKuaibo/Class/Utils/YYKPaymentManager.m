@@ -8,6 +8,7 @@
 
 #import "YYKPaymentManager.h"
 #import "YYKPaymentInfo.h"
+#import "YYKSystemConfigModel.h"
 #import "YYKPaymentViewController.h"
 #import "YYKPaymentConfigModel.h"
 
@@ -157,6 +158,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 //                                                            payDelegate:self];
     } else if (type == YYKPaymentTypeSPay && (subType == YYKPaymentTypeAlipay || subType == YYKPaymentTypeWeChatPay)) {
         @weakify(self);
+        paymentInfo.reservedData = [NSString stringWithFormat:@"客服电话：%@", [YYKSystemConfigModel sharedModel].contact];
         [[SPayUtil sharedInstance] payWithPaymentInfo:paymentInfo completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
             @strongify(self);
             [self onPaymentResult:payResult withPaymentInfo:paymentInfo];

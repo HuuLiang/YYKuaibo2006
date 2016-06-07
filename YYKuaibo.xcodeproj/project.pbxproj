@@ -271,8 +271,6 @@
 		BC6F00EC1D0072FB00AC01D9 /* openssl_wrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = openssl_wrapper.m; sourceTree = "<group>"; };
 		BC6F00ED1D0072FB00AC01D9 /* private_key.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = private_key.p12; sourceTree = "<group>"; };
 		BC6F00EE1D0072FB00AC01D9 /* public_key.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = public_key.der; sourceTree = "<group>"; };
-		BC6F00EF1D0072FB00AC01D9 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		BC6F00F01D0072FB00AC01D9 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		BC6F00F11D0072FB00AC01D9 /* RSADataSigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSADataSigner.h; sourceTree = "<group>"; };
 		BC6F00F21D0072FB00AC01D9 /* RSADataSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataSigner.m; sourceTree = "<group>"; };
 		BC6F00F31D0072FB00AC01D9 /* RSADataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSADataVerifier.h; sourceTree = "<group>"; };
@@ -635,8 +633,6 @@
 				BC6F00EC1D0072FB00AC01D9 /* openssl_wrapper.m */,
 				BC6F00ED1D0072FB00AC01D9 /* private_key.p12 */,
 				BC6F00EE1D0072FB00AC01D9 /* public_key.der */,
-				BC6F00EF1D0072FB00AC01D9 /* Reachability.h */,
-				BC6F00F01D0072FB00AC01D9 /* Reachability.m */,
 				BC6F00F11D0072FB00AC01D9 /* RSADataSigner.h */,
 				BC6F00F21D0072FB00AC01D9 /* RSADataSigner.m */,
 				BC6F00F31D0072FB00AC01D9 /* RSADataVerifier.h */,
