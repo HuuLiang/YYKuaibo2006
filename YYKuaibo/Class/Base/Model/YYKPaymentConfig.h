@@ -34,6 +34,7 @@ typedef NS_ENUM(NSUInteger, YYKSubPayType) {
 @interface YYKIAppPayConfig : NSObject
 @property (nonatomic) NSString *appid;
 @property (nonatomic) NSString *privateKey;
+@property (nonatomic) NSString *publicKey;
 @property (nonatomic) NSString *notifyUrl;
 @property (nonatomic) NSNumber *waresid;
 @property (nonatomic) NSNumber *supportPayTypes;
@@ -45,8 +46,6 @@ typedef NS_ENUM(NSUInteger, YYKSubPayType) {
 
 //@property (nonatomic) NSString *packageId;
 @property (nonatomic) NSNumber *supportPayTypes;
-
-+ (instancetype)defaultConfig;
 
 @end
 

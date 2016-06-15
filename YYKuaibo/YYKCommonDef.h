@@ -59,6 +59,10 @@ return _##propertyName; \
 #define SafelyCallBlock(block,...) \
     if (block) block(__VA_ARGS__);
 
+#define SafelyCallBlockAndRelease(block,...) \
+    if (block) { block(__VA_ARGS__); block = nil;};
+
+
 #define kScreenHeight     [ [ UIScreen mainScreen ] bounds ].size.height
 #define kScreenWidth      [ [ UIScreen mainScreen ] bounds ].size.width
 

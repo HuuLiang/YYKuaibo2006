@@ -65,6 +65,10 @@
         [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信支付" backgroundColor:[UIColor colorWithHexString:@"#05c30b"] action:^(id sender) {
             Pay(YYKPaymentTypeSPay, YYKPaymentTypeWeChatPay);
         }];
+    } else if ([YYKPaymentConfig sharedConfig].iappPayInfo) {
+        [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信支付" backgroundColor:[UIColor colorWithHexString:@"#05c30b"] action:^(id sender) {
+            Pay(YYKPaymentTypeIAppPay, YYKPaymentTypeWeChatPay);
+        }];
     }
     
     if ([YYKPaymentConfig sharedConfig].syskPayInfo.supportPayTypes.integerValue & YYKSubPayTypeAlipay) {

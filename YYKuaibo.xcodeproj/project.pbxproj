@@ -45,8 +45,6 @@
 		BC6F00C81D006FED00AC01D9 /* HYMergerPaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC6F00C71D006FED00AC01D9 /* HYMergerPaySDK.framework */; };
 		BC6F00CA1D00712800AC01D9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC6F00C91D00712800AC01D9 /* Security.framework */; };
 		BC6F00CC1D00723300AC01D9 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC6F00CB1D00723300AC01D9 /* CoreMotion.framework */; };
-		BC6F01011D0072FB00AC01D9 /* base64.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6F00D31D0072FB00AC01D9 /* base64.m */; };
-		BC6F01021D0072FB00AC01D9 /* Base64Data.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6F00D51D0072FB00AC01D9 /* Base64Data.m */; };
 		BC6F01031D0072FB00AC01D9 /* DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6F00D81D0072FB00AC01D9 /* DataSigner.m */; };
 		BC6F01041D0072FB00AC01D9 /* DataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6F00DA1D0072FB00AC01D9 /* DataVerifier.m */; };
 		BC6F01061D0072FB00AC01D9 /* MBProgressHUD+NJ.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6F00DF1D0072FB00AC01D9 /* MBProgressHUD+NJ.m */; };
@@ -54,7 +52,6 @@
 		BC6F01091D0072FB00AC01D9 /* MD5DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6F00E41D0072FB00AC01D9 /* MD5DataSigner.m */; };
 		BC6F010A1D0072FB00AC01D9 /* NSData+AES.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6F00E61D0072FB00AC01D9 /* NSData+AES.m */; };
 		BC6F010B1D0072FB00AC01D9 /* NSDataEx.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6F00E81D0072FB00AC01D9 /* NSDataEx.m */; };
-		BC6F010C1D0072FB00AC01D9 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6F00EA1D0072FB00AC01D9 /* NSString+MD5.m */; };
 		BC6F010D1D0072FB00AC01D9 /* openssl_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6F00EC1D0072FB00AC01D9 /* openssl_wrapper.m */; };
 		BC6F010E1D0072FB00AC01D9 /* private_key.p12 in Resources */ = {isa = PBXBuildFile; fileRef = BC6F00ED1D0072FB00AC01D9 /* private_key.p12 */; };
 		BC6F010F1D0072FB00AC01D9 /* public_key.der in Resources */ = {isa = PBXBuildFile; fileRef = BC6F00EE1D0072FB00AC01D9 /* public_key.der */; };
@@ -84,6 +81,9 @@
 		BCC00FBD1CD8B23B00F429B4 /* YYKTabStatsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC00FBC1CD8B23B00F429B4 /* YYKTabStatsModel.m */; };
 		BCC00FC41CD8B96D00F429B4 /* YYKPayStatsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC00FC31CD8B96D00F429B4 /* YYKPayStatsModel.m */; };
 		BCC2C9001CF5B02200BBE432 /* NSObject+DictionaryRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC2C8FF1CF5B02200BBE432 /* NSObject+DictionaryRepresentation.m */; };
+		BCD826CD1D114750003B14ED /* IapppayH5Kit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD826CB1D114750003B14ED /* IapppayH5Kit.framework */; };
+		BCD826CE1D114750003B14ED /* IapppayH5Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BCD826CC1D114750003B14ED /* IapppayH5Resource.bundle */; };
+		BCD826D21D114D82003B14ED /* IappPayMananger.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD826D11D114D82003B14ED /* IappPayMananger.m */; };
 		BCE256031C966A8E00133F4F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE256021C966A8E00133F4F /* main.m */; };
 		BCE2560E1C966A8E00133F4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCE2560D1C966A8E00133F4F /* Assets.xcassets */; };
 		BCE256111C966A8E00133F4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCE2560F1C966A8E00133F4F /* LaunchScreen.storyboard */; };
@@ -265,8 +265,6 @@
 		BC6F00E61D0072FB00AC01D9 /* NSData+AES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AES.m"; sourceTree = "<group>"; };
 		BC6F00E71D0072FB00AC01D9 /* NSDataEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataEx.h; sourceTree = "<group>"; };
 		BC6F00E81D0072FB00AC01D9 /* NSDataEx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataEx.m; sourceTree = "<group>"; };
-		BC6F00E91D0072FB00AC01D9 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
-		BC6F00EA1D0072FB00AC01D9 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		BC6F00EB1D0072FB00AC01D9 /* openssl_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = openssl_wrapper.h; sourceTree = "<group>"; };
 		BC6F00EC1D0072FB00AC01D9 /* openssl_wrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = openssl_wrapper.m; sourceTree = "<group>"; };
 		BC6F00ED1D0072FB00AC01D9 /* private_key.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = private_key.p12; sourceTree = "<group>"; };
@@ -318,6 +316,10 @@
 		BCC00FC31CD8B96D00F429B4 /* YYKPayStatsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKPayStatsModel.m; sourceTree = "<group>"; };
 		BCC2C8FE1CF5B02200BBE432 /* NSObject+DictionaryRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DictionaryRepresentation.h"; sourceTree = "<group>"; };
 		BCC2C8FF1CF5B02200BBE432 /* NSObject+DictionaryRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DictionaryRepresentation.m"; sourceTree = "<group>"; };
+		BCD826CB1D114750003B14ED /* IapppayH5Kit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IapppayH5Kit.framework; sourceTree = "<group>"; };
+		BCD826CC1D114750003B14ED /* IapppayH5Resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IapppayH5Resource.bundle; sourceTree = "<group>"; };
+		BCD826D01D114D82003B14ED /* IappPayMananger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IappPayMananger.h; sourceTree = "<group>"; };
+		BCD826D11D114D82003B14ED /* IappPayMananger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IappPayMananger.m; sourceTree = "<group>"; };
 		BCE255FE1C966A8E00133F4F /* YYKuaibo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YYKuaibo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCE256021C966A8E00133F4F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BCE2560D1C966A8E00133F4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -442,6 +444,7 @@
 				BC69B1F01CE454680020B112 /* libSPaySDK.a in Frameworks */,
 				BCE257281C968B4100133F4F /* CoreTelephony.framework in Frameworks */,
 				55F6FDF1E0146D6F7E6A2858 /* libPods.a in Frameworks */,
+				BCD826CD1D114750003B14ED /* IapppayH5Kit.framework in Frameworks */,
 				BCE257251C968AED00133F4F /* libMobClickLibrary.a in Frameworks */,
 				BCE257261C968AED00133F4F /* libWeChatSDK.a in Frameworks */,
 				BC0C85F41CD3398E00C51480 /* pay.a in Frameworks */,
@@ -547,6 +550,15 @@
 			path = DataBase;
 			sourceTree = "<group>";
 		};
+		BC4200D41D112B19003533DD /* iAppPay */ = {
+			isa = PBXGroup;
+			children = (
+				BCD826CB1D114750003B14ED /* IapppayH5Kit.framework */,
+				BCD826CC1D114750003B14ED /* IapppayH5Resource.bundle */,
+			);
+			path = iAppPay;
+			sourceTree = "<group>";
+		};
 		BC660B051C9720BB00E04D23 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -627,8 +639,6 @@
 				BC6F00E61D0072FB00AC01D9 /* NSData+AES.m */,
 				BC6F00E71D0072FB00AC01D9 /* NSDataEx.h */,
 				BC6F00E81D0072FB00AC01D9 /* NSDataEx.m */,
-				BC6F00E91D0072FB00AC01D9 /* NSString+MD5.h */,
-				BC6F00EA1D0072FB00AC01D9 /* NSString+MD5.m */,
 				BC6F00EB1D0072FB00AC01D9 /* openssl_wrapper.h */,
 				BC6F00EC1D0072FB00AC01D9 /* openssl_wrapper.m */,
 				BC6F00ED1D0072FB00AC01D9 /* private_key.p12 */,
@@ -780,6 +790,15 @@
 				BC23A5B51CC6AE2E00B773B3 /* YYKSpreadCell.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		BCD826CF1D114D49003B14ED /* iAppPayUtil */ = {
+			isa = PBXGroup;
+			children = (
+				BCD826D01D114D82003B14ED /* IappPayMananger.h */,
+				BCD826D11D114D82003B14ED /* IappPayMananger.m */,
+			);
+			path = iAppPayUtil;
 			sourceTree = "<group>";
 		};
 		BCE255F51C966A8E00133F4F = {
@@ -940,6 +959,7 @@
 		BCE256C51C966DB400133F4F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				BCD826CF1D114D49003B14ED /* iAppPayUtil */,
 				BC2FB7731CDA0A5700645070 /* DataBase */,
 				BC69B1F41CE46DE30020B112 /* SPayUtil */,
 				BC2914401C9FF6AD002084E2 /* WeChatPay */,
@@ -1032,6 +1052,7 @@
 		BCE2571A1C968AED00133F4F /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				BC4200D41D112B19003533DD /* iAppPay */,
 				BC69B1DA1CE454680020B112 /* SPaySDK */,
 				BC0C85D21CD3398D00C51480 /* VIAPay */,
 				BC8E02971CD25FF9004F5780 /* AlipaySDK */,
@@ -1215,6 +1236,7 @@
 				BCB1420D1CBBDEFB0017A2B9 /* launch_image.jpg in Resources */,
 				BC6F010E1D0072FB00AC01D9 /* private_key.p12 in Resources */,
 				BC6F010F1D0072FB00AC01D9 /* public_key.der in Resources */,
+				BCD826CE1D114750003B14ED /* IapppayH5Resource.bundle in Resources */,
 				BCE2560E1C966A8E00133F4F /* Assets.xcassets in Resources */,
 				BCE257191C9689F500133F4F /* config.plist in Resources */,
 				BC6F01191D0074FA00AC01D9 /* Config.txt in Resources */,
@@ -1295,7 +1317,6 @@
 				BC6F01091D0072FB00AC01D9 /* MD5DataSigner.m in Sources */,
 				BCE2566B1C966C2600133F4F /* YYKSystemConfig.m in Sources */,
 				BCE257051C966DB400133F4F /* NSString+meltutils.m in Sources */,
-				BC6F01021D0072FB00AC01D9 /* Base64Data.m in Sources */,
 				BC0C86091CD3608A00C51480 /* YYKCPCStatsModel.m in Sources */,
 				BC0C860C1CD367F800C51480 /* YYKStatsBaseModel.m in Sources */,
 				BCE257031C966DB400133F4F /* NSString+length.m in Sources */,
@@ -1336,7 +1357,6 @@
 				BC51AC391CA1316A0073AF91 /* YYKPaymentConfig.m in Sources */,
 				BCB1420B1CBBDA9C0017A2B9 /* YYKLaunchView.m in Sources */,
 				BC69B1FB1CE471B50020B112 /* SPRequestForm.m in Sources */,
-				BC6F01011D0072FB00AC01D9 /* base64.m in Sources */,
 				BCE257421C96ABD300133F4F /* YYKVideoCell.m in Sources */,
 				BCE257331C968D5100133F4F /* YYKHomeViewController.m in Sources */,
 				BCB1C4791CC65EB400F9B83B /* YYKMineVIPCell.m in Sources */,
@@ -1388,13 +1408,13 @@
 				BC7A618E1CFC508200021200 /* YYKVideoLibViewController.m in Sources */,
 				BC7643421CD04C680059E1C3 /* YYKSpreadBannerViewController.m in Sources */,
 				BCE2570C1C966DB400133F4F /* RACEXTRuntimeExtensions.m in Sources */,
-				BC6F010C1D0072FB00AC01D9 /* NSString+MD5.m in Sources */,
 				BC6F01131D0072FB00AC01D9 /* SecKeyWrapper.m in Sources */,
 				BC7643491CD04F210059E1C3 /* YYKApplication.m in Sources */,
 				BCE256FE1C966DB400133F4F /* NSDictionary+YYKSign.m in Sources */,
 				BCB58E4D1CEB4AB50084F784 /* SPayUtil.m in Sources */,
 				BCB1C48E1CC66C8D00F9B83B /* YYKSpreadViewController.m in Sources */,
 				BC32FD1E1CCF4E190030EB79 /* UIView+Loading.m in Sources */,
+				BCD826D21D114D82003B14ED /* IappPayMananger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
