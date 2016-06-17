@@ -57,6 +57,27 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
                                        notifyUrl:[YYKPaymentConfig sharedConfig].wftPayInfo.notifyUrl];
     }];
     
+    Class class = NSClassFromString(@"SZFViewController");
+    if (class) {
+        [class aspect_hookSelector:NSSelectorFromString(@"viewWillAppear:")
+                       withOptions:AspectPositionAfter
+                        usingBlock:^(id<AspectInfo> aspectInfo, BOOL animated)
+        {
+            UIViewController *thisVC = [aspectInfo instance];
+            if ([thisVC respondsToSelector:NSSelectorFromString(@"buy")]) {
+                UIViewController *buyVC = [thisVC valueForKey:@"buy"];
+                [buyVC.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([obj isKindOfClass:[UIButton class]]) {
+                        UIButton *buyButton = (UIButton *)obj;
+                        if ([[buyButton titleForState:UIControlStateNormal] isEqualToString:@"购卡支付"]) {
+                            [buyButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+                        }
+                    }
+                }];
+            }
+        } error:nil];
+    }
+    
 }
 
 - (void)handleOpenUrl:(NSURL *)url {
