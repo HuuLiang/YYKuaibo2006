@@ -14,7 +14,7 @@
 #define YYK_CHANNEL_NO           [YYKConfiguration sharedConfig].channelNo
 #define YYK_REST_APP_ID          @"QUBA_2006"
 #define YYK_REST_PV              @150
-#define YYK_PAYMENT_PV           @202
+#define YYK_PAYMENT_PV           @203
 #define YYK_PACKAGE_CERTIFICATE  @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
 #define YYK_PAYMENT_RESERVE_DATA [NSString stringWithFormat:@"%@$%@", YYK_REST_APP_ID, YYK_CHANNEL_NO]
 

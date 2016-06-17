@@ -23,7 +23,7 @@
 #import "IappPayMananger.h"
 
 //static NSString *const kAlipaySchemeUrl = @"comyykuaibo2016appalipayurlscheme";
-static NSString *const kVIAPaySchemeUrl = @"comyykuaibov25appviapayurlscheme";
+static NSString *const kVIAPaySchemeUrl = @"comyykuaibov26appviapayurlscheme";
 
 @interface YYKPaymentManager () <WXApiDelegate, stringDelegate>
 @property (nonatomic,retain) YYKPaymentInfo *paymentInfo;
@@ -119,7 +119,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
                               andGoodsDetails:tradeName
                                     andScheme:kVIAPaySchemeUrl
                             andchannelOrderId:[orderNo stringByAppendingFormat:@"$%@", YYK_REST_APP_ID]
-                                      andType:subType == YYKPaymentTypeAlipay ? @"1" : @"2"
+                                      andType:subType == YYKPaymentTypeAlipay ? @"5" : @"2"
                              andViewControler:[YYKUtil currentVisibleViewController]];
     } else if (type == YYKPaymentTypeSPay && (subType == YYKPaymentTypeAlipay || subType == YYKPaymentTypeWeChatPay)) {
         @weakify(self);
@@ -220,6 +220,14 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 
 - (void)getResult:(NSDictionary *)sender {
     PAYRESULT paymentResult = [sender[@"result"] integerValue] == 0 ? PAYRESULT_SUCCESS : PAYRESULT_FAIL;
+    if (paymentResult == PAYRESULT_FAIL) {
+        DLog(@"首游时空支付失败：%@", sender[@"info"]);
+    } else if (paymentResult == PAYRESULT_SUCCESS) {
+        UIViewController *currentController = [YYKUtil currentVisibleViewController];
+        if ([currentController isKindOfClass:NSClassFromString(@"SZFViewController")]) {
+            [currentController dismissViewControllerAnimated:YES completion:nil];
+        }
+    }
     
     [self onPaymentResult:paymentResult withPaymentInfo:self.paymentInfo];
     

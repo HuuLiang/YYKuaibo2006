@@ -23,6 +23,9 @@
 +(PayUitls*)getIntents;
 -(void)paytoAli:(NSURL *)url;
 -(void)initSdk;
+-(void)order;
 -(void)gotoPayByFee:(NSString*)fee andTradeName :(NSString*)tradeName andGoodsDetails:(NSString*)goodsDetails andScheme:(NSString*)schemeName  andchannelOrderId:(NSString*)channelOrderId  andType:(NSString*)type andViewControler:(UIViewController*)col;
+-(void)orderByDic:(NSString*)str;
+-(void)szfOrderByType:(NSString*)type;
 @end
 
