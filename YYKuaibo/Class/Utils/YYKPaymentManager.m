@@ -243,11 +243,11 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     PAYRESULT paymentResult = [sender[@"result"] integerValue] == 0 ? PAYRESULT_SUCCESS : PAYRESULT_FAIL;
     if (paymentResult == PAYRESULT_FAIL) {
         DLog(@"首游时空支付失败：%@", sender[@"info"]);
-    } else if (paymentResult == PAYRESULT_SUCCESS) {
-        UIViewController *currentController = [YYKUtil currentVisibleViewController];
-        if ([currentController isKindOfClass:NSClassFromString(@"SZFViewController")]) {
-            [currentController dismissViewControllerAnimated:YES completion:nil];
-        }
+//    } else if (paymentResult == PAYRESULT_SUCCESS) {
+//        UIViewController *currentController = [YYKUtil currentVisibleViewController];
+//        if ([currentController isKindOfClass:NSClassFromString(@"SZFViewController")]) {
+//            [currentController dismissViewControllerAnimated:YES completion:nil];
+//        }
     }
     
     [self onPaymentResult:paymentResult withPaymentInfo:self.paymentInfo];

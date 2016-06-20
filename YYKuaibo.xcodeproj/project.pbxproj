@@ -24,33 +24,14 @@
 		BC2A0B411CB8D79D00B7D397 /* YYKLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2A0B401CB8D79D00B7D397 /* YYKLocalNotificationManager.m */; };
 		BC2FB7791CDA0A5700645070 /* DBHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2FB7751CDA0A5700645070 /* DBHandler.m */; };
 		BC2FB77A1CDA0A5700645070 /* DBTableVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2FB7781CDA0A5700645070 /* DBTableVersion.m */; };
+		BC2FF5BB1D147D7100657598 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2FF5BA1D147D7100657598 /* Reachability.m */; };
+		BC2FF5BE1D147DA100657598 /* private_key.p12 in Resources */ = {isa = PBXBuildFile; fileRef = BC2FF5BC1D147DA100657598 /* private_key.p12 */; };
+		BC2FF5BF1D147DA100657598 /* public_key.der in Resources */ = {isa = PBXBuildFile; fileRef = BC2FF5BD1D147DA100657598 /* public_key.der */; };
 		BC30FBE51CE21A4300E49B98 /* YYKNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BC30FBE41CE21A4300E49B98 /* YYKNetworkInfo.m */; };
 		BC32FD1E1CCF4E190030EB79 /* UIView+Loading.m in Sources */ = {isa = PBXBuildFile; fileRef = BC32FD1D1CCF4E190030EB79 /* UIView+Loading.m */; };
 		BC32FD221CCF97A10030EB79 /* YYKAppSpreadBannerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC32FD211CCF97A10030EB79 /* YYKAppSpreadBannerModel.m */; };
-		BC3C26531D14398500BF5C3D /* AHKActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C26231D14398500BF5C3D /* AHKActionSheet.m */; };
-		BC3C26541D14398500BF5C3D /* AHKActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C26251D14398500BF5C3D /* AHKActionSheetViewController.m */; };
-		BC3C26551D14398500BF5C3D /* base64.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C26271D14398500BF5C3D /* base64.m */; };
-		BC3C26561D14398500BF5C3D /* Base64Data.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C26291D14398500BF5C3D /* Base64Data.m */; };
-		BC3C26571D14398500BF5C3D /* DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C262C1D14398500BF5C3D /* DataSigner.m */; };
-		BC3C26581D14398500BF5C3D /* DataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C262E1D14398500BF5C3D /* DataVerifier.m */; };
-		BC3C26591D14398500BF5C3D /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C26301D14398500BF5C3D /* GTMBase64.m */; };
 		BC3C265A1D14398500BF5C3D /* MBProgressHUD+NJ.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C26331D14398500BF5C3D /* MBProgressHUD+NJ.m */; };
 		BC3C265B1D14398500BF5C3D /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC3C26341D14398500BF5C3D /* MBProgressHUD.bundle */; };
-		BC3C265D1D14398500BF5C3D /* MD5DataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C26381D14398500BF5C3D /* MD5DataSigner.m */; };
-		BC3C265E1D14398500BF5C3D /* NSData+AES.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C263A1D14398500BF5C3D /* NSData+AES.m */; };
-		BC3C265F1D14398500BF5C3D /* NSDataEx.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C263C1D14398500BF5C3D /* NSDataEx.m */; };
-		BC3C26601D14398500BF5C3D /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C263E1D14398500BF5C3D /* NSString+MD5.m */; };
-		BC3C26611D14398500BF5C3D /* openssl_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C26401D14398500BF5C3D /* openssl_wrapper.m */; };
-		BC3C26621D14398500BF5C3D /* private_key.p12 in Resources */ = {isa = PBXBuildFile; fileRef = BC3C26411D14398500BF5C3D /* private_key.p12 */; };
-		BC3C26631D14398500BF5C3D /* public_key.der in Resources */ = {isa = PBXBuildFile; fileRef = BC3C26421D14398500BF5C3D /* public_key.der */; };
-		BC3C26641D14398500BF5C3D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C26441D14398500BF5C3D /* Reachability.m */; };
-		BC3C26651D14398500BF5C3D /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C26461D14398500BF5C3D /* RSADataSigner.m */; };
-		BC3C26661D14398500BF5C3D /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C26481D14398500BF5C3D /* RSADataVerifier.m */; };
-		BC3C26671D14398500BF5C3D /* SecKeyWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C264A1D14398500BF5C3D /* SecKeyWrapper.m */; };
-		BC3C26681D14398500BF5C3D /* SecurityUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C264C1D14398500BF5C3D /* SecurityUtil.m */; };
-		BC3C26691D14398500BF5C3D /* UIImage+AHKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C264E1D14398500BF5C3D /* UIImage+AHKAdditions.m */; };
-		BC3C266A1D14398500BF5C3D /* UIWindow+AHKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C26501D14398500BF5C3D /* UIWindow+AHKAdditions.m */; };
-		BC3C266B1D14398500BF5C3D /* XYRSACryption.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C26521D14398500BF5C3D /* XYRSACryption.m */; };
 		BC3C266D1D143CEC00BF5C3D /* Config.txt in Resources */ = {isa = PBXBuildFile; fileRef = BC3C266C1D143CEC00BF5C3D /* Config.txt */; };
 		BC3C26711D144C6C00BF5C3D /* VIASDKVERSION.txt in Resources */ = {isa = PBXBuildFile; fileRef = BC3C26701D144C6C00BF5C3D /* VIASDKVERSION.txt */; };
 		BC42C3551CE0946E00ECCD65 /* DBPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = BC42C3541CE0946E00ECCD65 /* DBPersistence.m */; };
@@ -204,59 +185,20 @@
 		BC2FB7761CDA0A5700645070 /* DBMigration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBMigration.h; sourceTree = "<group>"; };
 		BC2FB7771CDA0A5700645070 /* DBTableVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBTableVersion.h; sourceTree = "<group>"; };
 		BC2FB7781CDA0A5700645070 /* DBTableVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBTableVersion.m; sourceTree = "<group>"; };
+		BC2FF5B91D147D7100657598 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		BC2FF5BA1D147D7100657598 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		BC2FF5BC1D147DA100657598 /* private_key.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = private_key.p12; sourceTree = "<group>"; };
+		BC2FF5BD1D147DA100657598 /* public_key.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = public_key.der; sourceTree = "<group>"; };
 		BC30FBE31CE21A4300E49B98 /* YYKNetworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKNetworkInfo.h; sourceTree = "<group>"; };
 		BC30FBE41CE21A4300E49B98 /* YYKNetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKNetworkInfo.m; sourceTree = "<group>"; };
 		BC32FD1C1CCF4E190030EB79 /* UIView+Loading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Loading.h"; sourceTree = "<group>"; };
 		BC32FD1D1CCF4E190030EB79 /* UIView+Loading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Loading.m"; sourceTree = "<group>"; };
 		BC32FD201CCF97A10030EB79 /* YYKAppSpreadBannerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKAppSpreadBannerModel.h; sourceTree = "<group>"; };
 		BC32FD211CCF97A10030EB79 /* YYKAppSpreadBannerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKAppSpreadBannerModel.m; sourceTree = "<group>"; };
-		BC3C26221D14398500BF5C3D /* AHKActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHKActionSheet.h; sourceTree = "<group>"; };
-		BC3C26231D14398500BF5C3D /* AHKActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AHKActionSheet.m; sourceTree = "<group>"; };
-		BC3C26241D14398500BF5C3D /* AHKActionSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHKActionSheetViewController.h; sourceTree = "<group>"; };
-		BC3C26251D14398500BF5C3D /* AHKActionSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AHKActionSheetViewController.m; sourceTree = "<group>"; };
-		BC3C26261D14398500BF5C3D /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
-		BC3C26271D14398500BF5C3D /* base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = base64.m; sourceTree = "<group>"; };
-		BC3C26281D14398500BF5C3D /* Base64Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Data.h; sourceTree = "<group>"; };
-		BC3C26291D14398500BF5C3D /* Base64Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Data.m; sourceTree = "<group>"; };
 		BC3C262A1D14398500BF5C3D /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		BC3C262B1D14398500BF5C3D /* DataSigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSigner.h; sourceTree = "<group>"; };
-		BC3C262C1D14398500BF5C3D /* DataSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSigner.m; sourceTree = "<group>"; };
-		BC3C262D1D14398500BF5C3D /* DataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataVerifier.h; sourceTree = "<group>"; };
-		BC3C262E1D14398500BF5C3D /* DataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataVerifier.m; sourceTree = "<group>"; };
-		BC3C262F1D14398500BF5C3D /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
-		BC3C26301D14398500BF5C3D /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
-		BC3C26311D14398500BF5C3D /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		BC3C26321D14398500BF5C3D /* MBProgressHUD+NJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+NJ.h"; sourceTree = "<group>"; };
 		BC3C26331D14398500BF5C3D /* MBProgressHUD+NJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+NJ.m"; sourceTree = "<group>"; };
 		BC3C26341D14398500BF5C3D /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
-		BC3C26371D14398500BF5C3D /* MD5DataSigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MD5DataSigner.h; sourceTree = "<group>"; };
-		BC3C26381D14398500BF5C3D /* MD5DataSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MD5DataSigner.m; sourceTree = "<group>"; };
-		BC3C26391D14398500BF5C3D /* NSData+AES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AES.h"; sourceTree = "<group>"; };
-		BC3C263A1D14398500BF5C3D /* NSData+AES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AES.m"; sourceTree = "<group>"; };
-		BC3C263B1D14398500BF5C3D /* NSDataEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataEx.h; sourceTree = "<group>"; };
-		BC3C263C1D14398500BF5C3D /* NSDataEx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataEx.m; sourceTree = "<group>"; };
-		BC3C263D1D14398500BF5C3D /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
-		BC3C263E1D14398500BF5C3D /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
-		BC3C263F1D14398500BF5C3D /* openssl_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = openssl_wrapper.h; sourceTree = "<group>"; };
-		BC3C26401D14398500BF5C3D /* openssl_wrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = openssl_wrapper.m; sourceTree = "<group>"; };
-		BC3C26411D14398500BF5C3D /* private_key.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = private_key.p12; sourceTree = "<group>"; };
-		BC3C26421D14398500BF5C3D /* public_key.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = public_key.der; sourceTree = "<group>"; };
-		BC3C26431D14398500BF5C3D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		BC3C26441D14398500BF5C3D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		BC3C26451D14398500BF5C3D /* RSADataSigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSADataSigner.h; sourceTree = "<group>"; };
-		BC3C26461D14398500BF5C3D /* RSADataSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataSigner.m; sourceTree = "<group>"; };
-		BC3C26471D14398500BF5C3D /* RSADataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSADataVerifier.h; sourceTree = "<group>"; };
-		BC3C26481D14398500BF5C3D /* RSADataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataVerifier.m; sourceTree = "<group>"; };
-		BC3C26491D14398500BF5C3D /* SecKeyWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecKeyWrapper.h; sourceTree = "<group>"; };
-		BC3C264A1D14398500BF5C3D /* SecKeyWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecKeyWrapper.m; sourceTree = "<group>"; };
-		BC3C264B1D14398500BF5C3D /* SecurityUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityUtil.h; sourceTree = "<group>"; };
-		BC3C264C1D14398500BF5C3D /* SecurityUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityUtil.m; sourceTree = "<group>"; };
-		BC3C264D1D14398500BF5C3D /* UIImage+AHKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AHKAdditions.h"; sourceTree = "<group>"; };
-		BC3C264E1D14398500BF5C3D /* UIImage+AHKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AHKAdditions.m"; sourceTree = "<group>"; };
-		BC3C264F1D14398500BF5C3D /* UIWindow+AHKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+AHKAdditions.h"; sourceTree = "<group>"; };
-		BC3C26501D14398500BF5C3D /* UIWindow+AHKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+AHKAdditions.m"; sourceTree = "<group>"; };
-		BC3C26511D14398500BF5C3D /* XYRSACryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYRSACryption.h; sourceTree = "<group>"; };
-		BC3C26521D14398500BF5C3D /* XYRSACryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYRSACryption.m; sourceTree = "<group>"; };
 		BC3C266C1D143CEC00BF5C3D /* Config.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Config.txt; sourceTree = "<group>"; };
 		BC3C26701D144C6C00BF5C3D /* VIASDKVERSION.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VIASDKVERSION.txt; sourceTree = "<group>"; };
 		BC42C3531CE0946E00ECCD65 /* DBPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPersistence.h; sourceTree = "<group>"; };
@@ -588,54 +530,15 @@
 		BC3C26211D14398500BF5C3D /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				BC2FF5BC1D147DA100657598 /* private_key.p12 */,
+				BC2FF5BD1D147DA100657598 /* public_key.der */,
+				BC2FF5B91D147D7100657598 /* Reachability.h */,
+				BC2FF5BA1D147D7100657598 /* Reachability.m */,
 				BC3C266C1D143CEC00BF5C3D /* Config.txt */,
-				BC3C26221D14398500BF5C3D /* AHKActionSheet.h */,
-				BC3C26231D14398500BF5C3D /* AHKActionSheet.m */,
-				BC3C26241D14398500BF5C3D /* AHKActionSheetViewController.h */,
-				BC3C26251D14398500BF5C3D /* AHKActionSheetViewController.m */,
-				BC3C26261D14398500BF5C3D /* base64.h */,
-				BC3C26271D14398500BF5C3D /* base64.m */,
-				BC3C26281D14398500BF5C3D /* Base64Data.h */,
-				BC3C26291D14398500BF5C3D /* Base64Data.m */,
 				BC3C262A1D14398500BF5C3D /* config.h */,
-				BC3C262B1D14398500BF5C3D /* DataSigner.h */,
-				BC3C262C1D14398500BF5C3D /* DataSigner.m */,
-				BC3C262D1D14398500BF5C3D /* DataVerifier.h */,
-				BC3C262E1D14398500BF5C3D /* DataVerifier.m */,
-				BC3C262F1D14398500BF5C3D /* GTMBase64.h */,
-				BC3C26301D14398500BF5C3D /* GTMBase64.m */,
-				BC3C26311D14398500BF5C3D /* GTMDefines.h */,
 				BC3C26321D14398500BF5C3D /* MBProgressHUD+NJ.h */,
 				BC3C26331D14398500BF5C3D /* MBProgressHUD+NJ.m */,
 				BC3C26341D14398500BF5C3D /* MBProgressHUD.bundle */,
-				BC3C26371D14398500BF5C3D /* MD5DataSigner.h */,
-				BC3C26381D14398500BF5C3D /* MD5DataSigner.m */,
-				BC3C26391D14398500BF5C3D /* NSData+AES.h */,
-				BC3C263A1D14398500BF5C3D /* NSData+AES.m */,
-				BC3C263B1D14398500BF5C3D /* NSDataEx.h */,
-				BC3C263C1D14398500BF5C3D /* NSDataEx.m */,
-				BC3C263D1D14398500BF5C3D /* NSString+MD5.h */,
-				BC3C263E1D14398500BF5C3D /* NSString+MD5.m */,
-				BC3C263F1D14398500BF5C3D /* openssl_wrapper.h */,
-				BC3C26401D14398500BF5C3D /* openssl_wrapper.m */,
-				BC3C26411D14398500BF5C3D /* private_key.p12 */,
-				BC3C26421D14398500BF5C3D /* public_key.der */,
-				BC3C26431D14398500BF5C3D /* Reachability.h */,
-				BC3C26441D14398500BF5C3D /* Reachability.m */,
-				BC3C26451D14398500BF5C3D /* RSADataSigner.h */,
-				BC3C26461D14398500BF5C3D /* RSADataSigner.m */,
-				BC3C26471D14398500BF5C3D /* RSADataVerifier.h */,
-				BC3C26481D14398500BF5C3D /* RSADataVerifier.m */,
-				BC3C26491D14398500BF5C3D /* SecKeyWrapper.h */,
-				BC3C264A1D14398500BF5C3D /* SecKeyWrapper.m */,
-				BC3C264B1D14398500BF5C3D /* SecurityUtil.h */,
-				BC3C264C1D14398500BF5C3D /* SecurityUtil.m */,
-				BC3C264D1D14398500BF5C3D /* UIImage+AHKAdditions.h */,
-				BC3C264E1D14398500BF5C3D /* UIImage+AHKAdditions.m */,
-				BC3C264F1D14398500BF5C3D /* UIWindow+AHKAdditions.h */,
-				BC3C26501D14398500BF5C3D /* UIWindow+AHKAdditions.m */,
-				BC3C26511D14398500BF5C3D /* XYRSACryption.h */,
-				BC3C26521D14398500BF5C3D /* XYRSACryption.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -1288,15 +1191,15 @@
 			files = (
 				BC69B1F11CE454680020B112 /* SPaySDKResource.bundle in Resources */,
 				BC3C265B1D14398500BF5C3D /* MBProgressHUD.bundle in Resources */,
-				BC3C26621D14398500BF5C3D /* private_key.p12 in Resources */,
+				BC2FF5BF1D147DA100657598 /* public_key.der in Resources */,
 				BC7EEBEC1D13EF89008D9A32 /* AlipaySDK.bundle in Resources */,
-				BC3C26631D14398500BF5C3D /* public_key.der in Resources */,
 				BCE256111C966A8E00133F4F /* LaunchScreen.storyboard in Resources */,
 				BCB1420D1CBBDEFB0017A2B9 /* launch_image.jpg in Resources */,
 				BCD826CE1D114750003B14ED /* IapppayH5Resource.bundle in Resources */,
 				BC3C266D1D143CEC00BF5C3D /* Config.txt in Resources */,
 				BCE2560E1C966A8E00133F4F /* Assets.xcassets in Resources */,
 				BCE257191C9689F500133F4F /* config.plist in Resources */,
+				BC2FF5BE1D147DA100657598 /* private_key.p12 in Resources */,
 				BC3C26711D144C6C00BF5C3D /* VIASDKVERSION.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1376,7 +1279,6 @@
 				BC0C86091CD3608A00C51480 /* YYKCPCStatsModel.m in Sources */,
 				BC0C860C1CD367F800C51480 /* YYKStatsBaseModel.m in Sources */,
 				BCE257031C966DB400133F4F /* NSString+length.m in Sources */,
-				BC3C26651D14398500BF5C3D /* RSADataSigner.m in Sources */,
 				BCE257091C966DB400133F4F /* UIImageView+YPBAnimation.m in Sources */,
 				BCE2570B1C966DB400133F4F /* UIViewExt.m in Sources */,
 				BCE256681C966C2600133F4F /* YYKPaymentModel.m in Sources */,
@@ -1386,26 +1288,20 @@
 				BCE257061C966DB400133F4F /* UIColor+hexColor.m in Sources */,
 				BCE256731C966C2600133F4F /* YYKPaymentPopView.m in Sources */,
 				BCE256FF1C966DB400133F4F /* NSMutableDictionary+SafeCoding.m in Sources */,
-				BC3C26641D14398500BF5C3D /* Reachability.m in Sources */,
 				BCE2566C1C966C2600133F4F /* YYKSystemConfigModel.m in Sources */,
 				BCC00FC41CD8B96D00F429B4 /* YYKPayStatsModel.m in Sources */,
 				BC2A0B411CB8D79D00B7D397 /* YYKLocalNotificationManager.m in Sources */,
 				BCE256361C966ACD00133F4F /* YYKAppDelegate.m in Sources */,
 				BCC00FBD1CD8B23B00F429B4 /* YYKTabStatsModel.m in Sources */,
 				BCE257111C966DB400133F4F /* YYKConfiguration.m in Sources */,
-				BC3C26531D14398500BF5C3D /* AHKActionSheet.m in Sources */,
 				BC0C86051CD35F5C00C51480 /* YYKStatsManager.m in Sources */,
 				BCE256031C966A8E00133F4F /* main.m in Sources */,
 				BC30FBE51CE21A4300E49B98 /* YYKNetworkInfo.m in Sources */,
 				BCB1C4701CC65E7D00F9B83B /* YYKMineViewController.m in Sources */,
 				BC61D15B1CB971CA002A858E /* YYKVideoPlayer.m in Sources */,
-				BC3C26601D14398500BF5C3D /* NSString+MD5.m in Sources */,
-				BC3C26661D14398500BF5C3D /* RSADataVerifier.m in Sources */,
 				BCE2566D1C966C2600133F4F /* YYKURLRequest.m in Sources */,
-				BC3C26691D14398500BF5C3D /* UIImage+AHKAdditions.m in Sources */,
 				BC51AC361CA12E6B0073AF91 /* YYKPaymentConfigModel.m in Sources */,
 				BCE257001C966DB400133F4F /* NSObject+Properties.m in Sources */,
-				BC3C26551D14398500BF5C3D /* base64.m in Sources */,
 				BC32FD221CCF97A10030EB79 /* YYKAppSpreadBannerModel.m in Sources */,
 				BCB1C46F1CC65E7D00F9B83B /* YYKHistoryViewController.m in Sources */,
 				BCE2570A1C966DB400133F4F /* UIScrollView+Refresh.m in Sources */,
@@ -1413,7 +1309,6 @@
 				BC77DB031CFD95BE003B66E8 /* YYKPayPointTypeCell.m in Sources */,
 				BC51AC311CA0F7530073AF91 /* YYKVideoListModel.m in Sources */,
 				BC51AC391CA1316A0073AF91 /* YYKPaymentConfig.m in Sources */,
-				BC3C26561D14398500BF5C3D /* Base64Data.m in Sources */,
 				BCB1420B1CBBDA9C0017A2B9 /* YYKLaunchView.m in Sources */,
 				BC69B1FB1CE471B50020B112 /* SPRequestForm.m in Sources */,
 				BC3C265A1D14398500BF5C3D /* MBProgressHUD+NJ.m in Sources */,
@@ -1432,19 +1327,16 @@
 				BCB1C4781CC65EB400F9B83B /* YYKHistoryCell.m in Sources */,
 				BCE257081C966DB400133F4F /* UIImage+crop.m in Sources */,
 				BC8D0DC41CBFE88D0013F527 /* YYKHomeProgramModel.m in Sources */,
-				BC3C265D1D14398500BF5C3D /* MD5DataSigner.m in Sources */,
 				BC660B081C97243F00E04D23 /* YYKPaymentManager.m in Sources */,
 				BCE256661C966C2600133F4F /* YYKEncryptedURLRequest.m in Sources */,
+				BC2FF5BB1D147D7100657598 /* Reachability.m in Sources */,
 				BCE257071C966DB400133F4F /* UIImage+color.m in Sources */,
 				BCE256651C966C2600133F4F /* YYKActivateModel.m in Sources */,
 				BCE256FD1C966DB400133F4F /* NSDate+Utilities.m in Sources */,
 				BC69B1FF1CE472CB0020B112 /* SPHTTPManager.m in Sources */,
 				BCE257131C966DB400133F4F /* YYKHudManager.m in Sources */,
-				BC3C265E1D14398500BF5C3D /* NSData+AES.m in Sources */,
-				BC3C26611D14398500BF5C3D /* openssl_wrapper.m in Sources */,
 				BC2FB77A1CDA0A5700645070 /* DBTableVersion.m in Sources */,
 				BCE257041C966DB400133F4F /* NSString+md5.m in Sources */,
-				BC3C265F1D14398500BF5C3D /* NSDataEx.m in Sources */,
 				BC29144B1C9FF6AD002084E2 /* WeChatPayManager.m in Sources */,
 				BCE256621C966C2600133F4F /* YYKBaseViewController.m in Sources */,
 				BC61D15E1CB971FB002A858E /* YYKVideoPlayerViewController.m in Sources */,
@@ -1455,30 +1347,22 @@
 				BC20D3D31CC024D2003AEF34 /* YYKHomeSectionHeader.m in Sources */,
 				BC61BC131CC8AD6B000343FF /* YYKCard.m in Sources */,
 				BC29144A1C9FF6AD002084E2 /* payRequsestHandler.mm in Sources */,
-				BC3C266A1D14398500BF5C3D /* UIWindow+AHKAdditions.m in Sources */,
 				BCB1C4871CC66B5100F9B83B /* YYKVIPViewController.m in Sources */,
 				BCAAEB931CF83504000E9079 /* YYKPaymentButton.m in Sources */,
 				BCE256631C966C2600133F4F /* YYKPaymentViewController.m in Sources */,
 				BC23A5B61CC6AE2E00B773B3 /* YYKSpreadCell.m in Sources */,
-				BC3C26591D14398500BF5C3D /* GTMBase64.m in Sources */,
 				BC42C3551CE0946E00ECCD65 /* DBPersistence.m in Sources */,
 				BCE2566F1C966C2600133F4F /* YYKUserAccessModel.m in Sources */,
-				BC3C26541D14398500BF5C3D /* AHKActionSheetViewController.m in Sources */,
-				BC3C26671D14398500BF5C3D /* SecKeyWrapper.m in Sources */,
 				BC29144F1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m in Sources */,
-				BC3C26581D14398500BF5C3D /* DataVerifier.m in Sources */,
 				BC29144C1C9FF6AD002084E2 /* WXUtil.mm in Sources */,
 				BC61BC101CC8AD53000343FF /* YYKCardSlider.m in Sources */,
 				BC69B2031CE473E10020B112 /* SPConst.m in Sources */,
 				BCE2575A1C96F31200133F4F /* YYKWebViewController.m in Sources */,
 				BC7A618E1CFC508200021200 /* YYKVideoLibViewController.m in Sources */,
-				BC3C26571D14398500BF5C3D /* DataSigner.m in Sources */,
 				BC7643421CD04C680059E1C3 /* YYKSpreadBannerViewController.m in Sources */,
 				BCE2570C1C966DB400133F4F /* RACEXTRuntimeExtensions.m in Sources */,
 				BC7643491CD04F210059E1C3 /* YYKApplication.m in Sources */,
-				BC3C266B1D14398500BF5C3D /* XYRSACryption.m in Sources */,
 				BCE256FE1C966DB400133F4F /* NSDictionary+YYKSign.m in Sources */,
-				BC3C26681D14398500BF5C3D /* SecurityUtil.m in Sources */,
 				BCB58E4D1CEB4AB50084F784 /* SPayUtil.m in Sources */,
 				BCB1C48E1CC66C8D00F9B83B /* YYKSpreadViewController.m in Sources */,
 				BC32FD1E1CCF4E190030EB79 /* UIView+Loading.m in Sources */,
