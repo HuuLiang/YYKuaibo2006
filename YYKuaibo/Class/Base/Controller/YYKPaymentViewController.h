@@ -19,7 +19,8 @@
                 forProgram:(YYKProgram *)program
            programLocation:(NSUInteger)programLocation
                  inChannel:(YYKChannel *)channel
-     withCompletionHandler:(void (^)(void))completionHandler;
+     withCompletionHandler:(void (^)(void))completionHandler
+              footerAction:(YYKAction)footerAction;
 - (void)hidePayment;
 
 - (void)notifyPaymentResult:(PAYRESULT)result withPaymentInfo:(YYKPaymentInfo *)paymentInfo;

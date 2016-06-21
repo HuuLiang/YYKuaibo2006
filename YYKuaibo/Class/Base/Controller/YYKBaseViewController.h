@@ -19,6 +19,7 @@
 
 //- (void)payForProgram:(YYKProgram *)program programLocation:(NSUInteger)programLocation inChannel:(YYKChannel *)channel;
 - (void)payForPayPointType:(YYKPayPointType)payPointType;
+- (void)payForProgram:(YYKProgram *)program programLocation:(NSUInteger)programLocation inChannel:(YYKChannel *)channel;
 //- (void)onPaidNotification:(NSNotification *)notification;
 
 //- (BOOL)shouldDisplayBackgroundImage;

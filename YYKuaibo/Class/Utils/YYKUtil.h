@@ -21,6 +21,7 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSArray<YYKPaymentInfo *> *)payingPaymentInfos;
 + (NSArray<YYKPaymentInfo *> *)paidNotProcessedPaymentInfos;
 + (NSArray<YYKPaymentInfo *> *)allSuccessfulPaymentInfos;
++ (NSArray<YYKPaymentInfo *> *)allUnsuccessfulPaymentInfos;
 //+ (YYKPaymentInfo *)successfulPaymentInfo;
 
 //+ (BOOL)isPaid;
@@ -51,5 +52,7 @@ extern NSString *const kPaymentInfoKeyName;
 + (NSUInteger)currentSubTabPageIndex;
 + (NSString *)getIPAddress;
 + (UIViewController *)currentVisibleViewController;
+
++ (NSString *)currentTimeString;
 
 @end

@@ -12,6 +12,7 @@
 #import "YYKWebViewController.h"
 #import "YYKInputTextViewController.h"
 #import "YYKSystemConfigModel.h"
+#import "YYKVIPActivationViewController.h"
 
 static NSString *const kSideMenuNormalCellReusableIdentifier = @"SideMenuNormalCellReusableIdentifier";
 static NSString *const kSideMenuVIPCellReusableIdentifier = @"SideMenuVIPCellReusableIdentifier";
@@ -150,7 +151,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
-    if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP) {
+    if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP && indexPath.row == 0) {
         YYKMineVIPCell *vipCell = [tableView dequeueReusableCellWithIdentifier:kSideMenuVIPCellReusableIdentifier forIndexPath:indexPath];
         vipCell.vipImage = [YYKUtil isVIP] && ![YYKUtil isSVIP] ? [UIImage imageNamed:@"svip_text"] : [UIImage imageNamed:@"vip_text"];
         vipCell.memberTitle = [YYKUtil isVIP] && ![YYKUtil isSVIP] ? @"成为黑钻VIP会员" : @"成为VIP会员";
@@ -167,7 +168,6 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
                 }
             };
         }
-        
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:kSideMenuNormalCellReusableIdentifier];
         if (!cell) {
@@ -176,8 +176,11 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         cell.detailTextLabel.text = nil;
-    
-        if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionPhone) {
+        
+        if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP) {
+            cell.imageView.image = [UIImage imageNamed:@"self_activate_icon"];
+            cell.textLabel.text = @"自助激活";
+        } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionPhone) {
             cell.imageView.image = [UIImage imageNamed:@"side_menu_phone_icon"];
             cell.textLabel.text = @"投诉热线";
             cell.detailTextLabel.text = [YYKSystemConfigModel sharedModel].contactTime;
@@ -209,13 +212,15 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if ([self sectionTypeInSection:section] == YYKSideMenuSectionOthers) {
         return YYKSideMenuOtherSectionCellCount;
+    } else if ([self sectionTypeInSection:section] == YYKSideMenuSectionVIP) {
+        return 2;
     } else {
         return 1;
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP) {
+    if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP && indexPath.row == 0) {
         return 160;
     } else {
         return MAX(44, lround(kScreenHeight*0.08));
@@ -301,6 +306,9 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
         if (phoneNum.length > 0) {
             [YYKUtil callPhoneNumber:phoneNum];
         }
+    } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP && indexPath.row == 1) {
+        YYKVIPActivationViewController *activationVC = [[YYKVIPActivationViewController alloc] init];
+        [self.navigationController pushViewController:activationVC animated:YES];
     }
 }
 @end

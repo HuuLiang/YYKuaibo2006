@@ -130,6 +130,7 @@
            programLocation:(NSUInteger)programLocation
                  inChannel:(YYKChannel *)channel
      withCompletionHandler:(void (^)(void))completionHandler
+              footerAction:(YYKAction)footerAction
 {
     self.completionHandler = completionHandler;
     
@@ -142,6 +143,11 @@
     self.programLocationToPayFor = programLocation;
     self.channelToPayFor = channel;
     self.popView.payPointType = program.payPointType.unsignedIntegerValue;
+    @weakify(self);
+    self.popView.footerAction = ^(id obj) {
+        @strongify(self);
+        SafelyCallBlock(footerAction, self);
+    };
     //self.popView.headerImageURL = [NSURL URLWithString:[[YYKSystemConfigModel sharedModel] paymentImageWithProgram:program]];
     self.view.frame = view.bounds;
     self.view.alpha = 0;

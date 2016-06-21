@@ -9,7 +9,6 @@
 #import "YYKPaymentManager.h"
 #import "YYKPaymentInfo.h"
 #import "YYKSystemConfigModel.h"
-#import "YYKPaymentViewController.h"
 #import "YYKPaymentConfigModel.h"
 
 #import "WXApi.h"
@@ -122,6 +121,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     paymentInfo.columnId = channel.realColumnId;
     paymentInfo.columnType = channel.type;
     paymentInfo.payPointType = payPointType == YYKPayPointTypeSVIP ? @(YYKPayPointTypeSVIP) : @(YYKPayPointTypeVIP);
+    paymentInfo.paymentTime = [YYKUtil currentTimeString];
     paymentInfo.paymentType = @(type);
     paymentInfo.paymentResult = @(PAYRESULT_UNKNOWN);
     paymentInfo.paymentStatus = @(YYKPaymentStatusPaying);

@@ -81,6 +81,15 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
     }];
 }
 
++ (NSArray<YYKPaymentInfo *> *)allUnsuccessfulPaymentInfos {
+    return [self.allPaymentInfos bk_select:^BOOL(id obj) {
+        YYKPaymentInfo *paymentInfo = obj;
+        if (paymentInfo.paymentResult.unsignedIntegerValue != PAYRESULT_SUCCESS) {
+            return YES;
+        }
+        return NO;
+    }];
+}
 //+ (YYKPaymentInfo *)successfulPaymentInfo {
 //    return [self.allPaymentInfos bk_match:^BOOL(id obj) {
 //        YYKPaymentInfo *paymentInfo = obj;
@@ -290,4 +299,9 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
     return NSNotFound;
 }
 
++ (NSString *)currentTimeString {
+    NSDateFormatter *fomatter =[[NSDateFormatter alloc] init];
+    [fomatter setDateFormat:kDefaultDateFormat];
+    return [fomatter stringFromDate:[NSDate date]];
+}
 @end

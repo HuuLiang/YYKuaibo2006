@@ -32,6 +32,7 @@ typedef void (^YYKURLResponseHandler)(YYKURLResponseStatus respStatus, NSString 
 + (BOOL)shouldPersistURLResponse;
 - (NSURL *)baseURL; // override this method to provide a custom base URL to be used
 - (NSURL *)standbyBaseURL; // override this method to provide a custom standby base URL to be used
+- (BOOL)isPlainResponse; // override this method if the response is plain text.
 
 - (BOOL)shouldPostErrorNotification;
 - (YYKURLRequestMethod)requestMethod;

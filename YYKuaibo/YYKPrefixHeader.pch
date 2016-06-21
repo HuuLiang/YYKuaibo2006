@@ -27,6 +27,7 @@
 
 #import "YYKProgram.h"
 #import "YYKChannel.h"
+#import "YYKPaymentInfo.h"
 
 #import "YYKUtil.h"
 #import "YYKErrorHandler.h"

@@ -27,7 +27,7 @@ static NSString *const kPayPointTypeCellReusableIdentifier = @"PayPointTypeCellR
 #define kTitleCellHeight MIN(kScreenHeight * 0.08, 50)
 #define kPaymentCellHeight MIN(kScreenHeight * 0.15, 60)
 #define kPayPointTypeCellHeight MIN(kScreenHeight * 0.1, 60)
-#define kReservedCellHeight (kScreenHeight * 0.03)
+#define kFooterHeight (kScreenHeight * 0.06)
 
 static const void *kPaymentButtonAssociatedKey = &kPaymentButtonAssociatedKey;
 
@@ -39,6 +39,8 @@ static const void *kPaymentButtonAssociatedKey = &kPaymentButtonAssociatedKey;
     UIImageView *_headerImageView;
     UIImageView *_titleImageView;
     UILabel *_priceLabel;
+    
+    UILabel *_selfActivateLabel;
 }
 @property (nonatomic,retain) NSMutableDictionary<NSIndexPath *, UITableViewCell *> *cells;
 @end
@@ -58,7 +60,27 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
         self.separatorColor = [UIColor colorWithWhite:0.2 alpha:1];
         self.backgroundColor = [UIColor colorWithWhite:0.96 alpha:1];
         self.separatorColor = [UIColor lightGrayColor];
+        self.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, kFooterHeight)];
         [self registerClass:[YYKPayPointTypeCell class] forCellReuseIdentifier:kPayPointTypeCellReusableIdentifier];
+        
+        _selfActivateLabel = [[UILabel alloc] init];
+        _selfActivateLabel.textAlignment = NSTextAlignmentCenter;
+        NSString *selfActiString = @"支付完成后还需要重新支付？";
+        _selfActivateLabel.attributedText = [[NSAttributedString alloc] initWithString:selfActiString attributes:@{NSForegroundColorAttributeName:[UIColor redColor],
+                                                                                                                   NSUnderlineStyleAttributeName:@1,
+                                                                                                                   NSFontAttributeName:[UIFont systemFontOfSize:14.]}];
+        [self.tableFooterView addSubview:_selfActivateLabel];
+        {
+            [_selfActivateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.center.equalTo(self.tableFooterView);
+            }];
+        }
+        @weakify(self);
+        [self.tableFooterView bk_whenTapped:^{
+            @strongify(self);
+            SafelyCallBlock(self.footerAction, self);
+        }];
+        
     }
     return self;
 }
@@ -81,7 +103,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
             cellHeights += itemHeight;
         }
     }
-    cellHeights += kReservedCellHeight;
+    cellHeights += kFooterHeight;
 //    cellHeights += [self tableView:self heightForHeaderInSection:1];
     return lround(cellHeights);
 }

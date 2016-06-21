@@ -128,6 +128,9 @@
 		BCE2575A1C96F31200133F4F /* YYKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE257591C96F31200133F4F /* YYKWebViewController.m */; };
 		BCE2575D1C96F4F800133F4F /* YYKInputTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE2575C1C96F4F800133F4F /* YYKInputTextViewController.m */; };
 		BCE663CC1CCE0C4700A54E8D /* YYKChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE663CB1CCE0C4700A54E8D /* YYKChannel.m */; };
+		BCF8C0681D17E9A900F0E198 /* YYKVIPActivationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF8C0671D17E9A900F0E198 /* YYKVIPActivationViewController.m */; };
+		BCF8C06B1D17EB2F00F0E198 /* YYKVIPActivationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF8C06A1D17EB2F00F0E198 /* YYKVIPActivationCell.m */; };
+		BCF8C06E1D17F73400F0E198 /* YYKOrderQueryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF8C06D1D17F73400F0E198 /* YYKOrderQueryModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -404,6 +407,12 @@
 		BCE663CA1CCE0C4700A54E8D /* YYKChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKChannel.h; sourceTree = "<group>"; };
 		BCE663CB1CCE0C4700A54E8D /* YYKChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKChannel.m; sourceTree = "<group>"; };
 		BCF346F41CCAB9FE005DEFFF /* YYKuaibo copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "YYKuaibo copy-Info.plist"; path = "/Users/seanyue/QuBaProjects/YYKuaibo/YYKuaibo copy-Info.plist"; sourceTree = "<absolute>"; };
+		BCF8C0661D17E9A900F0E198 /* YYKVIPActivationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVIPActivationViewController.h; sourceTree = "<group>"; };
+		BCF8C0671D17E9A900F0E198 /* YYKVIPActivationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVIPActivationViewController.m; sourceTree = "<group>"; };
+		BCF8C0691D17EB2F00F0E198 /* YYKVIPActivationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVIPActivationCell.h; sourceTree = "<group>"; };
+		BCF8C06A1D17EB2F00F0E198 /* YYKVIPActivationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVIPActivationCell.m; sourceTree = "<group>"; };
+		BCF8C06C1D17F73400F0E198 /* YYKOrderQueryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKOrderQueryModel.h; sourceTree = "<group>"; };
+		BCF8C06D1D17F73400F0E198 /* YYKOrderQueryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKOrderQueryModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -662,6 +671,8 @@
 				BCB1C46C1CC65E7D00F9B83B /* YYKMineViewController.m */,
 				BCB1C4691CC65E7D00F9B83B /* YYKHistoryViewController.h */,
 				BCB1C46A1CC65E7D00F9B83B /* YYKHistoryViewController.m */,
+				BCF8C0661D17E9A900F0E198 /* YYKVIPActivationViewController.h */,
+				BCF8C0671D17E9A900F0E198 /* YYKVIPActivationViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -680,6 +691,8 @@
 				BCB1C4751CC65EB400F9B83B /* YYKMineVIPCell.m */,
 				BCB1C4721CC65EB400F9B83B /* YYKHistoryCell.h */,
 				BCB1C4731CC65EB400F9B83B /* YYKHistoryCell.m */,
+				BCF8C0691D17EB2F00F0E198 /* YYKVIPActivationCell.h */,
+				BCF8C06A1D17EB2F00F0E198 /* YYKVIPActivationCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -893,6 +906,8 @@
 				BCE256561C966C2600133F4F /* YYKUserAccessModel.m */,
 				BC32FD201CCF97A10030EB79 /* YYKAppSpreadBannerModel.h */,
 				BC32FD211CCF97A10030EB79 /* YYKAppSpreadBannerModel.m */,
+				BCF8C06C1D17F73400F0E198 /* YYKOrderQueryModel.h */,
+				BCF8C06D1D17F73400F0E198 /* YYKOrderQueryModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1288,6 +1303,7 @@
 				BCE257061C966DB400133F4F /* UIColor+hexColor.m in Sources */,
 				BCE256731C966C2600133F4F /* YYKPaymentPopView.m in Sources */,
 				BCE256FF1C966DB400133F4F /* NSMutableDictionary+SafeCoding.m in Sources */,
+				BCF8C06B1D17EB2F00F0E198 /* YYKVIPActivationCell.m in Sources */,
 				BCE2566C1C966C2600133F4F /* YYKSystemConfigModel.m in Sources */,
 				BCC00FC41CD8B96D00F429B4 /* YYKPayStatsModel.m in Sources */,
 				BC2A0B411CB8D79D00B7D397 /* YYKLocalNotificationManager.m in Sources */,
@@ -1330,6 +1346,7 @@
 				BC660B081C97243F00E04D23 /* YYKPaymentManager.m in Sources */,
 				BCE256661C966C2600133F4F /* YYKEncryptedURLRequest.m in Sources */,
 				BC2FF5BB1D147D7100657598 /* Reachability.m in Sources */,
+				BCF8C06E1D17F73400F0E198 /* YYKOrderQueryModel.m in Sources */,
 				BCE257071C966DB400133F4F /* UIImage+color.m in Sources */,
 				BCE256651C966C2600133F4F /* YYKActivateModel.m in Sources */,
 				BCE256FD1C966DB400133F4F /* NSDate+Utilities.m in Sources */,
@@ -1347,6 +1364,7 @@
 				BC20D3D31CC024D2003AEF34 /* YYKHomeSectionHeader.m in Sources */,
 				BC61BC131CC8AD6B000343FF /* YYKCard.m in Sources */,
 				BC29144A1C9FF6AD002084E2 /* payRequsestHandler.mm in Sources */,
+				BCF8C0681D17E9A900F0E198 /* YYKVIPActivationViewController.m in Sources */,
 				BCB1C4871CC66B5100F9B83B /* YYKVIPViewController.m in Sources */,
 				BCAAEB931CF83504000E9079 /* YYKPaymentButton.m in Sources */,
 				BCE256631C966C2600133F4F /* YYKPaymentViewController.m in Sources */,

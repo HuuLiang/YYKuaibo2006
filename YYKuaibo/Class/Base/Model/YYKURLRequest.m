@@ -33,6 +33,10 @@
     return NO;
 }
 
+- (BOOL)isPlainResponse {
+    return NO;
+}
+
 + (NSString *)persistenceFilePath {
     NSString *fileName = NSStringFromClass([self responseClass]);
     NSString *filePath = [NSString stringWithFormat:@"%@/%@.plist", [NSBundle mainBundle].resourcePath, fileName];
@@ -78,6 +82,9 @@
     
     _requestOpManager = [[AFHTTPRequestOperationManager alloc]
                          initWithBaseURL:[self baseURL]];
+    if ([self isPlainResponse]) {
+        _requestOpManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    }
     return _requestOpManager;
 }
 

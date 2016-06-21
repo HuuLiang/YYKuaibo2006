@@ -11,9 +11,6 @@
 
 static const NSTimeInterval kRetryingTimeInterval = 180;
 
-static NSString *const kSignKey = @"qdge^%$#@(sdwHs^&";
-static NSString *const kPaymentEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
-
 @interface YYKPaymentModel ()
 @property (nonatomic,retain) NSTimer *retryingTimer;
 @end
@@ -42,18 +39,18 @@ static NSString *const kPaymentEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
 }
 
 + (NSString *)signKey {
-    return kSignKey;
+    return YYK_PAYMENT_SIGN_KEY;
 }
 
 - (NSDictionary *)encryptWithParams:(NSDictionary *)params {
     NSDictionary *signParams = @{  @"appId":YYK_REST_APP_ID,
-                                   @"key":kSignKey,
+                                   @"key":YYK_PAYMENT_SIGN_KEY,
                                    @"imsi":@"999999999999999",
                                    @"channelNo":YYK_CHANNEL_NO,
                                    @"pV":YYK_PAYMENT_PV };
     
     NSString *sign = [signParams signWithDictionary:[self class].commonParams keyOrders:[self class].keyOrdersOfCommonParams];
-    NSString *encryptedDataString = [params encryptedStringWithSign:sign password:kPaymentEncryptionPassword excludeKeys:@[@"key"]];
+    NSString *encryptedDataString = [params encryptedStringWithSign:sign password:YYK_PAYMENT_ENCRYPTION_PASSWORD excludeKeys:@[@"key"]];
     return @{@"data":encryptedDataString, @"appId":YYK_REST_APP_ID};
 }
 

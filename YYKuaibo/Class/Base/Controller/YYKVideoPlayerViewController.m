@@ -72,11 +72,7 @@
 }
 
 - (void)dismissAndPopPayment {
-    [[YYKPaymentViewController sharedPaymentVC] popupPaymentInView:self.view.window
-                                                        forProgram:(YYKProgram *)self.video
-                                                   programLocation:self.videoLocation
-                                                         inChannel:self.channel
-                                             withCompletionHandler:nil];
+    [self payForProgram:self.video programLocation:self.videoLocation inChannel:self.channel];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 //- (BOOL)shouldAutorotate {

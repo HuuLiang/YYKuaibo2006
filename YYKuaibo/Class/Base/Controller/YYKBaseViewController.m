@@ -9,6 +9,7 @@
 #import "YYKBaseViewController.h"
 #import "YYKPaymentViewController.h"
 #import "YYKVideoPlayerViewController.h"
+#import "YYKVIPActivationViewController.h"
 
 @import MediaPlayer;
 @import AVKit;
@@ -123,11 +124,21 @@
 }
 
 - (void)payForProgram:(YYKProgram *)program programLocation:(NSUInteger)programLocation inChannel:(YYKChannel *)channel {
+    @weakify(self);
     [[YYKPaymentViewController sharedPaymentVC] popupPaymentInView:self.view.window
                                                         forProgram:program
                                                    programLocation:programLocation
                                                          inChannel:channel
-                                             withCompletionHandler:nil];
+                                             withCompletionHandler:nil
+                                                      footerAction:^(id obj)
+    {
+        @strongify(self);
+        YYKPaymentViewController *paymentVC = (YYKPaymentViewController *)obj;
+        [paymentVC hidePayment];
+        
+        YYKVIPActivationViewController *activationVC = [[YYKVIPActivationViewController alloc] init];
+        [self.navigationController pushViewController:activationVC animated:YES];
+    }];
 }
 
 - (void)payForPayPointType:(YYKPayPointType)payPointType {
