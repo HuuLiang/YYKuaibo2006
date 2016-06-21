@@ -309,7 +309,7 @@ DefineLazyPropertyInitialization(NSMutableArray, reusableCards)
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     YYKCard *rearCard = [self cardInPosition:YYKCardPositionRear];
     CGRect rearCardFrameOnContainer = [rearCard convertRect:rearCard.bounds toView:self];
-    if (CGRectContainsRect(self.bounds, rearCardFrameOnContainer) || CGRectIntersectsRect(self.bounds, rearCardFrameOnContainer)) {
+    if (CGRectContainsRect(self.bounds, rearCardFrameOnContainer)) {// || CGRectIntersectsRect(self.bounds, rearCardFrameOnContainer)) {
         [self addDisplayingCardInPosition:YYKCardPositionRear];
     }
     
