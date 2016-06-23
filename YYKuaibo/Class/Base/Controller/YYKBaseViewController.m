@@ -76,7 +76,7 @@
     if (needPayment) {
         [self payForProgram:program programLocation:programLocation inChannel:channel];
     } else if (program.type.unsignedIntegerValue == YYKProgramTypeVideo) {
-        if (isFreeVideo && (vipProgramButNoVIP || svipProgramButNoSVIP)) {
+        if (isFreeVideo && (program.payPointType.unsignedIntegerValue == YYKPayPointTypeNone || vipProgramButNoVIP || svipProgramButNoSVIP)) {
             [self playVideo:program videoLocation:programLocation inChannel:channel withTimeControl:NO shouldPopPayment:YES];
         } else {
             [self playVideo:program videoLocation:programLocation inChannel:channel withTimeControl:YES shouldPopPayment:NO];

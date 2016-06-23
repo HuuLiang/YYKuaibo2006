@@ -30,6 +30,7 @@
             [_vipImageView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self);
                 make.top.equalTo(self).offset(30);
+                make.size.mas_equalTo(_vipImageView.image.size);
             }];
         }
         

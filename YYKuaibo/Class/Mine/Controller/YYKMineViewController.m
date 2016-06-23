@@ -89,6 +89,10 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
             }];
         }
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     if ([_layoutTableView numberOfSections] > 0) {
         NSUInteger sections = [self numberOfSectionsInTableView:_layoutTableView];
