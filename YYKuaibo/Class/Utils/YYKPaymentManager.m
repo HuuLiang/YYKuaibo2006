@@ -22,7 +22,7 @@
 #import "IappPayMananger.h"
 
 //static NSString *const kAlipaySchemeUrl = @"comyykuaibo2016appalipayurlscheme";
-static NSString *const kVIAPaySchemeUrl = @"comyykuaibov26appviapayurlscheme";
+static NSString *const kVIAPaySchemeUrl = @"comyykuaibov27appviapayurlscheme";
 
 @interface YYKPaymentManager () <WXApiDelegate, stringDelegate>
 @property (nonatomic,retain) YYKPaymentInfo *paymentInfo;
