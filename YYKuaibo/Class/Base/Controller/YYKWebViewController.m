@@ -29,6 +29,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _webView = [[UIWebView alloc] init];
+    _webView.mediaPlaybackRequiresUserAction = NO;
     [self.view addSubview:_webView];
     {
         [_webView mas_makeConstraints:^(MASConstraintMaker *make) {

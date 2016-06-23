@@ -10,12 +10,13 @@
 #import "YYKPaymentViewController.h"
 #import "YYKVideoPlayerViewController.h"
 #import "YYKVIPActivationViewController.h"
+#import "YYKWebViewController.h"
 
-@import MediaPlayer;
-@import AVKit;
-@import AVFoundation.AVPlayer;
-@import AVFoundation.AVAsset;
-@import AVFoundation.AVAssetImageGenerator;
+//@import MediaPlayer;
+//@import AVKit;
+//@import AVFoundation.AVPlayer;
+//@import AVFoundation.AVAsset;
+//@import AVFoundation.AVAssetImageGenerator;
 
 @interface YYKBaseViewController ()
 {
@@ -110,9 +111,10 @@
  shouldPopPayment:(BOOL)shouldPopPayment
 {
     if (hasTimeControl) {
-        UIViewController *videoPlayVC = [self playerVCWithVideo:video];
-        videoPlayVC.hidesBottomBarWhenPushed = YES;
-        [self presentViewController:videoPlayVC animated:YES completion:nil];
+        YYKWebViewController *webVC = [[YYKWebViewController alloc] initWithURL:[NSURL URLWithString:video.videoUrl] standbyURL:nil];
+        webVC.title = video.title;
+        webVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:webVC animated:YES];
     } else {
         YYKVideoPlayerViewController *playerVC = [[YYKVideoPlayerViewController alloc] initWithVideo:video videoLocation:videoLocation channel:channel];
         playerVC.hidesBottomBarWhenPushed = YES;
@@ -156,34 +158,34 @@
     return UIInterfaceOrientationMaskPortrait;
 }
 
-- (UIViewController *)playerVCWithVideo:(YYKProgram *)video {
-    UIViewController *retVC;
-    if (NSClassFromString(@"AVPlayerViewController")) {
-        AVPlayerViewController *playerVC = [[AVPlayerViewController alloc] init];
-        playerVC.player = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:video.videoUrl]];
-        [playerVC aspect_hookSelector:@selector(viewDidAppear:)
-                          withOptions:AspectPositionAfter
-                           usingBlock:^(id<AspectInfo> aspectInfo){
-                               AVPlayerViewController *thisPlayerVC = [aspectInfo instance];
-                               [thisPlayerVC.player play];
-                           } error:nil];
-        
-        retVC = playerVC;
-    } else {
-        retVC = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:video.videoUrl]];
-    }
-    
-    [retVC aspect_hookSelector:@selector(supportedInterfaceOrientations) withOptions:AspectPositionInstead usingBlock:^(id<AspectInfo> aspectInfo){
-        UIInterfaceOrientationMask mask = UIInterfaceOrientationMaskAll;
-        [[aspectInfo originalInvocation] setReturnValue:&mask];
-    } error:nil];
-    
-    [retVC aspect_hookSelector:@selector(shouldAutorotate) withOptions:AspectPositionInstead usingBlock:^(id<AspectInfo> aspectInfo){
-        BOOL rotate = YES;
-        [[aspectInfo originalInvocation] setReturnValue:&rotate];
-    } error:nil];
-    return retVC;
-}
+//- (UIViewController *)playerVCWithVideo:(YYKProgram *)video {
+//    UIViewController *retVC;
+//    if (NSClassFromString(@"AVPlayerViewController")) {
+//        AVPlayerViewController *playerVC = [[AVPlayerViewController alloc] init];
+//        playerVC.player = [[AVPlayer alloc] initWithURL:[NSURL URLWithString:video.videoUrl]];
+//        [playerVC aspect_hookSelector:@selector(viewDidAppear:)
+//                          withOptions:AspectPositionAfter
+//                           usingBlock:^(id<AspectInfo> aspectInfo){
+//                               AVPlayerViewController *thisPlayerVC = [aspectInfo instance];
+//                               [thisPlayerVC.player play];
+//                           } error:nil];
+//        
+//        retVC = playerVC;
+//    } else {
+//        retVC = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:video.videoUrl]];
+//    }
+//    
+//    [retVC aspect_hookSelector:@selector(supportedInterfaceOrientations) withOptions:AspectPositionInstead usingBlock:^(id<AspectInfo> aspectInfo){
+//        UIInterfaceOrientationMask mask = UIInterfaceOrientationMaskAll;
+//        [[aspectInfo originalInvocation] setReturnValue:&mask];
+//    } error:nil];
+//    
+//    [retVC aspect_hookSelector:@selector(shouldAutorotate) withOptions:AspectPositionInstead usingBlock:^(id<AspectInfo> aspectInfo){
+//        BOOL rotate = YES;
+//        [[aspectInfo originalInvocation] setReturnValue:&rotate];
+//    } error:nil];
+//    return retVC;
+//}
 
 //- (BOOL)shouldDisplayBackgroundImage {
 //    return YES;
