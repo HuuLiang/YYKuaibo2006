@@ -29,6 +29,9 @@
 
 - (void)applicationWillEnterForeground;
 - (void)handleOpenUrl:(NSURL *)url;
+- (YYKPaymentType)wechatPaymentType;
+- (YYKPaymentType)alipayPaymentType;
+
 //- (void)checkPayment;
 
 @end

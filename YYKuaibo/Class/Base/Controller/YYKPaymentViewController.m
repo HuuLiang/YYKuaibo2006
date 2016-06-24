@@ -57,23 +57,17 @@
 //    _popView.headerImageURL = [NSURL URLWithString:[YYKSystemConfigModel sharedModel].hasDiscount ? [YYKSystemConfigModel sharedModel].discountImage : [YYKSystemConfigModel sharedModel].paymentImage];
     _popView.titleImage = [UIImage imageNamed:@"payment_title"];
     
-    if ([YYKPaymentConfig sharedConfig].syskPayInfo.supportPayTypes.integerValue & YYKSubPayTypeWeChat) {
+    YYKPaymentType wechatPaymentType = [[YYKPaymentManager sharedManager] wechatPaymentType];
+    if (wechatPaymentType != YYKPaymentTypeNone) {
         [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信支付" backgroundColor:[UIColor colorWithHexString:@"#05c30b"] action:^(id sender) {
-            Pay(YYKPaymentTypeVIAPay, YYKPaymentTypeWeChatPay);
-        }];
-    } else if ([YYKPaymentConfig sharedConfig].wftPayInfo) {
-        [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信支付" backgroundColor:[UIColor colorWithHexString:@"#05c30b"] action:^(id sender) {
-            Pay(YYKPaymentTypeSPay, YYKPaymentTypeWeChatPay);
-        }];
-    } else if ([YYKPaymentConfig sharedConfig].iappPayInfo) {
-        [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信支付" backgroundColor:[UIColor colorWithHexString:@"#05c30b"] action:^(id sender) {
-            Pay(YYKPaymentTypeIAppPay, YYKPaymentTypeWeChatPay);
+            Pay(wechatPaymentType, YYKPaymentTypeWeChatPay);
         }];
     }
     
-    if ([YYKPaymentConfig sharedConfig].syskPayInfo.supportPayTypes.integerValue & YYKSubPayTypeAlipay) {
+    YYKPaymentType alipayPaymentType = [[YYKPaymentManager sharedManager] alipayPaymentType];
+    if (alipayPaymentType != YYKPaymentTypeNone) {
         [_popView addPaymentWithImage:[UIImage imageNamed:@"alipay_icon"] title:@"支付宝支付" backgroundColor:[UIColor colorWithHexString:@"#02a0e9"] action:^(id sender) {
-            Pay(YYKPaymentTypeVIAPay, YYKPaymentTypeAlipay);
+            Pay(alipayPaymentType, YYKPaymentTypeAlipay);
         }];
     }
     

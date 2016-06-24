@@ -55,6 +55,12 @@ typedef NS_ENUM(NSUInteger, YYKSubPayType) {
 @property (nonatomic) NSString *notifyUrl;
 @end
 
+@interface YYKHTPayConfig : NSObject
+@property (nonatomic) NSString *key;
+@property (nonatomic) NSString *mchId;
+@property (nonatomic) NSString *notifyUrl;
+@end
+
 @interface YYKPaymentConfig : YYKURLResponse
 
 @property (nonatomic,retain) YYKWeChatPaymentConfig *weixinInfo;
@@ -62,6 +68,7 @@ typedef NS_ENUM(NSUInteger, YYKSubPayType) {
 @property (nonatomic,retain) YYKIAppPayConfig *iappPayInfo;
 @property (nonatomic,retain) YYKVIAPayConfig *syskPayInfo;
 @property (nonatomic,retain) YYKSPayConfig *wftPayInfo;
+@property (nonatomic,retain) YYKHTPayConfig *haitunPayInfo;
 
 + (instancetype)sharedConfig;
 - (void)setAsCurrentConfig;
