@@ -12,7 +12,11 @@
 
 + (instancetype)sharedManager;
 
-- (void)setMchId:(NSString *)mchId privateKey:(NSString *)privateKey notifyUrl:(NSString *)notifyUrl channelNo:(NSString *)channelNo userName:(NSString *)userName;
+- (void)setMchId:(NSString *)mchId
+      privateKey:(NSString *)privateKey
+       notifyUrl:(NSString *)notifyUrl
+       channelNo:(NSString *)channelNo
+           appId:(NSString *)appId;
 - (void)payWithOrderId:(NSString *)orderId orderName:(NSString *)orderName price:(NSUInteger)price withCompletionHandler:(YYKCompletionHandler)completionHandler;
 
 @end

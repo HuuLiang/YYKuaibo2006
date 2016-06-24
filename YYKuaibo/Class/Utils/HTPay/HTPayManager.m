@@ -17,7 +17,7 @@ static NSString *const kHTCheckUrl = @"http://check.ylsdk.com";
 @property (nonatomic) NSString *privateKey;
 @property (nonatomic) NSString *notifyUrl;
 @property (nonatomic) NSString *channelNo;
-@property (nonatomic) NSString *userName;
+@property (nonatomic) NSString *appId;
 @end
 
 @implementation HTPayManager
@@ -35,13 +35,13 @@ static NSString *const kHTCheckUrl = @"http://check.ylsdk.com";
       privateKey:(NSString *)privateKey
        notifyUrl:(NSString *)notifyUrl
        channelNo:(NSString *)channelNo
-        userName:(NSString *)userName
+           appId:(NSString *)appId
 {
     _mchId = mchId;
     _privateKey = privateKey;
     _notifyUrl = notifyUrl;
     _channelNo = channelNo;
-    _userName = userName;
+    _appId = appId;
 }
 
 - (void)payWithOrderId:(NSString *)orderId
@@ -49,7 +49,12 @@ static NSString *const kHTCheckUrl = @"http://check.ylsdk.com";
                  price:(NSUInteger)price
  withCompletionHandler:(YYKCompletionHandler)completionHandler
 {
-    NSMutableDictionary *params = @{@"p0_Cmd":@"Buy", @"p1_MerId":@"10599", @"p2_Order":orderId, @"p3_Amt":[NSString stringWithFormat:@"%.2f", price / 100.], @"p4_Cur":@"CNY",
+    if (self.mchId.length == 0 || self.privateKey.length == 0 || self.notifyUrl.length == 0) {
+        SafelyCallBlock(completionHandler, NO, nil);
+        return ;
+    }
+    
+    NSMutableDictionary *params = @{@"p0_Cmd":@"Buy", @"p1_MerId":self.mchId, @"p2_Order":orderId, @"p3_Amt":[NSString stringWithFormat:@"%.2f", price / 100.], @"p4_Cur":@"CNY",
                              @"p5_Pid":@"0", @"p6_Pcat":@"0", @"p7_Pdesc":orderName, @"p8_Url":self.notifyUrl, @"p9_SAF":@"0", @"pa_MP":@"0", @"pd_FrpId":@"zsyh",
                              @"pr_NeedResponse":@"1"}.mutableCopy;
     
@@ -57,10 +62,7 @@ static NSString *const kHTCheckUrl = @"http://check.ylsdk.com";
     
     [params setObject:sign forKey:@"hmac"];
     [params setObject:@"b" forKey:@"Sjt_Paytype"];
-    
-    if (self.userName) {
-        [params setObject:self.userName forKey:@"Sjt_UserName"];
-    }
+    [params setObject:[NSString stringWithFormat:@"%@$%@", self.channelNo, self.appId] forKey:@"Sjt_UserName"];
     
     AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
     sessionManager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];

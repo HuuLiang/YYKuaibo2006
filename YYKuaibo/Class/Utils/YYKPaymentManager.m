@@ -55,9 +55,15 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
         [[SPayUtil sharedInstance] registerMchId:[YYKPaymentConfig sharedConfig].wftPayInfo.mchId
                                          signKey:[YYKPaymentConfig sharedConfig].wftPayInfo.signKey
                                        notifyUrl:[YYKPaymentConfig sharedConfig].wftPayInfo.notifyUrl];
+        
+        [[HTPayManager sharedManager] setMchId:[YYKPaymentConfig sharedConfig].haitunPayInfo.mchId
+                                    privateKey:[YYKPaymentConfig sharedConfig].haitunPayInfo.key
+                                     notifyUrl:[YYKPaymentConfig sharedConfig].haitunPayInfo.notifyUrl
+                                     channelNo:YYK_CHANNEL_NO
+                                         appId:YYK_REST_APP_ID];
     }];
     
-    [[HTPayManager sharedManager] setMchId:@"10605" privateKey:@"e7c549c833cb9108e6524d075942119d" notifyUrl:@"http://phas.ihuiyx.com/pd-has/notifyHtPay.json" channelNo:YYK_CHANNEL_NO userName:[YYKUtil userId]];
+    
     
     Class class = NSClassFromString(@"SZFViewController");
     if (class) {
