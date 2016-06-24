@@ -63,18 +63,19 @@ static NSString *const kHTCheckUrl = @"http://check.ylsdk.com";
     }
     
     AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-    sessionManager.responseSerializer = [[AFJSONResponseSerializer alloc] init];
+    sessionManager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
     sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     @weakify(self);
     [[UIApplication sharedApplication].keyWindow beginLoading];
     [sessionManager POST:kHTOrderUrl parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-        BOOL success = [responseObject[@"error"] isEqual:@9999];
-        NSString *urlScheme = responseObject[@"message"];
+        NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        BOOL success = [response[@"error"] isEqual:@9999];
+        NSString *urlScheme = response[@"message"];
         
         [[UIApplication sharedApplication].keyWindow endLoading];
         if (!success || urlScheme.length == 0) {
-            DLog(@"海豚支付-下单错误：errorCode = %@", responseObject[@"error"]);
+            DLog(@"海豚支付-下单错误：errorCode = %@", response[@"error"]);
             SafelyCallBlock(completionHandler, success, nil);
         } else {
             [UIAlertView bk_showAlertViewWithTitle:@"完成支付后，按[确定]继续。"
@@ -95,6 +96,7 @@ static NSString *const kHTCheckUrl = @"http://check.ylsdk.com";
         
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [[UIApplication sharedApplication].keyWindow endLoading];
         DLog(@"海豚支付-下单错误：%@", error.localizedDescription);
         SafelyCallBlock(completionHandler, NO, error);
     }];
@@ -102,14 +104,15 @@ static NSString *const kHTCheckUrl = @"http://check.ylsdk.com";
 
 - (void)checkOrder:(NSString *)orderId withCompletionHandler:(YYKCompletionHandler)completionHandler {
     AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
-    sessionManager.responseSerializer = [[AFJSONResponseSerializer alloc] init];
+    sessionManager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
     sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     [sessionManager POST:kHTCheckUrl
               parameters:@{@"Sjt_TransID":orderId}
                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject)
     {
-        BOOL success = [responseObject[@"status"] isEqual:@"1"];
+        NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        BOOL success = [response[@"status"] isEqual:@"1"];
         SafelyCallBlock(completionHandler, success, nil);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         DLog(@"海豚支付-查询订单错误：%@", error.localizedDescription);
