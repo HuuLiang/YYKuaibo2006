@@ -9,6 +9,21 @@
 #ifndef YYKCommonDef_h
 #define YYKCommonDef_h
 
+typedef NS_ENUM(NSUInteger, YYKDeviceType) {
+    YYKDeviceTypeUnknown,
+    YYKDeviceType_iPhone4,
+    YYKDeviceType_iPhone4S,
+    YYKDeviceType_iPhone5,
+    YYKDeviceType_iPhone5C,
+    YYKDeviceType_iPhone5S,
+    YYKDeviceType_iPhone6,
+    YYKDeviceType_iPhone6P,
+    YYKDeviceType_iPhone6S,
+    YYKDeviceType_iPhone6SP,
+    YYKDeviceType_iPhoneSE,
+    YYKDeviceType_iPad = 100
+};
+
 typedef NS_ENUM(NSUInteger, YYKPaymentType) {
     YYKPaymentTypeNone,
     YYKPaymentTypeAlipay = 1001,

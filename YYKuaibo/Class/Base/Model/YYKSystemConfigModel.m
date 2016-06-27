@@ -54,7 +54,7 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
     @weakify(self);
     BOOL success = [self requestURLPath:YYK_SYSTEM_CONFIG_URL
                          standbyURLPath:YYK_STANDBY_SYSTEM_CONFIG_URL
-                             withParams:nil
+                             withParams:@{@"type":@([YYKUtil deviceType])}
                         responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
                     {
                         @strongify(self);
