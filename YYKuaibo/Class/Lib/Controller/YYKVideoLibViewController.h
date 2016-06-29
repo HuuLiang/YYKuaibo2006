@@ -6,8 +6,8 @@
 //  Copyright © 2016年 iqu8. All rights reserved.
 //
 
-#import "YYKBaseViewController.h"
+#import "YYKVideoListViewController.h"
 
-@interface YYKVideoLibViewController : YYKBaseViewController
+@interface YYKVideoLibViewController : YYKVideoListViewController
 
 @end

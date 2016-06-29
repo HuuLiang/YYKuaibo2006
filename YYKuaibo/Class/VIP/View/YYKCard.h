@@ -14,6 +14,8 @@
 @property (nonatomic) UIImage *placeholderImage;
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSString *subtitle;
+@property (nonatomic) NSUInteger rank;
+@property (nonatomic) NSUInteger popularity;
 @property (nonatomic) BOOL lightedDiamond;
 
 @end

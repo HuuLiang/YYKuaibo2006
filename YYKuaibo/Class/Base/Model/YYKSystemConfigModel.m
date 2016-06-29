@@ -221,7 +221,7 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
     
     NSUInteger payA = _payAmount;
     
-    if (payAmount) {
+    if (payAmount.integerValue > 0) {
         payA = payAmount.integerValue;
     }
     
@@ -234,7 +234,7 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
 - (NSUInteger)svipPayAmount {
     NSString *SvippayAmount = [[NSUserDefaults standardUserDefaults] objectForKey:kSystemConfigModelSVipKeyPrice];
     
-    if (SvippayAmount) {
+    if (SvippayAmount.integerValue > 0) {
         return SvippayAmount.integerValue;
     } else {
         return _svipPayAmount;
@@ -244,7 +244,7 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
 - (NSUInteger)allVIPPayAmount {
     NSString *allVipPayAmount = [[NSUserDefaults standardUserDefaults] objectForKey:kSystemConfigModelALLVipKeyPrice];
     
-    if (allVipPayAmount) {
+    if (allVipPayAmount.integerValue > 0) {
         return allVipPayAmount.integerValue;
     } else {
         return _allVIPPayAmount;

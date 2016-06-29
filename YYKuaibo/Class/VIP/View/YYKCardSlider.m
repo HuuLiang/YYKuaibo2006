@@ -43,7 +43,7 @@ DefineLazyPropertyInitialization(NSMutableArray, reusableCards)
 }
 
 - (void)commonInit {
-    _interCardSpacing = 25;
+    _interCardSpacing = 10;
     
     _contentView = [[UIScrollView alloc] init];
     _contentView.backgroundColor = [UIColor clearColor];
@@ -56,8 +56,8 @@ DefineLazyPropertyInitialization(NSMutableArray, reusableCards)
     {
         [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(self);
-            make.width.equalTo(self).multipliedBy(0.75);
-            make.height.equalTo(self).multipliedBy(1);
+            make.width.equalTo(self).multipliedBy(kScreenHeight/kScreenWidth/2);
+            make.height.equalTo(self);
         }];
     }
 }
@@ -288,7 +288,7 @@ DefineLazyPropertyInitialization(NSMutableArray, reusableCards)
         return [self.delegate cardSlider:self sizeOfCardAtIndex:index];
     } else {
         const CGFloat cardWidth = _contentView.bounds.size.width - self.interCardSpacing;
-        return CGSizeMake(cardWidth, cardWidth * 9./7.);
+        return CGSizeMake(cardWidth, cardWidth * 1.5);
     }
     return CGSizeZero;
 }

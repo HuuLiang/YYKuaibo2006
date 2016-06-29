@@ -65,7 +65,7 @@
 - (void)setPaymentInfo:(YYKPaymentInfo *)paymentInfo {
     _paymentInfo = paymentInfo;
     
-    _payPointTypeLabel.text = [NSString stringWithFormat:@"支付类型：%@", paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? @"黑钻VIP":@"VIP"];
+    _payPointTypeLabel.text = [NSString stringWithFormat:@"支付类型：%@", paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? kSVIPText:@"VIP"];
     _orderIDLabel.text = [NSString stringWithFormat:@"订单号：%@", paymentInfo.orderId];
     _priceLabel.text = [NSString stringWithFormat:@"金额：%.2f元", paymentInfo.orderPrice.unsignedIntegerValue / 100.];
     

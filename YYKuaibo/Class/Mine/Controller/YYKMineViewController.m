@@ -12,7 +12,6 @@
 #import "YYKWebViewController.h"
 #import "YYKInputTextViewController.h"
 #import "YYKSystemConfigModel.h"
-#import "YYKVIPActivationViewController.h"
 
 static NSString *const kSideMenuNormalCellReusableIdentifier = @"SideMenuNormalCellReusableIdentifier";
 static NSString *const kSideMenuVIPCellReusableIdentifier = @"SideMenuVIPCellReusableIdentifier";
@@ -25,7 +24,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuSection) {
 };
 
 typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
-    YYKSideMenuOtherSectionCellHistory,
+//    YYKSideMenuOtherSectionCellHistory,
 //    YYKSideMenuOtherSectionCellMemberCenter,
     YYKSideMenuOtherSectionCellCacheClean,
     YYKSideMenuOtherSectionCellFeedback,
@@ -44,7 +43,6 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.automaticallyAdjustsScrollViewInsets = [YYKUtil isAllVIPs];
     
     _layoutTableView = [[UITableView alloc] init];
     _layoutTableView.backgroundColor = self.view.backgroundColor;
@@ -52,7 +50,8 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
     _layoutTableView.dataSource = self;
     _layoutTableView.separatorColor = [UIColor grayColor];
     _layoutTableView.hasRowSeparator = YES;
-    _layoutTableView.hasSectionBorder = YES;
+//    _layoutTableView.hasSectionBorder = YES;
+    _layoutTableView.tableFooterView = [[UIView alloc] init];
 //    [_layoutTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kSideMenuNormalCellReusableIdentifier];
     [_layoutTableView registerClass:[YYKMineVIPCell class] forCellReuseIdentifier:kSideMenuVIPCellReusableIdentifier];
     [self.view addSubview:_layoutTableView];
@@ -67,10 +66,6 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    if (![YYKUtil isAllVIPs]) {
-        self.navigationController.navigationBarHidden = YES;
-    }
     
     if ([YYKUtil isAnyVIP]) {
         if ([YYKSystemConfigModel sharedModel].loaded) {
@@ -100,42 +95,37 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = NO;
-}
-
 - (void)onPaidNotification {
-    if ([YYKUtil isAllVIPs]) {
-        self.navigationController.navigationBarHidden = NO;
-    }
-    self.automaticallyAdjustsScrollViewInsets = [YYKUtil isAllVIPs];
-    
     [_layoutTableView reloadData];
 }
 
 - (YYKSideMenuSection)sectionTypeInSection:(NSUInteger)section {
-    if ([YYKUtil isNoVIP]) {
-        if (section == 0) {
-            return YYKSideMenuSectionVIP;
-        } else {
-            return YYKSideMenuSectionOthers;
-        }
-    } else if ([YYKUtil isVIP] && ![YYKUtil isSVIP]) {
-        if (section == 0) {
-            return YYKSideMenuSectionVIP;
-        } else if (section == 1) {
-            return YYKSideMenuSectionPhone;
-        } else {
-            return YYKSideMenuSectionOthers;
-        }
+    if ([YYKUtil isAllVIPs]) {
+        return section+1;
     } else {
-        if (section == 0) {
-            return YYKSideMenuSectionPhone;
-        } else {
-            return YYKSideMenuSectionOthers;
-        }
+        return section;
     }
+//    if ([YYKUtil isNoVIP]) {
+//        if (section == 0) {
+//            return YYKSideMenuSectionVIP;
+//        } else {
+//            return YYKSideMenuSectionOthers;
+//        }
+//    } else if ([YYKUtil isVIP] && ![YYKUtil isSVIP]) {
+//        if (section == 0) {
+//            return YYKSideMenuSectionVIP;
+//        } else if (section == 1) {
+//            return YYKSideMenuSectionPhone;
+//        } else {
+//            return YYKSideMenuSectionOthers;
+//        }
+//    } else {
+//        if (section == 0) {
+//            return YYKSideMenuSectionPhone;
+//        } else {
+//            return YYKSideMenuSectionOthers;
+//        }
+//    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -146,70 +136,70 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 #pragma mark - UITableViewDataSource,UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if ([YYKUtil isAllVIPs] || [YYKUtil isNoVIP])  {
-        return YYKSideMenuSectionCount - 1;
-    } else {
-        return YYKSideMenuSectionCount;
-    }
+    return [YYKUtil isAllVIPs] ? YYKSideMenuSectionCount-1 : YYKSideMenuSectionCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
-    if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP && indexPath.row == 0) {
+    if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP) {
         YYKMineVIPCell *vipCell = [tableView dequeueReusableCellWithIdentifier:kSideMenuVIPCellReusableIdentifier forIndexPath:indexPath];
-        vipCell.vipImage = [YYKUtil isVIP] && ![YYKUtil isSVIP] ? [UIImage imageNamed:@"svip_text"] : [UIImage imageNamed:@"vip_text"];
-        vipCell.memberTitle = [YYKUtil isVIP] && ![YYKUtil isSVIP] ? @"成为黑钻VIP会员" : @"成为VIP会员";
+        vipCell.memberTitle = [YYKUtil isVIP] && ![YYKUtil isSVIP] ? [NSString stringWithFormat:@"升级为\n%@", kSVIPText] : @"成为VIP";
+        vipCell.backgroundColor = [UIColor clearColor];
         cell = vipCell;
         
-        @weakify(self);
-        if (!vipCell.memberAction) {
-            vipCell.memberAction = ^(id sender) {
-                @strongify(self);
-                if (![YYKUtil isAllVIPs]) {
-                    [self payForPayPointType:[YYKUtil isVIP] && ![YYKUtil isSVIP] ? YYKPayPointTypeSVIP : YYKPayPointTypeVIP];
-                } else {
-                    [[YYKHudManager manager] showHudWithText:@"您已经是会员，感谢您的观看！"];
-                }
-            };
-        }
+//        @weakify(self);
+//        if (!vipCell.memberAction) {
+//            vipCell.memberAction = ^(id sender) {
+//                @strongify(self);
+//                if (![YYKUtil isAllVIPs]) {
+//                    [self payForPayPointType:[YYKUtil isVIP] && ![YYKUtil isSVIP] ? YYKPayPointTypeSVIP : YYKPayPointTypeVIP];
+//                } else {
+//                    [[YYKHudManager manager] showHudWithText:@"您已经是会员，感谢您的观看！"];
+//                }
+//            };
+//        }
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:kSideMenuNormalCellReusableIdentifier];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kSideMenuNormalCellReusableIdentifier];
             cell.textLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.backgroundColor = [UIColor whiteColor];
         }
         cell.detailTextLabel.text = nil;
-        
-        if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP) {
-            cell.imageView.image = [UIImage imageNamed:@"self_activate_icon"];
-            cell.textLabel.text = @"自助激活";
-        } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionPhone) {
-            cell.imageView.image = [UIImage imageNamed:@"side_menu_phone_icon"];
-            cell.textLabel.text = @"投诉热线";
-            cell.detailTextLabel.text = [YYKSystemConfigModel sharedModel].contactTime;
-        } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionOthers) {
-            if (indexPath.row == YYKSideMenuOtherSectionCellHistory) {
-                cell.imageView.image = [UIImage imageNamed:@"side_menu_history_icon"];
+
+        if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionPhone) {
+            const NSUInteger manualActiRow = [YYKUtil isAllVIPs] ? -1:0;
+            const NSUInteger historyRow = [YYKUtil isAllVIPs] ? 0 : 1;
+            const NSUInteger contactRow = [YYKUtil isNoVIP] ? -1 : [YYKUtil isAllVIPs] ? 1 : 2;
+            if (indexPath.row == manualActiRow) {
+                cell.imageView.image = [UIImage imageNamed:@"mine_activate_icon"];
+                cell.textLabel.text = @"自助激活";
+            } else if (indexPath.row == historyRow) {
+                cell.imageView.image = [UIImage imageNamed:@"mine_history_icon"];
                 cell.textLabel.text = @"播放记录";
-//            } else if (indexPath.row == YYKSideMenuOtherSectionCellMemberCenter) {
-//                cell.imageView.image = [UIImage imageNamed:@"side_menu_mine_icon"];
-//                cell.textLabel.text = @"会员中心";
-            } else if (indexPath.row == YYKSideMenuOtherSectionCellCacheClean) {
-                cell.imageView.image = [UIImage imageNamed:@"side_menu_setting_icon"];
+            } else if (indexPath.row == contactRow) {
+                cell.imageView.image = [UIImage imageNamed:@"side_menu_phone_icon"];
+                cell.textLabel.text = @"投诉热线";
+                cell.detailTextLabel.text = [YYKSystemConfigModel sharedModel].contactTime;
+            }
+            
+        } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionOthers) {
+            if (indexPath.row == YYKSideMenuOtherSectionCellCacheClean) {
+                cell.imageView.image = [UIImage imageNamed:@"mine_clean_icon"];
                 cell.textLabel.text = @"缓存清理";
                 cell.detailTextLabel.text = [YYKUtil cachedImageSizeString];
             } else if (indexPath.row == YYKSideMenuOtherSectionCellFeedback) {
-                cell.imageView.image = [UIImage imageNamed:@"side_menu_feedback_icon"];
+                cell.imageView.image = [UIImage imageNamed:@"mine_feedback_icon"];
                 cell.textLabel.text = @"意见反馈";
             } else if (indexPath.row == YYKSideMenuOtherSectionCellAboutUs) {
-                cell.imageView.image = [UIImage imageNamed:@"side_menu_about_icon"];
+                cell.imageView.image = [UIImage imageNamed:@"mine_about_icon"];
                 cell.textLabel.text = @"关于我们";
             }
             
         }
     }
-    cell.backgroundColor = [UIColor clearColor];
+    
     return cell;
 }
 
@@ -217,15 +207,15 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
     if ([self sectionTypeInSection:section] == YYKSideMenuSectionOthers) {
         return YYKSideMenuOtherSectionCellCount;
     } else if ([self sectionTypeInSection:section] == YYKSideMenuSectionVIP) {
-        return 2;
-    } else {
         return 1;
+    } else {
+        return [YYKUtil isVIP] && ![YYKUtil isSVIP] ? 3 : 2;
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP && indexPath.row == 0) {
-        return 160;
+    if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP) {
+        return 120;
     } else {
         return MAX(44, lround(kScreenHeight*0.08));
     }
@@ -248,18 +238,20 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
     return headerView;
 }
 
+- (BOOL)tableView:(UITableView *)tableView hasBorderInSection:(NSUInteger)section {
+    if (section == YYKSideMenuSectionVIP && ![YYKUtil isAllVIPs]) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionOthers) {
-        if (indexPath.row == YYKSideMenuOtherSectionCellHistory) {
-            YYKHistoryViewController *historyVC = [[YYKHistoryViewController alloc] init];
-            historyVC.title = cell.textLabel.text;
-            [self.navigationController pushViewController:historyVC animated:YES];
-//        } else if (indexPath.row == YYKSideMenuOtherSectionCellMemberCenter) {
-            
-        } else if (indexPath.row == YYKSideMenuOtherSectionCellCacheClean) {
+        if (indexPath.row == YYKSideMenuOtherSectionCellCacheClean) {
             if ([[SDImageCache sharedImageCache] getSize] == 0) {
                 [[YYKHudManager manager] showHudWithText:@"没有缓存需要清理"];
                 return ;
@@ -306,13 +298,27 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
             [self.navigationController pushViewController:webVC animated:YES];
         }
     } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionPhone) {
-        NSString *phoneNum = [YYKSystemConfigModel sharedModel].contact;
-        if (phoneNum.length > 0) {
-            [YYKUtil callPhoneNumber:phoneNum];
+        const NSUInteger manualActiRow = [YYKUtil isAllVIPs] ? -1:0;
+        const NSUInteger historyRow = [YYKUtil isAllVIPs] ? 0 : 1;
+        const NSUInteger contactRow = [YYKUtil isNoVIP] ? -1 : [YYKUtil isAllVIPs] ? 1 : 2;
+        if (indexPath.row == manualActiRow) {
+            [[YYKManualActivationManager sharedManager] doActivation];
+        } else if (indexPath.row == historyRow) {
+            YYKHistoryViewController *historyVC = [[YYKHistoryViewController alloc] init];
+            historyVC.title = cell.textLabel.text;
+            [self.navigationController pushViewController:historyVC animated:YES];
+        } else if (indexPath.row == contactRow) {
+            NSString *phoneNum = [YYKSystemConfigModel sharedModel].contact;
+            if (phoneNum.length > 0) {
+                [YYKUtil callPhoneNumber:phoneNum];
+            }
         }
-    } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP && indexPath.row == 1) {
-        YYKVIPActivationViewController *activationVC = [[YYKVIPActivationViewController alloc] init];
-        [self.navigationController pushViewController:activationVC animated:YES];
+    } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP) {
+        if (![YYKUtil isAllVIPs]) {
+            [self payForPayPointType:[YYKUtil isVIP] && ![YYKUtil isSVIP] ? YYKPayPointTypeSVIP : YYKPayPointTypeVIP];
+        } else {
+            [[YYKHudManager manager] showHudWithText:@"您已经是会员，感谢您的观看！"];
+        }
     }
 }
 @end

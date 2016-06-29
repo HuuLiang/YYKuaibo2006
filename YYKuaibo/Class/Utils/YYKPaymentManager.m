@@ -163,7 +163,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     
     BOOL success = YES;
     if (type == YYKPaymentTypeVIAPay && (subType == YYKPaymentTypeAlipay || subType == YYKPaymentTypeWeChatPay)) {
-        NSString *tradeName = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? @"黑钻VIP会员" : @"VIP会员";
+        NSString *tradeName = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? [kSVIPText stringByAppendingString:@"会员"] : @"VIP会员";
         [[PayUitls getIntents]   gotoPayByFee:@(price).stringValue
                                  andTradeName:tradeName
                               andGoodsDetails:tradeName
@@ -204,7 +204,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     } else if (type == YYKPaymentTypeHTPay && subType == YYKPaymentTypeWeChatPay) {
         @weakify(self);
         [[HTPayManager sharedManager] payWithOrderId:orderNo
-                                           orderName:program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? @"黑钻VIP会员" : @"VIP会员"
+                                           orderName:program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? [kSVIPText stringByAppendingString:@"会员"] : @"VIP会员"
                                                price:price
                                withCompletionHandler:^(BOOL success, id obj)
          {

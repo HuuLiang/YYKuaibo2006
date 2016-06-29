@@ -48,7 +48,7 @@
     NSString *service = @"unified.trade.pay";
     NSString *mch_id = self.mchId;
     NSString *out_trade_no = paymentInfo.orderId;
-    NSString *body = paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? @"黑钻VIP会员" : @"VIP会员";
+    NSString *body = paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? [kSVIPText stringByAppendingString:@"会员"] : @"VIP会员";
     if (paymentInfo.reservedData.length > 0) {
         body = [body stringByAppendingFormat:@"(%@)", paymentInfo.reservedData];
     }

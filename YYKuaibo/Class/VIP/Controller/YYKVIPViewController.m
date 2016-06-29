@@ -92,6 +92,8 @@ DefineLazyPropertyInitialization(YYKVideoListModel, videoModel)
         card.imageURL = [NSURL URLWithString:video.coverImg];
         card.title = video.title;
         card.subtitle = video.specialDesc;
+        card.rank = index+1;
+        card.popularity = video.spare.integerValue;
         card.lightedDiamond = [YYKUtil isSVIP];
     }
     

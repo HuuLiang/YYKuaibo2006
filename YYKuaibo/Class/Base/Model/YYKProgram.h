@@ -32,10 +32,12 @@ typedef NS_ENUM(NSUInteger, YYKProgramType) {
 @property (nonatomic) NSString *specialDesc;
 @property (nonatomic) NSString *videoUrl;
 @property (nonatomic) NSString *coverImg;
-@property (nonatomic) NSNumber *spec;
+//@property (nonatomic) NSNumber *spec;
 @property (nonatomic) NSNumber *payPointType; // 1、会员注册 2、付费
 @property (nonatomic) NSNumber *type; // 1、视频 2、图片
 @property (nonatomic) NSString *offUrl;
+@property (nonatomic) NSString *tag;
+@property (nonatomic) NSString *spare;
 @property (nonatomic,retain) NSArray<YYKProgramUrl *> *urlList; // type==2有集合，目前为图集url集合
 
 @property (nonatomic) NSDate *playedDate; // for history

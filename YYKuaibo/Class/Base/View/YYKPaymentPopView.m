@@ -228,19 +228,19 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
             cell.showOnlyTitle = isUpgrade;
             cell.userInteractionEnabled = !isUpgrade;
             if (isUpgrade) {
-                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"亲，您是普通VIP会员\n不能观看黑钻VIP区的视频哦~~~" attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
+                NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"亲，您是普通VIP会员\n不能观看%@区的视频哦~~~",kSVIPText] attributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
                 [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(4, 7)];
                 cell.placeholder = attrString;
             } else {
                 cell.titleLabel.textColor = [UIColor blackColor];
                 cell.titleLabel.text = @"普通VIP";
-                cell.subtitleLabel.text = @"可观看除黑钻区的所有视频";
+                cell.subtitleLabel.text = [NSString stringWithFormat:@"可观看除%@区的所有视频",kSVIPShortText];
                 cell.currentPrice = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:YYKPayPointTypeVIP] / 100.;
                 cell.originalPrice = [YYKSystemConfigModel sharedModel].originalPayAmount / 100.;
             }
         } else {
             cell.userInteractionEnabled = YES;
-            cell.titleLabel.text = isUpgrade ? @"升级成为黑钻VIP" : @"黑钻VIP";
+            cell.titleLabel.text = isUpgrade ? [NSString stringWithFormat:@"升级成为%@",kSVIPText] : kSVIPText;
             cell.subtitleLabel.text = @"可观看所有视频";
             cell.currentPrice = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:YYKPayPointTypeSVIP] / 100.;
             cell.originalPrice = [YYKSystemConfigModel sharedModel].originalSVIPPayAmount / 100.;

@@ -16,7 +16,7 @@
 #import "UIImage+color.h"
 #import "UIScrollView+Refresh.h"
 #import "UIColor+hexColor.h"
-#import "UIColor+CustomColor.h"
+#import "UIColor+FeaturedColor.h"
 #import "NSDictionary+YYKSign.h"
 #import "NSMutableDictionary+SafeCoding.h"
 #import "UITableView+Separator.h"

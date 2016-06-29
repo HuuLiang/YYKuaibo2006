@@ -85,6 +85,7 @@ return _##propertyName; \
 #define kPaidNotificationName @"yykuaibo_paid_notification"
 #define kDefaultDateFormat    @"yyyyMMddHHmmss"
 #define kDefaultCollectionViewInteritemSpace  (3)
+#define kThemeColor [UIColor darkPink]
 
 static NSString *const kChannelPersistenceSpace = @"yykuaibo_1";
 static NSString *const kChannelProgramPersistenceSpace = @"yykuaibo_2";
@@ -93,6 +94,8 @@ static NSString *const kVIPPersistenceSpace = @"yykuaibo_4";
 
 static NSString *const kPersistenceCryptPassword = @"#%Q%$#afaf3134134";
 static NSString *const kChannelPrimaryKey = @"columnId";
+static NSString *const kSVIPText = @"黑钻VIP";
+static NSString *const kSVIPShortText = @"黑钻";
 
 @class YYKPaymentInfo;
 typedef void (^YYKAction)(id obj);

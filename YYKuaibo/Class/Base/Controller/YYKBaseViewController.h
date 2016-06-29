@@ -12,7 +12,13 @@
 
 @property (nonatomic,retain) UIImage *backgroundImage;
 
-- (void)switchToPlayProgram:(YYKProgram *)program programLocation:(NSUInteger)programLocation inChannel:(YYKChannel *)channel;
+- (void)switchToPlayProgram:(YYKProgram *)program
+            programLocation:(NSUInteger)programLocation
+                  inChannel:(YYKChannel *)channel;
+- (void)switchToPlayProgram:(YYKProgram *)program
+            programLocation:(NSUInteger)programLocation
+                  inChannel:(YYKChannel *)channel
+           shouldShowDetail:(BOOL)shouldShowDetail;
 //- (void)playVideo:(YYKVideo *)video;
 //- (void)playVideo:(YYKVideo *)video withCloseAction:(YYKAction)closeAction;
 //- (void)playVideo:(YYKVideo *)video withTimeControl:(BOOL)hasTimeControl shouldPopPayment:(BOOL)shouldPopPayment;

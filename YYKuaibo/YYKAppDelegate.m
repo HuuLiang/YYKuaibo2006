@@ -35,7 +35,7 @@
     _window.backgroundColor              = [UIColor whiteColor];
     
     YYKHomeViewController *homeVC = [[YYKHomeViewController alloc] init];
-    homeVC.title = @"AV大片";
+    homeVC.title = @"成人大片";
     
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeVC];
     homeNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:homeVC.title
@@ -43,29 +43,29 @@
                                                selectedImage:[UIImage imageNamed:@"tabbar_home_selected"]];
     
     YYKVideoLibViewController *libVC = [[YYKVideoLibViewController alloc] init];
-    libVC.title = @"AV片库";
+    libVC.title = @"成人片库";
     
     UINavigationController *channelNav = [[UINavigationController alloc] initWithRootViewController:libVC];
     channelNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:libVC.title
-                                                          image:[UIImage imageNamed:@"tabbar_channel_normal"]
-                                                  selectedImage:[UIImage imageNamed:@"tabbar_channel_selected"]];
+                                                          image:[UIImage imageNamed:@"tabbar_lib_normal"]
+                                                  selectedImage:[UIImage imageNamed:@"tabbar_lib_selected"]];
     
     YYKVIPViewController *vipVC = [[YYKVIPViewController alloc] init];
-    vipVC.title = @"黑钻VIP";
+    vipVC.title = kSVIPText;
     
     UINavigationController *vipNav = [[UINavigationController alloc] initWithRootViewController:vipVC];
     vipNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil
-                                                      image:[[UIImage imageNamed:@"tabbar_vip_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
-                                              selectedImage:[[UIImage imageNamed:@"tabbar_vip_selected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+                                                      image:[UIImage imageNamed:@"tabbar_vip_normal"]
+                                              selectedImage:[UIImage imageNamed:@"tabbar_vip_selected"]];
     vipNav.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
     
     YYKSpreadViewController *spreadVC = [[YYKSpreadViewController alloc] init];
-    spreadVC.title = @"AV精品";
+    spreadVC.title = @"更多";
     
     UINavigationController *spreadNav = [[UINavigationController alloc] initWithRootViewController:spreadVC];
     spreadNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:spreadVC.title
-                                                         image:[UIImage imageNamed:@"tabbar_spread_normal"]
-                                                 selectedImage:[UIImage imageNamed:@"tabbar_spread_selected"]];
+                                                         image:[UIImage imageNamed:@"tabbar_more_normal"]
+                                                 selectedImage:[UIImage imageNamed:@"tabbar_more_selected"]];
     
     YYKMineViewController *mineVC = [[YYKMineViewController alloc] init];
     mineVC.title = @"我的";
@@ -89,9 +89,10 @@
 //    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
     [[UITabBar appearance] setSelectedImageTintColor:[UIColor darkPink]];
 //    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
-//    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.]}];
-//    [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor darkPink]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.],
+                                                           NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
 //    [[UISegmentedControl appearance] setTintColor:[UIColor colorWithHexString:@"#ff226f"]];
 //    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}
 //                                                   forState:UIControlStateNormal|UIControlStateSelected];
@@ -104,19 +105,19 @@
                                    thisVC.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"返回" style:UIBarButtonItemStylePlain handler:nil];
                                } error:nil];
     
-//    [UINavigationController aspect_hookSelector:@selector(preferredStatusBarStyle)
-//                                    withOptions:AspectPositionInstead
-//                                     usingBlock:^(id<AspectInfo> aspectInfo){
-//                                         UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
-//                                         [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
-//                                     } error:nil];
-//
-//    [UIViewController aspect_hookSelector:@selector(preferredStatusBarStyle)
-//                              withOptions:AspectPositionInstead
-//                               usingBlock:^(id<AspectInfo> aspectInfo){
-//                                   UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
-//                                   [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
-//                               } error:nil];
+    [UINavigationController aspect_hookSelector:@selector(preferredStatusBarStyle)
+                                    withOptions:AspectPositionInstead
+                                     usingBlock:^(id<AspectInfo> aspectInfo){
+                                         UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
+                                         [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
+                                     } error:nil];
+
+    [UIViewController aspect_hookSelector:@selector(preferredStatusBarStyle)
+                              withOptions:AspectPositionInstead
+                               usingBlock:^(id<AspectInfo> aspectInfo){
+                                   UIStatusBarStyle statusBarStyle = UIStatusBarStyleLightContent;
+                                   [[aspectInfo originalInvocation] setReturnValue:&statusBarStyle];
+                               } error:nil];
     
     [UITabBarController aspect_hookSelector:@selector(shouldAutorotate)
                                 withOptions:AspectPositionInstead

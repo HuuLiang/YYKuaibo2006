@@ -37,4 +37,5 @@
 #import "DBHandler.h"
 #import "YYKNetworkInfo.h"
 #import "YYKStatsManager.h"
+#import "YYKManualActivationManager.h"
 #endif /* YYKPrefixHeader_pch */

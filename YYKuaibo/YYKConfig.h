@@ -13,7 +13,7 @@
 
 #define YYK_CHANNEL_NO           [YYKConfiguration sharedConfig].channelNo
 #define YYK_REST_APP_ID          @"QUBA_2006"
-#define YYK_REST_PV              @160
+#define YYK_REST_PV              @170
 #define YYK_PAYMENT_PV           @204
 #define YYK_PACKAGE_CERTIFICATE  @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
 #define YYK_PAYMENT_RESERVE_DATA [NSString stringWithFormat:@"%@$%@", YYK_REST_APP_ID, YYK_CHANNEL_NO]
@@ -24,6 +24,7 @@
 #define YYK_HOME_VIDEO_URL              @"/iosvideo/homePage.htm"
 //#define YYK_VIDEO_LIB_URL               @"/iosvideo/hotVideo.htm"
 #define YYK_HOT_VIDEO_URL               @"/iosvideo/hotFilm.htm"
+#define YYK_VIDEO_DETAIL_URL            @"/iosvideo/detailss.htm"
 
 #define YYK_CHANNEL_URL                 @"/iosvideo/channelRanking.htm"
 #define YYK_CHANNEL_PROGRAM_URL         @"/iosvideo/program.htm"

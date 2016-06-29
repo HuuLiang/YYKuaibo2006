@@ -9,9 +9,8 @@
 #import "YYKBaseViewController.h"
 #import "YYKPaymentViewController.h"
 #import "YYKVideoPlayerViewController.h"
-#import "YYKVIPActivationViewController.h"
 #import "YYKWebViewController.h"
-
+#import "YYKVideoDetailViewController.h"
 //@import MediaPlayer;
 //@import AVKit;
 //@import AVFoundation.AVPlayer;
@@ -62,30 +61,56 @@
     DLog(@"%@ dealloc", [self class]);
 }
 
-- (void)switchToPlayProgram:(YYKProgram *)program programLocation:(NSUInteger)programLocation inChannel:(YYKChannel *)channel {
+- (void)switchToPlayProgram:(YYKProgram *)program
+            programLocation:(NSUInteger)programLocation
+                  inChannel:(YYKChannel *)channel {
+    [self switchToPlayProgram:program programLocation:programLocation inChannel:channel shouldShowDetail:YES];
+}
+
+- (void)switchToPlayProgram:(YYKProgram *)program
+            programLocation:(NSUInteger)programLocation
+                  inChannel:(YYKChannel *)channel
+           shouldShowDetail:(BOOL)shouldShowDetail {
     if (program.type.unsignedIntegerValue == YYKProgramTypeSpread) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:program.videoUrl]];
         return ;
     }
     
-    BOOL vipProgramButNoVIP = program.payPointType.unsignedIntegerValue == YYKPayPointTypeVIP && ![YYKUtil isVIP];
-    BOOL svipProgramButNoSVIP = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && ![YYKUtil isSVIP];
-    BOOL isFreeVideo = program.type.unsignedIntegerValue == YYKProgramTypeVideo && program.spec.unsignedIntegerValue == YYKVideoSpecFree;
     
-    BOOL needPayment = !isFreeVideo && (vipProgramButNoVIP || svipProgramButNoSVIP);
-    if (needPayment) {
-        [self payForProgram:program programLocation:programLocation inChannel:channel];
-    } else if (program.type.unsignedIntegerValue == YYKProgramTypeVideo) {
-        if ([YYKUtil isVIP] || [YYKUtil isSVIP]) {
-            [self playVideo:program videoLocation:programLocation inChannel:channel withTimeControl:YES shouldPopPayment:NO];
-        } else {
-            [self playVideo:program videoLocation:programLocation inChannel:channel withTimeControl:NO shouldPopPayment:YES];
-        }
-//        if (isFreeVideo && (program.payPointType.unsignedIntegerValue == YYKPayPointTypeNone || vipProgramButNoVIP || svipProgramButNoSVIP)) {
-//            [self playVideo:program videoLocation:programLocation inChannel:channel withTimeControl:NO shouldPopPayment:YES];
-//        } else {
+//    BOOL isFreeVideo = program.type.unsignedIntegerValue == YYKProgramTypeVideo && program.spec.unsignedIntegerValue == YYKVideoSpecFree;
+//    
+//    BOOL needPayment = !isFreeVideo && (vipProgramButNoVIP || svipProgramButNoSVIP);
+//    if (needPayment) {
+//        [self payForProgram:program programLocation:programLocation inChannel:channel];
+//    } else if (program.type.unsignedIntegerValue == YYKProgramTypeVideo) {
+//        if ([YYKUtil isVIP] || [YYKUtil isSVIP]) {
 //            [self playVideo:program videoLocation:programLocation inChannel:channel withTimeControl:YES shouldPopPayment:NO];
+//        } else {
+//            [self playVideo:program videoLocation:programLocation inChannel:channel withTimeControl:NO shouldPopPayment:YES];
 //        }
+//    }
+    
+    if (program.type.unsignedIntegerValue == YYKProgramTypeVideo) {
+        if (channel.type.unsignedIntegerValue == YYKProgramTypeTrial) {
+            [self playVideo:program videoLocation:programLocation inChannel:channel withTimeControl:[YYKUtil isVIP] shouldPopPayment:![YYKUtil isVIP]];
+        } else {
+            if (shouldShowDetail) {
+                YYKVideoDetailViewController *detailVC = [[YYKVideoDetailViewController alloc] initWithVideo:program
+                                                                                               videoLocation:programLocation
+                                                                                                   inChannel:channel];
+                detailVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            } else {
+                BOOL vipProgramButNoVIP = program.payPointType.unsignedIntegerValue == YYKPayPointTypeVIP && ![YYKUtil isVIP];
+                BOOL svipProgramButNoSVIP = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && ![YYKUtil isSVIP];
+                if (vipProgramButNoVIP || svipProgramButNoSVIP) {
+                    [self payForProgram:program programLocation:programLocation inChannel:channel];
+                } else {
+                    [self playVideo:program videoLocation:programLocation inChannel:channel withTimeControl:YES shouldPopPayment:NO];
+                }
+            }
+            
+        }
     }
 }
 
@@ -131,7 +156,6 @@
 }
 
 - (void)payForProgram:(YYKProgram *)program programLocation:(NSUInteger)programLocation inChannel:(YYKChannel *)channel {
-    @weakify(self);
     [[YYKPaymentViewController sharedPaymentVC] popupPaymentInView:self.view.window
                                                         forProgram:program
                                                    programLocation:programLocation
@@ -139,12 +163,10 @@
                                              withCompletionHandler:nil
                                                       footerAction:^(id obj)
     {
-        @strongify(self);
         YYKPaymentViewController *paymentVC = (YYKPaymentViewController *)obj;
         [paymentVC hidePayment];
         
-        YYKVIPActivationViewController *activationVC = [[YYKVIPActivationViewController alloc] init];
-        [self.navigationController pushViewController:activationVC animated:YES];
+        [[YYKManualActivationManager sharedManager] doActivation];
     }];
 }
 

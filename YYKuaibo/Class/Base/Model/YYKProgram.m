@@ -37,7 +37,9 @@ static NSString *const kVideoHistoryKeyName = @"yykuaibov_video_history_keyname"
     [entry safelySetObject:self.specialDesc forKey:@"specialDesc"];
     [entry safelySetObject:self.videoUrl forKey:@"videoUrl"];
     [entry safelySetObject:self.coverImg forKey:@"coverImg"];
-    [entry safelySetObject:self.spec forKey:@"spec"];
+//    [entry safelySetObject:self.spec forKey:@"spec"];
+    [entry safelySetObject:self.tag forKey:@"tag"];
+    [entry safelySetObject:self.spare forKey:@"spare"];
     [entry safelySetObject:self.type forKey:@"type"];
     [entry safelySetObject:self.payPointType forKey:@"payPointType"];
     [entry safelySetObject:self.offUrl forKey:@"offUrl"];
@@ -51,19 +53,29 @@ static NSString *const kVideoHistoryKeyName = @"yykuaibov_video_history_keyname"
 
 + (instancetype)programFromPersistentEntry:(NSDictionary *)entry {
     YYKProgram *program = [[self alloc] init];
-    program.programId = entry[@"programId"];
-    program.title = entry[@"title"];
-    program.specialDesc = entry[@"specialDesc"];
-    program.videoUrl = entry[@"videoUrl"];
-    program.coverImg = entry[@"coverImg"];
-    program.spec = entry[@"spec"];
-    program.type = entry[@"type"];
-    program.payPointType = entry[@"payPointType"];
-    program.offUrl = entry[@"offUrl"];
+    [entry enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        if ([key isEqualToString:@"playedDate"]) {
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:kDefaultDateFormat];
+            program.playedDate = [formatter dateFromString:obj];
+        } else if ([program respondsToSelector:NSSelectorFromString(key)]) {
+            [program setValue:obj forKey:key];
+        }
+    }];
+//    program.programId = entry[@"programId"];
+//    program.title = entry[@"title"];
+//    program.specialDesc = entry[@"specialDesc"];
+//    program.videoUrl = entry[@"videoUrl"];
+//    program.coverImg = entry[@"coverImg"];
+////    program.spec = entry[@"spec"];
+//    program.type = entry[@"type"];
+//    program.payPointType = entry[@"payPointType"];
+//    program.offUrl = entry[@"offUrl"];
+//    program.tag = entry[@"tag"];
     
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:kDefaultDateFormat];
-    program.playedDate = [formatter dateFromString:entry[@"playedDate"]];
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:kDefaultDateFormat];
+//    program.playedDate = [formatter dateFromString:entry[@"playedDate"]];
     return program;
 }
 
