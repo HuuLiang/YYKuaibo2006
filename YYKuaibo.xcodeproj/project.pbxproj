@@ -135,7 +135,6 @@
 		BCE2575A1C96F31200133F4F /* YYKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE257591C96F31200133F4F /* YYKWebViewController.m */; };
 		BCE2575D1C96F4F800133F4F /* YYKInputTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE2575C1C96F4F800133F4F /* YYKInputTextViewController.m */; };
 		BCE663CC1CCE0C4700A54E8D /* YYKChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE663CB1CCE0C4700A54E8D /* YYKChannel.m */; };
-		BCF8C06B1D17EB2F00F0E198 /* YYKVIPActivationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF8C06A1D17EB2F00F0E198 /* YYKVIPActivationCell.m */; };
 		BCF8C06E1D17F73400F0E198 /* YYKOrderQueryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF8C06D1D17F73400F0E198 /* YYKOrderQueryModel.m */; };
 /* End PBXBuildFile section */
 
@@ -427,8 +426,6 @@
 		BCE663CA1CCE0C4700A54E8D /* YYKChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKChannel.h; sourceTree = "<group>"; };
 		BCE663CB1CCE0C4700A54E8D /* YYKChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKChannel.m; sourceTree = "<group>"; };
 		BCF346F41CCAB9FE005DEFFF /* YYKuaibo copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "YYKuaibo copy-Info.plist"; path = "/Users/seanyue/QuBaProjects/YYKuaibo/YYKuaibo copy-Info.plist"; sourceTree = "<absolute>"; };
-		BCF8C0691D17EB2F00F0E198 /* YYKVIPActivationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVIPActivationCell.h; sourceTree = "<group>"; };
-		BCF8C06A1D17EB2F00F0E198 /* YYKVIPActivationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVIPActivationCell.m; sourceTree = "<group>"; };
 		BCF8C06C1D17F73400F0E198 /* YYKOrderQueryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKOrderQueryModel.h; sourceTree = "<group>"; };
 		BCF8C06D1D17F73400F0E198 /* YYKOrderQueryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKOrderQueryModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -746,8 +743,6 @@
 				BCB1C4751CC65EB400F9B83B /* YYKMineVIPCell.m */,
 				BCB1C4721CC65EB400F9B83B /* YYKHistoryCell.h */,
 				BCB1C4731CC65EB400F9B83B /* YYKHistoryCell.m */,
-				BCF8C0691D17EB2F00F0E198 /* YYKVIPActivationCell.h */,
-				BCF8C06A1D17EB2F00F0E198 /* YYKVIPActivationCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1351,7 +1346,6 @@
 				BCE257061C966DB400133F4F /* UIColor+hexColor.m in Sources */,
 				BCE256731C966C2600133F4F /* YYKPaymentPopView.m in Sources */,
 				BCE256FF1C966DB400133F4F /* NSMutableDictionary+SafeCoding.m in Sources */,
-				BCF8C06B1D17EB2F00F0E198 /* YYKVIPActivationCell.m in Sources */,
 				BCA1B7D91D23B664004B492B /* UIColor+FeaturedColor.m in Sources */,
 				BCE2566C1C966C2600133F4F /* YYKSystemConfigModel.m in Sources */,
 				BCC00FC41CD8B96D00F429B4 /* YYKPayStatsModel.m in Sources */,
