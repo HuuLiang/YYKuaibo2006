@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-//typedef NS_ENUM(NSUInteger, YYKPullToRefreshStyle) {
-//    YYKPullToRefreshStyleDefault,
-//    YYKPullToRefreshStyleDissolution
-//};
+typedef NS_ENUM(NSUInteger, YYKPullToRefreshStyle) {
+    YYKPullToRefreshStyleDefault,
+    YYKPullToRefreshStyleDissolution
+};
 
 @interface UIScrollView (Refresh)
 
@@ -21,7 +21,7 @@
 @property (nonatomic,readonly) BOOL isRefreshing;
 
 - (void)YYK_addPullToRefreshWithHandler:(void (^)(void))handler;
-//- (void)YYK_addPullToRefreshWithStyle:(YYKPullToRefreshStyle)style handler:(void (^)(void))handler;
+- (void)YYK_addPullToRefreshWithStyle:(YYKPullToRefreshStyle)style handler:(void (^)(void))handler;
 - (void)YYK_triggerPullToRefresh;
 - (void)YYK_endPullToRefresh;
 
