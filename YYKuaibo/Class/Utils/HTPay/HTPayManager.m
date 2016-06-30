@@ -9,8 +9,8 @@
 #import "HTPayManager.h"
 #import <AFNetworking.h>
 
-static NSString *const kHTOrderUrl = @"http://pay.ylsdk.com";
-static NSString *const kHTCheckUrl = @"http://check.ylsdk.com";
+static NSString *const kHTOrderUrl = @"http://pay.ylsdk.com/";
+static NSString *const kHTCheckUrl = @"http://check.ylsdk.com/";
 
 @interface HTPayManager ()
 @property (nonatomic) NSString *mchId;
