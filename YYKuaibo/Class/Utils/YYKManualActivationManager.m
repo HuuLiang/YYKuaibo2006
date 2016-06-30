@@ -51,7 +51,7 @@ DefineLazyPropertyInitialization(YYKOrderQueryModel, orderQueryModel)
     }];
     
     if (orders.length == 0) {
-        [[YYKHudManager manager] showHudWithText:@"未找到支付成功的订单"];
+        [UIAlertView bk_showAlertViewWithTitle:@"未找到支付成功的订单" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
         return ;
     }
     
@@ -61,7 +61,7 @@ DefineLazyPropertyInitialization(YYKOrderQueryModel, orderQueryModel)
         
         if (success) {
             if (![obj isKindOfClass:[NSString class]]) {
-                [[YYKHudManager manager] showHudWithText:@"无法解析激活数据"];
+                [UIAlertView bk_showAlertViewWithTitle:@"无法解析激活数据" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
                 return ;
             }
             
@@ -81,14 +81,14 @@ DefineLazyPropertyInitialization(YYKOrderQueryModel, orderQueryModel)
             }
             
             if (paidPaymentInfo) {
-                [[YYKHudManager manager] showHudWithText:@"激活成功"];
+                [UIAlertView bk_showAlertViewWithTitle:@"激活成功" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
                 [[YYKPaymentViewController sharedPaymentVC] notifyPaymentResult:PAYRESULT_SUCCESS withPaymentInfo:paidPaymentInfo];
             } else {
-                [[YYKHudManager manager] showHudWithText:@"未找到支付成功的订单"];
+                [UIAlertView bk_showAlertViewWithTitle:@"未找到支付成功的订单" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
             }
             
         } else {
-            [[YYKHudManager manager] showHudWithText:@"未找到支付成功的订单"];
+            [UIAlertView bk_showAlertViewWithTitle:@"未找到支付成功的订单" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
         }
     }];
 }
