@@ -12,7 +12,7 @@
 @implementation UIColor (FeaturedColor)
 
 + (instancetype)featuredColorWithIndex:(NSUInteger)index {
-    NSArray *colors = @[@"#fe5135",@"#5faaea",@"#ff4c8d",@"#37f890",@"#998dfd",@"#e3d548",@"#009193",@"#941751",@"#531b93",@"#7a81ff"];
+    NSArray *colors = @[@"#fe5135",@"#ff4c8d",@"#5faaea",@"#37f890",@"#998dfd",@"#e3d548",@"#009193",@"#941751",@"#531b93",@"#7a81ff"];
     return [UIColor colorWithHexString:colors[index % colors.count]];
 }
 

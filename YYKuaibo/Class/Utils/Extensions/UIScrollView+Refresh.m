@@ -16,7 +16,7 @@ static const void *kYYKShowStateAssociatedKey = &kYYKShowStateAssociatedKey;
 @implementation UIScrollView (Refresh)
 
 - (UIColor *)YYK_refreshTextColor {
-    return [UIColor colorWithWhite:0.5 alpha:1];
+    return kThemeColor;
 }
 
 - (BOOL)isRefreshing {
@@ -83,6 +83,8 @@ static const void *kYYKShowStateAssociatedKey = &kYYKShowStateAssociatedKey;
             refreshHeader.lastUpdatedTimeLabel.textColor = [self YYK_refreshTextColor];
             refreshHeader.stateLabel.textColor = [self YYK_refreshTextColor];
             refreshHeader.lastUpdatedTimeLabel.hidden = !self.YYK_showLastUpdatedTime;
+            refreshHeader.arrowView.image = [refreshHeader.arrowView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            refreshHeader.arrowView.tintColor = [self YYK_refreshTextColor];
             self.header = refreshHeader;
             
             objc_setAssociatedObject(self, kYYKRefreshViewAssociatedKey, refreshHeader, OBJC_ASSOCIATION_ASSIGN);

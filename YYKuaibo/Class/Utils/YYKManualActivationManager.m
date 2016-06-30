@@ -60,8 +60,33 @@ DefineLazyPropertyInitialization(YYKOrderQueryModel, orderQueryModel)
         [[UIApplication sharedApplication].keyWindow endLoading];
         
         if (success) {
-            [[YYKHudManager manager] showHudWithText:@"激活成功"];
-            //[[YYKPaymentViewController sharedPaymentVC] notifyPaymentResult:PAYRESULT_SUCCESS withPaymentInfo:paymentInfo];
+            if (![obj isKindOfClass:[NSString class]]) {
+                [[YYKHudManager manager] showHudWithText:@"无法解析激活数据"];
+                return ;
+            }
+            
+            NSArray<NSString *> *paidOrders = [obj componentsSeparatedByString:@"|"];
+            NSArray<YYKPaymentInfo *> *paidPaymentInfos = [paymentInfos bk_select:^BOOL(YYKPaymentInfo *paymentInfo) {
+                return [paidOrders containsObject:paymentInfo.orderId];
+            }];
+            
+            YYKPaymentInfo *paidPaymentInfo = [paidPaymentInfos bk_match:^BOOL(YYKPaymentInfo *paymentInfo) {
+                return paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP;
+            }];
+            
+            if (!paidPaymentInfo) {
+                paidPaymentInfo = [paidPaymentInfos bk_match:^BOOL(YYKPaymentInfo *paymentInfo) {
+                    return paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeVIP;
+                }];
+            }
+            
+            if (paidPaymentInfo) {
+                [[YYKHudManager manager] showHudWithText:@"激活成功"];
+                [[YYKPaymentViewController sharedPaymentVC] notifyPaymentResult:PAYRESULT_SUCCESS withPaymentInfo:paidPaymentInfo];
+            } else {
+                [[YYKHudManager manager] showHudWithText:@"未找到支付成功的订单"];
+            }
+            
         } else {
             [[YYKHudManager manager] showHudWithText:@"未找到支付成功的订单"];
         }

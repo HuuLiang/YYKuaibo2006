@@ -95,7 +95,7 @@ static NSString *const kHistoryCellReusableIdentifier = @"HistoryCellReusableIde
     
     if (indexPath.row < self.historyVideos.count) {
         YYKProgram *video = self.historyVideos[indexPath.row];
-        [self switchToPlayProgram:(YYKProgram *)video programLocation:indexPath.row inChannel:nil];
+        [self switchToPlayProgram:(YYKProgram *)video programLocation:indexPath.row inChannel:nil shouldShowDetail:NO];
     }
 }
 @end

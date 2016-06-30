@@ -35,9 +35,9 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.minimumInteritemSpacing = 3;
+    layout.minimumInteritemSpacing = kDefaultCollectionViewInteritemSpace;
     layout.minimumLineSpacing = layout.minimumInteritemSpacing;
-    layout.sectionInset = UIEdgeInsetsMake(layout.minimumInteritemSpacing, layout.minimumInteritemSpacing, layout.minimumInteritemSpacing, layout.minimumInteritemSpacing);
+    layout.sectionInset = UIEdgeInsetsMake(layout.minimumInteritemSpacing, 0, layout.minimumInteritemSpacing, 0);
     
     _layoutCollectionView = [[UICollectionView  alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     _layoutCollectionView.backgroundColor = self.view.backgroundColor;

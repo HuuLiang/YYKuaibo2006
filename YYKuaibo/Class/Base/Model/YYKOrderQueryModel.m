@@ -27,7 +27,7 @@
 }
 
 + (Class)responseClass {
-    return [NSNumber class];
+    return [NSString class];
 }
 
 - (BOOL)shouldPostErrorNotification {
@@ -57,13 +57,16 @@
                      withParams:@{@"orderId":orderId}
                 responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
     {
-        SafelyCallBlock(completionHandler, respStatus == YYKURLResponseSuccess, errorMessage);
+        SafelyCallBlock(completionHandler, respStatus == YYKURLResponseSuccess, respStatus == YYKURLResponseSuccess ? self.response : errorMessage);
     }];
 }
 
 - (void)processResponseObject:(id)responseObject withResponseHandler:(YYKURLResponseHandler)responseHandler {
-    NSString *response = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-    YYKURLResponseStatus status = [response isEqualToString:@"1"] ? YYKURLResponseSuccess : YYKURLResponseFailedByInterface;
-    SafelyCallBlock(responseHandler, status, status == YYKURLResponseFailedByInterface ? @"无该订单或者该笔订单未支付" : nil);
+    id jsonObj = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+    
+    NSString *decryptedResponse = [self decryptResponse:jsonObj];
+    self.response = decryptedResponse;
+    DLog(@"Manual activation response : %@", decryptedResponse);
+    SafelyCallBlock(responseHandler, decryptedResponse.length>0?YYKURLResponseSuccess:YYKURLResponseFailedByInterface, decryptedResponse.length>0?nil:@"无该订单或者该笔订单未支付");
 }
 @end

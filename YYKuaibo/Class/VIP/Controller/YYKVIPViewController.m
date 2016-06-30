@@ -29,6 +29,17 @@ DefineLazyPropertyInitialization(YYKVideoListModel, videoModel)
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor colorWithWhite:0.75 alpha:1];
     
+    NSString *bgImagePath = [[NSBundle mainBundle] pathForResource:@"svip_background" ofType:@"jpg"];
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:bgImagePath]];
+    backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+    backgroundImageView.clipsToBounds = YES;
+    [self.view addSubview:backgroundImageView];
+    {
+        [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
+    }
+    
     _contentView = [[YYKCardSlider alloc] initWithFrame:self.view.bounds];
     _contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     _contentView.delegate = self;
@@ -103,7 +114,7 @@ DefineLazyPropertyInitialization(YYKVideoListModel, videoModel)
 - (void)cardSlider:(YYKCardSlider *)slider didSelectCardAtIndex:(NSUInteger)index {
     if (index < self.videoModel.fetchedVideoChannel.programList.count) {
         YYKProgram *video = self.videoModel.fetchedVideoChannel.programList[index];
-        [self switchToPlayProgram:video programLocation:index inChannel:self.videoModel.fetchedVideoChannel];
+        [self switchToPlayProgram:video programLocation:index inChannel:self.videoModel.fetchedVideoChannel shouldShowDetail:NO];
         
         [[YYKStatsManager sharedManager] statsCPCWithProgram:video
                                              programLocation:index

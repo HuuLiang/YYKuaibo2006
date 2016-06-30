@@ -47,7 +47,7 @@
 #define YYK_PAYMENT_COMMIT_URL          @"http://pay.iqu8.net/paycenter/qubaPr.json" //@"http://120.24.252.114:8084/paycenter/qubaPr.json" //
 #define YYK_PAYMENT_CONFIG_URL          @"http://pay.iqu8.net/paycenter/payConfig.json"//@"http://120.24.252.114:8084/paycenter/payConfig.json"//
 #define YYK_STANDBY_PAYMENT_CONFIG_URL  @"http://appcdn.mqu8.com/static/iosvideo/payConfig_%@.json"
-#define YYK_ORDER_QUERY_URL             @"http://phas.ihuiyx.com/pd-has/successPay.json"
+#define YYK_ORDER_QUERY_URL             @"http://phas.ihuiyx.com/pd-has/successOrderIds.json"
 #define YYK_PAYMENT_SIGN_KEY            @"qdge^%$#@(sdwHs^&"
 #define YYK_PAYMENT_ENCRYPTION_PASSWORD @"wdnxs&*@#!*qb)*&qiang"
 
