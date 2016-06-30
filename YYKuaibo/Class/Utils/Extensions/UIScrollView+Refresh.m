@@ -8,7 +8,6 @@
 
 #import "UIScrollView+Refresh.h"
 #import <MJRefresh.h>
-#import <ODRefreshControl.h>
 
 static const void *kYYKRefreshViewAssociatedKey = &kYYKRefreshViewAssociatedKey;
 static const void *kYYKShowLastUpdatedTimeAssociatedKey = &kYYKShowLastUpdatedTimeAssociatedKey;
@@ -17,16 +16,16 @@ static const void *kYYKShowStateAssociatedKey = &kYYKShowStateAssociatedKey;
 @implementation UIScrollView (Refresh)
 
 - (UIColor *)YYK_refreshTextColor {
-    return kThemeColor;
+    return [UIColor colorWithWhite:0.5 alpha:1];
 }
 
 - (BOOL)isRefreshing {
     if ([self.YYK_refreshView isKindOfClass:[MJRefreshComponent class]]) {
         MJRefreshComponent *refresh = (MJRefreshComponent *)self.YYK_refreshView;
         return refresh.state == MJRefreshStateRefreshing;
-    } else if ([self.YYK_refreshView isKindOfClass:[ODRefreshControl class]]) {
-        ODRefreshControl *refresh = (ODRefreshControl *)self.YYK_refreshView;
-        return refresh.refreshing;
+//    } else if ([self.YYK_refreshView isKindOfClass:[ODRefreshControl class]]) {
+//        ODRefreshControl *refresh = (ODRefreshControl *)self.YYK_refreshView;
+//        return refresh.refreshing;
     }
     return NO;
 }
@@ -64,32 +63,30 @@ static const void *kYYKShowStateAssociatedKey = &kYYKShowStateAssociatedKey;
 }
 
 - (void)YYK_addPullToRefreshWithHandler:(void (^)(void))handler {
-    [self YYK_addPullToRefreshWithStyle:YYKPullToRefreshStyleDefault handler:handler];
-}
-
-- (void)YYK_addPullToRefreshWithStyle:(YYKPullToRefreshStyle)style handler:(void (^)(void))handler {
-    if (style == YYKPullToRefreshStyleDissolution) {
-        ODRefreshControl *refreshControl = [[ODRefreshControl alloc] initInScrollView:self];
-        refreshControl.tintColor = [UIColor grayColor];
-        [refreshControl bk_addEventHandler:^(id sender) {
-            if (handler) {
-                handler();
-            }
-        } forControlEvents:UIControlEventValueChanged];
-        objc_setAssociatedObject(self, kYYKRefreshViewAssociatedKey, refreshControl, OBJC_ASSOCIATION_ASSIGN);
-    } else {
+//    [self YYK_addPullToRefreshWithStyle:YYKPullToRefreshStyleDefault handler:handler];
+//}
+//
+//- (void)YYK_addPullToRefreshWithStyle:(YYKPullToRefreshStyle)style handler:(void (^)(void))handler {
+//    if (style == YYKPullToRefreshStyleDissolution) {
+//        ODRefreshControl *refreshControl = [[ODRefreshControl alloc] initInScrollView:self];
+//        refreshControl.tintColor = [UIColor grayColor];
+//        [refreshControl bk_addEventHandler:^(id sender) {
+//            if (handler) {
+//                handler();
+//            }
+//        } forControlEvents:UIControlEventValueChanged];
+//        objc_setAssociatedObject(self, kYYKRefreshViewAssociatedKey, refreshControl, OBJC_ASSOCIATION_ASSIGN);
+//    } else {
         if (!self.header) {
             MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:handler];
 //            refreshHeader.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
             refreshHeader.lastUpdatedTimeLabel.textColor = [self YYK_refreshTextColor];
             refreshHeader.stateLabel.textColor = [self YYK_refreshTextColor];
             refreshHeader.lastUpdatedTimeLabel.hidden = !self.YYK_showLastUpdatedTime;
-            refreshHeader.arrowView.image = [refreshHeader.arrowView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            refreshHeader.arrowView.tintColor = [self YYK_refreshTextColor];
             self.header = refreshHeader;
             
             objc_setAssociatedObject(self, kYYKRefreshViewAssociatedKey, refreshHeader, OBJC_ASSOCIATION_ASSIGN);
-        }
+//        }
     }
 }
 
@@ -98,10 +95,10 @@ static const void *kYYKShowStateAssociatedKey = &kYYKShowStateAssociatedKey;
     if ([self.YYK_refreshView isKindOfClass:[MJRefreshComponent class]]) {
         MJRefreshComponent *refresh = (MJRefreshComponent *)self.YYK_refreshView;
         [refresh beginRefreshing];
-    } else if ([self.YYK_refreshView isKindOfClass:[ODRefreshControl class]]) {
-        ODRefreshControl *refresh = (ODRefreshControl *)self.YYK_refreshView;
-        [refresh beginRefreshing];
-        [refresh sendActionsForControlEvents:UIControlEventValueChanged];
+//    } else if ([self.YYK_refreshView isKindOfClass:[ODRefreshControl class]]) {
+//        ODRefreshControl *refresh = (ODRefreshControl *)self.YYK_refreshView;
+//        [refresh beginRefreshing];
+//        [refresh sendActionsForControlEvents:UIControlEventValueChanged];
     }
 }
 
@@ -110,9 +107,9 @@ static const void *kYYKShowStateAssociatedKey = &kYYKShowStateAssociatedKey;
         MJRefreshComponent *refresh = (MJRefreshComponent *)self.YYK_refreshView;
         [refresh endRefreshing];
         [self.footer resetNoMoreData];
-    } else if ([self.YYK_refreshView isKindOfClass:[ODRefreshControl class]]) {
-        ODRefreshControl *refresh = (ODRefreshControl *)self.YYK_refreshView;
-        [refresh performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.01];
+//    } else if ([self.YYK_refreshView isKindOfClass:[ODRefreshControl class]]) {
+//        ODRefreshControl *refresh = (ODRefreshControl *)self.YYK_refreshView;
+//        [refresh performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.01];
     }
 }
 

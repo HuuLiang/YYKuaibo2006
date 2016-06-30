@@ -215,7 +215,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionVIP) {
-        return 120;
+        return kScreenHeight * 0.2;
     } else {
         return MAX(44, lround(kScreenHeight*0.08));
     }
