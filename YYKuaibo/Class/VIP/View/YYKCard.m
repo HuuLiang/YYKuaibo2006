@@ -163,7 +163,7 @@
         _vipIconImageView.image = lightedDiamond ? [UIImage imageNamed:@"vip_lighted_diamond"] : [UIImage imageNamed:@"vip_grey_diamond"];
     }
     
-    self.backgroundColor = lightedDiamond ? [UIColor colorWithHexString:@"#fffc79"] : [UIColor whiteColor];
+    self.backgroundColor = lightedDiamond ? [UIColor colorWithHexString:@"#ffd730"] : [UIColor whiteColor];
 //    _rankLabel.backgroundColor = lightedDiamond ? [UIColor whiteColor] : [UIColor darkPink];
 //    _rankLabel.textColor = lightedDiamond ? [UIColor darkPink] : [UIColor whiteColor];
 }

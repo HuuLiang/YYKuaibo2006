@@ -48,7 +48,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
     _layoutTableView.backgroundColor = self.view.backgroundColor;
     _layoutTableView.delegate = self;
     _layoutTableView.dataSource = self;
-    _layoutTableView.separatorColor = [UIColor grayColor];
+    _layoutTableView.separatorColor = [UIColor colorWithWhite:0.8 alpha:1];
     _layoutTableView.hasRowSeparator = YES;
 //    _layoutTableView.hasSectionBorder = YES;
     _layoutTableView.tableFooterView = [[UIView alloc] init];
@@ -179,7 +179,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
                 cell.imageView.image = [UIImage imageNamed:@"mine_history_icon"];
                 cell.textLabel.text = @"播放记录";
             } else if (indexPath.row == contactRow) {
-                cell.imageView.image = [UIImage imageNamed:@"side_menu_phone_icon"];
+                cell.imageView.image = [UIImage imageNamed:@"mine_contact_icon"];
                 cell.textLabel.text = @"投诉热线";
                 cell.detailTextLabel.text = [YYKSystemConfigModel sharedModel].contactTime;
             }

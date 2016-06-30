@@ -237,7 +237,8 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     
 //    UIEdgeInsets edgeInsets = [self collectionView:collectionView layout:collectionView.collectionViewLayout insetForSectionAtIndex:indexPath.section];
     YYKVideoSectionHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionHeaderReusableIdentifier forIndexPath:indexPath];
-    headerView.contentView.backgroundColor = [UIColor whiteColor];//[UIColor colorWithHexString:@"#292a39"];
+    headerView.contentView.backgroundColor = self.view.backgroundColor;
+    //headerView.contentView.backgroundColor = [UIColor whiteColor];//[UIColor colorWithHexString:@"#292a39"];
     headerView.titleColor = [UIColor blackColor];
     headerView.iconColor = [UIColor featuredColorWithIndex:indexPath.section];
     headerView.accessoryTintColor = [UIColor lightGrayColor];
@@ -315,7 +316,7 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     if (section == YYKHomeSectionBanner) {
         return UIEdgeInsetsMake(0, 0, 5, 0);
     }
-    return UIEdgeInsetsMake(0, 5, 5, 5);
+    return UIEdgeInsetsMake(0, 0, 5, 0);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {

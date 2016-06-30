@@ -84,7 +84,7 @@ return _##propertyName; \
 
 #define kPaidNotificationName @"yykuaibo_paid_notification"
 #define kDefaultDateFormat    @"yyyyMMddHHmmss"
-#define kDefaultCollectionViewInteritemSpace  (3)
+#define kDefaultCollectionViewInteritemSpace  (5)
 #define kThemeColor [UIColor darkPink]
 
 static NSString *const kChannelPersistenceSpace = @"yykuaibo_1";

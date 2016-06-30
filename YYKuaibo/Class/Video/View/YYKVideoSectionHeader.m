@@ -27,7 +27,7 @@
         [self addSubview:_contentView];
         {
             [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(self).insets(UIEdgeInsetsMake(0, 5, 0, 5));
+                make.edges.equalTo(self);//.insets(UIEdgeInsetsMake(0, 5, 0, 5));
             }];
         }
         

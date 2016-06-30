@@ -87,7 +87,7 @@
         _tagLabel.textColor = [UIColor whiteColor];
         _tagLabel.textAlignment = NSTextAlignmentCenter;
         _tagLabel.backgroundColor = self.tagBackgroundColor;
-        _tagLabel.layer.cornerRadius = 4;
+        _tagLabel.layer.cornerRadius = 3;
         _tagLabel.layer.masksToBounds = YES;
         [_footerView addSubview:_tagLabel];
         {
