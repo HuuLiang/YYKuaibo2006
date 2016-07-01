@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		472ACEBEB26898251444DD89 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C85E9861E06D5998D2C616F1 /* libPods.a */; };
 		BC0C85F41CD3398E00C51480 /* pay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC0C85D41CD3398D00C51480 /* pay.a */; };
 		BC0C86051CD35F5C00C51480 /* YYKStatsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C86041CD35F5C00C51480 /* YYKStatsManager.m */; };
 		BC0C86091CD3608A00C51480 /* YYKCPCStatsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C86081CD3608A00C51480 /* YYKCPCStatsModel.m */; };
@@ -137,6 +136,7 @@
 		BCE2575D1C96F4F800133F4F /* YYKInputTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE2575C1C96F4F800133F4F /* YYKInputTextViewController.m */; };
 		BCE663CC1CCE0C4700A54E8D /* YYKChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE663CB1CCE0C4700A54E8D /* YYKChannel.m */; };
 		BCF8C06E1D17F73400F0E198 /* YYKOrderQueryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF8C06D1D17F73400F0E198 /* YYKOrderQueryModel.m */; };
+		C6C5EAAAA388AFBA0CF247A6 /* libPods-YYKuaibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1E2D934F7E11701EDA8B6F /* libPods-YYKuaibo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,7 +157,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		97F94A9277602B6F72E0AB85 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		008ACC4CCCB3F4CC00B99ABE /* Pods-YYKuaibo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YYKuaibo.release.xcconfig"; path = "Pods/Target Support Files/Pods-YYKuaibo/Pods-YYKuaibo.release.xcconfig"; sourceTree = "<group>"; };
 		BC0C85D41CD3398D00C51480 /* pay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = pay.a; sourceTree = "<group>"; };
 		BC0C85D51CD3398D00C51480 /* PayUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayUtils.h; sourceTree = "<group>"; };
 		BC0C86031CD35F5C00C51480 /* YYKStatsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKStatsManager.h; sourceTree = "<group>"; };
@@ -428,8 +428,8 @@
 		BCF346F41CCAB9FE005DEFFF /* YYKuaibo copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "YYKuaibo copy-Info.plist"; path = "/Users/seanyue/QuBaProjects/YYKuaibo/YYKuaibo copy-Info.plist"; sourceTree = "<absolute>"; };
 		BCF8C06C1D17F73400F0E198 /* YYKOrderQueryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKOrderQueryModel.h; sourceTree = "<group>"; };
 		BCF8C06D1D17F73400F0E198 /* YYKOrderQueryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKOrderQueryModel.m; sourceTree = "<group>"; };
-		C85E9861E06D5998D2C616F1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED0C82ADEB9BA2FF29897DA8 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		F74F2DBA22222B6A63038AB9 /* Pods-YYKuaibo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YYKuaibo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YYKuaibo/Pods-YYKuaibo.debug.xcconfig"; sourceTree = "<group>"; };
+		FE1E2D934F7E11701EDA8B6F /* libPods-YYKuaibo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YYKuaibo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -450,7 +450,7 @@
 				BCE257251C968AED00133F4F /* libMobClickLibrary.a in Frameworks */,
 				BCE257261C968AED00133F4F /* libWeChatSDK.a in Frameworks */,
 				BC0C85F41CD3398E00C51480 /* pay.a in Frameworks */,
-				472ACEBEB26898251444DD89 /* libPods.a in Frameworks */,
+				C6C5EAAAA388AFBA0CF247A6 /* libPods-YYKuaibo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,6 +471,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C8CCB0CB2FBF997E85D0F20 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F74F2DBA22222B6A63038AB9 /* Pods-YYKuaibo.debug.xcconfig */,
+				008ACC4CCCB3F4CC00B99ABE /* Pods-YYKuaibo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		B8E3C88B58EDA7F709C6E55C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -480,7 +489,7 @@
 				BCE2572B1C968B5100133F4F /* libsqlite3.tbd */,
 				BCE257291C968B4800133F4F /* libz.tbd */,
 				BCE257271C968B4100133F4F /* CoreTelephony.framework */,
-				C85E9861E06D5998D2C616F1 /* libPods.a */,
+				FE1E2D934F7E11701EDA8B6F /* libPods-YYKuaibo.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -824,7 +833,7 @@
 				BCE255FF1C966A8E00133F4F /* Products */,
 				B8E3C88B58EDA7F709C6E55C /* Frameworks */,
 				BCF346F41CCAB9FE005DEFFF /* YYKuaibo copy-Info.plist */,
-				C94EAB2921B1A3BB0182F62F /* Pods */,
+				3C8CCB0CB2FBF997E85D0F20 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1133,15 +1142,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		C94EAB2921B1A3BB0182F62F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				ED0C82ADEB9BA2FF29897DA8 /* Pods.debug.xcconfig */,
-				97F94A9277602B6F72E0AB85 /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1149,12 +1149,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BCE2562B1C966A8E00133F4F /* Build configuration list for PBXNativeTarget "YYKuaibo" */;
 			buildPhases = (
-				E737B39876F747F001D97D87 /* Check Pods Manifest.lock */,
+				BABF4B805BA55881BC059782 /* [CP] Check Pods Manifest.lock */,
 				BCE255FA1C966A8E00133F4F /* Sources */,
 				BCE255FB1C966A8E00133F4F /* Frameworks */,
 				BCE255FC1C966A8E00133F4F /* Resources */,
-				AC801225217A9279603BB544 /* Embed Pods Frameworks */,
-				AEEB9588A86F54BBE07FA7DB /* Copy Pods Resources */,
+				7899AE2C7EE7FF05200F69A6 /* [CP] Embed Pods Frameworks */,
+				1043F538B5EEF71F13C295AB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1281,44 +1281,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		AC801225217A9279603BB544 /* Embed Pods Frameworks */ = {
+		1043F538B5EEF71F13C295AB /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YYKuaibo/Pods-YYKuaibo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AEEB9588A86F54BBE07FA7DB /* Copy Pods Resources */ = {
+		7899AE2C7EE7FF05200F69A6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YYKuaibo/Pods-YYKuaibo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E737B39876F747F001D97D87 /* Check Pods Manifest.lock */ = {
+		BABF4B805BA55881BC059782 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1571,7 +1571,7 @@
 		};
 		BCE2562C1C966A8E00133F4F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED0C82ADEB9BA2FF29897DA8 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = F74F2DBA22222B6A63038AB9 /* Pods-YYKuaibo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1601,7 +1601,7 @@
 		};
 		BCE2562D1C966A8E00133F4F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 97F94A9277602B6F72E0AB85 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 008ACC4CCCB3F4CC00B99ABE /* Pods-YYKuaibo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
