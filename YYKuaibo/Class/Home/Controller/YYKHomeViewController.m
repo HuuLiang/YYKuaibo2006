@@ -292,6 +292,8 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
                 channelVideoVC.hidesBottomBarWhenPushed = YES;
                 channelVideoVC.tagBackgroundColor = [UIColor featuredColorWithIndex:indexPath.section];
                 [self.navigationController pushViewController:channelVideoVC animated:YES];
+                
+                [[YYKStatsManager sharedManager] statsCPCWithChannel:channel inTabIndex:[YYKUtil currentTabPageIndex]];
             };
         }
     }
@@ -340,13 +342,6 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
         if (indexPath.row < self.programModel.fetchedTrialChannel.programList.count) {
             YYKProgram *program = self.programModel.fetchedTrialChannel.programList[indexPath.row];
             [self switchToPlayProgram:program programLocation:indexPath.row inChannel:self.programModel.fetchedTrialChannel];
-            
-            [[YYKStatsManager sharedManager] statsCPCWithProgram:program
-                                                 programLocation:indexPath.row
-                                                       inChannel:self.programModel.fetchedTrialChannel
-                                                     andTabIndex:self.tabBarController.selectedIndex
-                                                     subTabIndex:0];
-            
         }
     } else {
         NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
@@ -355,12 +350,6 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
             if (indexPath.row < channel.programList.count) {
                 YYKProgram *program = channel.programList[indexPath.row];
                 [self switchToPlayProgram:program programLocation:indexPath.row inChannel:channel];
-                
-                [[YYKStatsManager sharedManager] statsCPCWithProgram:program
-                                                     programLocation:indexPath.row
-                                                           inChannel:channel
-                                                         andTabIndex:self.tabBarController.selectedIndex
-                                                         subTabIndex:0];
             }
         }
     }
@@ -370,12 +359,6 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
     if (index < self.programModel.fetchedBannerChannel.programList.count) {
         YYKProgram *program = self.programModel.fetchedBannerChannel.programList[index];
         [self switchToPlayProgram:program programLocation:index inChannel:self.programModel.fetchedBannerChannel];
-        
-        [[YYKStatsManager sharedManager] statsCPCWithProgram:program
-                                             programLocation:index
-                                                   inChannel:self.programModel.fetchedBannerChannel
-                                                 andTabIndex:self.tabBarController.selectedIndex
-                                                 subTabIndex:0];
     }
 }
 @end

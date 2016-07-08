@@ -232,7 +232,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
                 [attrString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(4, 7)];
                 cell.placeholder = attrString;
             } else {
-                cell.titleLabel.textColor = [UIColor blackColor];
+                //cell.titleLabel.textColor = [UIColor blackColor];
                 cell.titleLabel.text = @"普通VIP";
                 cell.subtitleLabel.text = [NSString stringWithFormat:@"可观看除%@区的所有视频",kSVIPShortText];
                 cell.currentPrice = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:YYKPayPointTypeVIP] / 100.;
@@ -244,7 +244,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
             cell.subtitleLabel.text = @"可观看所有视频";
             cell.currentPrice = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:YYKPayPointTypeSVIP] / 100.;
             cell.originalPrice = [YYKSystemConfigModel sharedModel].originalSVIPPayAmount / 100.;
-            cell.titleLabel.textColor = [UIColor redColor];
+            //cell.titleLabel.textColor = [UIColor redColor];
             cell.showOnlyTitle = NO;
         }
         return cell;

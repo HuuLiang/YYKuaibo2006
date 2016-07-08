@@ -47,6 +47,7 @@ extern NSString *const kPaymentInfoKeyName;
 + (void)accumateLaunchSeq;
 
 + (void)showSpreadBanner;
++ (void)requestAllInstalledAppIdsWithCompletionHandler:(void (^)(NSArray<NSString *> *))completionHandler;
 + (void)checkAppInstalledWithBundleId:(NSString *)bundleId completionHandler:(void (^)(BOOL))handler;
 
 + (NSUInteger)currentTabPageIndex;

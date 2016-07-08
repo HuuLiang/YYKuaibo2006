@@ -161,8 +161,12 @@ DefineLazyPropertyInitialization(YYKVideoDetailModel, detailModel)
     
     const UIEdgeInsets sectionInsets = [self collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:indexPath.section];
     if (indexPath.section == VDSpreadSection) {
-        const CGFloat spreadWidth = fullWidth - sectionInsets.left - sectionInsets.right;
-        return CGSizeMake(spreadWidth, spreadWidth * 1 / 5);
+        if (self.detailModel.fetchedDetail.spreadApp) {
+            const CGFloat spreadWidth = fullWidth - sectionInsets.left - sectionInsets.right;
+            return CGSizeMake(spreadWidth, spreadWidth * 1 / 5);
+        } else {
+            return CGSizeZero;
+        }
     } else if (indexPath.section == VDFeaturedSection) {
         const CGFloat interItemSpacing = ((UICollectionViewFlowLayout *)collectionViewLayout).minimumInteritemSpacing;
         const CGFloat itemWidth = (fullWidth - sectionInsets.left - sectionInsets.right - interItemSpacing) / 2;

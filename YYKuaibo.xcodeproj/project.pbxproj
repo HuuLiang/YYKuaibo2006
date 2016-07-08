@@ -34,6 +34,7 @@
 		BC3C26711D144C6C00BF5C3D /* VIASDKVERSION.txt in Resources */ = {isa = PBXBuildFile; fileRef = BC3C26701D144C6C00BF5C3D /* VIASDKVERSION.txt */; };
 		BC42C3551CE0946E00ECCD65 /* DBPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = BC42C3541CE0946E00ECCD65 /* DBPersistence.m */; };
 		BC463EE31D25196800D19521 /* svip_background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC463EE21D25196800D19521 /* svip_background.jpg */; };
+		BC4E66661D2EBCFF0012C2B4 /* YYKVersionUpdateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4E66651D2EBCFF0012C2B4 /* YYKVersionUpdateModel.m */; };
 		BC51AC311CA0F7530073AF91 /* YYKVideoListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC51AC301CA0F7530073AF91 /* YYKVideoListModel.m */; };
 		BC51AC361CA12E6B0073AF91 /* YYKPaymentConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC51AC351CA12E6B0073AF91 /* YYKPaymentConfigModel.m */; };
 		BC51AC391CA1316A0073AF91 /* YYKPaymentConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BC51AC381CA1316A0073AF91 /* YYKPaymentConfig.m */; };
@@ -209,6 +210,8 @@
 		BC42C3531CE0946E00ECCD65 /* DBPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPersistence.h; sourceTree = "<group>"; };
 		BC42C3541CE0946E00ECCD65 /* DBPersistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPersistence.m; sourceTree = "<group>"; };
 		BC463EE21D25196800D19521 /* svip_background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = svip_background.jpg; sourceTree = "<group>"; };
+		BC4E66641D2EBCFF0012C2B4 /* YYKVersionUpdateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVersionUpdateModel.h; sourceTree = "<group>"; };
+		BC4E66651D2EBCFF0012C2B4 /* YYKVersionUpdateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVersionUpdateModel.m; sourceTree = "<group>"; };
 		BC51AC2F1CA0F7530073AF91 /* YYKVideoListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVideoListModel.h; sourceTree = "<group>"; };
 		BC51AC301CA0F7530073AF91 /* YYKVideoListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVideoListModel.m; sourceTree = "<group>"; };
 		BC51AC341CA12E6B0073AF91 /* YYKPaymentConfigModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKPaymentConfigModel.h; sourceTree = "<group>"; };
@@ -578,6 +581,15 @@
 			path = iAppPay;
 			sourceTree = "<group>";
 		};
+		BC4E66631D2EBC9A0012C2B4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BC4E66641D2EBCFF0012C2B4 /* YYKVersionUpdateModel.h */,
+				BC4E66651D2EBCFF0012C2B4 /* YYKVersionUpdateModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		BC660B051C9720BB00E04D23 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -724,6 +736,7 @@
 			children = (
 				BCB1C4681CC65E0400F9B83B /* View */,
 				BCB1C4661CC65E0400F9B83B /* Controller */,
+				BC4E66631D2EBC9A0012C2B4 /* Model */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -1394,6 +1407,7 @@
 				BC660B081C97243F00E04D23 /* YYKPaymentManager.m in Sources */,
 				BCE256661C966C2600133F4F /* YYKEncryptedURLRequest.m in Sources */,
 				BC2FF5BB1D147D7100657598 /* Reachability.m in Sources */,
+				BC4E66661D2EBCFF0012C2B4 /* YYKVersionUpdateModel.m in Sources */,
 				BCF8C06E1D17F73400F0E198 /* YYKOrderQueryModel.m in Sources */,
 				BCE257071C966DB400133F4F /* UIImage+color.m in Sources */,
 				BCE256651C966C2600133F4F /* YYKActivateModel.m in Sources */,

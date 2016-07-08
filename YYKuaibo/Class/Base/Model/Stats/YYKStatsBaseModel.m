@@ -168,6 +168,7 @@ static NSString *const kEncryptionPassword = @"qb%stats_2016&";
     [data safelySetObject:_programId forKey:@"programId"];
     [data safelySetObject:_programType forKey:@"programType"];
     [data safelySetObject:_programLocation forKey:@"programLocation"];
+    [data safelySetObject:_action forKey:@"action"];
     
     [data safelySetObject:_clickCount forKey:@"clickCount"];
     [data safelySetObject:_slideCount forKey:@"slideCount"];
@@ -198,6 +199,7 @@ static NSString *const kEncryptionPassword = @"qb%stats_2016&";
     [data safelySetObject:_programId.stringValue forKey:@"programId"];
     [data safelySetObject:_programType.stringValue forKey:@"programType"];
     [data safelySetObject:_programLocation.stringValue forKey:@"programLocation"];
+    [data safelySetObject:_action.stringValue forKey:@"action"];
     
     [data safelySetObject:_clickCount.stringValue forKey:@"clickCount"];
     [data safelySetObject:_slideCount.stringValue forKey:@"slideCount"];

@@ -84,6 +84,11 @@
     [super setSelected:selected animated:animated];
     
     _selectImageView.image = selected ? [UIImage imageNamed:@"vip_type_selected_icon"] : [UIImage imageNamed:@"vip_type_normal_icon"];
+    
+    _titleLabel.textColor = selected ? [UIColor blackColor] : [UIColor colorWithWhite:0.75 alpha:1];
+    _priceLabel.textColor = selected ? [UIColor redColor] : [UIColor colorWithWhite:0.75 alpha:1];
+    _originalPriceLabel.textColor = selected ? [UIColor grayColor] : [UIColor colorWithWhite:0.75 alpha:1];
+    _subtitleLabel.textColor = selected ? [UIColor grayColor] : [UIColor colorWithWhite:0.75 alpha:1];
 }
 
 - (void)setCurrentPrice:(CGFloat)currentPrice {

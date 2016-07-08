@@ -158,6 +158,7 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
                   inChannel:(YYKChannel *)channel
                 andTabIndex:(NSUInteger)tabIndex
                 subTabIndex:(NSUInteger)subTabIndex
+            isProgramDetail:(BOOL)isProgramDetail
 {
     YYKStatsInfo *statsInfo = [[YYKStatsInfo alloc] init];
     if (channel) {
@@ -172,6 +173,7 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
     statsInfo.programId = program.programId;
     statsInfo.programType = program.type;
     statsInfo.programLocation = @(programLocation+1);
+    statsInfo.action = isProgramDetail ? @(YYKStatsCPCActionProgramDetail) : @(YYKStatsCPCActionProgramPlaying);
     statsInfo.statsType = @(YYKStatsTypeProgramCPC);
     [self addStats:statsInfo];
     

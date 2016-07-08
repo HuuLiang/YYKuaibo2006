@@ -235,6 +235,15 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
     });
 }
 
++ (void)requestAllInstalledAppIdsWithCompletionHandler:(void (^)(NSArray<NSString *> *))completionHandler {
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSArray *allInstalledAppIds = [[YYKApplicationManager defaultManager] allInstalledAppIdentifiers];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            SafelyCallBlock(completionHandler, allInstalledAppIds);
+        });
+    });
+}
+
 + (void)checkAppInstalledWithBundleId:(NSString *)bundleId completionHandler:(void (^)(BOOL))handler {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         BOOL installed = [[[YYKApplicationManager defaultManager] allInstalledAppIdentifiers] bk_any:^BOOL(id obj) {

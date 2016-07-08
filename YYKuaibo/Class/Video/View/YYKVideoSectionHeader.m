@@ -52,6 +52,7 @@
         }
         
         _accessoryImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"section_accessory"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+        _accessoryImageView.tintColor = [UIColor colorWithWhite:0.5 alpha:1];
         [_contentView addSubview:_accessoryImageView];
         {
             [_accessoryImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -63,7 +64,7 @@
         }
         
         _subtitleLabel = [[UILabel alloc] init];
-        _subtitleLabel.textColor = [UIColor lightGrayColor];
+        _subtitleLabel.textColor = _accessoryImageView.tintColor;
         [_contentView addSubview:_subtitleLabel];
         {
             [_subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

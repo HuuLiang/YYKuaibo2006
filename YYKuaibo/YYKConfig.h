@@ -24,7 +24,7 @@
 #define YYK_HOME_VIDEO_URL              @"/iosvideo/homePage.htm"
 //#define YYK_VIDEO_LIB_URL               @"/iosvideo/hotVideo.htm"
 #define YYK_HOT_VIDEO_URL               @"/iosvideo/hotFilm.htm"
-#define YYK_VIDEO_DETAIL_URL            @"/iosvideo/detailss.htm"
+#define YYK_VIDEO_DETAIL_URL            @"/iosvideo/detailssl.htm"
 
 #define YYK_CHANNEL_URL                 @"/iosvideo/channelRanking.htm"
 #define YYK_CHANNEL_PROGRAM_URL         @"/iosvideo/program.htm"
@@ -38,6 +38,8 @@
 #define YYK_USER_ACCESS_URL             @"/iosvideo/userAccess.htm"
 #define YYK_AGREEMENT_NOTPAID_URL       @"/iosvideo/agreement.html"
 #define YYK_AGREEMENT_PAID_URL          @"/iosvideo/agreement-paid.html"
+
+#define YYK_VERSION_UPDATE_URL          @"http://channel.iqu8.cn/channel/versionCheck.htm"
 
 #define YYK_STATS_BASE_URL              @"http://stats.iqu8.cn"
 #define YYK_STATS_CPC_URL               @"/stats/cpcs.service"

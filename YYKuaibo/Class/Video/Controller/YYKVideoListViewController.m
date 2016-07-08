@@ -167,12 +167,6 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     YYKProgram *video = self.videos[indexPath.item];
     [self switchToPlayProgram:video programLocation:indexPath.item inChannel:[self askDelegateForChannel]];
-    
-    [[YYKStatsManager sharedManager] statsCPCWithProgram:video
-                                         programLocation:indexPath.item
-                                               inChannel:[self askDelegateForChannel]
-                                             andTabIndex:[YYKUtil currentTabPageIndex]
-                                             subTabIndex:[YYKUtil currentSubTabPageIndex]];
 }
 
 @end

@@ -78,6 +78,9 @@
 }
 
 - (void)setTagText:(NSString *)tagText {
+    if (tagText.length > 2) {
+        tagText = [tagText substringToIndex:2];
+    }
     _tagText = tagText;
     
     const CGFloat tagLabelWidth = 30;

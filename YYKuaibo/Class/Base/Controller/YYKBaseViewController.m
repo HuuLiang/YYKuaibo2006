@@ -33,6 +33,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithWhite:0.94 alpha:1];
+    
+    if (self.navigationController.viewControllers.count == 4) {
+        @weakify(self);
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"tabbar_home_selected"]
+                                                                                     style:UIBarButtonItemStyleDone
+                                                                                   handler:^(id sender)
+        {
+            @strongify(self);
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }];
+    }
 //    self.backgroundImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"background" ofType:@"jpg"]];
 }
 
@@ -73,26 +84,11 @@
            shouldShowDetail:(BOOL)shouldShowDetail {
     if (program.type.unsignedIntegerValue == YYKProgramTypeSpread) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:program.videoUrl]];
-        return ;
-    }
-    
-    
-//    BOOL isFreeVideo = program.type.unsignedIntegerValue == YYKProgramTypeVideo && program.spec.unsignedIntegerValue == YYKVideoSpecFree;
-//    
-//    BOOL needPayment = !isFreeVideo && (vipProgramButNoVIP || svipProgramButNoSVIP);
-//    if (needPayment) {
-//        [self payForProgram:program programLocation:programLocation inChannel:channel];
-//    } else if (program.type.unsignedIntegerValue == YYKProgramTypeVideo) {
-//        if ([YYKUtil isVIP] || [YYKUtil isSVIP]) {
-//            [self playVideo:program videoLocation:programLocation inChannel:channel withTimeControl:YES shouldPopPayment:NO];
-//        } else {
-//            [self playVideo:program videoLocation:programLocation inChannel:channel withTimeControl:NO shouldPopPayment:YES];
-//        }
-//    }
-    
-    if (program.type.unsignedIntegerValue == YYKProgramTypeVideo) {
+        shouldShowDetail = NO;
+    } else if (program.type.unsignedIntegerValue == YYKProgramTypeVideo) {
         if (channel.type.unsignedIntegerValue == YYKProgramTypeTrial) {
             [self playVideo:program videoLocation:programLocation inChannel:channel withTimeControl:[YYKUtil isVIP] shouldPopPayment:![YYKUtil isVIP]];
+            shouldShowDetail = NO;
         } else {
             if (shouldShowDetail) {
                 YYKVideoDetailViewController *detailVC = [[YYKVideoDetailViewController alloc] initWithVideo:program
@@ -112,6 +108,13 @@
             
         }
     }
+    
+    [[YYKStatsManager sharedManager] statsCPCWithProgram:program
+                                         programLocation:programLocation
+                                               inChannel:channel
+                                             andTabIndex:[YYKUtil currentTabPageIndex]
+                                             subTabIndex:[YYKUtil currentSubTabPageIndex]
+                                         isProgramDetail:shouldShowDetail];
 }
 
 //- (void)playVideo:(YYKProgram *)video videoLocation {

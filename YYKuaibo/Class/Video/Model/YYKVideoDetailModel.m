@@ -18,9 +18,12 @@
     return [YYKProgram class];
 }
 
-- (Class)spreadAppClass {
+- (Class)spreadAppListElementClass {
     return [YYKProgram class];
 }
+//- (Class)spreadAppClass {
+//    return [YYKProgram class];
+//}
 @end
 
 @implementation YYKVideoDetailModel
@@ -51,10 +54,19 @@
         YYKVideoDetail *detail;
         if (respStatus == YYKURLResponseSuccess) {
             detail = self.response;
-            self->_fetchedDetail = detail;
+            
+            [YYKUtil requestAllInstalledAppIdsWithCompletionHandler:^(NSArray<NSString *> *appIds) {
+                
+                YYKProgram *firstUninstalledAppId = [detail.spreadAppList bk_match:^BOOL(YYKProgram *spread) {
+                    return ![appIds containsObject:spread.specialDesc];
+                }];
+                detail.spreadApp = firstUninstalledAppId;
+                self->_fetchedDetail = detail;
+                SafelyCallBlock(completionHandler, YES, detail);
+            }];
+        } else {
+            SafelyCallBlock(completionHandler, NO, errorMessage);
         }
-        
-        SafelyCallBlock(completionHandler, respStatus==YYKURLResponseSuccess, detail);
     }];
     return ret;
 }

@@ -11,6 +11,8 @@
 @interface YYKVideoDetail : YYKURLResponse
 @property (nonatomic) NSArray<YYKProgram *> *hotProgramList;
 @property (nonatomic) YYKProgram *program;
+@property (nonatomic) NSArray<YYKProgram *> *spreadAppList;
+
 @property (nonatomic) YYKProgram *spreadApp;
 @end
 

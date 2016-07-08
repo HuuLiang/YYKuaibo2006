@@ -31,7 +31,8 @@ typedef NS_ENUM(NSUInteger, YYKStatsPayAction) {
             programLocation:(NSUInteger)programLocation
                   inChannel:(YYKChannel *)channel
                 andTabIndex:(NSUInteger)tabIndex
-                subTabIndex:(NSUInteger)subTabIndex;
+                subTabIndex:(NSUInteger)subTabIndex
+            isProgramDetail:(BOOL)isProgramDetail;
 
 - (void)statsTabIndex:(NSUInteger)tabIndex subTabIndex:(NSUInteger)subTabIndex forClickCount:(NSUInteger)clickCount;
 - (void)statsTabIndex:(NSUInteger)tabIndex subTabIndex:(NSUInteger)subTabIndex forSlideCount:(NSUInteger)slideCount;

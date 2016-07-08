@@ -235,7 +235,8 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, appSpreadModel)
                                          programLocation:indexPath.item
                                                inChannel:self.appSpreadModel.fetchedSpreadChannel
                                              andTabIndex:self.tabBarController.selectedIndex
-                                             subTabIndex:NSNotFound];
+                                             subTabIndex:NSNotFound
+                                         isProgramDetail:NO];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {

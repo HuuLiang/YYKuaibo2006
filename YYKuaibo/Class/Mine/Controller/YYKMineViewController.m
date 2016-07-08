@@ -12,6 +12,7 @@
 #import "YYKWebViewController.h"
 #import "YYKInputTextViewController.h"
 #import "YYKSystemConfigModel.h"
+#import "YYKVersionUpdateModel.h"
 
 static NSString *const kSideMenuNormalCellReusableIdentifier = @"SideMenuNormalCellReusableIdentifier";
 static NSString *const kSideMenuVIPCellReusableIdentifier = @"SideMenuVIPCellReusableIdentifier";
@@ -20,6 +21,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuSection) {
     YYKSideMenuSectionVIP,
     YYKSideMenuSectionPhone,
     YYKSideMenuSectionOthers,
+    YYKSideMenuSectionAutoUpdate,
     YYKSideMenuSectionCount
 };
 
@@ -36,9 +38,12 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 {
     UITableView *_layoutTableView;
 }
+@property (nonatomic,retain) YYKVersionUpdateModel *versionUpdateModel;
 @end
 
 @implementation YYKMineViewController
+
+DefineLazyPropertyInitialization(YYKVersionUpdateModel, versionUpdateModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -69,7 +74,8 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
     
     if ([YYKUtil isAnyVIP]) {
         if ([YYKSystemConfigModel sharedModel].loaded) {
-            [_layoutTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:YYKSideMenuSectionPhone]] withRowAnimation:UITableViewRowAnimationNone];
+            [_layoutTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:[self sectionIndexForSectionType:YYKSideMenuSectionPhone]]]
+                                    withRowAnimation:UITableViewRowAnimationNone];
         } else {
             @weakify(self);
             [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
@@ -79,20 +85,33 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
                 }
                 
                 if (success) {
-                    [self->_layoutTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:YYKSideMenuSectionPhone]] withRowAnimation:UITableViewRowAnimationNone];
+                    [self->_layoutTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:[self sectionIndexForSectionType:YYKSideMenuSectionPhone]]]
+                                                  withRowAnimation:UITableViewRowAnimationNone];
                 }
             }];
         }
     }
+    
+    [self checkNewVersion];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     if ([_layoutTableView numberOfSections] > 0) {
-        NSUInteger sections = [self numberOfSectionsInTableView:_layoutTableView];
-        [_layoutTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:YYKSideMenuOtherSectionCellCacheClean inSection:sections-1]] withRowAnimation:UITableViewRowAnimationNone];
+        [_layoutTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:YYKSideMenuOtherSectionCellCacheClean inSection:[self sectionIndexForSectionType:YYKSideMenuSectionOthers]]]
+                                withRowAnimation:UITableViewRowAnimationNone];
     }
+}
+
+- (void)checkNewVersion {
+    @weakify(self);
+    [self.versionUpdateModel fetchLatestVersionWithCompletionHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (success) {
+            [self->_layoutTableView reloadSections:[NSIndexSet indexSetWithIndex:[self sectionIndexForSectionType:YYKSideMenuSectionAutoUpdate]] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }];
 }
 
 - (void)onPaidNotification {
@@ -126,6 +145,14 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 //            return YYKSideMenuSectionOthers;
 //        }
 //    }
+}
+
+- (NSUInteger)sectionIndexForSectionType:(YYKSideMenuSection)sectionType {
+    if ([YYKUtil isAllVIPs]) {
+        return sectionType - 1;
+    } else {
+        return sectionType;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -167,6 +194,7 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
             cell.backgroundColor = [UIColor whiteColor];
         }
         cell.detailTextLabel.text = nil;
+        cell.detailTextLabel.textColor = [UIColor colorWithWhite:0.6 alpha:1];
 
         if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionPhone) {
             const NSUInteger manualActiRow = [YYKUtil isAllVIPs] ? -1:0;
@@ -197,6 +225,14 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
                 cell.textLabel.text = @"关于我们";
             }
             
+        } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionAutoUpdate) {
+            cell.imageView.image = [UIImage imageNamed:@"mine_auto_update"];
+            cell.textLabel.text = @"版本更新";
+            if (self.versionUpdateModel.fetchedVersionInfo.versionNo.length > 0) {
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"新版本：%@", self.versionUpdateModel.fetchedVersionInfo.versionNo];
+                cell.detailTextLabel.textColor = [UIColor redColor];
+            }
+            
         }
     }
     
@@ -207,6 +243,8 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
     if ([self sectionTypeInSection:section] == YYKSideMenuSectionOthers) {
         return YYKSideMenuOtherSectionCellCount;
     } else if ([self sectionTypeInSection:section] == YYKSideMenuSectionVIP) {
+        return 1;
+    } else if ([self sectionTypeInSection:section] == YYKSideMenuSectionAutoUpdate) {
         return 1;
     } else {
         return [YYKUtil isVIP] && ![YYKUtil isSVIP] ? 3 : 2;
@@ -318,6 +356,12 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
             [self payForPayPointType:[YYKUtil isVIP] && ![YYKUtil isSVIP] ? YYKPayPointTypeSVIP : YYKPayPointTypeVIP];
         } else {
             [[YYKHudManager manager] showHudWithText:@"您已经是会员，感谢您的观看！"];
+        }
+    } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionAutoUpdate) {
+        if (self.versionUpdateModel.fetchedVersionInfo.versionNo.length > 0) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.versionUpdateModel.fetchedVersionInfo.linkUrl]];
+        } else {
+            [UIAlertView bk_showAlertViewWithTitle:@"当前版本已经是最新版本！" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
         }
     }
 }

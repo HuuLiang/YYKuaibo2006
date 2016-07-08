@@ -28,6 +28,12 @@ typedef NS_ENUM(NSInteger, YYKStatsNetwork) {
     YYKStatsNetworkOther = -1
 };
 
+typedef NS_ENUM(NSUInteger, YYKStatsCPCAction) {
+    YYKStatsCPCActionUnknown,
+    YYKStatsCPCActionProgramDetail,
+    YYKStatsCPCActionProgramPlaying
+};
+
 @interface YYKStatsInfo : DBPersistence
 
 // Unique ID
@@ -47,6 +53,7 @@ typedef NS_ENUM(NSInteger, YYKStatsNetwork) {
 @property (nonatomic) NSNumber *programId;
 @property (nonatomic) NSNumber *programType;
 @property (nonatomic) NSNumber *programLocation;
+@property (nonatomic) NSNumber *action;
 @property (nonatomic) NSNumber *statsType; //YYKStatsType
 
 // Accumalation stats

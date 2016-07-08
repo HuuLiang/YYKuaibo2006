@@ -115,12 +115,6 @@ DefineLazyPropertyInitialization(YYKVideoListModel, videoModel)
     if (index < self.videoModel.fetchedVideoChannel.programList.count) {
         YYKProgram *video = self.videoModel.fetchedVideoChannel.programList[index];
         [self switchToPlayProgram:video programLocation:index inChannel:self.videoModel.fetchedVideoChannel shouldShowDetail:NO];
-        
-        [[YYKStatsManager sharedManager] statsCPCWithProgram:video
-                                             programLocation:index
-                                                   inChannel:self.videoModel.fetchedVideoChannel
-                                                 andTabIndex:self.tabBarController.selectedIndex
-                                                 subTabIndex:NSNotFound];
     }
 }
 

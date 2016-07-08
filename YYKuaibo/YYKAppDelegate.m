@@ -105,6 +105,18 @@
                                    thisVC.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"返回" style:UIBarButtonItemStylePlain handler:nil];
                                } error:nil];
     
+    [UIViewController aspect_hookSelector:@selector(hidesBottomBarWhenPushed)
+                              withOptions:AspectPositionInstead
+                               usingBlock:^(id<AspectInfo> aspectInfo)
+    {
+        UIViewController *thisVC = [aspectInfo instance];
+        BOOL hidesBottomBarWhenPushed = YES;
+        if (thisVC.navigationController.viewControllers.count == 0 || thisVC.navigationController.viewControllers.firstObject == thisVC) {
+            hidesBottomBarWhenPushed = NO;
+        }
+        [[aspectInfo originalInvocation] setReturnValue:&hidesBottomBarWhenPushed];
+    } error:nil];
+    
     [UINavigationController aspect_hookSelector:@selector(preferredStatusBarStyle)
                                     withOptions:AspectPositionInstead
                                      usingBlock:^(id<AspectInfo> aspectInfo){

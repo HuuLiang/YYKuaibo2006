@@ -41,6 +41,7 @@
         }
         
         _progressImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_thumb_progress_bar"]];
+        _progressImageView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
         [self addSubview:_progressImageView];
         {
             [_progressImageView mas_makeConstraints:^(MASConstraintMaker *make) {
