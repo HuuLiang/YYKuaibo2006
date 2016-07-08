@@ -34,7 +34,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithWhite:0.94 alpha:1];
     
-    if (self.navigationController.viewControllers.count == 4) {
+    if (self.navigationController.viewControllers.count >= 4) {
         @weakify(self);
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"tabbar_home_selected"]
                                                                                      style:UIBarButtonItemStyleDone
