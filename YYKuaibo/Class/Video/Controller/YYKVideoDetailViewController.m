@@ -161,7 +161,7 @@ DefineLazyPropertyInitialization(YYKVideoDetailModel, detailModel)
     
     const UIEdgeInsets sectionInsets = [self collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:indexPath.section];
     if (indexPath.section == VDSpreadSection) {
-        if (self.detailModel.fetchedDetail.spreadApp) {
+        if (self.detailModel.fetchedDetail.spreadApp && [YYKUtil isVIP]) {
             const CGFloat spreadWidth = fullWidth - sectionInsets.left - sectionInsets.right;
             return CGSizeMake(spreadWidth, spreadWidth * 1 / 5);
         } else {
