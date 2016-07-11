@@ -101,4 +101,12 @@ static NSString *const kSVIPShortText = @"黑钻";
 typedef void (^YYKAction)(id obj);
 typedef void (^YYKCompletionHandler)(BOOL success, id obj);
 typedef void (^YYKPaymentCompletionHandler)(PAYRESULT payResult, YYKPaymentInfo *paymentInfo);
+
+FOUNDATION_STATIC_INLINE NSString * YYKIntegralPrice(const CGFloat price) {
+    if ((unsigned long)(price * 100.) % 100==0) {
+        return [NSString stringWithFormat:@"%ld", (unsigned long)price];
+    } else {
+        return [NSString stringWithFormat:@"%.2f", price];
+    }
+}
 #endif /* YYKCommonDef_h */

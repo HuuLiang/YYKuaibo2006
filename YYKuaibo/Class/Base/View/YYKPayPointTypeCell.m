@@ -37,7 +37,7 @@
         [self addSubview:_priceLabel];
         {
             [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.equalTo(self).offset(-15);
+                make.right.equalTo(self).offset(-10);
                 make.centerY.equalTo(self).offset(-5);
             }];
         }
@@ -93,12 +93,13 @@
 
 - (void)setCurrentPrice:(CGFloat)currentPrice {
     _currentPrice = currentPrice;
-    _priceLabel.text = [NSString stringWithFormat:@"¥ %.2f", currentPrice];
+    
+    _priceLabel.text = [NSString stringWithFormat:@"仅需：¥%@", YYKIntegralPrice(currentPrice)];
 }
 
 - (void)setOriginalPrice:(CGFloat)originalPrice {
     _originalPrice = originalPrice;
-    _originalPriceLabel.attributedText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %.2f", originalPrice]
+    _originalPriceLabel.attributedText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"原价：¥%@", YYKIntegralPrice(originalPrice)]
                                                                          attributes:@{NSStrikethroughStyleAttributeName:@1}];
 }
 
