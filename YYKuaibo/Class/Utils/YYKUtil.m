@@ -169,6 +169,8 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
         return YYKDeviceType_iPhone6SP;
     } else if ([deviceName rangeOfString:@"iPhone8,4"].location == 0) {
         return YYKDeviceType_iPhoneSE;
+    } else if ([deviceName rangeOfString:@"iPad"].location == 0) {
+        return YYKDeviceType_iPad;
     } else {
         return YYKDeviceTypeUnknown;
     }
