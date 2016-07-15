@@ -48,6 +48,11 @@
                 return;
             }
             
+            if (subclass == [NSString class] || subclass == [NSNumber class]) {
+                [instance setValue:value forKey:propertyName];
+                return ;
+            }
+            
             NSMutableArray *arr = [[NSMutableArray alloc] init];
             [instance setValue:arr forKey:propertyName];
             

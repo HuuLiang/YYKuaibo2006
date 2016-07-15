@@ -55,7 +55,7 @@
     
     _popView = [[YYKPaymentPopView alloc] init];
 //    _popView.headerImageURL = [NSURL URLWithString:[YYKSystemConfigModel sharedModel].hasDiscount ? [YYKSystemConfigModel sharedModel].discountImage : [YYKSystemConfigModel sharedModel].paymentImage];
-    _popView.titleImage = [UIImage imageNamed:@"payment_title"];
+//    _popView.titleImage = [UIImage imageNamed:@"payment_title"];
     
     YYKPaymentType wechatPaymentType = [[YYKPaymentManager sharedManager] wechatPaymentType];
     if (wechatPaymentType != YYKPaymentTypeNone) {

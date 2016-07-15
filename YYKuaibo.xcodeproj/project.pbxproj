@@ -11,8 +11,6 @@
 		BC0C86051CD35F5C00C51480 /* YYKStatsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C86041CD35F5C00C51480 /* YYKStatsManager.m */; };
 		BC0C86091CD3608A00C51480 /* YYKCPCStatsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C86081CD3608A00C51480 /* YYKCPCStatsModel.m */; };
 		BC0C860C1CD367F800C51480 /* YYKStatsBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0C860B1CD367F800C51480 /* YYKStatsBaseModel.m */; };
-		BC23A5B31CC6AD9800B773B3 /* YYKAppSpreadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC23A5B21CC6AD9800B773B3 /* YYKAppSpreadModel.m */; };
-		BC23A5B61CC6AE2E00B773B3 /* YYKSpreadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC23A5B51CC6AE2E00B773B3 /* YYKSpreadCell.m */; };
 		BC25F10C1D243BB300ECE1F6 /* YYKManualActivationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC25F10B1D243BB300ECE1F6 /* YYKManualActivationManager.m */; };
 		BC2914491C9FF6AD002084E2 /* ApiXml.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC2914421C9FF6AD002084E2 /* ApiXml.mm */; };
 		BC29144A1C9FF6AD002084E2 /* payRequsestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC2914441C9FF6AD002084E2 /* payRequsestHandler.mm */; };
@@ -20,6 +18,7 @@
 		BC29144C1C9FF6AD002084E2 /* WXUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = BC2914481C9FF6AD002084E2 /* WXUtil.mm */; };
 		BC29144F1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC29144E1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m */; };
 		BC2A0B411CB8D79D00B7D397 /* YYKLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2A0B401CB8D79D00B7D397 /* YYKLocalNotificationManager.m */; };
+		BC2BAB491D37E1B900691CB4 /* YYKSearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2BAB481D37E1B900691CB4 /* YYKSearchModel.m */; };
 		BC2FB7791CDA0A5700645070 /* DBHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2FB7751CDA0A5700645070 /* DBHandler.m */; };
 		BC2FB77A1CDA0A5700645070 /* DBTableVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2FB7781CDA0A5700645070 /* DBTableVersion.m */; };
 		BC2FF5BB1D147D7100657598 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2FF5BA1D147D7100657598 /* Reachability.m */; };
@@ -28,12 +27,19 @@
 		BC30FBE51CE21A4300E49B98 /* YYKNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BC30FBE41CE21A4300E49B98 /* YYKNetworkInfo.m */; };
 		BC32FD1E1CCF4E190030EB79 /* UIView+Loading.m in Sources */ = {isa = PBXBuildFile; fileRef = BC32FD1D1CCF4E190030EB79 /* UIView+Loading.m */; };
 		BC32FD221CCF97A10030EB79 /* YYKAppSpreadBannerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC32FD211CCF97A10030EB79 /* YYKAppSpreadBannerModel.m */; };
+		BC39DE701D37B47E002D5E26 /* YYKTagSearchFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC39DE6F1D37B47E002D5E26 /* YYKTagSearchFooterView.m */; };
 		BC3C265A1D14398500BF5C3D /* MBProgressHUD+NJ.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3C26331D14398500BF5C3D /* MBProgressHUD+NJ.m */; };
 		BC3C265B1D14398500BF5C3D /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC3C26341D14398500BF5C3D /* MBProgressHUD.bundle */; };
 		BC3C266D1D143CEC00BF5C3D /* Config.txt in Resources */ = {isa = PBXBuildFile; fileRef = BC3C266C1D143CEC00BF5C3D /* Config.txt */; };
 		BC3C26711D144C6C00BF5C3D /* VIASDKVERSION.txt in Resources */ = {isa = PBXBuildFile; fileRef = BC3C26701D144C6C00BF5C3D /* VIASDKVERSION.txt */; };
 		BC42C3551CE0946E00ECCD65 /* DBPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = BC42C3541CE0946E00ECCD65 /* DBPersistence.m */; };
 		BC463EE31D25196800D19521 /* svip_background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC463EE21D25196800D19521 /* svip_background.jpg */; };
+		BC4CCD651D3639D1001518F1 /* YYKSpreadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4CCD641D3639D1001518F1 /* YYKSpreadCell.m */; };
+		BC4CCD681D3639D7001518F1 /* YYKSpreadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4CCD671D3639D7001518F1 /* YYKSpreadViewController.m */; };
+		BC4CCD6B1D3639DF001518F1 /* YYKAppSpreadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4CCD6A1D3639DF001518F1 /* YYKAppSpreadModel.m */; };
+		BC4CCD721D363A14001518F1 /* YYKSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4CCD711D363A14001518F1 /* YYKSearchViewController.m */; };
+		BC4CCD751D3643CF001518F1 /* YYKTagSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4CCD741D3643CF001518F1 /* YYKTagSearchViewController.m */; };
+		BC4CCD781D364991001518F1 /* YYKSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4CCD771D364991001518F1 /* YYKSearchResultViewController.m */; };
 		BC4E66661D2EBCFF0012C2B4 /* YYKVersionUpdateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4E66651D2EBCFF0012C2B4 /* YYKVersionUpdateModel.m */; };
 		BC51AC311CA0F7530073AF91 /* YYKVideoListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC51AC301CA0F7530073AF91 /* YYKVideoListModel.m */; };
 		BC51AC361CA12E6B0073AF91 /* YYKPaymentConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC51AC351CA12E6B0073AF91 /* YYKPaymentConfigModel.m */; };
@@ -59,6 +65,8 @@
 		BC76434F1CD04FBE0059E1C3 /* NSObject+PropertyAccessInspecting.m in Sources */ = {isa = PBXBuildFile; fileRef = BC76434E1CD04FBE0059E1C3 /* NSObject+PropertyAccessInspecting.m */; };
 		BC77DB031CFD95BE003B66E8 /* YYKPayPointTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC77DB021CFD95BE003B66E8 /* YYKPayPointTypeCell.m */; };
 		BC7A618E1CFC508200021200 /* YYKVideoLibViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7A61871CFC508200021200 /* YYKVideoLibViewController.m */; };
+		BC7AC6781D38C42200B1DA5E /* YYKKeywordTagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7AC6771D38C42200B1DA5E /* YYKKeywordTagModel.m */; };
+		BC7AC67B1D38D7B800B1DA5E /* YYKKeyword.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7AC67A1D38D7B800B1DA5E /* YYKKeyword.m */; };
 		BC7EEBEC1D13EF89008D9A32 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC7EEBEA1D13EF89008D9A32 /* AlipaySDK.bundle */; };
 		BC7EEBED1D13EF89008D9A32 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC7EEBEB1D13EF89008D9A32 /* AlipaySDK.framework */; };
 		BC8D0DC41CBFE88D0013F527 /* YYKHomeProgramModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8D0DC31CBFE88D0013F527 /* YYKHomeProgramModel.m */; };
@@ -79,7 +87,6 @@
 		BCB1C4781CC65EB400F9B83B /* YYKHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB1C4731CC65EB400F9B83B /* YYKHistoryCell.m */; };
 		BCB1C4791CC65EB400F9B83B /* YYKMineVIPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB1C4751CC65EB400F9B83B /* YYKMineVIPCell.m */; };
 		BCB1C4871CC66B5100F9B83B /* YYKVIPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB1C4861CC66B5100F9B83B /* YYKVIPViewController.m */; };
-		BCB1C48E1CC66C8D00F9B83B /* YYKSpreadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB1C48D1CC66C8D00F9B83B /* YYKSpreadViewController.m */; };
 		BCB58E4D1CEB4AB50084F784 /* SPayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BC69B1F61CE46E080020B112 /* SPayUtil.m */; };
 		BCC00FBD1CD8B23B00F429B4 /* YYKTabStatsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC00FBC1CD8B23B00F429B4 /* YYKTabStatsModel.m */; };
 		BCC00FC41CD8B96D00F429B4 /* YYKPayStatsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC00FC31CD8B96D00F429B4 /* YYKPayStatsModel.m */; };
@@ -168,10 +175,6 @@
 		BC0C860A1CD367F800C51480 /* YYKStatsBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKStatsBaseModel.h; sourceTree = "<group>"; };
 		BC0C860B1CD367F800C51480 /* YYKStatsBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKStatsBaseModel.m; sourceTree = "<group>"; };
 		BC1FCA171CE42E4100B4364C /* paySender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paySender.h; sourceTree = "<group>"; };
-		BC23A5B11CC6AD9800B773B3 /* YYKAppSpreadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKAppSpreadModel.h; sourceTree = "<group>"; };
-		BC23A5B21CC6AD9800B773B3 /* YYKAppSpreadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKAppSpreadModel.m; sourceTree = "<group>"; };
-		BC23A5B41CC6AE2E00B773B3 /* YYKSpreadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKSpreadCell.h; sourceTree = "<group>"; };
-		BC23A5B51CC6AE2E00B773B3 /* YYKSpreadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKSpreadCell.m; sourceTree = "<group>"; };
 		BC25F10A1D243BB300ECE1F6 /* YYKManualActivationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKManualActivationManager.h; sourceTree = "<group>"; };
 		BC25F10B1D243BB300ECE1F6 /* YYKManualActivationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKManualActivationManager.m; sourceTree = "<group>"; };
 		BC2914411C9FF6AD002084E2 /* ApiXml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiXml.h; sourceTree = "<group>"; };
@@ -186,6 +189,8 @@
 		BC29144E1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeChatPayQueryOrderRequest.m; sourceTree = "<group>"; };
 		BC2A0B3F1CB8D79D00B7D397 /* YYKLocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKLocalNotificationManager.h; sourceTree = "<group>"; };
 		BC2A0B401CB8D79D00B7D397 /* YYKLocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKLocalNotificationManager.m; sourceTree = "<group>"; };
+		BC2BAB471D37E1B900691CB4 /* YYKSearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKSearchModel.h; sourceTree = "<group>"; };
+		BC2BAB481D37E1B900691CB4 /* YYKSearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKSearchModel.m; sourceTree = "<group>"; };
 		BC2FB7741CDA0A5700645070 /* DBHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBHandler.h; sourceTree = "<group>"; };
 		BC2FB7751CDA0A5700645070 /* DBHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBHandler.m; sourceTree = "<group>"; };
 		BC2FB7761CDA0A5700645070 /* DBMigration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBMigration.h; sourceTree = "<group>"; };
@@ -201,6 +206,8 @@
 		BC32FD1D1CCF4E190030EB79 /* UIView+Loading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Loading.m"; sourceTree = "<group>"; };
 		BC32FD201CCF97A10030EB79 /* YYKAppSpreadBannerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKAppSpreadBannerModel.h; sourceTree = "<group>"; };
 		BC32FD211CCF97A10030EB79 /* YYKAppSpreadBannerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKAppSpreadBannerModel.m; sourceTree = "<group>"; };
+		BC39DE6E1D37B47E002D5E26 /* YYKTagSearchFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKTagSearchFooterView.h; sourceTree = "<group>"; };
+		BC39DE6F1D37B47E002D5E26 /* YYKTagSearchFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKTagSearchFooterView.m; sourceTree = "<group>"; };
 		BC3C262A1D14398500BF5C3D /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		BC3C26321D14398500BF5C3D /* MBProgressHUD+NJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+NJ.h"; sourceTree = "<group>"; };
 		BC3C26331D14398500BF5C3D /* MBProgressHUD+NJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+NJ.m"; sourceTree = "<group>"; };
@@ -210,6 +217,18 @@
 		BC42C3531CE0946E00ECCD65 /* DBPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPersistence.h; sourceTree = "<group>"; };
 		BC42C3541CE0946E00ECCD65 /* DBPersistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPersistence.m; sourceTree = "<group>"; };
 		BC463EE21D25196800D19521 /* svip_background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = svip_background.jpg; sourceTree = "<group>"; };
+		BC4CCD631D3639D1001518F1 /* YYKSpreadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKSpreadCell.h; sourceTree = "<group>"; };
+		BC4CCD641D3639D1001518F1 /* YYKSpreadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKSpreadCell.m; sourceTree = "<group>"; };
+		BC4CCD661D3639D7001518F1 /* YYKSpreadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKSpreadViewController.h; sourceTree = "<group>"; };
+		BC4CCD671D3639D7001518F1 /* YYKSpreadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKSpreadViewController.m; sourceTree = "<group>"; };
+		BC4CCD691D3639DF001518F1 /* YYKAppSpreadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKAppSpreadModel.h; sourceTree = "<group>"; };
+		BC4CCD6A1D3639DF001518F1 /* YYKAppSpreadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKAppSpreadModel.m; sourceTree = "<group>"; };
+		BC4CCD701D363A14001518F1 /* YYKSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKSearchViewController.h; sourceTree = "<group>"; };
+		BC4CCD711D363A14001518F1 /* YYKSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKSearchViewController.m; sourceTree = "<group>"; };
+		BC4CCD731D3643CF001518F1 /* YYKTagSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKTagSearchViewController.h; sourceTree = "<group>"; };
+		BC4CCD741D3643CF001518F1 /* YYKTagSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKTagSearchViewController.m; sourceTree = "<group>"; };
+		BC4CCD761D364991001518F1 /* YYKSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKSearchResultViewController.h; sourceTree = "<group>"; };
+		BC4CCD771D364991001518F1 /* YYKSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKSearchResultViewController.m; sourceTree = "<group>"; };
 		BC4E66641D2EBCFF0012C2B4 /* YYKVersionUpdateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVersionUpdateModel.h; sourceTree = "<group>"; };
 		BC4E66651D2EBCFF0012C2B4 /* YYKVersionUpdateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVersionUpdateModel.m; sourceTree = "<group>"; };
 		BC51AC2F1CA0F7530073AF91 /* YYKVideoListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVideoListModel.h; sourceTree = "<group>"; };
@@ -274,6 +293,10 @@
 		BC77DB021CFD95BE003B66E8 /* YYKPayPointTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKPayPointTypeCell.m; sourceTree = "<group>"; };
 		BC7A61861CFC508200021200 /* YYKVideoLibViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVideoLibViewController.h; sourceTree = "<group>"; };
 		BC7A61871CFC508200021200 /* YYKVideoLibViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVideoLibViewController.m; sourceTree = "<group>"; };
+		BC7AC6761D38C42200B1DA5E /* YYKKeywordTagModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKKeywordTagModel.h; sourceTree = "<group>"; };
+		BC7AC6771D38C42200B1DA5E /* YYKKeywordTagModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKKeywordTagModel.m; sourceTree = "<group>"; };
+		BC7AC6791D38D7B800B1DA5E /* YYKKeyword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKKeyword.h; sourceTree = "<group>"; };
+		BC7AC67A1D38D7B800B1DA5E /* YYKKeyword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKKeyword.m; sourceTree = "<group>"; };
 		BC7EEBEA1D13EF89008D9A32 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		BC7EEBEB1D13EF89008D9A32 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		BC8D0DC21CBFE88D0013F527 /* YYKHomeProgramModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKHomeProgramModel.h; sourceTree = "<group>"; };
@@ -311,8 +334,6 @@
 		BCB1C4751CC65EB400F9B83B /* YYKMineVIPCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKMineVIPCell.m; sourceTree = "<group>"; };
 		BCB1C4851CC66B5100F9B83B /* YYKVIPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVIPViewController.h; sourceTree = "<group>"; };
 		BCB1C4861CC66B5100F9B83B /* YYKVIPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVIPViewController.m; sourceTree = "<group>"; };
-		BCB1C48C1CC66C8D00F9B83B /* YYKSpreadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKSpreadViewController.h; sourceTree = "<group>"; };
-		BCB1C48D1CC66C8D00F9B83B /* YYKSpreadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKSpreadViewController.m; sourceTree = "<group>"; };
 		BCC00FBB1CD8B23B00F429B4 /* YYKTabStatsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKTabStatsModel.h; sourceTree = "<group>"; };
 		BCC00FBC1CD8B23B00F429B4 /* YYKTabStatsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKTabStatsModel.m; sourceTree = "<group>"; };
 		BCC00FC21CD8B96D00F429B4 /* YYKPayStatsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKPayStatsModel.h; sourceTree = "<group>"; };
@@ -581,9 +602,56 @@
 			path = iAppPay;
 			sourceTree = "<group>";
 		};
+		BC4CCD6C1D3639EF001518F1 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				BC4CCD6F1D3639EF001518F1 /* View */,
+				BC4CCD6D1D3639EF001518F1 /* Controller */,
+				BC4CCD6E1D3639EF001518F1 /* Model */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		BC4CCD6D1D3639EF001518F1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BC4CCD701D363A14001518F1 /* YYKSearchViewController.h */,
+				BC4CCD711D363A14001518F1 /* YYKSearchViewController.m */,
+				BC4CCD731D3643CF001518F1 /* YYKTagSearchViewController.h */,
+				BC4CCD741D3643CF001518F1 /* YYKTagSearchViewController.m */,
+				BC4CCD761D364991001518F1 /* YYKSearchResultViewController.h */,
+				BC4CCD771D364991001518F1 /* YYKSearchResultViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BC4CCD6E1D3639EF001518F1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BC2BAB471D37E1B900691CB4 /* YYKSearchModel.h */,
+				BC2BAB481D37E1B900691CB4 /* YYKSearchModel.m */,
+				BC7AC6761D38C42200B1DA5E /* YYKKeywordTagModel.h */,
+				BC7AC6771D38C42200B1DA5E /* YYKKeywordTagModel.m */,
+				BC7AC6791D38D7B800B1DA5E /* YYKKeyword.h */,
+				BC7AC67A1D38D7B800B1DA5E /* YYKKeyword.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BC4CCD6F1D3639EF001518F1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BC39DE6E1D37B47E002D5E26 /* YYKTagSearchFooterView.h */,
+				BC39DE6F1D37B47E002D5E26 /* YYKTagSearchFooterView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		BC4E66631D2EBC9A0012C2B4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BC4CCD691D3639DF001518F1 /* YYKAppSpreadModel.h */,
+				BC4CCD6A1D3639DF001518F1 /* YYKAppSpreadModel.m */,
 				BC4E66641D2EBCFF0012C2B4 /* YYKVersionUpdateModel.h */,
 				BC4E66651D2EBCFF0012C2B4 /* YYKVersionUpdateModel.m */,
 			);
@@ -746,6 +814,8 @@
 			children = (
 				BCB1C46B1CC65E7D00F9B83B /* YYKMineViewController.h */,
 				BCB1C46C1CC65E7D00F9B83B /* YYKMineViewController.m */,
+				BC4CCD661D3639D7001518F1 /* YYKSpreadViewController.h */,
+				BC4CCD671D3639D7001518F1 /* YYKSpreadViewController.m */,
 				BCB1C4691CC65E7D00F9B83B /* YYKHistoryViewController.h */,
 				BCB1C46A1CC65E7D00F9B83B /* YYKHistoryViewController.m */,
 			);
@@ -755,6 +825,8 @@
 		BCB1C4681CC65E0400F9B83B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BC4CCD631D3639D1001518F1 /* YYKSpreadCell.h */,
+				BC4CCD641D3639D1001518F1 /* YYKSpreadCell.m */,
 				BCB1C4741CC65EB400F9B83B /* YYKMineVIPCell.h */,
 				BCB1C4751CC65EB400F9B83B /* YYKMineVIPCell.m */,
 				BCB1C4721CC65EB400F9B83B /* YYKHistoryCell.h */,
@@ -788,43 +860,6 @@
 				BC61BC121CC8AD6B000343FF /* YYKCard.m */,
 				BC61BC0E1CC8AD53000343FF /* YYKCardSlider.h */,
 				BC61BC0F1CC8AD53000343FF /* YYKCardSlider.m */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		BCB1C4881CC66C7100F9B83B /* Spread */ = {
-			isa = PBXGroup;
-			children = (
-				BCB1C48B1CC66C7100F9B83B /* View */,
-				BCB1C4891CC66C7100F9B83B /* Controller */,
-				BCB1C48A1CC66C7100F9B83B /* Model */,
-			);
-			path = Spread;
-			sourceTree = "<group>";
-		};
-		BCB1C4891CC66C7100F9B83B /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				BCB1C48C1CC66C8D00F9B83B /* YYKSpreadViewController.h */,
-				BCB1C48D1CC66C8D00F9B83B /* YYKSpreadViewController.m */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		BCB1C48A1CC66C7100F9B83B /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				BC23A5B11CC6AD9800B773B3 /* YYKAppSpreadModel.h */,
-				BC23A5B21CC6AD9800B773B3 /* YYKAppSpreadModel.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		BCB1C48B1CC66C7100F9B83B /* View */ = {
-			isa = PBXGroup;
-			children = (
-				BC23A5B41CC6AE2E00B773B3 /* YYKSpreadCell.h */,
-				BC23A5B51CC6AE2E00B773B3 /* YYKSpreadCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -905,7 +940,7 @@
 				BCE2572D1C968CEA00133F4F /* Home */,
 				BC7A61841CFC508200021200 /* Lib */,
 				BCB1C4811CC66B3600F9B83B /* VIP */,
-				BCB1C4881CC66C7100F9B83B /* Spread */,
+				BC4CCD6C1D3639EF001518F1 /* Search */,
 				BCB1C4651CC65E0400F9B83B /* Mine */,
 				BCA1B7D21D23AB59004B492B /* Video */,
 			);
@@ -1347,8 +1382,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC2FB7791CDA0A5700645070 /* DBHandler.m in Sources */,
+				BC7AC6781D38C42200B1DA5E /* YYKKeywordTagModel.m in Sources */,
 				BCE2566B1C966C2600133F4F /* YYKSystemConfig.m in Sources */,
 				BCE257051C966DB400133F4F /* NSString+meltutils.m in Sources */,
+				BC4CCD651D3639D1001518F1 /* YYKSpreadCell.m in Sources */,
+				BC4CCD6B1D3639DF001518F1 /* YYKAppSpreadModel.m in Sources */,
 				BC0C86091CD3608A00C51480 /* YYKCPCStatsModel.m in Sources */,
 				BC0C860C1CD367F800C51480 /* YYKStatsBaseModel.m in Sources */,
 				BCE257031C966DB400133F4F /* NSString+length.m in Sources */,
@@ -1358,6 +1396,7 @@
 				BCA1B7D61D23AC10004B492B /* YYKVideoDetailViewController.m in Sources */,
 				BCE256681C966C2600133F4F /* YYKPaymentModel.m in Sources */,
 				BC76434A1CD04F210059E1C3 /* YYKApplicationManager.m in Sources */,
+				BC7AC67B1D38D7B800B1DA5E /* YYKKeyword.m in Sources */,
 				BCE257021C966DB400133F4F /* NSString+FilterHTML.m in Sources */,
 				BCE257011C966DB400133F4F /* NSString+crypt.m in Sources */,
 				BCE257061C966DB400133F4F /* UIColor+hexColor.m in Sources */,
@@ -1389,6 +1428,7 @@
 				BCB1420B1CBBDA9C0017A2B9 /* YYKLaunchView.m in Sources */,
 				BC69B1FB1CE471B50020B112 /* SPRequestForm.m in Sources */,
 				BCA1B7ED1D23EE13004B492B /* YYKVideoThumbCell.m in Sources */,
+				BC4CCD781D364991001518F1 /* YYKSearchResultViewController.m in Sources */,
 				BC3C265A1D14398500BF5C3D /* MBProgressHUD+NJ.m in Sources */,
 				BCE257331C968D5100133F4F /* YYKHomeViewController.m in Sources */,
 				BCB1C4791CC65EB400F9B83B /* YYKMineVIPCell.m in Sources */,
@@ -1396,7 +1436,6 @@
 				BCA1B7E01D23BE30004B492B /* YYKChannelProgramModel.m in Sources */,
 				BC2914491C9FF6AD002084E2 /* ApiXml.mm in Sources */,
 				BCE256671C966C2600133F4F /* YYKPaymentInfo.m in Sources */,
-				BC23A5B31CC6AD9800B773B3 /* YYKAppSpreadModel.m in Sources */,
 				BCE2566E1C966C2600133F4F /* YYKURLResponse.m in Sources */,
 				BCC2C9001CF5B02200BBE432 /* NSObject+DictionaryRepresentation.m in Sources */,
 				BC76434F1CD04FBE0059E1C3 /* NSObject+PropertyAccessInspecting.m in Sources */,
@@ -1415,6 +1454,7 @@
 				BCE256FD1C966DB400133F4F /* NSDate+Utilities.m in Sources */,
 				BC69B1FF1CE472CB0020B112 /* SPHTTPManager.m in Sources */,
 				BCE257131C966DB400133F4F /* YYKHudManager.m in Sources */,
+				BC2BAB491D37E1B900691CB4 /* YYKSearchModel.m in Sources */,
 				BC2FB77A1CDA0A5700645070 /* DBTableVersion.m in Sources */,
 				BCE257041C966DB400133F4F /* NSString+md5.m in Sources */,
 				BC29144B1C9FF6AD002084E2 /* WeChatPayManager.m in Sources */,
@@ -1429,16 +1469,19 @@
 				BCE257511C96C53D00133F4F /* UITableView+Separator.m in Sources */,
 				BC61BC131CC8AD6B000343FF /* YYKCard.m in Sources */,
 				BC29144A1C9FF6AD002084E2 /* payRequsestHandler.mm in Sources */,
+				BC4CCD681D3639D7001518F1 /* YYKSpreadViewController.m in Sources */,
 				BCB1C4871CC66B5100F9B83B /* YYKVIPViewController.m in Sources */,
 				BCAAEB931CF83504000E9079 /* YYKPaymentButton.m in Sources */,
 				BCE256631C966C2600133F4F /* YYKPaymentViewController.m in Sources */,
-				BC23A5B61CC6AE2E00B773B3 /* YYKSpreadCell.m in Sources */,
+				BC4CCD751D3643CF001518F1 /* YYKTagSearchViewController.m in Sources */,
 				BC42C3551CE0946E00ECCD65 /* DBPersistence.m in Sources */,
 				BCE2566F1C966C2600133F4F /* YYKUserAccessModel.m in Sources */,
 				BC29144F1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m in Sources */,
 				BC29144C1C9FF6AD002084E2 /* WXUtil.mm in Sources */,
 				BC61BC101CC8AD53000343FF /* YYKCardSlider.m in Sources */,
 				BC69B2031CE473E10020B112 /* SPConst.m in Sources */,
+				BC39DE701D37B47E002D5E26 /* YYKTagSearchFooterView.m in Sources */,
+				BC4CCD721D363A14001518F1 /* YYKSearchViewController.m in Sources */,
 				BCE2575A1C96F31200133F4F /* YYKWebViewController.m in Sources */,
 				BC7A618E1CFC508200021200 /* YYKVideoLibViewController.m in Sources */,
 				BC7643421CD04C680059E1C3 /* YYKSpreadBannerViewController.m in Sources */,
@@ -1446,7 +1489,6 @@
 				BC7643491CD04F210059E1C3 /* YYKApplication.m in Sources */,
 				BCE256FE1C966DB400133F4F /* NSDictionary+YYKSign.m in Sources */,
 				BCB58E4D1CEB4AB50084F784 /* SPayUtil.m in Sources */,
-				BCB1C48E1CC66C8D00F9B83B /* YYKSpreadViewController.m in Sources */,
 				BC32FD1E1CCF4E190030EB79 /* UIView+Loading.m in Sources */,
 				BCD826D21D114D82003B14ED /* IappPayMananger.m in Sources */,
 			);

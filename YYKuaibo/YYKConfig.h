@@ -33,13 +33,16 @@
 #define YYK_APP_SPREAD_LIST_URL         @"/iosvideo/appSpreadList.htm"
 #define YYK_APP_SPREAD_BANNER_URL       @"/iosvideo/appSpreadBanner.htm"
 
+#define YYK_HOT_TAG_URL                 @"/iosvideo/hotTag.htm"
+#define YYK_SEARCH_URL                  @"/iosvideo/search.htm"
+
 #define YYK_ACTIVATE_URL                @"/iosvideo/activat.htm"
 #define YYK_SYSTEM_CONFIG_URL           @"/iosvideo/systemConfig.htm"
 #define YYK_USER_ACCESS_URL             @"/iosvideo/userAccess.htm"
 #define YYK_AGREEMENT_NOTPAID_URL       @"/iosvideo/agreement.html"
 #define YYK_AGREEMENT_PAID_URL          @"/iosvideo/agreement-paid.html"
 
-#define YYK_VERSION_UPDATE_URL          @"http://channel.iqu8.cn/channel/versionCheck.htm"
+#define YYK_VERSION_UPDATE_URL          @"http://channel.iqu8.cn/channel/versionCheck.htm" //@"http://120.24.252.114:8095/channel/versionCheck.htm" //
 
 #define YYK_STATS_BASE_URL              @"http://stats.iqu8.cn"
 #define YYK_STATS_CPC_URL               @"/stats/cpcs.service"

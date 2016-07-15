@@ -10,8 +10,8 @@
 
 @interface YYKPayPointTypeCell ()
 @property (nonatomic,retain) UIImageView *selectImageView;
-@property (nonatomic,retain) UILabel *priceLabel;
-@property (nonatomic,retain) UILabel *originalPriceLabel;
+//@property (nonatomic,retain) UILabel *priceLabel;
+//@property (nonatomic,retain) UILabel *originalPriceLabel;
 @property (nonatomic,retain) UILabel *placeholderLabel;
 @end
 
@@ -30,50 +30,52 @@
                 make.width.equalTo(_selectImageView.mas_height);
             }];
         }
-
-        _priceLabel = [[UILabel alloc] init];
-        _priceLabel.textColor = [UIColor redColor];
-        _priceLabel.font = [UIFont systemFontOfSize:16.];
-        [self addSubview:_priceLabel];
-        {
-            [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.equalTo(self).offset(-10);
-                make.centerY.equalTo(self).offset(-5);
-            }];
-        }
-        
-        _originalPriceLabel = [[UILabel alloc] init];
-        _originalPriceLabel.textColor = [UIColor grayColor];
-        _originalPriceLabel.font = [UIFont systemFontOfSize:12.];
-        [self addSubview:_originalPriceLabel];
-        {
-            [_originalPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.equalTo(_priceLabel);
-                make.top.equalTo(_priceLabel.mas_bottom).offset(1);
-            }];
-        }
+//
+//        _priceLabel = [[UILabel alloc] init];
+//        _priceLabel.textColor = [UIColor redColor];
+//        _priceLabel.font = [UIFont systemFontOfSize:16.];
+//        [self addSubview:_priceLabel];
+//        {
+//            [_priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.right.equalTo(self).offset(-10);
+//                make.centerY.equalTo(self).offset(-5);
+//            }];
+//        }
+//        
+//        _originalPriceLabel = [[UILabel alloc] init];
+//        _originalPriceLabel.textColor = [UIColor grayColor];
+//        _originalPriceLabel.font = [UIFont systemFontOfSize:12.];
+//        [self addSubview:_originalPriceLabel];
+//        {
+//            [_originalPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.right.equalTo(_priceLabel);
+//                make.top.equalTo(_priceLabel.mas_bottom).offset(1);
+//            }];
+//        }
         
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:MIN(18, kScreenWidth*0.05)];
+        _titleLabel.font = kBigFont;
         [self addSubview:_titleLabel];
         {
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_selectImageView.mas_right).offset(15);
-                make.right.equalTo(_priceLabel.mas_left).offset(-5).priority(MASLayoutPriorityFittingSizeLevel);
-                make.bottom.equalTo(self.mas_centerY);
+                //make.right.equalTo(_priceLabel.mas_left).offset(-5).priority(MASLayoutPriorityFittingSizeLevel);
+                make.centerY.equalTo(self);
+                //make.bottom.equalTo(self.mas_centerY);
             }];
         }
         
         _subtitleLabel = [[UILabel alloc] init];
         _subtitleLabel.textColor = [UIColor grayColor];
-        _subtitleLabel.font = [UIFont systemFontOfSize:12.];
+        _subtitleLabel.font = kSmallFont;
         [self addSubview:_subtitleLabel];
         {
             [_subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.left.equalTo(_titleLabel.mas_right).offset(5);
-//                make.right.lessThanOrEqualTo(_priceLabel.mas_left).offset(-5);//.priority(MASLayoutPriorityDefaultMedium);
-                make.left.right.equalTo(_titleLabel);
-                make.top.equalTo(_titleLabel.mas_bottom).offset(lround(kScreenWidth*0.01));
+                make.right.equalTo(self).offset(-15);
+                make.left.equalTo(_titleLabel.mas_right).offset(15).priority(MASLayoutPriorityFittingSizeLevel);
+                make.centerY.equalTo(self);
+//                make.left.right.equalTo(_titleLabel);
+//                make.top.equalTo(_titleLabel.mas_bottom).offset(lround(kScreenWidth*0.01));
             }];
         }
     }
@@ -86,22 +88,22 @@
     _selectImageView.image = selected ? [UIImage imageNamed:@"vip_type_selected_icon"] : [UIImage imageNamed:@"vip_type_normal_icon"];
     
     _titleLabel.textColor = selected ? [UIColor blackColor] : [UIColor colorWithWhite:0.75 alpha:1];
-    _priceLabel.textColor = selected ? [UIColor redColor] : [UIColor colorWithWhite:0.75 alpha:1];
-    _originalPriceLabel.textColor = selected ? [UIColor grayColor] : [UIColor colorWithWhite:0.75 alpha:1];
+//    _priceLabel.textColor = selected ? [UIColor redColor] : [UIColor colorWithWhite:0.75 alpha:1];
+//    _originalPriceLabel.textColor = selected ? [UIColor grayColor] : [UIColor colorWithWhite:0.75 alpha:1];
     _subtitleLabel.textColor = selected ? [UIColor grayColor] : [UIColor colorWithWhite:0.75 alpha:1];
 }
 
-- (void)setCurrentPrice:(CGFloat)currentPrice {
-    _currentPrice = currentPrice;
-    
-    _priceLabel.text = [NSString stringWithFormat:@"仅需：¥%@", YYKIntegralPrice(currentPrice)];
-}
-
-- (void)setOriginalPrice:(CGFloat)originalPrice {
-    _originalPrice = originalPrice;
-    _originalPriceLabel.attributedText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"原价：¥%@", YYKIntegralPrice(originalPrice)]
-                                                                         attributes:@{NSStrikethroughStyleAttributeName:@1}];
-}
+//- (void)setCurrentPrice:(CGFloat)currentPrice {
+//    _currentPrice = currentPrice;
+//    
+//    _priceLabel.text = [NSString stringWithFormat:@"仅需：¥%@", YYKIntegralPrice(currentPrice)];
+//}
+//
+//- (void)setOriginalPrice:(CGFloat)originalPrice {
+//    _originalPrice = originalPrice;
+//    _originalPriceLabel.attributedText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"原价：¥%@", YYKIntegralPrice(originalPrice)]
+//                                                                         attributes:@{NSStrikethroughStyleAttributeName:@1}];
+//}
 
 - (void)setShowOnlyTitle:(BOOL)showOnlyTitle {
     _showOnlyTitle = showOnlyTitle;
@@ -109,8 +111,8 @@
     _titleLabel.hidden = showOnlyTitle;
     _selectImageView.hidden = showOnlyTitle;
     _subtitleLabel.hidden = showOnlyTitle;
-    _priceLabel.hidden = showOnlyTitle;
-    _originalPriceLabel.hidden = showOnlyTitle;
+//    _priceLabel.hidden = showOnlyTitle;
+//    _originalPriceLabel.hidden = showOnlyTitle;
     _placeholderLabel.hidden = !showOnlyTitle;
 //    if (showOnlyTitle) {
 //        [_priceLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -132,7 +134,7 @@
     }
     
     _placeholderLabel = [[UILabel alloc] init];
-    _placeholderLabel.font = [UIFont systemFontOfSize:MIN(16, kScreenWidth * 0.04)];
+    _placeholderLabel.font = kMediumFont;
     _placeholderLabel.numberOfLines = 2;
     _placeholderLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_placeholderLabel];

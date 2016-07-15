@@ -11,6 +11,7 @@
 #import "YYKHistoryViewController.h"
 #import "YYKWebViewController.h"
 #import "YYKInputTextViewController.h"
+#import "YYKSpreadViewController.h"
 #import "YYKSystemConfigModel.h"
 #import "YYKVersionUpdateModel.h"
 
@@ -19,6 +20,7 @@ static NSString *const kSideMenuVIPCellReusableIdentifier = @"SideMenuVIPCellReu
 
 typedef NS_ENUM(NSUInteger, YYKSideMenuSection) {
     YYKSideMenuSectionVIP,
+    YYKSideMenuSectionSpread,
     YYKSideMenuSectionPhone,
     YYKSideMenuSectionOthers,
     YYKSideMenuSectionAutoUpdate,
@@ -38,12 +40,9 @@ typedef NS_ENUM(NSUInteger, YYKSideMenuOtherSectionCell) {
 {
     UITableView *_layoutTableView;
 }
-@property (nonatomic,retain) YYKVersionUpdateModel *versionUpdateModel;
 @end
 
 @implementation YYKMineViewController
-
-DefineLazyPropertyInitialization(YYKVersionUpdateModel, versionUpdateModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -67,6 +66,12 @@ DefineLazyPropertyInitialization(YYKVersionUpdateModel, versionUpdateModel)
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification) name:kPaidNotificationName object:nil];
+    
+    
+    [self.navigationController.navigationBar bk_whenTouches:1 tapped:5 handler:^{
+        NSString *baseURLString = [YYK_BASE_URL stringByReplacingCharactersInRange:NSMakeRange(0, YYK_BASE_URL.length-6) withString:@"******"];
+        [[YYKHudManager manager] showHudWithText:[NSString stringWithFormat:@"Server:%@\nChannelNo:%@\nPackageCertificate:%@\npV:%@/%@", baseURLString, YYK_CHANNEL_NO, YYK_PACKAGE_CERTIFICATE, YYK_REST_PV, YYK_PAYMENT_PV]];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -105,8 +110,12 @@ DefineLazyPropertyInitialization(YYKVersionUpdateModel, versionUpdateModel)
 }
 
 - (void)checkNewVersion {
+    if ([YYKVersionUpdateModel sharedModel].fetchedVersionInfo.versionNo.length == 0) {
+        return ;
+    }
+    
     @weakify(self);
-    [self.versionUpdateModel fetchLatestVersionWithCompletionHandler:^(BOOL success, id obj) {
+    [[YYKVersionUpdateModel sharedModel] fetchLatestVersionWithCompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
         if (success) {
             [self->_layoutTableView reloadSections:[NSIndexSet indexSetWithIndex:[self sectionIndexForSectionType:YYKSideMenuSectionAutoUpdate]] withRowAnimation:UITableViewRowAnimationNone];
@@ -195,8 +204,11 @@ DefineLazyPropertyInitialization(YYKVersionUpdateModel, versionUpdateModel)
         }
         cell.detailTextLabel.text = nil;
         cell.detailTextLabel.textColor = [UIColor colorWithWhite:0.6 alpha:1];
-
-        if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionPhone) {
+        
+        if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionSpread) {
+            cell.textLabel.text = @"精品推荐";
+            cell.imageView.image = [UIImage imageNamed:@"mine_spread_icon"];
+        } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionPhone) {
             const NSUInteger manualActiRow = [YYKUtil isAllVIPs] ? -1:0;
             const NSUInteger historyRow = [YYKUtil isAllVIPs] ? 0 : 1;
             const NSUInteger contactRow = [YYKUtil isNoVIP] ? -1 : [YYKUtil isAllVIPs] ? 1 : 2;
@@ -228,9 +240,11 @@ DefineLazyPropertyInitialization(YYKVersionUpdateModel, versionUpdateModel)
         } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionAutoUpdate) {
             cell.imageView.image = [UIImage imageNamed:@"mine_auto_update"];
             cell.textLabel.text = @"版本更新";
-            if (self.versionUpdateModel.fetchedVersionInfo.versionNo.length > 0) {
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"新版本：%@", self.versionUpdateModel.fetchedVersionInfo.versionNo];
+            if ([YYKVersionUpdateModel sharedModel].fetchedVersionInfo.versionNo.length > 0) {
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"新版本：%@", [YYKVersionUpdateModel sharedModel].fetchedVersionInfo.versionNo];
                 cell.detailTextLabel.textColor = [UIColor redColor];
+            } else {
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"当前版本：%@", [YYKUtil appVersion]];
             }
             
         }
@@ -240,7 +254,9 @@ DefineLazyPropertyInitialization(YYKVersionUpdateModel, versionUpdateModel)
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([self sectionTypeInSection:section] == YYKSideMenuSectionOthers) {
+    if ([self sectionTypeInSection:section] == YYKSideMenuSectionSpread) {
+        return 1;
+    } else if ([self sectionTypeInSection:section] == YYKSideMenuSectionOthers) {
         return YYKSideMenuOtherSectionCellCount;
     } else if ([self sectionTypeInSection:section] == YYKSideMenuSectionVIP) {
         return 1;
@@ -358,11 +374,15 @@ DefineLazyPropertyInitialization(YYKVersionUpdateModel, versionUpdateModel)
             [[YYKHudManager manager] showHudWithText:@"您已经是会员，感谢您的观看！"];
         }
     } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionAutoUpdate) {
-        if (self.versionUpdateModel.fetchedVersionInfo.versionNo.length > 0) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.versionUpdateModel.fetchedVersionInfo.linkUrl]];
+        if ([YYKVersionUpdateModel sharedModel].fetchedVersionInfo.versionNo.length > 0) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[YYKVersionUpdateModel sharedModel].fetchedVersionInfo.linkUrl]];
         } else {
             [UIAlertView bk_showAlertViewWithTitle:@"当前版本已经是最新版本！" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
         }
+    } else if ([self sectionTypeInSection:indexPath.section] == YYKSideMenuSectionSpread) {
+        YYKSpreadViewController *spreadVC = [[YYKSpreadViewController alloc] init];
+        spreadVC.title = cell.textLabel.text;
+        [self.navigationController pushViewController:spreadVC animated:YES];
     }
 }
 @end

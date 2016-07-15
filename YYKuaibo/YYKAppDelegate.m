@@ -11,7 +11,7 @@
 #import "YYKMineViewController.h"
 #import "YYKVideoLibViewController.h"
 #import "YYKVIPViewController.h"
-#import "YYKSpreadViewController.h"
+#import "YYKSearchViewController.h"
 #import "YYKActivateModel.h"
 #import "YYKUserAccessModel.h"
 #import "YYKPaymentModel.h"
@@ -19,6 +19,7 @@
 #import "YYKAppSpreadBannerModel.h"
 #import "MobClick.h"
 #import "YYKLaunchView.h"
+#import "YYKVersionUpdateModel.h"
 
 @interface YYKAppDelegate () <UITabBarControllerDelegate>
 
@@ -59,13 +60,13 @@
                                               selectedImage:[UIImage imageNamed:@"tabbar_vip_selected"]];
     vipNav.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
     
-    YYKSpreadViewController *spreadVC = [[YYKSpreadViewController alloc] init];
-    spreadVC.title = @"更多";
+    YYKSearchViewController *searchVC = [[YYKSearchViewController alloc] init];
+    searchVC.title = @"热搜";
     
-    UINavigationController *spreadNav = [[UINavigationController alloc] initWithRootViewController:spreadVC];
-    spreadNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:spreadVC.title
-                                                         image:[UIImage imageNamed:@"tabbar_more_normal"]
-                                                 selectedImage:[UIImage imageNamed:@"tabbar_more_selected"]];
+    UINavigationController *searchNav = [[UINavigationController alloc] initWithRootViewController:searchVC];
+    searchNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:searchVC.title
+                                                         image:[UIImage imageNamed:@"tabbar_search_normal"]
+                                                 selectedImage:[UIImage imageNamed:@"tabbar_search_selected"]];
     
     YYKMineViewController *mineVC = [[YYKMineViewController alloc] init];
     mineVC.title = @"我的";
@@ -76,7 +77,7 @@
                                                    selectedImage:[UIImage imageNamed:@"tabbar_mine_selected"]];
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[homeNav, channelNav, vipNav, spreadNav, mineNav];
+    tabBarController.viewControllers = @[homeNav, channelNav, vipNav, searchNav, mineNav];
 //    tabBarController.tabBar.translucent = NO;
     tabBarController.delegate = self;
     _window.rootViewController = tabBarController;
@@ -93,6 +94,13 @@
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.],
                                                            NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    if ([UITextField respondsToSelector:@selector(appearanceWhenContainedInInstancesOfClasses:)]) {
+        [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTintColor:[UIColor darkGrayColor]];
+    } else {
+        [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor:[UIColor darkGrayColor]];
+    }
+    
 //    [[UISegmentedControl appearance] setTintColor:[UIColor colorWithHexString:@"#ff226f"]];
 //    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}
 //                                                   forState:UIControlStateNormal|UIControlStateSelected];
@@ -234,6 +242,23 @@
     }];
     
     [[YYKAppSpreadBannerModel sharedModel] fetchAppSpreadWithCompletionHandler:nil];
+    [[YYKVersionUpdateModel sharedModel] fetchLatestVersionWithCompletionHandler:^(BOOL success, id obj) {
+        if (success) {
+            YYKVersionUpdateInfo *info = obj;
+            if (info.isForceToUpdate.boolValue) {
+                [UIAlertView bk_showAlertViewWithTitle:@"系统更新"
+                                               message:@"系统检测到新的版本，建议您升级到新的版本；如果您选择不升级，将影响到应用的使用。"
+                                     cancelButtonTitle:@"取消"
+                                     otherButtonTitles:@[@"确定"]
+                                               handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+                {
+                    if (buttonIndex == 1) {
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:info.linkUrl]];
+                    }
+                }];
+            }
+        }
+    }];
     return YES;
 }
 

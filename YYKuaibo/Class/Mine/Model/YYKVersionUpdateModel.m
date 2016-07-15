@@ -14,6 +14,15 @@
 
 @implementation YYKVersionUpdateModel
 
++ (instancetype)sharedModel {
+    static YYKVersionUpdateModel *_sharedModel;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedModel = [[self alloc] init];
+    });
+    return _sharedModel;
+}
+
 - (BOOL)shouldPostErrorNotification {
     return NO;
 }

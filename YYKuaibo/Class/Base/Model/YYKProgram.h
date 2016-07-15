@@ -40,6 +40,10 @@ typedef NS_ENUM(NSUInteger, YYKProgramType) {
 @property (nonatomic) NSString *spare;
 @property (nonatomic,retain) NSArray<YYKProgramUrl *> *urlList; // type==2有集合，目前为图集url集合
 
+// Channel info
+@property (nonatomic) NSNumber *columnId;
+@property (nonatomic) NSNumber *realColumnId;
+
 @property (nonatomic) NSDate *playedDate; // for history
 
 + (NSArray<YYKProgram *> *)allPlayedPrograms;

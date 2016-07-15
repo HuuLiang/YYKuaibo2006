@@ -56,6 +56,16 @@ typedef NS_ENUM(NSUInteger, YYKVideoSpec) {
     YYKVideoSpecFree,
     YYKVideoSpecVIP
 };
+
+// Search Error Definitions
+extern NSString *const kSearchErrorDomain;
+extern const NSInteger kSearchParameterErrorCode;
+extern const NSInteger kSearchLogicErrorCode;
+extern const NSInteger kSearchNetworkErrorCode;
+extern const NSInteger kSearchUnknownErrorCode;
+
+extern NSString *const kSearchErrorMessageKey;
+
 // DLog
 #ifdef  DEBUG
 #define DLog(fmt,...) {NSLog((@"%s [Line:%d]" fmt),__PRETTY_FUNCTION__,__LINE__,##__VA_ARGS__);}
@@ -109,4 +119,11 @@ FOUNDATION_STATIC_INLINE NSString * YYKIntegralPrice(const CGFloat price) {
         return [NSString stringWithFormat:@"%.2f", price];
     }
 }
+
+#define kExtraExtraBigFont [UIFont systemFontOfSize:MIN(24,kScreenWidth*0.065)]
+#define kExtraBigFont [UIFont systemFontOfSize:MIN(20,kScreenWidth*0.055)]
+#define kBigFont  [UIFont systemFontOfSize:MIN(18,kScreenWidth*0.05)]
+#define kMediumFont [UIFont systemFontOfSize:MIN(16, kScreenWidth*0.045)]
+#define kSmallFont [UIFont systemFontOfSize:MIN(14, kScreenWidth*0.04)]
+#define kExtraSmallFont [UIFont systemFontOfSize:MIN(12, kScreenWidth*0.035)]
 #endif /* YYKCommonDef_h */

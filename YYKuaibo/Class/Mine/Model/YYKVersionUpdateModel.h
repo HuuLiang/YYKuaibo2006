@@ -12,6 +12,7 @@
 
 @property (nonatomic) NSString *versionNo;
 @property (nonatomic) NSString *linkUrl;
+@property (nonatomic) NSNumber *isForceToUpdate;
 
 @end
 
@@ -19,6 +20,7 @@
 
 @property (nonatomic,retain,readonly) YYKVersionUpdateInfo *fetchedVersionInfo;
 
++ (instancetype)sharedModel;
 - (BOOL)fetchLatestVersionWithCompletionHandler:(YYKCompletionHandler)completionHandler;
 
 @end
