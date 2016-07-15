@@ -96,7 +96,7 @@
 - (void)setCurrentPrice:(CGFloat)currentPrice {
     _currentPrice = currentPrice;
     
-    _priceLabel.text = [NSString stringWithFormat:@"活动价:¥%@元", YYKIntegralPrice(currentPrice)];
+    _priceLabel.text = [NSString stringWithFormat:@"特价:¥%@元", YYKIntegralPrice(currentPrice)];
 }
 
 - (void)setOriginalPrice:(CGFloat)originalPrice {
