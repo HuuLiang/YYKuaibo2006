@@ -122,7 +122,7 @@ DefineLazyPropertyInitialization(NSMutableArray, resultPrograms)
         
         cell.imageURL = [NSURL URLWithString:program.coverImg];
         cell.title = program.title;
-        cell.tagText = program.spare;
+        cell.tagText = program.tag;
     }
     return cell;
 }

@@ -111,12 +111,20 @@
     [self.view addSubview:self.popView];
     {
         [self.popView mas_makeConstraints:^(MASConstraintMaker *make) {
+
             make.center.equalTo(self.view);
-            
-            const CGFloat width = kScreenWidth * 0.85;
-            make.size.mas_equalTo(CGSizeMake(width, [self.popView viewHeightRelativeToWidth:width]));
+            const CGFloat width = MAX(kScreenWidth * 0.75, 275);
+            const CGFloat height = [self.popView viewHeightRelativeToWidth:width];
+            make.size.mas_equalTo(CGSizeMake(width, height));
+            //make.centerY.equalTo(self.view).offset(-height/10);
         }];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [_popView reloadData];
 }
 
 - (void)popupPaymentInView:(UIView *)view

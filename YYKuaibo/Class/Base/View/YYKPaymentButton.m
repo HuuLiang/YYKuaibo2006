@@ -14,14 +14,15 @@
     self = [super init];
     if (self) {
         self.layer.masksToBounds = YES;
-        self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        self.layer.cornerRadius = 5;
+        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     }
     return self;
 }
 
 - (CGRect)imageRectForContentRect:(CGRect)contentRect {
     const CGFloat height = CGRectGetHeight(contentRect) * 0.8;
-    return CGRectMake(5, (contentRect.size.height - height)/2, height, height);
+    return CGRectMake(CGRectGetWidth(contentRect)/5, (contentRect.size.height - height)/2, height, height);
 }
 
 - (CGRect)titleRectForContentRect:(CGRect)contentRect {
@@ -29,10 +30,5 @@
     const CGFloat height = imageRect.size.height;
     const CGFloat x = CGRectGetMaxX(imageRect)+15;
     return CGRectMake(x, (contentRect.size.height - height)/2, contentRect.size.width-x-15, height);
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.layer.cornerRadius = CGRectGetHeight(self.bounds)/2;
 }
 @end

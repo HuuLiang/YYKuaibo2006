@@ -13,9 +13,8 @@
 @property (nonatomic,retain,readonly) UILabel *titleLabel;
 @property (nonatomic,retain,readonly) UILabel *subtitleLabel;
 
-//@property (nonatomic) CGFloat currentPrice;
-//@property (nonatomic) CGFloat originalPrice;
-@property (nonatomic) BOOL showOnlyTitle;
+@property (nonatomic) CGFloat currentPrice;
+@property (nonatomic) CGFloat originalPrice;
 @property (nonatomic) NSAttributedString *placeholder;
 
 @end

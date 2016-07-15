@@ -120,6 +120,7 @@ FOUNDATION_STATIC_INLINE NSString * YYKIntegralPrice(const CGFloat price) {
     }
 }
 
+#define kExExExBigFont [UIFont systemFontOfSize:MIN(28,kScreenWidth*0.075)]
 #define kExtraExtraBigFont [UIFont systemFontOfSize:MIN(24,kScreenWidth*0.065)]
 #define kExtraBigFont [UIFont systemFontOfSize:MIN(20,kScreenWidth*0.055)]
 #define kBigFont  [UIFont systemFontOfSize:MIN(18,kScreenWidth*0.05)]
