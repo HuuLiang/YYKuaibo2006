@@ -161,7 +161,7 @@ DefineLazyPropertyInitialization(YYKKeywordTagModel, tagModel)
         cell.backgroundColor = [UIColor whiteColor];
         
         UILabel *textLabel = [self textLabelInCell:cell];
-        textLabel.numberOfLines = 2;
+        textLabel.numberOfLines = 4;
         
         if ([self.delegate respondsToSelector:@selector(searchErrorMessageInTagSearchViewController:)]) {
             textLabel.attributedText = [self.delegate searchErrorMessageInTagSearchViewController:self];

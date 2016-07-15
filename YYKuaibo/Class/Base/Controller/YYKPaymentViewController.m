@@ -112,11 +112,11 @@
     {
         [self.popView mas_makeConstraints:^(MASConstraintMaker *make) {
 
-            make.center.equalTo(self.view);
+            make.centerX.equalTo(self.view);
             const CGFloat width = MAX(kScreenWidth * 0.75, 275);
             const CGFloat height = [self.popView viewHeightRelativeToWidth:width];
             make.size.mas_equalTo(CGSizeMake(width, height));
-            //make.centerY.equalTo(self.view).offset(-height/10);
+            make.centerY.equalTo(self.view).offset(-height/20);
         }];
     }
 }

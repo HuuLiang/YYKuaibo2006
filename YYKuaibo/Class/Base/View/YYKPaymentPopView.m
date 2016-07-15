@@ -20,7 +20,7 @@ typedef NS_ENUM(NSUInteger, YYKPaymentPopViewSection) {
     SectionCount
 };
 
-static const CGFloat kHeaderImageScale = 545./400.;
+static const CGFloat kHeaderImageScale = 545./557.;//400.;
 static NSString *const kPayPointTypeCellReusableIdentifier = @"PayPointTypeCellReusableIdentifier";
 
 #define kTitleCellHeight MIN(kScreenHeight * 0.08, 50)
@@ -181,7 +181,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
     [_headerImageView addSubview:self.titleLabel];
     {
         [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(_headerImageView).offset(-kScreenHeight*0.015);
+            make.bottom.equalTo(_headerImageView).multipliedBy(0.9);
             make.centerX.equalTo(_headerImageView);
         }];
     }

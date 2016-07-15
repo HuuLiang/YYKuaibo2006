@@ -27,6 +27,17 @@
     return self;
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    const CGFloat fullWidth = CGRectGetWidth(self.bounds);
+    const CGFloat fullHeight = CGRectGetHeight(self.bounds);
+    
+    _textLabel.frame = self.bounds;
+    _imageView.center = CGPointMake(fullWidth/2, fullHeight/2);
+    _imageView.bounds = CGRectMake(0, 0, fullHeight*0.5, fullHeight*0.5);
+}
+
 - (UILabel *)textLabel {
     if (_textLabel) {
         return _textLabel;
@@ -36,12 +47,8 @@
     _textLabel.textColor = [UIColor darkPink];
     _textLabel.font = kMediumFont;
     _textLabel.text = @"清空记录";
+    _textLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_textLabel];
-    {
-        [_textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(self);
-        }];
-    }
     return _textLabel;
 }
 
@@ -54,13 +61,6 @@
     _imageView.contentMode = UIViewContentModeScaleAspectFit;
     _imageView.transform = self.imageTransform;
     [self addSubview:_imageView];
-    {
-        [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(self);
-            make.height.equalTo(self).multipliedBy(0.5);
-            make.width.equalTo(_imageView.mas_height);
-        }];
-    }
     return _imageView;
 }
 

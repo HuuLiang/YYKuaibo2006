@@ -11,7 +11,7 @@
 #import "YYKSearchResultViewController.h"
 #import "YYKKeyword.h"
 
-static NSString *const kNonVIPSearchKeywordError = @"很遗憾，只有VIP会员才能使用关键字搜索功能！";
+static NSString *const kNonVIPSearchKeywordError = @"只有VIP会员才能使用关键字搜索功能！";
 
 @interface YYKSearchViewController () <UISearchBarDelegate,YYKTagSearchViewControllerDelegate>
 {
@@ -85,13 +85,13 @@ DefineLazyPropertyInitialization(YYKSearchResultViewController, resultVC)
                 
                 NSString *errorMessage;
                 if (!error) {
-                    errorMessage = @"很遗憾，您搜索的内容未能找到！";
+                    errorMessage = @"您搜索的内容未能找到！";
                 } else if (error.code == kSearchNetworkErrorCode) {
-                    errorMessage = @"很遗憾，由于网络问题，您搜索的内容无法显示！";
+                    errorMessage = @"由于网络问题，您搜索的内容无法显示！";
                 } else if (error.code == kSearchLogicErrorCode) {
-                    errorMessage = @"很遗憾，由于业务逻辑问题，您搜索的内容无法显示！";
+                    errorMessage = @"由于业务逻辑问题，您搜索的内容无法显示！";
                 } else {
-                    errorMessage = @"很遗憾，搜索的过程中出现了未知的错误！";
+                    errorMessage = @"搜索的过程中出现了未知的错误！";
                 }
                 
                 NSAttributedString *firstLineString = [[NSAttributedString alloc] initWithString:errorMessage attributes:@{NSFontAttributeName:kMediumFont}];
