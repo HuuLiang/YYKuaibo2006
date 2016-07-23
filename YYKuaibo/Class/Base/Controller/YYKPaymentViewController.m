@@ -71,6 +71,12 @@
         }];
     }
     
+    YYKPaymentType cardPayPaymentType = [[YYKPaymentManager sharedManager] cardPayPaymentType];
+    if (cardPayPaymentType != YYKPaymentTypeNone) {
+        [_popView addPaymentWithImage:[UIImage imageNamed:@"card_pay_icon"] title:@"购卡支付" backgroundColor:[UIColor darkPink] action:^(id sender) {
+            Pay(cardPayPaymentType, YYKPaymentTypeNone);
+        }];
+    }
 //    if (([YYKPaymentConfig sharedConfig].iappPayInfo.supportPayTypes.unsignedIntegerValue & YYKIAppPayTypeWeChat)
 //        || [YYKPaymentConfig sharedConfig].weixinInfo) {
 //        BOOL useBuildInWeChatPay = [YYKPaymentConfig sharedConfig].weixinInfo != nil;
