@@ -29,7 +29,7 @@
 - (CGRect)titleRectForContentRect:(CGRect)contentRect {
     CGRect imageRect = [self imageRectForContentRect:contentRect];
 //    const CGFloat height = imageRect.size.height;
-    const CGFloat x = CGRectGetMaxX(imageRect)+5;
-    return CGRectMake(x, 0, contentRect.size.width-x-5, contentRect.size.height);
+    const CGFloat x = CGRectGetMaxX(imageRect)+3;
+    return CGRectMake(x, 0, contentRect.size.width-x-3, contentRect.size.height);
 }
 @end
