@@ -24,6 +24,14 @@
 //static NSString *const kAlipaySchemeUrl = @"comyykuaibo2016appalipayurlscheme";
 static NSString *const kVIAPaySchemeUrl = @"comyykuaibov27appviapayurlscheme";
 
+typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
+    YYKVIAPayTypeNone,
+    YYKVIAPayTypeWeChat = 2,
+    YYKVIAPayTypeQQ = 3,
+    YYKVIAPayTypeUPPay = 4,
+    YYKVIAPayTypeShenZhou = 5
+};
+
 @interface YYKPaymentManager () <WXApiDelegate, stringDelegate>
 @property (nonatomic,retain) YYKPaymentInfo *paymentInfo;
 @property (nonatomic,copy) YYKPaymentCompletionHandler completionHandler;
@@ -64,7 +72,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     
     
     
-    Class class = NSClassFromString(@"SZFViewController");
+    Class class = NSClassFromString(@"VIASZFViewController");
     if (class) {
         [class aspect_hookSelector:NSSelectorFromString(@"viewWillAppear:")
                        withOptions:AspectPositionAfter
@@ -112,12 +120,19 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     return YYKPaymentTypeNone;
 }
 
+- (YYKPaymentType)qqPaymentType {
+    if ([YYKPaymentConfig sharedConfig].syskPayInfo.supportPayTypes.unsignedIntegerValue & YYKSubPayTypeQQ) {
+        return YYKPaymentTypeVIAPay;
+    }
+    return YYKPaymentTypeNone;
+}
+
 - (void)handleOpenUrl:(NSURL *)url {
     [[PayUitls getIntents] paytoAli:url];
 }
 
 - (YYKPaymentInfo *)startPaymentWithType:(YYKPaymentType)type
-                                 subType:(YYKPaymentType)subType
+                                 subType:(YYKSubPayType)subType
                                    price:(NSUInteger)price
                             payPointType:(YYKPayPointType)payPointType
                               forProgram:(YYKProgram *)program
@@ -166,16 +181,20 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     self.payChannel = channel;
     
     BOOL success = YES;
-    if (type == YYKPaymentTypeVIAPay && (subType == YYKPaymentTypeAlipay || subType == YYKPaymentTypeWeChatPay)) {
+    if (type == YYKPaymentTypeVIAPay && (subType == YYKSubPayTypeAlipay || subType == YYKSubPayTypeWeChat || subType == YYKSubPayTypeQQ)) {
+        NSDictionary *viaPayTypeMapping = @{@(YYKSubPayTypeAlipay):@(YYKVIAPayTypeShenZhou),
+                                            @(YYKSubPayTypeWeChat):@(YYKVIAPayTypeWeChat),
+                                            @(YYKSubPayTypeQQ):@(YYKVIAPayTypeQQ)};
+        
         NSString *tradeName = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? [kSVIPText stringByAppendingString:@"会员"] : @"VIP会员";
         [[PayUitls getIntents]   gotoPayByFee:@(price).stringValue
                                  andTradeName:tradeName
                               andGoodsDetails:tradeName
                                     andScheme:kVIAPaySchemeUrl
                             andchannelOrderId:[orderNo stringByAppendingFormat:@"$%@", YYK_REST_APP_ID]
-                                      andType:subType == YYKPaymentTypeAlipay ? @"5" : @"2"
+                                      andType:[viaPayTypeMapping[@(subType)] stringValue]
                              andViewControler:[YYKUtil currentVisibleViewController]];
-    } else if (type == YYKPaymentTypeSPay && (subType == YYKPaymentTypeAlipay || subType == YYKPaymentTypeWeChatPay)) {
+    } else if (type == YYKPaymentTypeSPay && (subType == YYKSubPayTypeAlipay || subType == YYKSubPayTypeWeChat)) {
         @weakify(self);
         paymentInfo.reservedData = [NSString stringWithFormat:@"客服电话：%@", [YYKSystemConfigModel sharedModel].contact];
         [[SPayUtil sharedInstance] payWithPaymentInfo:paymentInfo completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
@@ -205,7 +224,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
                 self.completionHandler(payResult, self.paymentInfo);
             }
         }];
-    } else if (type == YYKPaymentTypeHTPay && subType == YYKPaymentTypeWeChatPay) {
+    } else if (type == YYKPaymentTypeHTPay && subType == YYKSubPayTypeWeChat) {
         @weakify(self);
         [[HTPayManager sharedManager] payWithOrderId:orderNo
                                            orderName:program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? [kSVIPText stringByAppendingString:@"会员"] : @"VIP会员"

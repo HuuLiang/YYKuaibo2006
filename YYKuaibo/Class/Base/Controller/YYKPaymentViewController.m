@@ -46,7 +46,7 @@
     }
     
     @weakify(self);
-    void (^Pay)(YYKPaymentType type, YYKPaymentType subType) = ^(YYKPaymentType type, YYKPaymentType subType)
+    void (^Pay)(YYKPaymentType type, YYKSubPayType subType) = ^(YYKPaymentType type, YYKSubPayType subType)
     {
         @strongify(self);
         [self payForPaymentType:type paymentSubType:subType];
@@ -60,21 +60,28 @@
     YYKPaymentType wechatPaymentType = [[YYKPaymentManager sharedManager] wechatPaymentType];
     if (wechatPaymentType != YYKPaymentTypeNone) {
         [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信支付" backgroundColor:[UIColor colorWithHexString:@"#05c30b"] action:^(id sender) {
-            Pay(wechatPaymentType, YYKPaymentTypeWeChatPay);
+            Pay(wechatPaymentType, YYKSubPayTypeWeChat);
         }];
     }
     
     YYKPaymentType alipayPaymentType = [[YYKPaymentManager sharedManager] alipayPaymentType];
     if (alipayPaymentType != YYKPaymentTypeNone) {
-        [_popView addPaymentWithImage:[UIImage imageNamed:@"alipay_icon"] title:@"支付宝支付" backgroundColor:[UIColor colorWithHexString:@"#02a0e9"] action:^(id sender) {
-            Pay(alipayPaymentType, YYKPaymentTypeAlipay);
+        [_popView addPaymentWithImage:[UIImage imageNamed:@"alipay_icon"] title:@"支付宝" backgroundColor:[UIColor colorWithHexString:@"#02a0e9"] action:^(id sender) {
+            Pay(alipayPaymentType, YYKSubPayTypeAlipay);
+        }];
+    }
+    
+    YYKPaymentType qqPaymentType = [[YYKPaymentManager sharedManager] qqPaymentType];
+    if (qqPaymentType != YYKPaymentTypeNone) {
+        [_popView addPaymentWithImage:[UIImage imageNamed:@"qq_icon"] title:@"QQ钱包" backgroundColor:[UIColor redColor] action:^(id sender) {
+            Pay(alipayPaymentType, YYKSubPayTypeQQ);
         }];
     }
     
     YYKPaymentType cardPayPaymentType = [[YYKPaymentManager sharedManager] cardPayPaymentType];
     if (cardPayPaymentType != YYKPaymentTypeNone) {
-        [_popView addPaymentWithImage:[UIImage imageNamed:@"card_pay_icon"] title:@"购卡支付" backgroundColor:[UIColor darkPink] action:^(id sender) {
-            Pay(cardPayPaymentType, YYKPaymentTypeNone);
+        [_popView addPaymentWithImage:[UIImage imageNamed:@"card_pay_icon"] title:@"购卡支付" subtitle:@"支持微信和支付宝" backgroundColor:[UIColor darkPink] action:^(id sender) {
+            Pay(cardPayPaymentType, YYKSubPayTypeNone);
         }];
     }
 //    if (([YYKPaymentConfig sharedConfig].iappPayInfo.supportPayTypes.unsignedIntegerValue & YYKIAppPayTypeWeChat)
@@ -220,7 +227,7 @@
 }
 
 - (void)payForPaymentType:(YYKPaymentType)paymentType
-           paymentSubType:(YYKPaymentType)paymentSubType {
+           paymentSubType:(YYKSubPayType)paymentSubType {
     @weakify(self);
     YYKPayPointType payPointType = self.popView.payPointType;
     NSUInteger price = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:payPointType];

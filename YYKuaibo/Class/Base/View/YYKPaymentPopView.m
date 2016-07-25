@@ -9,6 +9,7 @@
 #import "YYKPaymentPopView.h"
 #import "YYKPaymentButton.h"
 #import "YYKPayPointTypeCell.h"
+#import "YYKPaymentTypeCell.h"
 #import "YYKSystemConfigModel.h"
 #import <objc/runtime.h>
 
@@ -20,33 +21,71 @@ typedef NS_ENUM(NSUInteger, YYKPaymentPopViewSection) {
     SectionCount
 };
 
-static const CGFloat kHeaderImageScale = 545./557.;//400.;
+static const CGFloat kHeaderImageScale = 545./440.;//400.;
 static NSString *const kPayPointTypeCellReusableIdentifier = @"PayPointTypeCellReusableIdentifier";
+static NSString *const kPaymentTypeCellReusableIdentifier = @"PaymentTypeCellReusableIdentifier";
 
 #define kTitleCellHeight MIN(kScreenHeight * 0.08, 50)
-#define kPaymentCellHeight MIN(kScreenHeight * 0.15, 60)
+#define kPaymentCellHeight MIN(kScreenHeight * 0.11, 60)
 #define kPayPointTypeCellHeight MIN(kScreenHeight * 0.1, 60)
 #define kFooterHeight (kScreenHeight * 0.06)
 
 static const void *kPaymentButtonAssociatedKey = &kPaymentButtonAssociatedKey;
+static const void *kPayPointTypeAssociatedKey = &kPayPointTypeAssociatedKey;
 
-@interface YYKPaymentPopView () <UITableViewDataSource,UITableViewSeparatorDelegate>
+@interface YYKPaymentTypeItem : NSObject
+
+@property (nonatomic,retain) UIImage *image;
+@property (nonatomic) NSString *title;
+@property (nonatomic) NSString *subtitle;
+@property (nonatomic) UIColor *backgroundColor;
+@property (nonatomic,copy) YYKAction action;
+
++ (instancetype)itemWithImage:(UIImage *)image
+                        title:(NSString *)title
+                     subtitle:(NSString *)subtitle
+              backgroundColor:(UIColor *)backgroundColor
+                       action:(YYKAction)action;
+@end
+
+@implementation YYKPaymentTypeItem
+
++ (instancetype)itemWithImage:(UIImage *)image
+                        title:(NSString *)title
+                     subtitle:(NSString *)subtitle
+              backgroundColor:(UIColor *)backgroundColor
+                       action:(YYKAction)action
+{
+    YYKPaymentTypeItem *instance = [[self alloc] init];
+    instance.image = image;
+    instance.title = title;
+    instance.subtitle = subtitle;
+    instance.backgroundColor = backgroundColor;
+    instance.action = action;
+
+    return instance;
+}
+@end
+
+@interface YYKPaymentPopView () <UITableViewDataSource,UITableViewSeparatorDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     UITableViewCell *_headerCell;
     UITableViewCell *_titleCell;
+    UITableViewCell *_paymentTypeCell;
+    UICollectionView *_paymentCV;
     
     UILabel *_priceLabel;
     
     UILabel *_selfActivateLabel;
 }
-@property (nonatomic,retain) NSMutableDictionary<NSIndexPath *, UITableViewCell *> *cells;
+@property (nonatomic,retain) NSMutableArray<YYKPaymentTypeItem *> *paymentTypeItems;
 @property (nonatomic,retain) UIImageView *headerImageView;
-@property (nonatomic,retain) UILabel *titleLabel;
+//@property (nonatomic,retain) UILabel *titleLabel;
 @end
 
 @implementation YYKPaymentPopView
 
-DefineLazyPropertyInitialization(NSMutableDictionary, cells)
+DefineLazyPropertyInitialization(NSMutableArray, paymentTypeItems)
 
 - (instancetype)init {
     self = [super init];
@@ -128,32 +167,47 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
             backgroundColor:(UIColor *)backgroundColor
                      action:(YYKAction)action
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.cells.count inSection:PaymentTypeSection];
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
-    cell.backgroundColor = self.tableFooterView.backgroundColor;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [self addPaymentWithImage:image title:title subtitle:nil backgroundColor:backgroundColor action:action];
     
-    YYKPaymentButton *paymentButton = [[YYKPaymentButton alloc] init];
-    [paymentButton setTitle:title forState:UIControlStateNormal];
-    [paymentButton setBackgroundImage:[UIImage imageWithColor:backgroundColor] forState:UIControlStateNormal];
-    [paymentButton setImage:image forState:UIControlStateNormal];
-    objc_setAssociatedObject(cell, kPaymentButtonAssociatedKey, paymentButton, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [cell addSubview:paymentButton];
-    {
-        [paymentButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(cell);
-            make.height.equalTo(cell).multipliedBy(0.7);
-            make.width.equalTo(cell).multipliedBy(0.85);
-        }];
-    }
-    
-    [paymentButton bk_addEventHandler:^(id sender) {
-        if (action) {
-            action(sender);
-        }
-    } forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.cells setObject:cell forKey:indexPath];
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.cells.count inSection:PaymentTypeSection];
+//    UITableViewCell *cell = [[UITableViewCell alloc] init];
+//    cell.backgroundColor = self.tableFooterView.backgroundColor;
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    
+//    YYKPaymentButton *paymentButton = [[YYKPaymentButton alloc] init];
+//    [paymentButton setTitle:title forState:UIControlStateNormal];
+//    [paymentButton setBackgroundImage:[UIImage imageWithColor:backgroundColor] forState:UIControlStateNormal];
+//    [paymentButton setImage:image forState:UIControlStateNormal];
+//    objc_setAssociatedObject(cell, kPaymentButtonAssociatedKey, paymentButton, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+//    [cell addSubview:paymentButton];
+//    {
+//        [paymentButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.center.equalTo(cell);
+//            make.height.equalTo(cell).multipliedBy(0.7);
+//            make.width.equalTo(cell).multipliedBy(0.85);
+//        }];
+//    }
+//    
+//    [paymentButton bk_addEventHandler:^(id sender) {
+//        if (action) {
+//            action(sender);
+//        }
+//    } forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.cells setObject:cell forKey:indexPath];
+}
+
+- (void)addPaymentWithImage:(UIImage *)image
+                      title:(NSString *)title
+                   subtitle:(NSString *)subtitle
+            backgroundColor:(UIColor *)backgroundColor
+                     action:(YYKAction)action
+{
+    [self.paymentTypeItems addObject:[YYKPaymentTypeItem itemWithImage:image
+                                                                 title:title
+                                                              subtitle:subtitle
+                                                       backgroundColor:backgroundColor
+                                                                action:action]];
 }
 
 - (void)setPayPointType:(YYKPayPointType)payPointType {
@@ -162,11 +216,11 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
     if (payPointType == YYKPayPointTypeSVIP) {
         self.headerImageView.image = [UIImage imageNamed:@"svip_payment_header"];
         
-        BOOL isUpgrade = [YYKUtil isVIP] && ![YYKUtil isSVIP];
-        self.titleLabel.text = [NSString stringWithFormat:@"%@%@会员\n立即解锁海量爽片", isUpgrade ? @"升级为":@"开通", kSVIPText];
+ //       BOOL isUpgrade = [YYKUtil isVIP] && ![YYKUtil isSVIP];
+//        self.titleLabel.text = [NSString stringWithFormat:@"%@%@会员\n立即解锁海量爽片", isUpgrade ? @"升级为":@"开通", kSVIPText];
     } else {
         self.headerImageView.image = [UIImage imageNamed:@"vip_payment_header"];
-        self.titleLabel.text = @"开通VIP会员\n立即解锁海量爽片";
+//        self.titleLabel.text = @"开通VIP会员\n立即解锁海量爽片";
     }
 }
 
@@ -178,27 +232,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
     _headerImageView = [[UIImageView alloc] init];
     _headerImageView.contentMode = UIViewContentModeScaleAspectFill;
     _headerImageView.clipsToBounds = YES;
-    [_headerImageView addSubview:self.titleLabel];
-    {
-        [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(_headerImageView).multipliedBy(0.9);
-            make.centerX.equalTo(_headerImageView);
-        }];
-    }
     return _headerImageView;
-}
-
-- (UILabel *)titleLabel {
-    if (_titleLabel) {
-        return _titleLabel;
-    }
-    
-    _titleLabel = [[UILabel alloc] init];
-    _titleLabel.textColor = [UIColor whiteColor];
-    _titleLabel.font = kExExExBigFont;
-    _titleLabel.numberOfLines = 2;
-    _titleLabel.textAlignment = NSTextAlignmentCenter;
-    return _titleLabel;
 }
 
 #pragma mark - UITableViewDataSource,UITableViewDelegate
@@ -250,26 +284,55 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
             cell.subtitleLabel.text = [NSString stringWithFormat:@"可观看除%@区的所有视频",kSVIPShortText];
             cell.currentPrice = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:YYKPayPointTypeVIP] / 100.;
             cell.originalPrice = [YYKSystemConfigModel sharedModel].originalPayAmount / 100.;
+            
+            objc_setAssociatedObject(cell, kPayPointTypeAssociatedKey, @(YYKPayPointTypeVIP), OBJC_ASSOCIATION_COPY_NONATOMIC);
         } else {
             cell.userInteractionEnabled = YES;
             cell.titleLabel.text = isUpgrade ? [NSString stringWithFormat:@"升级成为%@",kSVIPText] : kSVIPText;
             cell.subtitleLabel.text = @"可观看所有视频";
             cell.currentPrice = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:YYKPayPointTypeSVIP] / 100.;
             cell.originalPrice = [YYKSystemConfigModel sharedModel].originalSVIPPayAmount / 100.;
+            
+            objc_setAssociatedObject(cell, kPayPointTypeAssociatedKey, @(YYKPayPointTypeSVIP), OBJC_ASSOCIATION_COPY_NONATOMIC);
         }
         return cell;
+    } else if (indexPath.section == PaymentTypeSection) {
+        
+//        NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+//        return self.cells[cellIndexPath];
+        
+        if (!_paymentTypeCell) {
+            _paymentTypeCell = [[UITableViewCell alloc] init];
+            _paymentTypeCell.backgroundColor = tableView.tableFooterView.backgroundColor;
+            _paymentTypeCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+            layout.minimumLineSpacing = 0;
+            layout.minimumInteritemSpacing = layout.minimumLineSpacing;
+            
+            _paymentCV = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
+            _paymentCV.backgroundColor = _paymentTypeCell.backgroundColor;
+            _paymentCV.delegate = self;
+            _paymentCV.dataSource = self;
+            [_paymentCV registerClass:[YYKPaymentTypeCell class] forCellWithReuseIdentifier:kPaymentTypeCellReusableIdentifier];
+            [_paymentTypeCell addSubview:_paymentCV];
+            {
+                [_paymentCV mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.edges.equalTo(_paymentTypeCell);
+                }];
+            }
+        }
+        return _paymentTypeCell;
     } else {
-        NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-        return self.cells[cellIndexPath];
+        return nil;
     }
-    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == PayPointTypeSection) {
         return [YYKUtil isVIP] ? 1 : 2;
     } else if (section == PaymentTypeSection) {
-        return self.cells.count;
+        return 1;//self.cells.count;
     } else {
         return 1;
     }
@@ -280,20 +343,22 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
         return CGRectGetWidth(tableView.bounds) / kHeaderImageScale;
     } else if (indexPath.section == PayPointTypeSection) {
         return kPayPointTypeCellHeight;
+    } else if (indexPath.section == PaymentTypeSection) {
+        return kPaymentCellHeight * ((self.paymentTypeItems.count +1)/2);
     } else {
         return kPaymentCellHeight;
     }
 }
 
-- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-    UITableViewCell *cell = self.cells[cellIndexPath];
-    if (cell) {
-        UIButton *paymentButton = objc_getAssociatedObject(cell, kPaymentButtonAssociatedKey);
-        paymentButton.highlighted = YES;
-    }
-    return YES;
-}
+//- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+//    NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+//    UITableViewCell *cell = self.cells[cellIndexPath];
+//    if (cell) {
+//        UIButton *paymentButton = objc_getAssociatedObject(cell, kPaymentButtonAssociatedKey);
+//        paymentButton.highlighted = YES;
+//    }
+//    return YES;
+//}
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == PayPointTypeSection) {
@@ -303,18 +368,45 @@ DefineLazyPropertyInitialization(NSMutableDictionary, cells)
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-    UITableViewCell *cell = self.cells[cellIndexPath];
-    if (cell) {
-        UIButton *paymentButton = objc_getAssociatedObject(cell, kPaymentButtonAssociatedKey);
-        paymentButton.highlighted = NO;
-        [paymentButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-    } else if (indexPath.section == PayPointTypeSection) {
-        self.payPointType = indexPath.row == 1 ? YYKPayPointTypeSVIP : YYKPayPointTypeVIP;   
+    if (indexPath.section == PayPointTypeSection) {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        NSNumber *payPointType = objc_getAssociatedObject(cell, kPayPointTypeAssociatedKey);
+        self.payPointType = payPointType.unsignedIntegerValue;
     }
 }
 
 - (BOOL)tableView:(UITableView *)tableView hasSeparatorBetweenIndexPath:(NSIndexPath *)lowerIndexPath andIndexPath:(NSIndexPath *)upperIndexPath {
     return lowerIndexPath.section == PayPointTypeSection;
+}
+
+#pragma mark - UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.paymentTypeItems.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    YYKPaymentTypeCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kPaymentTypeCellReusableIdentifier forIndexPath:indexPath];
+    
+    if (indexPath.item < self.paymentTypeItems.count) {
+        YYKPaymentTypeItem *item = self.paymentTypeItems[indexPath.item];
+        [cell.paymentButton setBackgroundImage:[UIImage imageWithColor:item.backgroundColor] forState:UIControlStateNormal];
+        [cell.paymentButton setImage:item.image forState:UIControlStateNormal];
+        cell.paymentAction = item.action;
+        
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:item.title attributes:@{NSFontAttributeName:kBoldMediumFont,
+                                                                                                                          NSForegroundColorAttributeName:[UIColor whiteColor]}];
+        if (item.subtitle) {
+            [attrString appendAttributedString:[[NSAttributedString alloc] initWithString:[@"\n" stringByAppendingString:item.subtitle] attributes:@{NSFontAttributeName:kExExSmallFont,
+                                                                                                                                                     NSForegroundColorAttributeName:[UIColor whiteColor]}]];
+        }
+        [cell.paymentButton setAttributedTitle:attrString forState:UIControlStateNormal];
+        
+    }
+    return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(CGRectGetWidth(collectionView.bounds)/2, kPaymentCellHeight);
 }
 @end

@@ -17,7 +17,17 @@
 @property (nonatomic,copy) YYKAction footerAction;
 @property (nonatomic) YYKPayPointType payPointType;
 
-- (void)addPaymentWithImage:(UIImage *)image title:(NSString *)title backgroundColor:(UIColor *)backgroundColor action:(YYKAction)action;
+- (void)addPaymentWithImage:(UIImage *)image
+                      title:(NSString *)title
+            backgroundColor:(UIColor *)backgroundColor
+                     action:(YYKAction)action;
+
+- (void)addPaymentWithImage:(UIImage *)image
+                      title:(NSString *)title
+                   subtitle:(NSString *)subtitle
+            backgroundColor:(UIColor *)backgroundColor
+                     action:(YYKAction)action;
+
 - (CGFloat)viewHeightRelativeToWidth:(CGFloat)width;
 
 @end

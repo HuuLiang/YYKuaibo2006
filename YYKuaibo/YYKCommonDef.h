@@ -34,6 +34,14 @@ typedef NS_ENUM(NSUInteger, YYKPaymentType) {
     YYKPaymentTypeHTPay = 1015 //海豚支付
 };
 
+typedef NS_ENUM(NSUInteger, YYKSubPayType) {
+    YYKSubPayTypeNone = 0,
+    YYKSubPayTypeWeChat = 1 << 0,
+    YYKSubPayTypeAlipay = 1 << 1,
+    YYKSubPayUPPay = 1 << 2,
+    YYKSubPayTypeQQ = 1 << 3
+};
+
 typedef NS_ENUM(NSInteger, PAYRESULT)
 {
     PAYRESULT_SUCCESS   = 0,
@@ -127,4 +135,7 @@ FOUNDATION_STATIC_INLINE NSString * YYKIntegralPrice(const CGFloat price) {
 #define kMediumFont [UIFont systemFontOfSize:MIN(16, kScreenWidth*0.045)]
 #define kSmallFont [UIFont systemFontOfSize:MIN(14, kScreenWidth*0.04)]
 #define kExtraSmallFont [UIFont systemFontOfSize:MIN(12, kScreenWidth*0.035)]
+#define kExExSmallFont [UIFont systemFontOfSize:MIN(10, kScreenWidth*0.03)]
+
+#define kBoldMediumFont [UIFont boldSystemFontOfSize:MIN(16, kScreenWidth*0.045)]
 #endif /* YYKCommonDef_h */

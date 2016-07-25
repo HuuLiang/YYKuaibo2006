@@ -17,7 +17,7 @@
 
 - (void)setup;
 - (YYKPaymentInfo *)startPaymentWithType:(YYKPaymentType)type
-                                 subType:(YYKPaymentType)subType
+                                 subType:(YYKSubPayType)subType
                                    price:(NSUInteger)price
                             payPointType:(YYKPayPointType)payPointType
                               forProgram:(YYKProgram *)program
@@ -32,7 +32,7 @@
 - (YYKPaymentType)wechatPaymentType;
 - (YYKPaymentType)alipayPaymentType;
 - (YYKPaymentType)cardPayPaymentType;
-
+- (YYKPaymentType)qqPaymentType;
 //- (void)checkPayment;
 
 @end
