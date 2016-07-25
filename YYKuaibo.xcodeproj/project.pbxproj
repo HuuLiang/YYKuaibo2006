@@ -1381,10 +1381,8 @@
 				BC7BF69F1D45F54000756287 /* btn8.png in Resources */,
 				BC7BF6A21D45F54000756287 /* unicom_back.png in Resources */,
 				BC7BF6A01D45F54000756287 /* btn9.png in Resources */,
-				BCD826CE1D114750003B14ED /* IapppayH5Resource.bundle in Resources */,
 				BC7BF69B1D45F54000756287 /* btn3.png in Resources */,
 				BC7BF69C1D45F54000756287 /* btn5.png in Resources */,
-				BC3C266D1D143CEC00BF5C3D /* Config.txt in Resources */,
 				BCBDB8C41D435307004EA95D /* IapppayResource.bundle in Resources */,
 				BCE2560E1C966A8E00133F4F /* Assets.xcassets in Resources */,
 				BCE257191C9689F500133F4F /* config.plist in Resources */,
@@ -1724,7 +1722,6 @@
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/iAppPay",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/AlipaySDK",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay",
-					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay/framework",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/iAppPay/Release-iphoneos",
 				);
 				INFOPLIST_FILE = YYKuaibo/Info.plist;
@@ -1736,7 +1733,6 @@
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/WeChatSDK",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/SPaySDK",
-					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay/framework",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qianpaoyy.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1758,7 +1754,6 @@
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/iAppPay",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/AlipaySDK",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay",
-					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay/framework",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/iAppPay/Release-iphoneos",
 				);
 				INFOPLIST_FILE = YYKuaibo/Info.plist;
@@ -1770,7 +1765,6 @@
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/WeChatSDK",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/SPaySDK",
-					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay/framework",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qianpaoyy.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
