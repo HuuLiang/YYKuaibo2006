@@ -42,12 +42,6 @@
 		BC61D15E1CB971FB002A858E /* YYKVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC61D15D1CB971FB002A858E /* YYKVideoPlayerViewController.m */; };
 		BC660B081C97243F00E04D23 /* YYKPaymentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC660B071C97243F00E04D23 /* YYKPaymentManager.m */; };
 		BC660B121C97275100E04D23 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BC660B111C97275100E04D23 /* libc++.tbd */; };
-		BC68FF891D1CDACF0056B341 /* HTPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC68FF881D1CDACF0056B341 /* HTPayManager.m */; };
-		BC69B1F01CE454680020B112 /* libSPaySDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC69B1EE1CE454680020B112 /* libSPaySDK.a */; };
-		BC69B1F11CE454680020B112 /* SPaySDKResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC69B1EF1CE454680020B112 /* SPaySDKResource.bundle */; };
-		BC69B1FB1CE471B50020B112 /* SPRequestForm.m in Sources */ = {isa = PBXBuildFile; fileRef = BC69B1FA1CE471B50020B112 /* SPRequestForm.m */; };
-		BC69B1FF1CE472CB0020B112 /* SPHTTPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC69B1FE1CE472CB0020B112 /* SPHTTPManager.m */; };
-		BC69B2031CE473E10020B112 /* SPConst.m in Sources */ = {isa = PBXBuildFile; fileRef = BC69B2021CE473E10020B112 /* SPConst.m */; };
 		BC6F00CA1D00712800AC01D9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC6F00C91D00712800AC01D9 /* Security.framework */; };
 		BC6F00CC1D00723300AC01D9 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC6F00CB1D00723300AC01D9 /* CoreMotion.framework */; };
 		BC6F6E1F1D44A487002FD77C /* Config.txt in Resources */ = {isa = PBXBuildFile; fileRef = BC6F6E1D1D44A487002FD77C /* Config.txt */; };
@@ -103,7 +97,6 @@
 		BCB1C4781CC65EB400F9B83B /* YYKHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB1C4731CC65EB400F9B83B /* YYKHistoryCell.m */; };
 		BCB1C4791CC65EB400F9B83B /* YYKMineVIPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB1C4751CC65EB400F9B83B /* YYKMineVIPCell.m */; };
 		BCB1C4871CC66B5100F9B83B /* YYKVIPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB1C4861CC66B5100F9B83B /* YYKVIPViewController.m */; };
-		BCB58E4D1CEB4AB50084F784 /* SPayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BC69B1F61CE46E080020B112 /* SPayUtil.m */; };
 		BCBDB8C41D435307004EA95D /* IapppayResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BCBDB8C11D435307004EA95D /* IapppayResource.bundle */; };
 		BCBDB8C51D435307004EA95D /* IapppayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBDB8C31D435307004EA95D /* IapppayKit.framework */; };
 		BCC00FBD1CD8B23B00F429B4 /* YYKTabStatsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC00FBC1CD8B23B00F429B4 /* YYKTabStatsModel.m */; };
@@ -251,36 +244,6 @@
 		BC660B061C97243F00E04D23 /* YYKPaymentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKPaymentManager.h; sourceTree = "<group>"; };
 		BC660B071C97243F00E04D23 /* YYKPaymentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKPaymentManager.m; sourceTree = "<group>"; };
 		BC660B111C97275100E04D23 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		BC68FF871D1CDACF0056B341 /* HTPayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTPayManager.h; sourceTree = "<group>"; };
-		BC68FF881D1CDACF0056B341 /* HTPayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTPayManager.m; sourceTree = "<group>"; };
-		BC69B1DC1CE454680020B112 /* NSDictionary+SPayUtilsExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+SPayUtilsExtras.h"; sourceTree = "<group>"; };
-		BC69B1DD1CE454680020B112 /* NSString+SPayUtilsExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SPayUtilsExtras.h"; sourceTree = "<group>"; };
-		BC69B1DE1CE454680020B112 /* SPayClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClient.h; sourceTree = "<group>"; };
-		BC69B1DF1CE454680020B112 /* SPayClientAlipayConfigModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientAlipayConfigModel.h; sourceTree = "<group>"; };
-		BC69B1E01CE454680020B112 /* SPayClientConstEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientConstEnum.h; sourceTree = "<group>"; };
-		BC69B1E11CE454680020B112 /* SPayClientHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientHeaders.h; sourceTree = "<group>"; };
-		BC69B1E21CE454680020B112 /* SPayClientPayAppPayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientPayAppPayManager.h; sourceTree = "<group>"; };
-		BC69B1E31CE454680020B112 /* SPayClientPayDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientPayDetailModel.h; sourceTree = "<group>"; };
-		BC69B1E41CE454680020B112 /* SPayClientPayHelpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientPayHelpModel.h; sourceTree = "<group>"; };
-		BC69B1E51CE454680020B112 /* SPayClientPayStateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientPayStateModel.h; sourceTree = "<group>"; };
-		BC69B1E61CE454680020B112 /* SPayClientPaySuccessDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientPaySuccessDetailModel.h; sourceTree = "<group>"; };
-		BC69B1E71CE454680020B112 /* SPayClientPaySuccessModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientPaySuccessModel.h; sourceTree = "<group>"; };
-		BC69B1E81CE454680020B112 /* SPayClientQQConfigModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientQQConfigModel.h; sourceTree = "<group>"; };
-		BC69B1E91CE454680020B112 /* SPayClientReverseScanPayDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientReverseScanPayDetailModel.h; sourceTree = "<group>"; };
-		BC69B1EA1CE454680020B112 /* SPayClientWapPayDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientWapPayDetailModel.h; sourceTree = "<group>"; };
-		BC69B1EB1CE454680020B112 /* SPayClientWechatConfigModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientWechatConfigModel.h; sourceTree = "<group>"; };
-		BC69B1EC1CE454680020B112 /* SPayClientXMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientXMLWriter.h; sourceTree = "<group>"; };
-		BC69B1ED1CE454680020B112 /* SPBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPBaseModel.h; sourceTree = "<group>"; };
-		BC69B1EE1CE454680020B112 /* libSPaySDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSPaySDK.a; sourceTree = "<group>"; };
-		BC69B1EF1CE454680020B112 /* SPaySDKResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SPaySDKResource.bundle; sourceTree = "<group>"; };
-		BC69B1F51CE46E080020B112 /* SPayUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayUtil.h; sourceTree = "<group>"; };
-		BC69B1F61CE46E080020B112 /* SPayUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPayUtil.m; sourceTree = "<group>"; };
-		BC69B1F91CE471B50020B112 /* SPRequestForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPRequestForm.h; sourceTree = "<group>"; };
-		BC69B1FA1CE471B50020B112 /* SPRequestForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPRequestForm.m; sourceTree = "<group>"; };
-		BC69B1FD1CE472CB0020B112 /* SPHTTPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPHTTPManager.h; sourceTree = "<group>"; };
-		BC69B1FE1CE472CB0020B112 /* SPHTTPManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPHTTPManager.m; sourceTree = "<group>"; };
-		BC69B2011CE473E10020B112 /* SPConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPConst.h; sourceTree = "<group>"; };
-		BC69B2021CE473E10020B112 /* SPConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPConst.m; sourceTree = "<group>"; };
 		BC6F00C91D00712800AC01D9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		BC6F00CB1D00723300AC01D9 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		BC6F6E1D1D44A487002FD77C /* Config.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Config.txt; sourceTree = "<group>"; };
@@ -505,7 +468,6 @@
 				BC660B121C97275100E04D23 /* libc++.tbd in Frameworks */,
 				BCE2572C1C968B5100133F4F /* libsqlite3.tbd in Frameworks */,
 				BCE2572A1C968B4800133F4F /* libz.tbd in Frameworks */,
-				BC69B1F01CE454680020B112 /* libSPaySDK.a in Frameworks */,
 				BC7EEBED1D13EF89008D9A32 /* AlipaySDK.framework in Frameworks */,
 				BCE257281C968B4100133F4F /* CoreTelephony.framework in Frameworks */,
 				BCE257251C968AED00133F4F /* libMobClickLibrary.a in Frameworks */,
@@ -677,65 +639,6 @@
 				BCB1420C1CBBDEFB0017A2B9 /* launch_image.jpg */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		BC68FF861D1CDA910056B341 /* HTPay */ = {
-			isa = PBXGroup;
-			children = (
-				BC68FF871D1CDACF0056B341 /* HTPayManager.h */,
-				BC68FF881D1CDACF0056B341 /* HTPayManager.m */,
-			);
-			path = HTPay;
-			sourceTree = "<group>";
-		};
-		BC69B1DA1CE454680020B112 /* SPaySDK */ = {
-			isa = PBXGroup;
-			children = (
-				BC69B1DB1CE454680020B112 /* include */,
-				BC69B1EE1CE454680020B112 /* libSPaySDK.a */,
-				BC69B1EF1CE454680020B112 /* SPaySDKResource.bundle */,
-			);
-			path = SPaySDK;
-			sourceTree = "<group>";
-		};
-		BC69B1DB1CE454680020B112 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				BC69B1DC1CE454680020B112 /* NSDictionary+SPayUtilsExtras.h */,
-				BC69B1DD1CE454680020B112 /* NSString+SPayUtilsExtras.h */,
-				BC69B1DE1CE454680020B112 /* SPayClient.h */,
-				BC69B1DF1CE454680020B112 /* SPayClientAlipayConfigModel.h */,
-				BC69B1E01CE454680020B112 /* SPayClientConstEnum.h */,
-				BC69B1E11CE454680020B112 /* SPayClientHeaders.h */,
-				BC69B1E21CE454680020B112 /* SPayClientPayAppPayManager.h */,
-				BC69B1E31CE454680020B112 /* SPayClientPayDetailModel.h */,
-				BC69B1E41CE454680020B112 /* SPayClientPayHelpModel.h */,
-				BC69B1E51CE454680020B112 /* SPayClientPayStateModel.h */,
-				BC69B1E61CE454680020B112 /* SPayClientPaySuccessDetailModel.h */,
-				BC69B1E71CE454680020B112 /* SPayClientPaySuccessModel.h */,
-				BC69B1E81CE454680020B112 /* SPayClientQQConfigModel.h */,
-				BC69B1E91CE454680020B112 /* SPayClientReverseScanPayDetailModel.h */,
-				BC69B1EA1CE454680020B112 /* SPayClientWapPayDetailModel.h */,
-				BC69B1EB1CE454680020B112 /* SPayClientWechatConfigModel.h */,
-				BC69B1EC1CE454680020B112 /* SPayClientXMLWriter.h */,
-				BC69B1ED1CE454680020B112 /* SPBaseModel.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		BC69B1F41CE46DE30020B112 /* SPayUtil */ = {
-			isa = PBXGroup;
-			children = (
-				BC69B2011CE473E10020B112 /* SPConst.h */,
-				BC69B2021CE473E10020B112 /* SPConst.m */,
-				BC69B1FD1CE472CB0020B112 /* SPHTTPManager.h */,
-				BC69B1FE1CE472CB0020B112 /* SPHTTPManager.m */,
-				BC69B1F91CE471B50020B112 /* SPRequestForm.h */,
-				BC69B1FA1CE471B50020B112 /* SPRequestForm.m */,
-				BC69B1F51CE46E080020B112 /* SPayUtil.h */,
-				BC69B1F61CE46E080020B112 /* SPayUtil.m */,
-			);
-			path = SPayUtil;
 			sourceTree = "<group>";
 		};
 		BC7A61841CFC508200021200 /* Lib */ = {
@@ -1107,10 +1010,8 @@
 		BCE256C51C966DB400133F4F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				BC68FF861D1CDA910056B341 /* HTPay */,
 				BCD826CF1D114D49003B14ED /* iAppPayUtil */,
 				BC2FB7731CDA0A5700645070 /* DataBase */,
-				BC69B1F41CE46DE30020B112 /* SPayUtil */,
 				BC2914401C9FF6AD002084E2 /* WeChatPay */,
 				BCE256C61C966DB400133F4F /* Extensions */,
 				BCE256E61C966DB400133F4F /* rac_extobjc */,
@@ -1204,7 +1105,6 @@
 			isa = PBXGroup;
 			children = (
 				BCBDB8C01D435307004EA95D /* iAppPay */,
-				BC69B1DA1CE454680020B112 /* SPaySDK */,
 				BC0C85D21CD3398D00C51480 /* VIAPay */,
 				BC8E02971CD25FF9004F5780 /* AlipaySDK */,
 				BCE2571C1C968AED00133F4F /* Umeng */,
@@ -1369,7 +1269,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC69B1F11CE454680020B112 /* SPaySDKResource.bundle in Resources */,
 				BC7EEBEC1D13EF89008D9A32 /* AlipaySDK.bundle in Resources */,
 				BC7BF6981D45F54000756287 /* btn1.png in Resources */,
 				BC6F6E201D44A487002FD77C /* VIASDKVERSION.txt in Resources */,
@@ -1513,7 +1412,6 @@
 				BC51AC311CA0F7530073AF91 /* YYKVideoListModel.m in Sources */,
 				BC51AC391CA1316A0073AF91 /* YYKPaymentConfig.m in Sources */,
 				BCB1420B1CBBDA9C0017A2B9 /* YYKLaunchView.m in Sources */,
-				BC69B1FB1CE471B50020B112 /* SPRequestForm.m in Sources */,
 				BCA1B7ED1D23EE13004B492B /* YYKVideoThumbCell.m in Sources */,
 				BC4CCD781D364991001518F1 /* YYKSearchResultViewController.m in Sources */,
 				BCE257331C968D5100133F4F /* YYKHomeViewController.m in Sources */,
@@ -1540,14 +1438,12 @@
 				BCA1B7DD1D23BC76004B492B /* YYKVideoListViewController.m in Sources */,
 				BCE256FD1C966DB400133F4F /* NSDate+Utilities.m in Sources */,
 				BC7BF6901D45F54000756287 /* base64.m in Sources */,
-				BC69B1FF1CE472CB0020B112 /* SPHTTPManager.m in Sources */,
 				BCE257131C966DB400133F4F /* YYKHudManager.m in Sources */,
 				BC2BAB491D37E1B900691CB4 /* YYKSearchModel.m in Sources */,
 				BC2FB77A1CDA0A5700645070 /* DBTableVersion.m in Sources */,
 				BCE257041C966DB400133F4F /* NSString+md5.m in Sources */,
 				BC29144B1C9FF6AD002084E2 /* WeChatPayManager.m in Sources */,
 				BCE256621C966C2600133F4F /* YYKBaseViewController.m in Sources */,
-				BC68FF891D1CDACF0056B341 /* HTPayManager.m in Sources */,
 				BCA1B7E31D23C240004B492B /* YYKChannelVideoViewController.m in Sources */,
 				BC61D15E1CB971FB002A858E /* YYKVideoPlayerViewController.m in Sources */,
 				BC7BF6931D45F54000756287 /* MD5DataSigner.m in Sources */,
@@ -1568,7 +1464,6 @@
 				BC29144F1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m in Sources */,
 				BC29144C1C9FF6AD002084E2 /* WXUtil.mm in Sources */,
 				BC61BC101CC8AD53000343FF /* YYKCardSlider.m in Sources */,
-				BC69B2031CE473E10020B112 /* SPConst.m in Sources */,
 				BC39DE701D37B47E002D5E26 /* YYKTagSearchFooterView.m in Sources */,
 				BC4CCD721D363A14001518F1 /* YYKSearchViewController.m in Sources */,
 				BCE2575A1C96F31200133F4F /* YYKWebViewController.m in Sources */,
@@ -1578,7 +1473,6 @@
 				BCE2570C1C966DB400133F4F /* RACEXTRuntimeExtensions.m in Sources */,
 				BC7643491CD04F210059E1C3 /* YYKApplication.m in Sources */,
 				BCE256FE1C966DB400133F4F /* NSDictionary+YYKSign.m in Sources */,
-				BCB58E4D1CEB4AB50084F784 /* SPayUtil.m in Sources */,
 				BC32FD1E1CCF4E190030EB79 /* UIView+Loading.m in Sources */,
 				BCD826D21D114D82003B14ED /* IappPayMananger.m in Sources */,
 			);
