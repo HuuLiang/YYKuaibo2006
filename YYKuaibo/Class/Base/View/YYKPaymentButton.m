@@ -8,6 +8,12 @@
 
 #import "YYKPaymentButton.h"
 
+static const CGFloat kSpaceBetweenImageAndTitle = 3;
+
+@interface YYKPaymentButton ()
+@property (nonatomic) CGSize titleSize;
+@end
+
 @implementation YYKPaymentButton
 
 - (instancetype)init {
@@ -21,14 +27,30 @@
     return self;
 }
 
+- (void)setAttributedTitle:(NSAttributedString *)title forState:(UIControlState)state {
+    [super setAttributedTitle:title forState:state];
+    
+    self.titleSize = [title size];
+}
+
+- (void)setTitle:(NSString *)title forState:(UIControlState)state {
+    [super setTitle:title forState:state];
+    
+    self.titleSize = [title sizeWithAttributes:@{NSFontAttributeName:self.titleLabel.font}];
+}
+
 - (CGRect)imageRectForContentRect:(CGRect)contentRect {
+    
     const CGFloat height = CGRectGetHeight(contentRect) * 0.6;
-    return CGRectMake(8, (contentRect.size.height - height)/2, height, height);
+    const CGFloat width = height;
+    const CGFloat totalWidth = width + kSpaceBetweenImageAndTitle + self.titleSize.width;
+    const CGFloat imageX = (contentRect.size.width-totalWidth)/2;
+    return CGRectMake(imageX, (contentRect.size.height - height)/2, height, height);
 }
 
 - (CGRect)titleRectForContentRect:(CGRect)contentRect {
     CGRect imageRect = [self imageRectForContentRect:contentRect];
-//    const CGFloat height = imageRect.size.height;
+    
     const CGFloat x = CGRectGetMaxX(imageRect)+3;
     return CGRectMake(x, 0, contentRect.size.width-x-3, contentRect.size.height);
 }

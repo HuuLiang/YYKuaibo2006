@@ -19,9 +19,9 @@
         [self addSubview:_paymentButton];
         {
             [_paymentButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.center.equalTo(self);
+                make.center.width.equalTo(self);
                 make.height.equalTo(self).multipliedBy(0.8);
-                make.width.equalTo(self).multipliedBy(0.88);
+                //make.width.equalTo(self).multipliedBy(0.88);
             }];
         }
         

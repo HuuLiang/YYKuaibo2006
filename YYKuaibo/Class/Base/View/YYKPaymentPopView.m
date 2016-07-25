@@ -308,7 +308,7 @@ DefineLazyPropertyInitialization(NSMutableArray, paymentTypeItems)
             
             UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
             layout.minimumLineSpacing = 0;
-            layout.minimumInteritemSpacing = layout.minimumLineSpacing;
+            layout.minimumInteritemSpacing = 15;
             
             _paymentCV = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
             _paymentCV.backgroundColor = _paymentTypeCell.backgroundColor;
@@ -318,7 +318,7 @@ DefineLazyPropertyInitialization(NSMutableArray, paymentTypeItems)
             [_paymentTypeCell addSubview:_paymentCV];
             {
                 [_paymentCV mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.edges.equalTo(_paymentTypeCell);
+                    make.edges.equalTo(_paymentTypeCell).insets(UIEdgeInsetsMake(0, 15, 0, 15));
                 }];
             }
         }
@@ -407,6 +407,12 @@ DefineLazyPropertyInitialization(NSMutableArray, paymentTypeItems)
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(CGRectGetWidth(collectionView.bounds)/2, kPaymentCellHeight);
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionViewLayout;
+    
+    if (self.paymentTypeItems.count % 2 == 1 && indexPath.item == 0) {
+        return CGSizeMake(CGRectGetWidth(collectionView.bounds), kPaymentCellHeight);
+    } else {
+        return CGSizeMake((CGRectGetWidth(collectionView.bounds) - layout.minimumInteritemSpacing)/2, kPaymentCellHeight);
+    }
 }
 @end
