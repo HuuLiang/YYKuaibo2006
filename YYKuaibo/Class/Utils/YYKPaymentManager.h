@@ -31,6 +31,7 @@
 - (void)handleOpenUrl:(NSURL *)url;
 - (YYKPaymentType)wechatPaymentType;
 - (YYKPaymentType)alipayPaymentType;
+- (YYKPaymentType)cardPayPaymentType;
 
 //- (void)checkPayment;
 

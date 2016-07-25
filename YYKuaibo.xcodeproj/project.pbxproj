@@ -103,11 +103,11 @@
 		BCB1C4791CC65EB400F9B83B /* YYKMineVIPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB1C4751CC65EB400F9B83B /* YYKMineVIPCell.m */; };
 		BCB1C4871CC66B5100F9B83B /* YYKVIPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCB1C4861CC66B5100F9B83B /* YYKVIPViewController.m */; };
 		BCB58E4D1CEB4AB50084F784 /* SPayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BC69B1F61CE46E080020B112 /* SPayUtil.m */; };
+		BCBDB8C41D435307004EA95D /* IapppayResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BCBDB8C11D435307004EA95D /* IapppayResource.bundle */; };
+		BCBDB8C51D435307004EA95D /* IapppayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBDB8C31D435307004EA95D /* IapppayKit.framework */; };
 		BCC00FBD1CD8B23B00F429B4 /* YYKTabStatsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC00FBC1CD8B23B00F429B4 /* YYKTabStatsModel.m */; };
 		BCC00FC41CD8B96D00F429B4 /* YYKPayStatsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC00FC31CD8B96D00F429B4 /* YYKPayStatsModel.m */; };
 		BCC2C9001CF5B02200BBE432 /* NSObject+DictionaryRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC2C8FF1CF5B02200BBE432 /* NSObject+DictionaryRepresentation.m */; };
-		BCD826CD1D114750003B14ED /* IapppayH5Kit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD826CB1D114750003B14ED /* IapppayH5Kit.framework */; };
-		BCD826CE1D114750003B14ED /* IapppayH5Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BCD826CC1D114750003B14ED /* IapppayH5Resource.bundle */; };
 		BCD826D21D114D82003B14ED /* IappPayMananger.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD826D11D114D82003B14ED /* IappPayMananger.m */; };
 		BCE256031C966A8E00133F4F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE256021C966A8E00133F4F /* main.m */; };
 		BCE2560E1C966A8E00133F4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCE2560D1C966A8E00133F4F /* Assets.xcassets */; };
@@ -368,14 +368,14 @@
 		BCB1C4751CC65EB400F9B83B /* YYKMineVIPCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKMineVIPCell.m; sourceTree = "<group>"; };
 		BCB1C4851CC66B5100F9B83B /* YYKVIPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVIPViewController.h; sourceTree = "<group>"; };
 		BCB1C4861CC66B5100F9B83B /* YYKVIPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVIPViewController.m; sourceTree = "<group>"; };
+		BCBDB8C11D435307004EA95D /* IapppayResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IapppayResource.bundle; sourceTree = "<group>"; };
+		BCBDB8C31D435307004EA95D /* IapppayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IapppayKit.framework; sourceTree = "<group>"; };
 		BCC00FBB1CD8B23B00F429B4 /* YYKTabStatsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKTabStatsModel.h; sourceTree = "<group>"; };
 		BCC00FBC1CD8B23B00F429B4 /* YYKTabStatsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKTabStatsModel.m; sourceTree = "<group>"; };
 		BCC00FC21CD8B96D00F429B4 /* YYKPayStatsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKPayStatsModel.h; sourceTree = "<group>"; };
 		BCC00FC31CD8B96D00F429B4 /* YYKPayStatsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKPayStatsModel.m; sourceTree = "<group>"; };
 		BCC2C8FE1CF5B02200BBE432 /* NSObject+DictionaryRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DictionaryRepresentation.h"; sourceTree = "<group>"; };
 		BCC2C8FF1CF5B02200BBE432 /* NSObject+DictionaryRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DictionaryRepresentation.m"; sourceTree = "<group>"; };
-		BCD826CB1D114750003B14ED /* IapppayH5Kit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IapppayH5Kit.framework; sourceTree = "<group>"; };
-		BCD826CC1D114750003B14ED /* IapppayH5Resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IapppayH5Resource.bundle; sourceTree = "<group>"; };
 		BCD826D01D114D82003B14ED /* IappPayMananger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IappPayMananger.h; sourceTree = "<group>"; };
 		BCD826D11D114D82003B14ED /* IappPayMananger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IappPayMananger.m; sourceTree = "<group>"; };
 		BCE255FE1C966A8E00133F4F /* YYKuaibo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YYKuaibo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -495,6 +495,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCBDB8C51D435307004EA95D /* IapppayKit.framework in Frameworks */,
 				BC6F00CC1D00723300AC01D9 /* CoreMotion.framework in Frameworks */,
 				BC6F00CA1D00712800AC01D9 /* Security.framework in Frameworks */,
 				BC7BF6A31D45F54000756287 /* PayUtil.framework in Frameworks */,
@@ -504,7 +505,6 @@
 				BC69B1F01CE454680020B112 /* libSPaySDK.a in Frameworks */,
 				BC7EEBED1D13EF89008D9A32 /* AlipaySDK.framework in Frameworks */,
 				BCE257281C968B4100133F4F /* CoreTelephony.framework in Frameworks */,
-				BCD826CD1D114750003B14ED /* IapppayH5Kit.framework in Frameworks */,
 				BCE257251C968AED00133F4F /* libMobClickLibrary.a in Frameworks */,
 				BCE257261C968AED00133F4F /* libWeChatSDK.a in Frameworks */,
 				C6C5EAAAA388AFBA0CF247A6 /* libPods-YYKuaibo.a in Frameworks */,
@@ -609,15 +609,6 @@
 				BC42C3541CE0946E00ECCD65 /* DBPersistence.m */,
 			);
 			path = DataBase;
-			sourceTree = "<group>";
-		};
-		BC4200D41D112B19003533DD /* iAppPay */ = {
-			isa = PBXGroup;
-			children = (
-				BCD826CB1D114750003B14ED /* IapppayH5Kit.framework */,
-				BCD826CC1D114750003B14ED /* IapppayH5Resource.bundle */,
-			);
-			path = iAppPay;
 			sourceTree = "<group>";
 		};
 		BC4CCD6C1D3639EF001518F1 /* Search */ = {
@@ -924,6 +915,23 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		BCBDB8C01D435307004EA95D /* iAppPay */ = {
+			isa = PBXGroup;
+			children = (
+				BCBDB8C11D435307004EA95D /* IapppayResource.bundle */,
+				BCBDB8C21D435307004EA95D /* Release-iphoneos */,
+			);
+			path = iAppPay;
+			sourceTree = "<group>";
+		};
+		BCBDB8C21D435307004EA95D /* Release-iphoneos */ = {
+			isa = PBXGroup;
+			children = (
+				BCBDB8C31D435307004EA95D /* IapppayKit.framework */,
+			);
+			path = "Release-iphoneos";
+			sourceTree = "<group>";
+		};
 		BCD826CF1D114D49003B14ED /* iAppPayUtil */ = {
 			isa = PBXGroup;
 			children = (
@@ -1190,7 +1198,7 @@
 		BCE2571A1C968AED00133F4F /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				BC4200D41D112B19003533DD /* iAppPay */,
+				BCBDB8C01D435307004EA95D /* iAppPay */,
 				BC69B1DA1CE454680020B112 /* SPaySDK */,
 				BC0C85D21CD3398D00C51480 /* VIAPay */,
 				BC8E02971CD25FF9004F5780 /* AlipaySDK */,
@@ -1376,6 +1384,8 @@
 				BCD826CE1D114750003B14ED /* IapppayH5Resource.bundle in Resources */,
 				BC7BF69B1D45F54000756287 /* btn3.png in Resources */,
 				BC7BF69C1D45F54000756287 /* btn5.png in Resources */,
+				BC3C266D1D143CEC00BF5C3D /* Config.txt in Resources */,
+				BCBDB8C41D435307004EA95D /* IapppayResource.bundle in Resources */,
 				BCE2560E1C966A8E00133F4F /* Assets.xcassets in Resources */,
 				BCE257191C9689F500133F4F /* config.plist in Resources */,
 				BC463EE31D25196800D19521 /* svip_background.jpg in Resources */,
@@ -1715,6 +1725,7 @@
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/AlipaySDK",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay/framework",
+					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/iAppPay/Release-iphoneos",
 				);
 				INFOPLIST_FILE = YYKuaibo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1748,6 +1759,7 @@
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/AlipaySDK",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay/framework",
+					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/iAppPay/Release-iphoneos",
 				);
 				INFOPLIST_FILE = YYKuaibo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

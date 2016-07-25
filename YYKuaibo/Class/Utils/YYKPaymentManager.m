@@ -92,8 +92,6 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
         return YYKPaymentTypeVIAPay;
     } else if ([YYKPaymentConfig sharedConfig].wftPayInfo) {
         return YYKPaymentTypeSPay;
-    } else if ([YYKPaymentConfig sharedConfig].iappPayInfo) {
-        return YYKPaymentTypeIAppPay;
     } else if ([YYKPaymentConfig sharedConfig].haitunPayInfo) {
         return YYKPaymentTypeHTPay;
     }
@@ -103,6 +101,13 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 - (YYKPaymentType)alipayPaymentType {
     if ([YYKPaymentConfig sharedConfig].syskPayInfo.supportPayTypes.integerValue & YYKSubPayTypeAlipay) {
         return YYKPaymentTypeVIAPay;
+    }
+    return YYKPaymentTypeNone;
+}
+
+- (YYKPaymentType)cardPayPaymentType {
+    if ([YYKPaymentConfig sharedConfig].iappPayInfo) {
+        return YYKPaymentTypeIAppPay;
     }
     return YYKPaymentTypeNone;
 }
@@ -120,7 +125,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
                                inChannel:(YYKChannel *)channel
                        completionHandler:(YYKPaymentCompletionHandler)handler
 {
-    if (type == YYKPaymentTypeNone || (type == YYKPaymentTypeIAppPay && subType == YYKPaymentTypeNone)) {
+    if (type == YYKPaymentTypeNone) {
         if (handler) {
             handler(PAYRESULT_FAIL, nil);
         }
@@ -181,7 +186,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
                 self.completionHandler(payResult, self.paymentInfo);
             }
         }];
-    } else if (type == YYKPaymentTypeIAppPay && (subType == YYKPaymentTypeAlipay || subType == YYKPaymentTypeWeChatPay)) {
+    } else if (type == YYKPaymentTypeIAppPay) {
         @weakify(self);
         IappPayMananger *iAppMgr = [IappPayMananger sharedMananger];
         iAppMgr.appId = [YYKPaymentConfig sharedConfig].iappPayInfo.appid;
