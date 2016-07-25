@@ -1233,6 +1233,7 @@
 				TargetAttributes = {
 					BCE255FD1C966A8E00133F4F = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 7VHT3KAS56;
 					};
 					BCE256161C966A8E00133F4F = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -1615,8 +1616,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yu Xulu (HHS7K3EC7U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yu Xulu (HHS7K3EC7U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/iAppPay",
@@ -1636,7 +1637,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qianpaoyy.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8dcc8b46-3ac7-4e39-9bbb-c9cde668e716";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
