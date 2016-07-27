@@ -20,7 +20,8 @@
 #import "IappPayMananger.h"
 
 //static NSString *const kAlipaySchemeUrl = @"comyykuaibo2016appalipayurlscheme";
-static NSString *const kVIAPaySchemeUrl = @"comyykuaibov27appviapayurlscheme";
+static NSString *const kVIAPaySchemeUrl = @"comyykuaibov35appviapayurlscheme";
+static NSString *const kIappPaySchemeUrl = @"comyykuaibov35appiapppayurlscheme";
 
 typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
     YYKVIAPayTypeNone,
@@ -56,6 +57,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     [paySender getIntents].delegate = self;
     
     [[YYKPaymentConfigModel sharedModel] fetchConfigWithCompletionHandler:nil];
+    [IappPayMananger sharedMananger].alipayURLScheme = kIappPaySchemeUrl;
     
     Class class = NSClassFromString(@"VIASZFViewController");
     if (class) {
