@@ -31,6 +31,16 @@
             }];
         }
         
+        UIImageView *tagImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"svip_tag"]];
+        [_thumbImageView addSubview:tagImageView];
+        {
+            [tagImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.top.equalTo(_thumbImageView);
+                make.height.equalTo(_thumbImageView).multipliedBy(0.25);
+                make.width.equalTo(tagImageView.mas_height);
+            }];
+        }
+        
         UIView *footerView = [[UIView alloc] init];
         footerView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
         [self addSubview:footerView];

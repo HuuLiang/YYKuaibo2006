@@ -39,6 +39,17 @@ static const CGFloat kThumbImageScale = 7./9.;
             make.height.equalTo(_thumbImageView.mas_width).dividedBy(kThumbImageScale);
         }];
     }
+    
+    UIImageView *tagImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"svip_tag"]];
+    [_thumbImageView addSubview:tagImageView];
+    {
+        [tagImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.top.equalTo(_thumbImageView);
+            make.width.equalTo(_thumbImageView).multipliedBy(0.25);
+            make.height.equalTo(tagImageView.mas_width);
+        }];
+    }
+    
     return _thumbImageView;
 }
 
