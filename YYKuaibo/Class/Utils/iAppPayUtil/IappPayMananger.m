@@ -11,8 +11,6 @@
 #import <IapppayKit/IapppayOrderUtils.h>
 #import "YYKPaymentInfo.h"
 
-static NSString *const kIappPreOrderURL = @"http://ipay.iapppay.com:9999/payapi/order";
-
 @interface IappPayMananger () <IapppayKitPayRetDelegate>
 @property (nonatomic,copy) YYKPaymentCompletionHandler completionHandler;
 @property (nonatomic,retain) YYKPaymentInfo *paymentInfo;
@@ -50,6 +48,10 @@ static NSString *const kIappPreOrderURL = @"http://ipay.iapppay.com:9999/payapi/
 
     NSString *trandData = [order getTrandData];
     [[IapppayKit sharedInstance] makePayForTrandInfo:trandData payResultDelegate:self];
+}
+
+- (void)handleOpenURL:(NSURL *)url {
+    [[IapppayKit sharedInstance] handleOpenUrl:url];
 }
 
 #pragma mark - IapppayKitPayRetDelegate

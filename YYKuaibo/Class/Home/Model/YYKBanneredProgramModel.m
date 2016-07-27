@@ -1,14 +1,14 @@
 //
-//  YYKHomeVideoModel.m
+//  YYKBanneredProgramModel.m
 //  YYKuaibo
 //
-//  Created by Sean Yue on 16/4/14.
+//  Created by Sean Yue on 16/7/27.
 //  Copyright © 2016年 iqu8. All rights reserved.
 //
 
-#import "YYKHomeProgramModel.h"
+#import "YYKBanneredProgramModel.h"
 
-@implementation YYKHomeProgramResponse
+@implementation YYKBanneredProgramResponse
 
 - (Class)columnListElementClass {
     return [YYKChannel class];
@@ -16,10 +16,10 @@
 
 @end
 
-@implementation YYKHomeProgramModel
+@implementation YYKBanneredProgramModel
 
 + (Class)responseClass {
-    return [YYKHomeProgramResponse class];
+    return [YYKBanneredProgramResponse class];
 }
 
 - (instancetype)init {
@@ -34,10 +34,10 @@
     return self;
 }
 
-- (BOOL)fetchProgramsWithCompletionHandler:(YYKCompletionHandler)handler {
+- (BOOL)fetchProgramsInSpace:(YYKBanneredProgramSpace)space withCompletionHandler:(YYKCompletionHandler)handler {
     @weakify(self);
-    BOOL success = [self requestURLPath:YYK_HOME_VIDEO_URL
-                         standbyURLPath:YYK_STANDBY_HOME_VIDEO_URL
+    BOOL success = [self requestURLPath:space == YYKBanneredProgramSpaceHome ? YYK_HOME_VIDEO_URL : YYK_VIP_VIDEO_URL
+                         standbyURLPath:space == YYKBanneredProgramSpaceHome ? YYK_STANDBY_HOME_VIDEO_URL : YYK_STANDBY_VIP_VIDEO_URL
                              withParams:nil
                         responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
                     {
@@ -49,7 +49,7 @@
                         
                         NSArray *programs;
                         if (respStatus == YYKURLResponseSuccess) {
-                            YYKHomeProgramResponse *resp = (YYKHomeProgramResponse *)self.response;
+                            YYKBanneredProgramResponse *resp = (YYKBanneredProgramResponse *)self.response;
                             programs = resp.columnList;
                             self->_fetchedProgramList = programs;
                             
@@ -72,24 +72,24 @@
 }
 
 - (void)filterProgramTypes {
-    _fetchedVideoAndAdProgramList = [self.fetchedProgramList bk_select:^BOOL(id obj)
-                                     {
-                                         YYKProgramType type = ((YYKChannel *)obj).type.unsignedIntegerValue;
-                                         return type == YYKProgramTypeVideo || type == YYKProgramTypeSpread;
-                                     }];
+    _fetchedVideoProgramList = [self.fetchedProgramList bk_select:^BOOL(id obj)
+                                {
+                                    YYKProgramType type = ((YYKChannel *)obj).type.unsignedIntegerValue;
+                                    return type == YYKProgramTypeVideo;
+                                }];
     
     NSArray<YYKChannel *> *bannerChannels = [self.fetchedProgramList bk_select:^BOOL(id obj)
-                                                {
-                                                    YYKProgramType type = ((YYKChannel *)obj).type.unsignedIntegerValue;
-                                                    return type == YYKProgramTypeBanner;
-                                                }];
+                                             {
+                                                 YYKProgramType type = ((YYKChannel *)obj).type.unsignedIntegerValue;
+                                                 return type == YYKProgramTypeBanner;
+                                             }];
     
-//    NSMutableArray *bannerPrograms = [NSMutableArray array];
-//    [bannerProgramList enumerateObjectsUsingBlock:^(YYKChannel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        if (obj.programList.count > 0) {
-//            [bannerPrograms addObjectsFromArray:obj.programList];
-//        }
-//    }];
+    //    NSMutableArray *bannerPrograms = [NSMutableArray array];
+    //    [bannerProgramList enumerateObjectsUsingBlock:^(YYKChannel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    //        if (obj.programList.count > 0) {
+    //            [bannerPrograms addObjectsFromArray:obj.programList];
+    //        }
+    //    }];
     _fetchedBannerChannel = bannerChannels.firstObject;
     
     NSArray<YYKChannel *> *trailChannels = [self.fetchedProgramList bk_select:^BOOL(id obj) {
@@ -97,12 +97,12 @@
         return type == YYKProgramTypeTrial;
     }];
     
-//    NSMutableArray<YYKProgram *> *trialPrograms = [NSMutableArray array];
-//    [trailProgramList enumerateObjectsUsingBlock:^(YYKChannel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        if (obj.programList.count > 0) {
-//            [trialPrograms addObjectsFromArray:obj.programList];
-//        }
-//    }];
+    //    NSMutableArray<YYKProgram *> *trialPrograms = [NSMutableArray array];
+    //    [trailProgramList enumerateObjectsUsingBlock:^(YYKChannel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    //        if (obj.programList.count > 0) {
+    //            [trialPrograms addObjectsFromArray:obj.programList];
+    //        }
+    //    }];
     _fetchedTrialChannel = trailChannels.firstObject;
 }
 @end

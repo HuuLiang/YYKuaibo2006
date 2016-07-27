@@ -116,6 +116,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 
 - (void)handleOpenUrl:(NSURL *)url {
     [[PayUitls getIntents] paytoAli:url];
+    [[IappPayMananger sharedMananger] handleOpenURL:url];
 }
 
 - (YYKPaymentInfo *)startPaymentWithType:(YYKPaymentType)type
@@ -135,11 +136,20 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     }
     
 #ifdef DEBUG
-    if (payPointType == YYKPayPointTypeSVIP) {
-        price = 2;
+    if (type == YYKPaymentTypeIAppPay) {
+        if (payPointType == YYKPayPointTypeSVIP) {
+            price = 201;
+        } else {
+            price = 200;
+        }
     } else {
-        price = 1;
+        if (payPointType == YYKPayPointTypeSVIP) {
+            price = 2;
+        } else {
+            price = 1;
+        }
     }
+    
 #endif
     
     NSString *channelNo = YYK_CHANNEL_NO;
@@ -198,7 +208,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
         iAppMgr.appId = [YYKPaymentConfig sharedConfig].iappPayInfo.appid;
         iAppMgr.privateKey = [YYKPaymentConfig sharedConfig].iappPayInfo.privateKey;
         iAppMgr.waresid = [YYKPaymentConfig sharedConfig].iappPayInfo.waresid.stringValue;
-        iAppMgr.appUserId = [YYKUtil userId].md5 ?: @"UnregisterUser";
+        iAppMgr.appUserId = [YYKUtil userId] ?: @"UnregisterUser";
         iAppMgr.privateInfo = YYK_PAYMENT_RESERVE_DATA;
         iAppMgr.notifyUrl = [YYKPaymentConfig sharedConfig].iappPayInfo.notifyUrl;
         iAppMgr.publicKey = [YYKPaymentConfig sharedConfig].iappPayInfo.publicKey;

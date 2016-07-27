@@ -9,7 +9,7 @@
 #import "YYKHomeViewController.h"
 #import "YYKVideoCell.h"
 #import "YYKVideoSectionHeader.h"
-#import "YYKHomeProgramModel.h"
+#import "YYKBanneredProgramModel.h"
 #import "YYKChannelVideoViewController.h"
 #import <SDCycleScrollView.h>
 
@@ -31,13 +31,13 @@ typedef NS_ENUM(NSUInteger, YYKHomeSection) {
     UICollectionViewCell *_bannerCell;
     SDCycleScrollView *_bannerView;
 }
-@property (nonatomic,retain) YYKHomeProgramModel *programModel;
+@property (nonatomic,retain) YYKBanneredProgramModel *programModel;
 @property (nonatomic) BOOL hasShownSpreadBanner;
 @end
 
 @implementation YYKHomeViewController
 
-DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
+DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -97,7 +97,7 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
 
 - (void)loadPrograms {
     @weakify(self);
-    [self.programModel fetchProgramsWithCompletionHandler:^(BOOL success, id obj) {
+    [self.programModel fetchProgramsInSpace:YYKBanneredProgramSpaceHome withCompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
         if (!self) {
             return ;
@@ -143,7 +143,7 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
 #pragma mark - UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return self.programModel.fetchedVideoAndAdProgramList.count + YYKHomeSectionChannelOffset;
+    return self.programModel.fetchedVideoProgramList.count + YYKHomeSectionChannelOffset;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -178,8 +178,8 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
         return cell;
     } else {
         NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
-        if (programsIndex < self.programModel.fetchedVideoAndAdProgramList.count) {
-            YYKChannel *channel = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
+        if (programsIndex < self.programModel.fetchedVideoProgramList.count) {
+            YYKChannel *channel = self.programModel.fetchedVideoProgramList[programsIndex];
             if (channel.type.unsignedIntegerValue == YYKProgramTypeVideo) {
                 YYKVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVideoLibCellReusableIdentifier forIndexPath:indexPath];
                 cell.placeholderImage = indexPath.row == 0 ? [UIImage imageNamed:@"placeholder_3_5"] : [UIImage imageNamed:@"placeholder_1_1"];
@@ -222,8 +222,8 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
         return self.programModel.fetchedTrialChannel.programList.count;
     } else if (section >= YYKHomeSectionChannelOffset) {
         NSUInteger programsIndex = section - YYKHomeSectionChannelOffset;
-        if (programsIndex < self.programModel.fetchedVideoAndAdProgramList.count) {
-            YYKChannel *channel = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
+        if (programsIndex < self.programModel.fetchedVideoProgramList.count) {
+            YYKChannel *channel = self.programModel.fetchedVideoProgramList[programsIndex];
             return channel.programList.count;
         }
     }
@@ -270,8 +270,8 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
         };
     } else {
         NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
-        if (programsIndex < self.programModel.fetchedVideoAndAdProgramList.count) {
-            YYKChannel *channel = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
+        if (programsIndex < self.programModel.fetchedVideoProgramList.count) {
+            YYKChannel *channel = self.programModel.fetchedVideoProgramList[programsIndex];
             headerView.title = channel.name;
             headerView.subtitle = channel.columnDesc;
             
@@ -345,8 +345,8 @@ DefineLazyPropertyInitialization(YYKHomeProgramModel, programModel)
         }
     } else {
         NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
-        if (programsIndex < self.programModel.fetchedVideoAndAdProgramList.count) {
-            YYKChannel *channel = self.programModel.fetchedVideoAndAdProgramList[programsIndex];
+        if (programsIndex < self.programModel.fetchedVideoProgramList.count) {
+            YYKChannel *channel = self.programModel.fetchedVideoProgramList[programsIndex];
             if (indexPath.row < channel.programList.count) {
                 YYKProgram *program = channel.programList[indexPath.row];
                 [self switchToPlayProgram:program programLocation:indexPath.row inChannel:channel];

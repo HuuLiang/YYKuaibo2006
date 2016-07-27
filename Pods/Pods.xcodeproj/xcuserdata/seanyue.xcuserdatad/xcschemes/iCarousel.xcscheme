@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '41D5DDCFCDB68217DD63E88B75867B18'
-               BlueprintName = 'SFHFKeychainUtils'
+               BlueprintIdentifier = '9494390523250106847516AB47E5F9FF'
+               BlueprintName = 'iCarousel'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libSFHFKeychainUtils.a'>
+               BuildableName = 'libiCarousel.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

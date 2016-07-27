@@ -15,4 +15,5 @@ target 'YYKuaibo' do
     # pod 'ODRefreshControl', '~> 1.2'
     pod 'FMDB', '~> 2.6.2'
     pod 'XMLReader-Arc', '~> 1.1'
+    pod 'iCarousel', '~> 1.8.2'
 end
