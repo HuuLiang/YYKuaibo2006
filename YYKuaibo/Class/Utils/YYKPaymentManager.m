@@ -141,7 +141,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 #ifdef DEBUG
     if (type == YYKPaymentTypeIAppPay) {
         if (payPointType == YYKPayPointTypeSVIP) {
-            price = 201;
+            price = 210;
         } else {
             price = 200;
         }
