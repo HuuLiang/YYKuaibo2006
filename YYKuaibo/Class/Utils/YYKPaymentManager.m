@@ -115,8 +115,11 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 }
 
 - (void)handleOpenUrl:(NSURL *)url {
-    [[PayUitls getIntents] paytoAli:url];
-    [[IappPayMananger sharedMananger] handleOpenURL:url];
+    if ([url.absoluteString rangeOfString:kIappPaySchemeUrl].location == 0) {
+        [[IappPayMananger sharedMananger] handleOpenURL:url];
+    } else if ([url.absoluteString rangeOfString:kVIAPaySchemeUrl].location == 0) {
+        [[PayUitls getIntents] paytoAli:url];
+    }
 }
 
 - (YYKPaymentInfo *)startPaymentWithType:(YYKPaymentType)type
