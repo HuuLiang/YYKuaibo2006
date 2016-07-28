@@ -89,6 +89,7 @@
 //    [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
 //    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
     [[UITabBar appearance] setSelectedImageTintColor:[UIColor darkPink]];
+    [[UITabBar appearance] setTintColor:[UIColor darkPink]];
 //    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
     [[UINavigationBar appearance] setBarTintColor:[UIColor darkPink]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.],
