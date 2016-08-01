@@ -21,9 +21,7 @@
     }
     
     @weakify(self);
-    NSDictionary *params = @{@"columnId":columnId,
-                             @"page":@(page),
-                             @"pageSize":@(10)};
+    NSDictionary *params = @{@"columnId":columnId, @"page":@(page)};
     BOOL ret = [self requestURLPath:YYK_CHANNEL_PROGRAM_URL withParams:params responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage) {
         @strongify(self);
         if (!self) {
