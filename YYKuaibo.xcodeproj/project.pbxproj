@@ -18,8 +18,6 @@
 		BC29144F1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC29144E1C9FF7A2002084E2 /* WeChatPayQueryOrderRequest.m */; };
 		BC2A0B411CB8D79D00B7D397 /* YYKLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2A0B401CB8D79D00B7D397 /* YYKLocalNotificationManager.m */; };
 		BC2BAB491D37E1B900691CB4 /* YYKSearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2BAB481D37E1B900691CB4 /* YYKSearchModel.m */; };
-		BC2F2DA81D49161600DAF764 /* IapppayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC2F2DA61D49161600DAF764 /* IapppayKit.framework */; };
-		BC2F2DA91D49161600DAF764 /* IapppayResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC2F2DA71D49161600DAF764 /* IapppayResource.bundle */; };
 		BC2FB7791CDA0A5700645070 /* DBHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2FB7751CDA0A5700645070 /* DBHandler.m */; };
 		BC2FB77A1CDA0A5700645070 /* DBTableVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2FB7781CDA0A5700645070 /* DBTableVersion.m */; };
 		BC30FBE51CE21A4300E49B98 /* YYKNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BC30FBE41CE21A4300E49B98 /* YYKNetworkInfo.m */; };
@@ -84,6 +82,8 @@
 		BC7BF6AA1D460BAE00756287 /* YYKPaymentTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7BF6A91D460BAE00756287 /* YYKPaymentTypeCell.m */; };
 		BC7EEBEC1D13EF89008D9A32 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC7EEBEA1D13EF89008D9A32 /* AlipaySDK.bundle */; };
 		BC7EEBED1D13EF89008D9A32 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC7EEBEB1D13EF89008D9A32 /* AlipaySDK.framework */; };
+		BC91131A1D59BDC70033C922 /* IapppayAlphaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC9113181D59BDC70033C922 /* IapppayAlphaKit.framework */; };
+		BC91131B1D59BDC70033C922 /* IapppayAlphaResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC9113191D59BDC70033C922 /* IapppayAlphaResource.bundle */; };
 		BCA1B7D61D23AC10004B492B /* YYKVideoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA1B7D51D23AC10004B492B /* YYKVideoDetailViewController.m */; };
 		BCA1B7D91D23B664004B492B /* UIColor+FeaturedColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA1B7D81D23B664004B492B /* UIColor+FeaturedColor.m */; };
 		BCA1B7DD1D23BC76004B492B /* YYKVideoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA1B7DC1D23BC76004B492B /* YYKVideoListViewController.m */; };
@@ -197,8 +197,6 @@
 		BC2A0B401CB8D79D00B7D397 /* YYKLocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKLocalNotificationManager.m; sourceTree = "<group>"; };
 		BC2BAB471D37E1B900691CB4 /* YYKSearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKSearchModel.h; sourceTree = "<group>"; };
 		BC2BAB481D37E1B900691CB4 /* YYKSearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKSearchModel.m; sourceTree = "<group>"; };
-		BC2F2DA61D49161600DAF764 /* IapppayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IapppayKit.framework; sourceTree = "<group>"; };
-		BC2F2DA71D49161600DAF764 /* IapppayResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IapppayResource.bundle; sourceTree = "<group>"; };
 		BC2FB7741CDA0A5700645070 /* DBHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBHandler.h; sourceTree = "<group>"; };
 		BC2FB7751CDA0A5700645070 /* DBHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBHandler.m; sourceTree = "<group>"; };
 		BC2FB7761CDA0A5700645070 /* DBMigration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBMigration.h; sourceTree = "<group>"; };
@@ -307,6 +305,8 @@
 		BC7BF6A91D460BAE00756287 /* YYKPaymentTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKPaymentTypeCell.m; sourceTree = "<group>"; };
 		BC7EEBEA1D13EF89008D9A32 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		BC7EEBEB1D13EF89008D9A32 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		BC9113181D59BDC70033C922 /* IapppayAlphaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IapppayAlphaKit.framework; sourceTree = "<group>"; };
+		BC9113191D59BDC70033C922 /* IapppayAlphaResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IapppayAlphaResource.bundle; sourceTree = "<group>"; };
 		BCA1B7D41D23AC10004B492B /* YYKVideoDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVideoDetailViewController.h; sourceTree = "<group>"; };
 		BCA1B7D51D23AC10004B492B /* YYKVideoDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVideoDetailViewController.m; sourceTree = "<group>"; };
 		BCA1B7D71D23B664004B492B /* UIColor+FeaturedColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FeaturedColor.h"; sourceTree = "<group>"; };
@@ -466,10 +466,10 @@
 				BC6F00CA1D00712800AC01D9 /* Security.framework in Frameworks */,
 				BC7BF6A31D45F54000756287 /* PayUtil.framework in Frameworks */,
 				BC660B121C97275100E04D23 /* libc++.tbd in Frameworks */,
-				BC2F2DA81D49161600DAF764 /* IapppayKit.framework in Frameworks */,
 				BCE2572C1C968B5100133F4F /* libsqlite3.tbd in Frameworks */,
 				BCE2572A1C968B4800133F4F /* libz.tbd in Frameworks */,
 				BC7EEBED1D13EF89008D9A32 /* AlipaySDK.framework in Frameworks */,
+				BC91131A1D59BDC70033C922 /* IapppayAlphaKit.framework in Frameworks */,
 				BCE257281C968B4100133F4F /* CoreTelephony.framework in Frameworks */,
 				BCE257251C968AED00133F4F /* libMobClickLibrary.a in Frameworks */,
 				BCE257261C968AED00133F4F /* libWeChatSDK.a in Frameworks */,
@@ -826,8 +826,8 @@
 		BCBDB8C01D435307004EA95D /* iAppPay */ = {
 			isa = PBXGroup;
 			children = (
-				BC2F2DA61D49161600DAF764 /* IapppayKit.framework */,
-				BC2F2DA71D49161600DAF764 /* IapppayResource.bundle */,
+				BC9113181D59BDC70033C922 /* IapppayAlphaKit.framework */,
+				BC9113191D59BDC70033C922 /* IapppayAlphaResource.bundle */,
 			);
 			path = iAppPay;
 			sourceTree = "<group>";
@@ -1264,7 +1264,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC2F2DA91D49161600DAF764 /* IapppayResource.bundle in Resources */,
 				BC7EEBEC1D13EF89008D9A32 /* AlipaySDK.bundle in Resources */,
 				BC7BF6981D45F54000756287 /* btn1.png in Resources */,
 				BC6F6E201D44A487002FD77C /* VIASDKVERSION.txt in Resources */,
@@ -1276,6 +1275,7 @@
 				BC7BF6A41D45F54000756287 /* private_key.p12 in Resources */,
 				BC7BF6A11D45F54000756287 /* seperator.png in Resources */,
 				BC7BF69A1D45F54000756287 /* btn2.png in Resources */,
+				BC91131B1D59BDC70033C922 /* IapppayAlphaResource.bundle in Resources */,
 				BC7BF6A51D45F54000756287 /* public_key.der in Resources */,
 				BC7BF69F1D45F54000756287 /* btn8.png in Resources */,
 				BC7BF6A21D45F54000756287 /* unicom_back.png in Resources */,

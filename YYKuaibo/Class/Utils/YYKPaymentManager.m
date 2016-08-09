@@ -89,6 +89,8 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 //        return YYKPaymentTypeSPay;
 //    } else if ([YYKPaymentConfig sharedConfig].haitunPayInfo) {
 //        return YYKPaymentTypeHTPay;
+    } else if ([YYKPaymentConfig sharedConfig].iappPayInfo.supportPayTypes.integerValue & YYKSubPayTypeWeChat) {
+        return YYKPaymentTypeIAppPay;
     }
     return YYKPaymentTypeNone;
 }
@@ -96,14 +98,16 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 - (YYKPaymentType)alipayPaymentType {
     if ([YYKPaymentConfig sharedConfig].syskPayInfo.supportPayTypes.integerValue & YYKSubPayTypeAlipay) {
         return YYKPaymentTypeVIAPay;
+    } else if ([YYKPaymentConfig sharedConfig].iappPayInfo.supportPayTypes.integerValue & YYKSubPayTypeAlipay) {
+        return YYKPaymentTypeIAppPay;
     }
     return YYKPaymentTypeNone;
 }
 
 - (YYKPaymentType)cardPayPaymentType {
-    if ([YYKPaymentConfig sharedConfig].iappPayInfo) {
-        return YYKPaymentTypeIAppPay;
-    }
+//    if ([YYKPaymentConfig sharedConfig].iappPayInfo) {
+//        return YYKPaymentTypeIAppPay;
+//    }
     return YYKPaymentTypeNone;
 }
 
@@ -216,7 +220,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
         iAppMgr.notifyUrl = [YYKPaymentConfig sharedConfig].iappPayInfo.notifyUrl;
         iAppMgr.publicKey = [YYKPaymentConfig sharedConfig].iappPayInfo.publicKey;
         
-        [iAppMgr payWithPaymentInfo:paymentInfo completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
+        [iAppMgr payWithPaymentInfo:paymentInfo payType:subType completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
             @strongify(self);
             [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
             
