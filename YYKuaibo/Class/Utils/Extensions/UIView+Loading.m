@@ -46,7 +46,7 @@ static const void *kUIMessageViewAssociatedKey = &kUIMessageViewAssociatedKey;
     MBProgressHUD *progressHud = [[MBProgressHUD alloc] initWithView:self];
     objc_setAssociatedObject(self, kUIProgressingViewAssociatedKey, progressHud, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
-    progressHud.mode = MBProgressHUDModeDeterminate;
+    progressHud.mode = MBProgressHUDModeIndeterminate;
     [self addSubview:progressHud];
     return progressHud;
 }

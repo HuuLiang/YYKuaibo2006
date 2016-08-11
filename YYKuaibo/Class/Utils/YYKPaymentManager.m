@@ -18,6 +18,7 @@
 #import <PayUtil/PayUtil.h>
 
 #import "IappPayMananger.h"
+#import "MingPayManager.h"
 
 //static NSString *const kAlipaySchemeUrl = @"comyykuaibo2016appalipayurlscheme";
 static NSString *const kVIAPaySchemeUrl = @"comyykuaibov35appviapayurlscheme";
@@ -56,7 +57,9 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     [[PayUitls getIntents] initSdk];
     [paySender getIntents].delegate = self;
     
-    [[YYKPaymentConfigModel sharedModel] fetchConfigWithCompletionHandler:nil];
+    [[YYKPaymentConfigModel sharedModel] fetchConfigWithCompletionHandler:^(BOOL success, id obj) {
+        [MingPayManager sharedManager].mch = [YYKPaymentConfig sharedConfig].mpPayInfo.mch;
+    }];
     [IappPayMananger sharedMananger].alipayURLScheme = kIappPaySchemeUrl;
     
     Class class = NSClassFromString(@"VIASZFViewController");
@@ -91,6 +94,8 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 //        return YYKPaymentTypeHTPay;
     } else if ([YYKPaymentConfig sharedConfig].iappPayInfo.supportPayTypes.integerValue & YYKSubPayTypeWeChat) {
         return YYKPaymentTypeIAppPay;
+    } else if ([YYKPaymentConfig sharedConfig].mpPayInfo.mch.length > 0) {
+        return YYKPaymentTypeMingPay;
     }
     return YYKPaymentTypeNone;
 }
@@ -149,12 +154,14 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
         } else {
             price = 200;
         }
-    } else {
+    } else if (type == YYKPaymentTypeMingPay) {
         if (payPointType == YYKPayPointTypeSVIP) {
-            price = 2;
+            price = 110;
         } else {
-            price = 1;
+            price = 100;
         }
+    } else {
+        price = payPointType == YYKPayPointTypeSVIP ? 2 : 1;
     }
     
 #endif
@@ -165,8 +172,22 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
     NSString *orderNo = [NSString stringWithFormat:@"%@_%@", channelNo, uuid];
     
     YYKPaymentInfo *paymentInfo = [[YYKPaymentInfo alloc] init];
-    paymentInfo.orderId = orderNo;
+    if (type == YYKPaymentTypeMingPay) {
+        paymentInfo.orderId = [[MingPayManager sharedManager] processOrderNo:orderNo];
+    } else {
+        paymentInfo.orderId = orderNo;
+    }
+    
     paymentInfo.orderPrice = @(price);
+    
+    NSString *tradeName = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? [kSVIPText stringByAppendingString:@"会员"] : @"VIP会员";
+    NSString *servicePhone = [YYKSystemConfigModel sharedModel].contact;
+    if (type == YYKPaymentTypeMingPay) {
+        paymentInfo.orderDescription = servicePhone ?: @"VIP";
+    } else {
+       paymentInfo.orderDescription = servicePhone.length > 0 ? [tradeName stringByAppendingFormat:@"(客服电话: %@)", servicePhone] : tradeName;
+    }
+    
     paymentInfo.contentId = program.programId;
     paymentInfo.contentType = program.type;
     paymentInfo.contentLocation = @(programLocation+1);
@@ -243,6 +264,16 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 //                 self.completionHandler(payResult, self.paymentInfo);
 //             }
 //         }];
+    } else if (type == YYKPaymentTypeMingPay) {
+        @weakify(self);
+        [[MingPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
+            @strongify(self);
+            [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
+            
+            if (self.completionHandler) {
+                self.completionHandler(payResult, self.paymentInfo);
+            }
+        }];
     } else {
         success = NO;
         

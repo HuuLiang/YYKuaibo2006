@@ -12,6 +12,7 @@
 static NSString *const kPaymentInfoPaymentIdKeyName = @"yykuaibov_paymentinfo_paymentid_keyname";
 static NSString *const kPaymentInfoOrderIdKeyName = @"yykuaibov_paymentinfo_orderid_keyname";
 static NSString *const kPaymentInfoOrderPriceKeyName = @"yykuaibov_paymentinfo_orderprice_keyname";
+static NSString *const kPaymentInfoOrderDescriptionKeyName = @"yykuaibov_paymentinfo_orderdescription_keyname";
 static NSString *const kPaymentInfoContentIdKeyName = @"yykuaibov_paymentinfo_contentid_keyname";
 static NSString *const kPaymentInfoContentTypeKeyName = @"yykuaibov_paymentinfo_contenttype_keyname";
 static NSString *const kPaymentInfoContentLocationKeyName = @"yykuaibov_paymentinfo_contentlocation_keyname";
@@ -45,6 +46,7 @@ static NSString *const kPaymentInfoPaymentNotifyUrl = @"yykuaibov_paymentinfo_pa
     paymentInfo.paymentId = payment[kPaymentInfoPaymentIdKeyName];
     paymentInfo.orderId = payment[kPaymentInfoOrderIdKeyName];
     paymentInfo.orderPrice = payment[kPaymentInfoOrderPriceKeyName];
+    paymentInfo.orderDescription = payment[kPaymentInfoOrderDescriptionKeyName];
     paymentInfo.contentId = payment[kPaymentInfoContentIdKeyName];
     paymentInfo.contentType = payment[kPaymentInfoContentTypeKeyName];
     paymentInfo.contentLocation = payment[kPaymentInfoContentLocationKeyName];
@@ -68,6 +70,7 @@ static NSString *const kPaymentInfoPaymentNotifyUrl = @"yykuaibov_paymentinfo_pa
     [payment safelySetObject:self.paymentId forKey:kPaymentInfoPaymentIdKeyName];
     [payment safelySetObject:self.orderId forKey:kPaymentInfoOrderIdKeyName];
     [payment safelySetObject:self.orderPrice forKey:kPaymentInfoOrderPriceKeyName];
+    [payment safelySetObject:self.orderDescription forKey:kPaymentInfoOrderDescriptionKeyName];
     [payment safelySetObject:self.contentId forKey:kPaymentInfoContentIdKeyName];
     [payment safelySetObject:self.contentType forKey:kPaymentInfoContentTypeKeyName];
     [payment safelySetObject:self.contentLocation forKey:kPaymentInfoContentLocationKeyName];

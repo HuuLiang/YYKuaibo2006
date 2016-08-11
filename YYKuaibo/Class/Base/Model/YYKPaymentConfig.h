@@ -43,17 +43,22 @@
 
 @end
 
-@interface YYKSPayConfig : NSObject
-@property (nonatomic) NSString *signKey;
-@property (nonatomic) NSString *mchId;
-@property (nonatomic) NSString *notifyUrl;
-@end
+@interface YYKMingPayConfig : NSObject
 
-@interface YYKHTPayConfig : NSObject
-@property (nonatomic) NSString *key;
-@property (nonatomic) NSString *mchId;
-@property (nonatomic) NSString *notifyUrl;
+@property (nonatomic) NSString *mch;
+
 @end
+//@interface YYKSPayConfig : NSObject
+//@property (nonatomic) NSString *signKey;
+//@property (nonatomic) NSString *mchId;
+//@property (nonatomic) NSString *notifyUrl;
+//@end
+//
+//@interface YYKHTPayConfig : NSObject
+//@property (nonatomic) NSString *key;
+//@property (nonatomic) NSString *mchId;
+//@property (nonatomic) NSString *notifyUrl;
+//@end
 
 @interface YYKPaymentConfig : YYKURLResponse
 
@@ -61,8 +66,10 @@
 @property (nonatomic,retain) YYKAlipayConfig *alipayInfo;
 @property (nonatomic,retain) YYKIAppPayConfig *iappPayInfo;
 @property (nonatomic,retain) YYKVIAPayConfig *syskPayInfo;
-@property (nonatomic,retain) YYKSPayConfig *wftPayInfo;
-@property (nonatomic,retain) YYKHTPayConfig *haitunPayInfo;
+@property (nonatomic,retain) YYKMingPayConfig *mpPayInfo;
+
+//@property (nonatomic,retain) YYKSPayConfig *wftPayInfo;
+//@property (nonatomic,retain) YYKHTPayConfig *haitunPayInfo;
 
 + (instancetype)sharedConfig;
 - (void)setAsCurrentConfig;
