@@ -192,7 +192,7 @@ DefineLazyPropertyInitialization(YYKSearchResultViewController, resultVC)
 }
 
 - (void)onPaidNotification {
-    if ([self.errorMessage.string containsString:kNonVIPSearchKeywordError]) {
+    if ([self.errorMessage.string rangeOfString:kNonVIPSearchKeywordError].location == 0) {
         self.errorMessage = nil;
         [self.tagVC reloadData];
     }

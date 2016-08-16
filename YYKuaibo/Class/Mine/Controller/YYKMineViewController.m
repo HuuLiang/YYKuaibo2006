@@ -106,6 +106,13 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, spreadModel)
     // Dispose of any resources that can be recreated.
 }
 
+- (YYKMineSection)sectionTypeWithSectionIndex:(NSUInteger)sectionIndex {
+    if (![YYKUtil isAllVIPs]) {
+        return sectionIndex;
+    } else {
+        return sectionIndex + 1;
+    }
+}
 #pragma mark - UICollectionViewDataSource,UICollectionViewDelegateFlowLayout
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -113,18 +120,18 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, spreadModel)
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (section == YYKVIPSection) {
+    if ([self sectionTypeWithSectionIndex:section] == YYKVIPSection) {
         return 1;
-    } else if (section == YYKMenuSection) {
+    } else if ([self sectionTypeWithSectionIndex:section] == YYKMenuSection) {
         return [YYKUtil isAnyVIP] ? 4 : 3;
-    } else if (section == YYKSpreadSection) {
+    } else if ([self sectionTypeWithSectionIndex:section] == YYKSpreadSection) {
         return self.spreadModel.fetchedSpreadChannel.programList.count;
     }
     return 0;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == YYKVIPSection) {
+    if ([self sectionTypeWithSectionIndex:indexPath.section] == YYKVIPSection) {
         YYKMineVIPCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVIPCellReusableIdentifier forIndexPath:indexPath];
         
         if ([YYKUtil isVIP] && ![YYKUtil isSVIP]) {
@@ -136,7 +143,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, spreadModel)
         }
         
         return cell;
-    } else if (indexPath.section == YYKMenuSection) {
+    } else if ([self sectionTypeWithSectionIndex:indexPath.section] == YYKMenuSection) {
         YYKMineMenuCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMenuCellReusableIdentifier forIndexPath:indexPath];
         cell.backgroundColor = [UIColor whiteColor];
         
@@ -154,7 +161,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, spreadModel)
             cell.title = @"联系我们";
         }
         return cell;
-    } else if (indexPath.section == YYKSpreadSection) {
+    } else if ([self sectionTypeWithSectionIndex:indexPath.section] == YYKSpreadSection) {
         
         YYKProgram *appSpread;
         if (indexPath.item < self.spreadModel.fetchedSpreadChannel.programList.count) {
@@ -182,18 +189,18 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, spreadModel)
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == YYKVIPSection) {
+    if ([self sectionTypeWithSectionIndex:indexPath.section] == YYKVIPSection) {
         if (![YYKUtil isAllVIPs]) {
             return CGSizeMake(CGRectGetWidth(collectionView.bounds), CGRectGetWidth(collectionView.bounds)/2);
         }
-    } else if (indexPath.section == YYKMenuSection) {
+    } else if ([self sectionTypeWithSectionIndex:indexPath.section] == YYKMenuSection) {
         const NSUInteger numberOfItems = [self collectionView:collectionView numberOfItemsInSection:indexPath.section];
         if (numberOfItems > 0) {
             const CGFloat itemWidth = CGRectGetWidth(collectionView.bounds) / numberOfItems;
             return CGSizeMake(itemWidth, kScreenHeight *0.12);
         }
         
-    } else if (indexPath.section == YYKSpreadSection) {
+    } else if ([self sectionTypeWithSectionIndex:indexPath.section] == YYKSpreadSection) {
         if ([YYKUtil isAnyVIP]) {
             const CGFloat itemWidth = CGRectGetWidth(collectionView.bounds);
             const CGFloat itemHeight = itemWidth * 0.4;
@@ -208,7 +215,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, spreadModel)
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    if (section == YYKSpreadSection) {
+    if ([self sectionTypeWithSectionIndex:section] == YYKSpreadSection) {
         if ([YYKUtil isNoVIP]) {
             return 15;
         } else {
@@ -219,14 +226,14 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, spreadModel)
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    if (section == YYKSpreadSection && [YYKUtil isNoVIP]) {
+    if ([self sectionTypeWithSectionIndex:section] == YYKSpreadSection && [YYKUtil isNoVIP]) {
         return [self collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:section].left;
     }
     return 0;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    if (section == YYKSpreadSection && [YYKUtil isNoVIP]) {
+    if ([self sectionTypeWithSectionIndex:section] == YYKSpreadSection && [YYKUtil isNoVIP]) {
         const CGFloat kLeftRightInsets = (long)(CGRectGetWidth(collectionView.bounds) / 6);
         return UIEdgeInsetsMake(30, kLeftRightInsets, 30, kLeftRightInsets);
     }
@@ -234,10 +241,10 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, spreadModel)
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == YYKVIPSection) {
+    if ([self sectionTypeWithSectionIndex:indexPath.section] == YYKVIPSection) {
         YYKPayPointType payPointType = [YYKUtil isVIP] && ![YYKUtil isSVIP] ? YYKPayPointTypeSVIP : YYKPayPointTypeVIP;
         [self payForPayPointType:payPointType];
-    } else if (indexPath.section == YYKMenuSection) {
+    } else if ([self sectionTypeWithSectionIndex:indexPath.section] == YYKMenuSection) {
         YYKMineMenuCell *cell = (YYKMineMenuCell *)[collectionView cellForItemAtIndexPath:indexPath];
         if (indexPath.item == YYKActivationItem) {
             [[YYKManualActivationManager sharedManager] doActivation];
@@ -264,7 +271,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, spreadModel)
                 [YYKUtil callPhoneNumber:phoneNum];
             }
         }
-    } else if (indexPath.section == YYKSpreadSection) {
+    } else if ([self sectionTypeWithSectionIndex:indexPath.section] == YYKSpreadSection) {
         if (indexPath.item < self.spreadModel.fetchedSpreadChannel.programList.count) {
             YYKProgram *spread = self.spreadModel.fetchedSpreadChannel.programList[indexPath.item];
             [self switchToPlayProgram:spread programLocation:indexPath.item inChannel:self.spreadModel.fetchedSpreadChannel];
