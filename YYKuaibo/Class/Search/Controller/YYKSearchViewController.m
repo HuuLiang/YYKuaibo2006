@@ -248,7 +248,7 @@ DefineLazyPropertyInitialization(YYKSearchResultViewController, resultVC)
 }
 
 - (void)tagSearchViewController:(YYKTagSearchViewController *)tagSearchVC didSelectErrorMessage:(NSString *)errorMessage {
-    if ([errorMessage containsString:kNonVIPSearchKeywordError]) {
+    if ([errorMessage rangeOfString:kNonVIPSearchKeywordError].location == 0) {
         [self payForPayPointType:YYKPayPointTypeVIP];
     } else {
         [self searchKeyword:self.resultVC.searchedKeyword];

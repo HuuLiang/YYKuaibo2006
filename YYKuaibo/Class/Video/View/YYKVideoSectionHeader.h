@@ -11,12 +11,5 @@
 @interface YYKVideoSectionHeader : UICollectionReusableView
 
 @property (nonatomic) NSString *title;
-@property (nonatomic) NSString *subtitle;
-@property (nonatomic) UIColor *iconColor;
-@property (nonatomic) UIColor *titleColor;
-@property (nonatomic) UIColor *accessoryTintColor;
-@property (nonatomic) YYKAction accessoryAction;
-@property (nonatomic) BOOL accessoryHidden;
 
-@property (nonatomic,retain,readonly) UIView *contentView;
 @end

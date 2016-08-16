@@ -14,6 +14,10 @@
     return [NSString class];
 }
 
+- (Class)hotSearchElementClass {
+    return [YYKProgram class];
+}
+
 @end
 
 @implementation YYKKeywordTagModel
@@ -37,14 +41,21 @@
             return ;
         }
         
-        NSArray *tags;
+        YYKKeywordTags *resp;
         if (respStatus == YYKURLResponseSuccess) {
-            YYKKeywordTags *resp = self.response;
-            tags = resp.tags;
-            self->_fetchedTags = tags;
+            resp = self.response;
+            self->_fetchedTags = resp.tags;
+            
+            YYKChannel *channel = [[YYKChannel alloc] init];
+            channel.columnId = resp.hsColumnId;
+            channel.realColumnId = resp.hsRealColumnId;
+            channel.programList = resp.hotSearch;
+            channel.type = @(YYKProgramTypeVideo);
+            
+            self->_fetchedHotChannel = channel;
         }
         
-        SafelyCallBlock(completionHandler, respStatus == YYKURLResponseSuccess, tags);
+        SafelyCallBlock(completionHandler, respStatus == YYKURLResponseSuccess, resp);
     }];
     return ret;
 }

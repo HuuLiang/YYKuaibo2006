@@ -2,78 +2,87 @@
 //  YYKVIPViewController.m
 //  YYKuaibo
 //
-//  Created by Sean Yue on 16/7/27.
+//  Created by Sean Yue on 16/4/19.
 //  Copyright © 2016年 iqu8. All rights reserved.
 //
 
 #import "YYKVIPViewController.h"
-#import "YYKVIPCell.h"
-#import "YYKVIPBannerCell.h"
-#import "YYKBanneredProgramModel.h"
+#import "YYKCardSlider.h"
+#import "YYKChannelModel.h"
+#import "YYKPaymentInfo.h"
+#import "YYKVIPVideoViewController.h"
 
-static NSString *const kVIPCellReusableIdentifier = @"VIPCellReusableIdentifier";
-static NSString *const kBannerCellReusableIdentifier = @"BannerCellReusableIdentifier";
-
-@interface YYKVIPViewController () <UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
+@interface YYKVIPViewController () <YYKCardSliderDelegate,YYKCardSliderDataSource>
 {
-    UICollectionView *_layoutCV;
+    YYKCardSlider *_contentView;
 }
-@property (nonatomic,retain) YYKBanneredProgramModel *vipModel;
-@property (nonatomic,retain) YYKChannel *bannerChannel;
-@property (nonatomic,retain) YYKChannel *videoChannel;
+@property (nonatomic,retain) YYKChannelModel *channelModel;
+@property (nonatomic) BOOL initialLoad;
 @end
 
 @implementation YYKVIPViewController
 
-DefineLazyPropertyInitialization(YYKBanneredProgramModel, vipModel)
+DefineLazyPropertyInitialization(YYKChannelModel, channelModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.minimumLineSpacing = 0;
-    layout.minimumInteritemSpacing = 0;
+    //self.view.backgroundColor = [UIColor colorWithWhite:0.75 alpha:1];
     
-    _layoutCV = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-    _layoutCV.backgroundColor = self.view.backgroundColor;
-    _layoutCV.delegate = self;
-    _layoutCV.dataSource = self;
-    [_layoutCV registerClass:[YYKVIPCell class] forCellWithReuseIdentifier:kVIPCellReusableIdentifier];
-    [_layoutCV registerClass:[YYKVIPBannerCell class] forCellWithReuseIdentifier:kBannerCellReusableIdentifier];
-    [self.view addSubview:_layoutCV];
-    {
-        [_layoutCV mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
-    }
+//    NSString *bgImagePath = [[NSBundle mainBundle] pathForResource:@"svip_background" ofType:@"jpg"];
+//    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:bgImagePath]];
+//    backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+//    backgroundImageView.clipsToBounds = YES;
+//    [self.view addSubview:backgroundImageView];
+//    {
+//        [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(self.view);
+//        }];
+//    }
     
+    _contentView = [[YYKCardSlider alloc] initWithFrame:self.view.bounds];
+    _contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    _contentView.delegate = self;
+    _contentView.dataSource = self;
+    [self.view addSubview:_contentView];
+
     @weakify(self);
-    [_layoutCV YYK_addPullToRefreshWithHandler:^{
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"svip_refresh"] style:UIBarButtonItemStylePlain handler:^(id sender) {
         @strongify(self);
-        [self loadVIPVideos];
+        [self loadChannels];
     }];
-    [_layoutCV YYK_triggerPullToRefresh];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
+
+    [self loadChannels];
 }
 
-- (void)loadVIPVideos {
+//- (void)onPaidNotification:(NSNotification *)notification {
+//    if ([YYKUtil isSVIP]) {
+//        [_contentView reloadData];
+//    }
+//}
+
+- (void)loadChannels {
     @weakify(self);
-    [self.vipModel fetchProgramsInSpace:YYKBanneredProgramSpaceVIP withCompletionHandler:^(BOOL success, id obj) {
+    [self.view beginLoading];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    [self.channelModel fetchChannelsInSpace:YYKChannelSpaceSVIP withCompletionHandler:^(BOOL success, id obj)
+    {
         @strongify(self);
         if (!self) {
             return ;
         }
         
-        [self->_layoutCV YYK_endPullToRefresh];
+        [self.view endLoading];
+        self.navigationItem.rightBarButtonItem.enabled = YES;
         
-        if (success) {
-            
-            self.bannerChannel = self.vipModel.fetchedBannerChannel;
-            self.videoChannel = self.vipModel.fetchedVideoProgramList.firstObject;
-            
-            [self->_layoutCV reloadData];
+        if (success || !self.initialLoad) {
+            [self->_contentView reloadData];
+            self.initialLoad = YES;
         }
-
     }];
 }
 
@@ -82,73 +91,62 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, vipModel)
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - UICollectionViewDelegateFlowLayout,UICollectionViewDataSource
+#pragma mark - YYKCardSliderDelegate,YYKCardSliderDataSource
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 2;
+- (NSUInteger)numberOfCardsInCardSlider:(YYKCardSlider *)slider {
+    return self.channelModel.fetchedChannels.count;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 1;
-    }
-    return self.videoChannel.programList.count;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        YYKVIPBannerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kBannerCellReusableIdentifier forIndexPath:indexPath];
-        
-        NSMutableArray<YYKVIPBannerItem *> *items = [NSMutableArray array];
-        [self.bannerChannel.programList enumerateObjectsUsingBlock:^(YYKProgram * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [items addObject:[YYKVIPBannerItem itemWithImageURL:[NSURL URLWithString:obj.coverImg] title:obj.title]];
-        }];
-        
-        cell.items = items;
-        
-        @weakify(self);
-        cell.selectionAction = ^(NSUInteger index, id obj) {
-            @strongify(self);
-            if (!self) {
-                return ;
-            }
-            
-            if (index < self.bannerChannel.programList.count) {
-                YYKProgram *program = self.bannerChannel.programList[index];
-                [self switchToPlayProgram:program programLocation:index inChannel:self.bannerChannel shouldShowDetail:NO];
-            }
-        };
-        return cell;
-    } else {
-        YYKVIPCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVIPCellReusableIdentifier forIndexPath:indexPath];
-        
-        if (indexPath.section == 1) {
-            if (indexPath.item < self.videoChannel.programList.count) {
-                YYKProgram *program = self.videoChannel.programList[indexPath.item];
-                cell.imageURL = [NSURL URLWithString:program.coverImg];
-            }
-        }
-        return cell;
+- (YYKCard *)cardSlider:(YYKCardSlider *)slider cardAtIndex:(NSUInteger)index {
+    YYKCard *card = [slider dequeReusableCardAtIndex:index];
+    card.layer.shadowColor = [UIColor colorWithWhite:0 alpha:1].CGColor;
+    card.layer.shadowOpacity = 0.5;
+    card.layer.shadowOffset = CGSizeMake(1, 1);
+    
+    if (!card.placeholderImage) {
+        card.placeholderImage = [UIImage imageNamed:@"placeholder_1_1"];
     }
     
+    if (!card.backgroundImage) {
+        card.backgroundImage = [UIImage imageNamed:@"svip_background"];
+    }
+    
+    if (index < self.channelModel.fetchedChannels.count) {
+        YYKChannel *channel = self.channelModel.fetchedChannels[index];
+        card.imageURL = [NSURL URLWithString:channel.columnImg];
+        card.iconImage = [UIImage imageNamed:@"svip_icon"];
+//        card.title = channel.name;
+//        card.subtitle = channel.columnDesc;
+    }
+    
+    return card;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        return CGSizeMake(CGRectGetWidth(collectionView.bounds), CGRectGetWidth(collectionView.bounds)/1.8);
-    } else if (indexPath.section == 1) {
-        const CGFloat itemWidth = CGRectGetWidth(collectionView.bounds)/2;
-        return CGSizeMake(itemWidth, itemWidth/0.8);
+- (NSString *)cardSlide:(YYKCardSlider *)slider titleAtIndex:(NSUInteger)index {
+    if (index < self.channelModel.fetchedChannels.count) {
+        YYKChannel *channel = self.channelModel.fetchedChannels[index];
+        return channel.name;
     }
-    return CGSizeZero;
+    return nil;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 1) {
-        if (indexPath.item < self.videoChannel.programList.count) {
-            YYKProgram *program = self.videoChannel.programList[indexPath.item];
-            [self switchToPlayProgram:program programLocation:indexPath.item inChannel:self.videoChannel shouldShowDetail:NO];
-        }
+- (NSString *)cardSlide:(YYKCardSlider *)slider descriptionAtIndex:(NSUInteger)index {
+    if (index < self.channelModel.fetchedChannels.count) {
+        YYKChannel *channel = self.channelModel.fetchedChannels[index];
+        return channel.columnDesc;
     }
+    return nil;
+}
+
+- (void)cardSlider:(YYKCardSlider *)slider didSelectCardAtIndex:(NSUInteger)index {
+    if (index < self.channelModel.fetchedChannels.count) {
+        YYKChannel *channel = self.channelModel.fetchedChannels[index];
+        YYKVIPVideoViewController *videoVC = [[YYKVIPVideoViewController alloc] initWithChannel:channel];
+        [self.navigationController pushViewController:videoVC animated:YES];
+    }
+}
+
+- (void)cardSliderDidEndSliding:(YYKCardSlider *)slider {
+    [[YYKStatsManager sharedManager] statsTabIndex:self.tabBarController.selectedIndex subTabIndex:NSNotFound forSlideCount:1];
 }
 @end

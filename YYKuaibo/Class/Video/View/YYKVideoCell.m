@@ -14,8 +14,7 @@
     UILabel *_titleLabel;
     UIImageView *_coverImageView;
     UILabel *_tagLabel;
-//    UIImageView *_iconImageView;
-//    UILabel *_specLabel;
+    UILabel *_popLabel;
 }
 @end
 
@@ -27,7 +26,6 @@
         self.backgroundColor = [UIColor whiteColor];
         
         _footerView = [[UIView alloc] init];
-//        _footerView.backgroundColor = [UIColor colorWithWhite:0.4 alpha:0.5];
         [self addSubview:_footerView];
         {
             [_footerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -37,14 +35,27 @@
         }
 
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:15.];
+        _titleLabel.font = kSmallFont;
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
         //_titleLabel.textColor = [UIColor colorWithWhite:0.9 alpha:1];
         [_footerView addSubview:_titleLabel];
         {
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_footerView).offset(5);
-                make.centerY.equalTo(_footerView);
+                make.bottom.equalTo(_footerView).offset(-kMediumVerticalSpacing);
                 make.right.equalTo(_footerView).offset(-5);
+            }];
+        }
+        
+        _popLabel = [[UILabel alloc] init];
+        _popLabel.textColor = [UIColor colorWithHexString:@"#888888"];
+        _popLabel.font = kExtraSmallFont;
+        _popLabel.textAlignment = NSTextAlignmentCenter;
+        [_footerView addSubview:_popLabel];
+        {
+            [_popLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.equalTo(_titleLabel);
+                make.bottom.equalTo(_titleLabel.mas_top).offset(-kSmallVerticalSpacing);
             }];
         }
         
@@ -59,17 +70,24 @@
             }];
         }
         
+        
     }
     return self;
 }
 
-//+ (CGFloat)heightRelativeToWidth:(CGFloat)width {
-//    return width * 1050./825.;
-//}
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    //_tagLabel.layer.cornerRadius = CGRectGetWidth(_popLabel.frame)/2;
+}
 
 - (void)setTitle:(NSString *)title {
     _title = title;
     _titleLabel.text = title;
+}
+
+- (void)setPopularity:(NSUInteger)popularity {
+    _popularity = popularity;
+    _popLabel.text = [NSString stringWithFormat:@"%ld人观看", (unsigned long)popularity];
 }
 
 - (void)setImageURL:(NSURL *)imageURL {
@@ -83,37 +101,31 @@
     }
     _tagText = tagText;
     
-    const CGFloat tagLabelWidth = 30;
     if (tagText.length > 0 && !_tagLabel) {
         _tagLabel = [[UILabel alloc] init];
-        _tagLabel.font = [UIFont systemFontOfSize:_titleLabel.font.pointSize-2];
+        _tagLabel.font = kExtraSmallFont;
         _tagLabel.textColor = [UIColor whiteColor];
         _tagLabel.textAlignment = NSTextAlignmentCenter;
         _tagLabel.backgroundColor = self.tagBackgroundColor;
-        _tagLabel.layer.cornerRadius = 3;
         _tagLabel.layer.masksToBounds = YES;
-        [_footerView addSubview:_tagLabel];
+        [_tagLabel aspect_hookSelector:@selector(layoutSubviews) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo)
+        {
+            UILabel *thisLabel = [aspectInfo instance];
+            thisLabel.layer.cornerRadius = CGRectGetWidth(thisLabel.frame)/2;
+        } error:nil];
+        [self addSubview:_tagLabel];
         {
             [_tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.equalTo(_footerView).offset(-5);
-                make.centerY.equalTo(_footerView);
-                make.width.mas_equalTo(tagLabelWidth);
+                make.centerX.equalTo(self);
+                make.centerY.equalTo(_coverImageView.mas_bottom);
+                make.size.mas_equalTo(CGSizeMake(30, 30));
             }];
         }
     }
-    
+
     _tagLabel.hidden = tagText.length == 0;
     _tagLabel.text = tagText;
-    
-    if (_tagLabel.hidden) {
-        [_titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(_footerView).offset(-5);
-        }];
-    } else {
-        [_titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(_footerView).offset(-tagLabelWidth-10);
-        }];
-    }
+
 }
 
 - (void)setTagBackgroundColor:(UIColor *)tagBackgroundColor {
@@ -121,84 +133,6 @@
     
     _tagLabel.backgroundColor = tagBackgroundColor;
 }
-//- (void)setShowPlayIcon:(BOOL)showPlayIcon {
-//    _showPlayIcon = showPlayIcon;
-//    
-//    if (showPlayIcon) {
-//        if (!_iconImageView) {
-//            const CGFloat iconHeightScale = 0.75;
-//            _iconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"video_play_icon"]];
-//            [_footerView addSubview:_iconImageView];
-//            {
-//                [_iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                    make.left.equalTo(_footerView).offset(5);
-//                    make.centerY.equalTo(_footerView);
-//                    make.height.equalTo(_footerView).multipliedBy(iconHeightScale);
-//                    make.width.equalTo(_iconImageView.mas_height);
-//                }];
-//            }
-//            
-//            [_titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-//                make.left.equalTo(_footerView).offset([[self class] titleHeight]*iconHeightScale + 10);
-//            }];
-////            [_titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-////                make.left.equalTo(_iconImageView.mas_right).offset(5);
-////            }];
-//        }
-//    } else {
-//        if (_iconImageView) {
-//            [_titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-//                make.left.equalTo(self).offset(5);
-//            }];
-//        }
-//    }
-//    _iconImageView.hidden = !showPlayIcon;
-//}
-
-//- (void)setSpec:(YYKVideoSpec)spec {
-//    _spec = spec;
-//    
-//    if (spec != YYKVideoSpecNone && !_specLabel) {
-//        _specLabel = [[UILabel alloc] init];
-//        _specLabel.textColor = [UIColor whiteColor];
-//        _specLabel.backgroundColor = [UIColor darkPink];
-//        _specLabel.font = [UIFont systemFontOfSize:13.];
-//        _specLabel.textAlignment = NSTextAlignmentCenter;
-//        _specLabel.layer.cornerRadius = 4;
-//        _specLabel.layer.masksToBounds = YES;
-//        [self addSubview:_specLabel];
-//        {
-//            [_specLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.right.equalTo(self).offset(-10);
-//                make.top.equalTo(self).offset(10);
-//                make.size.mas_equalTo(CGSizeMake(30, 16));
-//            }];
-//        }
-//    }
-//
-//    NSString *specText;
-//    switch (spec) {
-//        case YYKVideoSpecNew:
-//            specText = @"最新";
-//            break;
-//        case YYKVideoSpecHot:
-//            specText = @"热门";
-//            break;
-//        case YYKVideoSpecHD:
-//            specText = @"高清";
-//            break;
-//        case YYKVideoSpecFree:
-//            specText = @"试播";
-//            break;
-//        case YYKVideoSpecVIP:
-//            specText = kSVIPShortText;
-//            break;
-//        default:
-//            break;
-//    }
-//    _specLabel.text = specText;
-//    _specLabel.hidden = specText.length == 0;
-//}
 
 + (CGFloat)heightRelativeToWidth:(CGFloat)width withScale:(CGFloat)scale {
     if (scale == 0) {
@@ -209,6 +143,6 @@
 }
 
 + (CGFloat)titleHeight {
-    return 30;
+    return 56;
 }
 @end

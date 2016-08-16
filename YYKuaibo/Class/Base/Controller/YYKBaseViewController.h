@@ -12,6 +12,7 @@
 
 @property (nonatomic,retain) UIImage *backgroundImage;
 
+- (void)openChannel:(YYKChannel *)channel;
 - (void)switchToPlayProgram:(YYKProgram *)program
             programLocation:(NSUInteger)programLocation
                   inChannel:(YYKChannel *)channel;

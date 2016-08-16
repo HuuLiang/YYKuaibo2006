@@ -115,7 +115,7 @@ DefineLazyPropertyInitialization(NSMutableArray, resultPrograms)
     YYKVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVideoCellReusableIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
     cell.placeholderImage = [UIImage imageNamed:@"placeholder_1_1"];
-    cell.tagBackgroundColor = [UIColor darkPink];
+    cell.tagBackgroundColor = kThemeColor;
     
     if (indexPath.item < self.resultPrograms.count) {
         YYKProgram *program = self.resultPrograms[indexPath.item];

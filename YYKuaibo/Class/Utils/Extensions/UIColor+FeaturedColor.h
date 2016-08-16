@@ -11,6 +11,6 @@
 @interface UIColor (FeaturedColor)
 
 + (instancetype)featuredColorWithIndex:(NSUInteger)index;
-+ (instancetype)darkPink;
+//+ (instancetype)darkPink;
 
 @end

@@ -9,27 +9,37 @@
 #import "YYKHomeViewController.h"
 #import "YYKVideoCell.h"
 #import "YYKVideoSectionHeader.h"
+#import "YYKVideoSectionFooter.h"
 #import "YYKBanneredProgramModel.h"
-#import "YYKChannelVideoViewController.h"
-#import <SDCycleScrollView.h>
+#import "YYKBannerCell.h"
+#import "YYKHomeTrialCell.h"
+#import "YYKHomeRankingHeaderView.h"
+#import "YYKHomeRankingRowCell.h"
+//#import <SDCycleScrollView.h>
 
 static NSString *const kBannerCellReusableIdentifier = @"BannerCellReusableIdentifier";
 static NSString *const kVideoLibCellReusableIdentifier = @"VideoLibCellReusableIdentifier";
-static NSString *const kSpreadCellReusableIdentifier = @"SpreadCellReusableIdentifier";
 static NSString *const kSectionHeaderReusableIdentifier = @"SectionHeaderReusableIdentifier";
+static NSString *const kSectionFooterReusableIdentifier = @"SectionFooterReusableIdentifier";
+
+static NSString *const kTrialCellReusableIdentifier = @"TrialCellReusableIdentifier";
+
+static NSString *const kRankingHeaderReusableIdentifier = @"RankingHeaderReusableIdentifier";
+static NSString *const kRankingCellReusableIdentifier = @"RankingCellReusableIdentifier";
 
 typedef NS_ENUM(NSUInteger, YYKHomeSection) {
     YYKHomeSectionBanner,
     YYKHomeSectionTrial,
+    YYKHomeSectionRanking,
     YYKHomeSectionChannelOffset
 };
 
-@interface YYKHomeViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,SDCycleScrollViewDelegate>
+@interface YYKHomeViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,YYKBannerCellDelegate>
 {
     UICollectionView *_layoutCollectionView;
     
-    UICollectionViewCell *_bannerCell;
-    SDCycleScrollView *_bannerView;
+//    UICollectionViewCell *_bannerCell;
+//    SDCycleScrollView *_bannerView;
 }
 @property (nonatomic,retain) YYKBanneredProgramModel *programModel;
 @property (nonatomic) BOOL hasShownSpreadBanner;
@@ -42,28 +52,7 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    // Do any additional setup after loading the view.
-    @weakify(self);
-    _bannerView = [[SDCycleScrollView alloc] init];
-    _bannerView.bannerImageViewContentMode = UIViewContentModeScaleAspectFill;
-    _bannerView.autoScrollTimeInterval = 3;
-    _bannerView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
-    _bannerView.delegate = self;
-    _bannerView.backgroundColor = [UIColor clearColor];
-    _bannerView.placeholderImage = [UIImage imageNamed:@"placeholder_1_1"];
-    [_bannerView aspect_hookSelector:@selector(scrollViewDidEndDragging:willDecelerate:)
-                         withOptions:AspectPositionAfter
-                          usingBlock:^(id<AspectInfo> aspectInfo, UIScrollView *scrollView, BOOL decelerate)
-    {
-        @strongify(self);
-        [[YYKStatsManager sharedManager] statsTabIndex:[YYKUtil currentTabPageIndex]
-                                           subTabIndex:[YYKUtil currentSubTabPageIndex]
-                                             forBanner:self.programModel.fetchedBannerChannel.columnId
-                                        withSlideCount:1];
-    } error:nil];
-    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-//    YYKHomeCollectionViewLayout *layout = [[YYKHomeCollectionViewLayout alloc] init];
     layout.minimumInteritemSpacing = kDefaultCollectionViewInteritemSpace;
     layout.minimumLineSpacing = layout.minimumInteritemSpacing;
     
@@ -72,13 +61,17 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
     }
     
     _layoutCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-    _layoutCollectionView.backgroundColor = self.view.backgroundColor;
+    _layoutCollectionView.backgroundColor = [UIColor whiteColor];
     _layoutCollectionView.delegate = self;
     _layoutCollectionView.dataSource = self;
     [_layoutCollectionView registerClass:[YYKVideoCell class] forCellWithReuseIdentifier:kVideoLibCellReusableIdentifier];
-    [_layoutCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kBannerCellReusableIdentifier];
-    [_layoutCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kSpreadCellReusableIdentifier];
+    [_layoutCollectionView registerClass:[YYKBannerCell class] forCellWithReuseIdentifier:kBannerCellReusableIdentifier];
     [_layoutCollectionView registerClass:[YYKVideoSectionHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kSectionHeaderReusableIdentifier];
+    [_layoutCollectionView registerClass:[YYKVideoSectionFooter class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kSectionFooterReusableIdentifier];
+    [_layoutCollectionView registerClass:[YYKHomeTrialCell class] forCellWithReuseIdentifier:kTrialCellReusableIdentifier];
+    
+    [_layoutCollectionView registerClass:[YYKHomeRankingHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kRankingHeaderReusableIdentifier];
+    [_layoutCollectionView registerClass:[YYKHomeRankingRowCell class] forCellWithReuseIdentifier:kRankingCellReusableIdentifier];
     [self.view addSubview:_layoutCollectionView];
     {
         [_layoutCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -86,6 +79,7 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
         }];
     }
 
+    @weakify(self);
     [_layoutCollectionView YYK_addPullToRefreshWithHandler:^{
         @strongify(self);
         [self loadPrograms];
@@ -118,19 +112,6 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
     }];
 }
 
-- (void)refreshBannerView {
-    NSMutableArray *imageUrlGroup = [NSMutableArray array];
-    NSMutableArray *titlesGroup = [NSMutableArray array];
-    for (YYKProgram *bannerProgram in self.programModel.fetchedBannerChannel.programList) {
-        if (bannerProgram.coverImg && bannerProgram.title) {
-            [imageUrlGroup addObject:bannerProgram.coverImg];
-            [titlesGroup addObject:bannerProgram.title];
-        }
-    }
-    _bannerView.imageURLStringsGroup = imageUrlGroup;
-    _bannerView.titlesGroup = titlesGroup;
-}
-
 - (void)onPaidNotification {
     [_layoutCollectionView reloadSections:[NSIndexSet indexSetWithIndex:YYKHomeSectionTrial]];
 }
@@ -148,33 +129,69 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == YYKHomeSectionBanner) {
-        if (!_bannerCell) {
-            _bannerCell = [collectionView dequeueReusableCellWithReuseIdentifier:kBannerCellReusableIdentifier forIndexPath:indexPath];
-            [_bannerCell.contentView addSubview:_bannerView];
-            {
-                [_bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.edges.equalTo(_bannerCell.contentView);
-                }];
-            }
+        YYKBannerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kBannerCellReusableIdentifier forIndexPath:indexPath];
+        cell.delegate = self;
+        cell.style = YYKBannerCellStyleTile;
+        cell.showPageControl = YES;
+        
+        if (!cell.backgroundImage) {
+            NSString *filePath = [[NSBundle mainBundle] pathForResource:@"home_banner_background" ofType:@"jpg"];
+            cell.backgroundImage = [UIImage imageWithContentsOfFile:filePath];
         }
-        [self refreshBannerView];
-        return _bannerCell;
+        
+        NSMutableArray<YYKBannerItem *> *bannerItems = [NSMutableArray array];
+        for (YYKProgram *bannerProgram in self.programModel.fetchedBannerChannel.programList) {
+            [bannerItems addObject:[YYKBannerItem itemWithImageURL:[NSURL URLWithString:bannerProgram.coverImg] title:bannerProgram.title]];
+        }
+        cell.items = bannerItems;
+        
+//        @weakify(self);
+//        cell.selectionAction = ^(NSUInteger index, id obj) {
+//            @strongify(self);
+//            if (index < self.programModel.fetchedBannerChannel.programList.count) {
+//                YYKProgram *program = self.programModel.fetchedBannerChannel.programList[index];
+//                [self switchToPlayProgram:program programLocation:index inChannel:self.programModel.fetchedBannerChannel];
+//            }
+//        };
+        return cell;
     } else if (indexPath.section == YYKHomeSectionTrial) {
-        YYKVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVideoLibCellReusableIdentifier forIndexPath:indexPath];
-        cell.placeholderImage = [UIImage imageNamed:@"placeholder_1_1"];
+        YYKHomeTrialCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kTrialCellReusableIdentifier forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor whiteColor];
         
         if (indexPath.row < self.programModel.fetchedTrialChannel.programList.count) {
             YYKProgram *trialProgram = self.programModel.fetchedTrialChannel.programList[indexPath.row];
             cell.title = trialProgram.title;
             cell.imageURL = [NSURL URLWithString:trialProgram.coverImg];
-            cell.tagText = trialProgram.tag;
-            cell.tagBackgroundColor = [UIColor featuredColorWithIndex:indexPath.section];
         } else {
             cell.title = nil;
             cell.imageURL = nil;
-            cell.tagText = nil;
-            
         }
+        return cell;
+    } else if (indexPath.section == YYKHomeSectionRanking) {
+        YYKHomeRankingRowCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kRankingCellReusableIdentifier forIndexPath:indexPath];
+        
+        NSMutableArray<YYKHomeRankingRowCellItem *> *items = [NSMutableArray array];
+        [self.programModel.fetchedRankingChannel.programList enumerateObjectsUsingBlock:^(YYKProgram * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            YYKHomeRankingRowCellItem *item = [[YYKHomeRankingRowCellItem alloc] init];
+            item.imageURL = [NSURL URLWithString:obj.coverImg];
+            item.title = obj.title;
+            item.subtitle = obj.specialDesc;
+            item.tag = obj.tag;
+            item.popularity = obj.spare.integerValue;
+            [items addObject:item];
+        }];
+        cell.items = items;
+        
+        @weakify(self);
+        cell.selectionAction = ^(NSUInteger index, id obj) {
+            @strongify(self);
+            if (index >= self.programModel.fetchedRankingChannel.programList.count) {
+                return ;
+            }
+            
+            YYKProgram *program = self.programModel.fetchedRankingChannel.programList[index];
+            [self switchToPlayProgram:program programLocation:index inChannel:self.programModel.fetchedRankingChannel];
+        };
         return cell;
     } else {
         NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
@@ -189,26 +206,15 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
                     cell.title = program.title;
                     cell.imageURL = [NSURL URLWithString:program.coverImg];
                     cell.tagText = program.tag;
-                    cell.tagBackgroundColor = [UIColor featuredColorWithIndex:indexPath.section];
+                    cell.tagBackgroundColor = kThemeColor;
+                    cell.popularity = program.spare.integerValue;
                 } else {
                     cell.title = nil;
                     cell.imageURL = nil;
                     cell.tagText = nil;
+                    cell.popularity = 0;
                 }
                 return cell;
-            } else {
-                UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSpreadCellReusableIdentifier forIndexPath:indexPath];
-                
-                if (indexPath.row < channel.programList.count) {
-                    YYKProgram *program = channel.programList[indexPath.row];
-                    
-                    if (!cell.backgroundView) {
-                        cell.backgroundView = [[UIImageView alloc] init];
-                    }
-                    
-                    UIImageView *imageView = (UIImageView *)cell.backgroundView;
-                    [imageView sd_setImageWithURL:[NSURL URLWithString:program.coverImg] placeholderImage:[UIImage imageNamed:@"placeholder_5_1"]];
-                }
             }
         }
     }
@@ -220,6 +226,8 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
         return 1;
     } else if (section == YYKHomeSectionTrial) {
         return self.programModel.fetchedTrialChannel.programList.count;
+    } else if (section == YYKHomeSectionRanking) {
+        return 1;
     } else if (section >= YYKHomeSectionChannelOffset) {
         NSUInteger programsIndex = section - YYKHomeSectionChannelOffset;
         if (programsIndex < self.programModel.fetchedVideoProgramList.count) {
@@ -231,74 +239,48 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == YYKHomeSectionBanner || ![kind isEqualToString:UICollectionElementKindSectionHeader]) {
+    if (indexPath.section == YYKHomeSectionBanner) {
         return nil;
     }
     
-//    UIEdgeInsets edgeInsets = [self collectionView:collectionView layout:collectionView.collectionViewLayout insetForSectionAtIndex:indexPath.section];
-    YYKVideoSectionHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionHeaderReusableIdentifier forIndexPath:indexPath];
-    headerView.contentView.backgroundColor = self.view.backgroundColor;
-    //headerView.contentView.backgroundColor = [UIColor whiteColor];//[UIColor colorWithHexString:@"#292a39"];
-    headerView.titleColor = [UIColor blackColor];
-    headerView.iconColor = [UIColor featuredColorWithIndex:indexPath.section];
-    headerView.accessoryTintColor = [UIColor lightGrayColor];
-    headerView.accessoryHidden = NO;
-//    headerView.contentSizeOffset = UIOffsetMake(-edgeInsets.left-edgeInsets.right, 0);
-    
-    if (indexPath.section == YYKHomeSectionTrial) {
-        headerView.title = @"试看专区";
-        if ([YYKUtil isSVIP]) {
-            headerView.subtitle = nil;
-            headerView.accessoryHidden = YES;
-        } else if ([YYKUtil isVIP]) {
-            headerView.subtitle = [NSString stringWithFormat:@"成为%@", kSVIPText];
-        } else {
-            headerView.subtitle = @"成为VIP";
-        }
+    if (indexPath.section == YYKHomeSectionRanking) {
+        YYKHomeRankingHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kRankingHeaderReusableIdentifier forIndexPath:indexPath];
+        headerView.title = self.programModel.fetchedRankingChannel.name;
+        headerView.subtitle = self.programModel.fetchedRankingChannel.columnDesc;
+        return headerView;
+    }
+
+    if (kind == UICollectionElementKindSectionHeader) {
+        YYKVideoSectionHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionHeaderReusableIdentifier forIndexPath:indexPath];
         
+        if (indexPath.section == YYKHomeSectionTrial) {
+            headerView.title = @"免费试播";
+        } else {
+            NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
+            if (programsIndex < self.programModel.fetchedVideoProgramList.count) {
+                YYKChannel *channel = self.programModel.fetchedVideoProgramList[programsIndex];
+                headerView.title = channel.name;
+            }
+        }
+        return headerView;
+    } else {
+        YYKVideoSectionFooter *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionFooterReusableIdentifier forIndexPath:indexPath];
+        footerView.title = @"查看全部 >>";
         
         @weakify(self);
-        headerView.accessoryAction = ^(id obj) {
+        footerView.tapAction = ^(id obj) {
             @strongify(self);
-            if ([YYKUtil isSVIP]) {
-                
-            } else if ([YYKUtil isVIP]) {
-                [self payForPayPointType:YYKPayPointTypeSVIP];
-            } else {
-                [self payForPayPointType:YYKPayPointTypeVIP];
+            NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
+            if (programsIndex >= self.programModel.fetchedVideoProgramList.count) {
+                return ;
             }
-        };
-    } else {
-        NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
-        if (programsIndex < self.programModel.fetchedVideoProgramList.count) {
+            
             YYKChannel *channel = self.programModel.fetchedVideoProgramList[programsIndex];
-            headerView.title = channel.name;
-            headerView.subtitle = channel.columnDesc;
-            
-            BOOL svip = [channel.programList bk_any:^BOOL(YYKProgram *obj) {
-                return obj.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP;
-            }];
-            if (svip) {
-                headerView.contentView.backgroundColor = [UIColor darkPink];
-                headerView.titleColor = [UIColor whiteColor];
-                headerView.iconColor = [UIColor yellowColor];
-                headerView.accessoryTintColor = [UIColor whiteColor];
-            }
-            
-            @weakify(self);
-            headerView.accessoryAction = ^(YYKVideoSectionHeader *obj) {
-                @strongify(self);
-                YYKChannelVideoViewController *channelVideoVC = [[YYKChannelVideoViewController alloc] initWithChannel:channel];
-                channelVideoVC.hidesBottomBarWhenPushed = YES;
-                channelVideoVC.tagBackgroundColor = [UIColor featuredColorWithIndex:indexPath.section];
-                [self.navigationController pushViewController:channelVideoVC animated:YES];
-                
-                [[YYKStatsManager sharedManager] statsCPCWithChannel:channel inTabIndex:[YYKUtil currentTabPageIndex]];
-            };
-        }
+            [self openChannel:channel];
+
+        };
+        return footerView;
     }
-    
-    return headerView;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -306,23 +288,41 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
     
     if (indexPath.section == YYKHomeSectionBanner) {
         return CGSizeMake(fullWidth, fullWidth/2);
+    } else if (indexPath.section == YYKHomeSectionRanking) {
+        return self.programModel.fetchedRankingChannel.programList.count > 0 ? CGSizeMake(fullWidth, fullWidth) : CGSizeZero;
     } else {
         const CGFloat interItemSpacing = ((UICollectionViewFlowLayout *)collectionViewLayout).minimumInteritemSpacing;
         const UIEdgeInsets sectionInsets = [self collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:indexPath.section];
         const CGFloat itemWidth = (fullWidth - sectionInsets.left - sectionInsets.right - interItemSpacing)/2;
+        
+        if (indexPath.section == YYKHomeSectionTrial) {
+            return CGSizeMake(itemWidth, [YYKHomeTrialCell heightRelativeToWidth:itemWidth withImageScale:5./3.]);
+        }
         return CGSizeMake(itemWidth, [YYKVideoCell heightRelativeToWidth:itemWidth withScale:5./3.]);
     }
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    if (section == YYKHomeSectionBanner) {
-        return UIEdgeInsetsMake(0, 0, 5, 0);
+    if (section >= YYKHomeSectionChannelOffset || section == YYKHomeSectionTrial) {
+        return UIEdgeInsetsMake(0, kDefaultCollectionViewInteritemSpace, 0, kDefaultCollectionViewInteritemSpace);
     }
-    return UIEdgeInsetsMake(0, 0, 5, 0);
+    return UIEdgeInsetsZero;//UIEdgeInsetsMake(0, 0, 5, 0);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     if (section == YYKHomeSectionBanner) {
+        return CGSizeZero;
+    } else if (section == YYKHomeSectionTrial) {
+        return self.programModel.fetchedTrialChannel.programList.count > 0 ? CGSizeMake(0, 45) : CGSizeZero;
+    } else if (section == YYKHomeSectionRanking) {
+        return self.programModel.fetchedRankingChannel.programList.count > 0 ? CGSizeMake(0, 45) : CGSizeZero;
+    } else {
+        return CGSizeMake(0, 45);
+    }
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    if (section < YYKHomeSectionChannelOffset) {
         return CGSizeZero;
     } else {
         return CGSizeMake(0, 40);
@@ -355,10 +355,19 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
     }
 }
 
-- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
+#pragma mark - YYKBannerCellDelegate
+
+- (void)bannerCell:(YYKBannerCell *)bannerCell didSelectItemAtIndex:(NSUInteger)index {
     if (index < self.programModel.fetchedBannerChannel.programList.count) {
         YYKProgram *program = self.programModel.fetchedBannerChannel.programList[index];
         [self switchToPlayProgram:program programLocation:index inChannel:self.programModel.fetchedBannerChannel];
     }
+}
+
+- (void)bannerCellDidEndDragging:(YYKBannerCell *)bannerCell willDecelerate:(BOOL)decelerate {
+    [[YYKStatsManager sharedManager] statsTabIndex:[YYKUtil currentTabPageIndex]
+                                       subTabIndex:[YYKUtil currentSubTabPageIndex]
+                                         forBanner:self.programModel.fetchedBannerChannel.columnId
+                                    withSlideCount:1];
 }
 @end

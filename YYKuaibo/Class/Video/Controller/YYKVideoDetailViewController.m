@@ -140,12 +140,18 @@ DefineLazyPropertyInitialization(YYKVideoDetailModel, detailModel)
         return cell;
     } else if (indexPath.section == VDFeaturedSection) {
         YYKVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kFeaturedCellReusableIdentifier forIndexPath:indexPath];
+        
+        if (!cell.placeholderImage) {
+            cell.placeholderImage = [UIImage imageNamed:@"placeholder_1_1"];
+        }
+        
         if (indexPath.item < self.detailModel.fetchedDetail.hotProgramList.count) {
             YYKProgram *featuredVideo = self.detailModel.fetchedDetail.hotProgramList[indexPath.item];
             cell.title = featuredVideo.title;
             cell.imageURL = [NSURL URLWithString:featuredVideo.coverImg];
             cell.tagText = featuredVideo.tag;
-            cell.tagBackgroundColor = [UIColor redColor];
+            cell.tagBackgroundColor = kThemeColor;
+            cell.popularity = featuredVideo.spare.integerValue;
         }
         return cell;
     } else {
@@ -182,40 +188,13 @@ DefineLazyPropertyInitialization(YYKVideoDetailModel, detailModel)
     }
     
     YYKVideoSectionHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kHeaderSectionReusableIdentifier forIndexPath:indexPath];
-    header.contentView.backgroundColor = [UIColor whiteColor];//[UIColor colorWithHexString:@"#292a39"];
-    header.titleColor = [UIColor blackColor];
-    header.iconColor = [UIColor redColor];
-    header.accessoryTintColor = [UIColor lightGrayColor];
-    header.accessoryHidden = NO;
-    
     header.title = @"热力推荐";
-    if ([YYKUtil isSVIP]) {
-        header.subtitle = nil;
-        header.accessoryHidden = YES;
-    } else if ([YYKUtil isVIP]) {
-        header.subtitle = [NSString stringWithFormat:@"成为%@", kSVIPText];
-    } else {
-        header.subtitle = @"成为VIP";
-    }
-    
-    
-    @weakify(self);
-    header.accessoryAction = ^(id obj) {
-        @strongify(self);
-        if ([YYKUtil isSVIP]) {
-            
-        } else if ([YYKUtil isVIP]) {
-            [self payForPayPointType:YYKPayPointTypeSVIP];
-        } else {
-            [self payForPayPointType:YYKPayPointTypeVIP];
-        }
-    };
     return header;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     if (section == VDFeaturedSection && self.detailModel.fetchedDetail.hotProgramList.count > 0) {
-        return CGSizeMake(0, 40);
+        return CGSizeMake(0, 45);
     } else {
         return CGSizeZero;
     }

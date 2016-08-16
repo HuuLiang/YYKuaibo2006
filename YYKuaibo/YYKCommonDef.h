@@ -104,7 +104,7 @@ return _##propertyName; \
 #define kPaidNotificationName @"yykuaibo_paid_notification"
 #define kDefaultDateFormat    @"yyyyMMddHHmmss"
 #define kDefaultCollectionViewInteritemSpace  (5)
-#define kThemeColor [UIColor darkPink]
+#define kThemeColor [UIColor colorWithHexString:@"#ab47bc"]
 
 static NSString *const kChannelPersistenceSpace = @"yykuaibo_1";
 static NSString *const kChannelProgramPersistenceSpace = @"yykuaibo_2";
@@ -120,6 +120,7 @@ static NSString *const kSVIPShortText = @"黑钻";
 typedef void (^YYKAction)(id obj);
 typedef void (^YYKCompletionHandler)(BOOL success, id obj);
 typedef void (^YYKPaymentCompletionHandler)(PAYRESULT payResult, YYKPaymentInfo *paymentInfo);
+typedef void (^YYKSelectionAction)(NSUInteger index, id obj);
 
 FOUNDATION_STATIC_INLINE NSString * YYKIntegralPrice(const CGFloat price) {
     if ((unsigned long)(price * 100.) % 100==0) {
@@ -139,4 +140,18 @@ FOUNDATION_STATIC_INLINE NSString * YYKIntegralPrice(const CGFloat price) {
 #define kExExSmallFont [UIFont systemFontOfSize:MIN(10, kScreenWidth*0.03)]
 
 #define kBoldMediumFont [UIFont boldSystemFontOfSize:MIN(16, kScreenWidth*0.045)]
+#define kBoldBigFont [UIFont boldSystemFontOfSize:MIN(18,kScreenWidth*0.05)]
+
+#define kExtraBigVerticalSpacing (kScreenHeight * 0.016)
+#define kBigVerticalSpacing (kScreenHeight * 0.012)
+#define kMediumVerticalSpacing (kScreenHeight * 0.008)
+#define kSmallVerticalSpacing (kScreenHeight * 0.004)
+
+#define kExtraBigHorizontalSpacing  (kScreenWidth * 0.04)
+#define kBigHorizontalSpacing       (kScreenWidth * 0.024)
+#define kMediumHorizontalSpacing    (kScreenWidth * 0.016)
+#define kSmallHorizontalSpacing     (kScreenWidth * 0.008)
+
+#define kLeftRightContentMarginSpacing kExtraBigHorizontalSpacing
+#define kTopBottomContentMarginSpacing kExtraBigVerticalSpacing
 #endif /* YYKCommonDef_h */

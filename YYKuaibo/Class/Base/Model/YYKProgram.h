@@ -14,7 +14,8 @@ typedef NS_ENUM(NSUInteger, YYKProgramType) {
     YYKProgramTypePicture = 2,
     YYKProgramTypeSpread = 3,
     YYKProgramTypeBanner = 4,
-    YYKProgramTypeTrial = 5
+    YYKProgramTypeTrial = 5,
+    YYKProgramTypeRanking = 6
 };
 
 @interface YYKProgramUrl : NSObject
@@ -32,6 +33,7 @@ typedef NS_ENUM(NSUInteger, YYKProgramType) {
 @property (nonatomic) NSString *specialDesc;
 @property (nonatomic) NSString *videoUrl;
 @property (nonatomic) NSString *coverImg;
+@property (nonatomic) NSString *detailsCoverImg;
 //@property (nonatomic) NSNumber *spec;
 @property (nonatomic) NSNumber *payPointType; // 1、会员注册 2、付费
 @property (nonatomic) NSNumber *type; // 1、视频 2、图片

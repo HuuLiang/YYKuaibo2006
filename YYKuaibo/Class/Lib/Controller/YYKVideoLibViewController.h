@@ -2,12 +2,12 @@
 //  YYKVideoLibViewController.h
 //  YYKuaibo
 //
-//  Created by Sean Yue on 16/3/8.
+//  Created by Sean Yue on 16/8/16.
 //  Copyright © 2016年 iqu8. All rights reserved.
 //
 
-#import "YYKVideoListViewController.h"
+#import "YYKBaseViewController.h"
 
-@interface YYKVideoLibViewController : YYKVideoListViewController
+@interface YYKVideoLibViewController : YYKBaseViewController
 
 @end

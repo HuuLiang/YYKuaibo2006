@@ -221,6 +221,7 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
 }
 
 + (void)showSpreadBanner {
+#ifndef DEBUG
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         NSArray *spreads = [YYKAppSpreadBannerModel sharedModel].fetchedSpreads;
         NSArray *allInstalledAppIds = [[YYKApplicationManager defaultManager] allInstalledAppIdentifiers];
@@ -235,6 +236,7 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
             });
         }
     });
+#endif
 }
 
 + (void)requestAllInstalledAppIdsWithCompletionHandler:(void (^)(NSArray<NSString *> *))completionHandler {

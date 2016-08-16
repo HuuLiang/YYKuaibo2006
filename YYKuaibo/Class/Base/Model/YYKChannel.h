@@ -22,6 +22,7 @@
 @property (nonatomic) NSNumber *items;
 @property (nonatomic) NSNumber *page;
 @property (nonatomic) NSNumber *pageSize;
+@property (nonatomic) NSString *spare;
 @property (nonatomic,retain) NSArray<YYKProgram *> *programList;
 
 //+ (BOOL)persistChannels:(NSArray<YYKChannel *> *)channels inSpace:(NSString *)spaceName withPrimaryKey:(NSString *)primaryKey clearBeforePersistence:(BOOL)shouldClear;

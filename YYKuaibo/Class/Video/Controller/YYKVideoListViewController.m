@@ -149,6 +149,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
         cell.imageURL = [NSURL URLWithString:video.coverImg];
         cell.tagText = video.tag;
         cell.tagBackgroundColor = self.tagBackgroundColor;
+        cell.popularity = video.spare.integerValue;
     }
     return cell;
 }

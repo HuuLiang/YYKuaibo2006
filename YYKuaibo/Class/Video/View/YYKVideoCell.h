@@ -15,10 +15,8 @@
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSString *tagText;
 @property (nonatomic) UIColor *tagBackgroundColor;
-//@property (nonatomic) BOOL showPlayIcon;
-//@property (nonatomic) YYKVideoSpec spec;
+@property (nonatomic) NSUInteger popularity;
 
 + (CGFloat)heightRelativeToWidth:(CGFloat)width withScale:(CGFloat)scale;
-+ (CGFloat)titleHeight;
 
 @end

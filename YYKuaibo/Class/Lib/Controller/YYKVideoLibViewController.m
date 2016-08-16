@@ -2,76 +2,120 @@
 //  YYKVideoLibViewController.m
 //  YYKuaibo
 //
-//  Created by Sean Yue on 16/3/8.
+//  Created by Sean Yue on 16/8/16.
 //  Copyright © 2016年 iqu8. All rights reserved.
 //
 
 #import "YYKVideoLibViewController.h"
-#import "YYKVideoListModel.h"
+#import "YYKChannelModel.h"
+#import "YYKChannelCell.h"
 
-@interface YYKVideoLibViewController () <YYKVideoListViewControllerDelegate>
-@property (nonatomic,retain) YYKVideoListModel *videoModel;
+static NSString *const kChannelCellReusableIdentifier = @"ChannelCellReusableIdentifier";
+static NSString *const kChannelHeaderReusableIdentifier = @"ChannelHeaderReusableIdentifier";
+
+@interface YYKVideoLibViewController () <UITableViewDelegate,UITableViewDataSource>
+{
+    UITableView *_layoutTV;
+}
+@property (nonatomic,retain) YYKChannelModel *channelModel;
 @end
 
 @implementation YYKVideoLibViewController
 
-DefineLazyPropertyInitialization(YYKVideoListModel, videoModel)
+DefineLazyPropertyInitialization(YYKChannelModel, channelModel)
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.delegate = self;
-        self.tagBackgroundColor = [UIColor featuredColorWithIndex:0];
-    }
-    return self;
-}
-
-#pragma mark - YYKVideoListViewControllerDelegate
-
-- (void)videoListViewController:(YYKVideoListViewController *)viewContorller beginLoadingVideosWithPaging:(BOOL)isPaging {
-    if (isPaging && ![YYKUtil isVIP] && self.videoModel.fetchedVideoChannel.page.unsignedIntegerValue > 2) {
-        [self disableVideoLoadingWithNotifiedText:@"成为VIP后，上拉或点击加载更多"];
-        [self payForPayPointType:YYKPayPointTypeVIP];
-        return ;
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    _layoutTV = [[UITableView alloc] init];
+    _layoutTV.backgroundColor = self.view.backgroundColor;
+    _layoutTV.delegate = self;
+    _layoutTV.dataSource = self;
+    _layoutTV.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [_layoutTV registerClass:[YYKChannelCell class] forCellReuseIdentifier:kChannelCellReusableIdentifier];
+    [_layoutTV registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:kChannelHeaderReusableIdentifier];
+    [self.view addSubview:_layoutTV];
+    {
+        [_layoutTV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
     }
     
     @weakify(self);
-    [self.videoModel fetchVideosInSpace:YYKVideoListSpaceHot
-                                   page:isPaging?self.videoModel.fetchedVideoChannel.page.unsignedIntegerValue+1:1
-                  withCompletionHandler:^(BOOL success, id obj)
-     {
-         @strongify(self);
-         if (!self) {
-             return ;
-         }
-         
-         [self endVideosLoading];
-         
-         if (success) {
-             if (!isPaging) {
-                 [self.videos removeAllObjects];
-             }
- 
-             YYKChannel *videos = obj;
-             if (videos.programList) {
-                 [self.videos addObjectsFromArray:videos.programList];
-                 [self reloadVideoList];
-             }
- 
-             if (videos.page.unsignedIntegerValue * videos.pageSize.unsignedIntegerValue >= videos.items.unsignedIntegerValue) {
-                 [self notifyNoMoreVideos];
-             }
-         }
-         
-     }];
+    [_layoutTV YYK_addPullToRefreshWithHandler:^{
+        @strongify(self);
+        [self loadChannels];
+    }];
+    [_layoutTV YYK_triggerPullToRefresh];
 }
 
-- (YYKChannel *)channelForCurrentVideosInVideoListViewController:(YYKVideoListViewController *)viewController {
-    return self.videoModel.fetchedVideoChannel;
+- (void)loadChannels {
+    @weakify(self);
+    [self.channelModel fetchChannelsInSpace:YYKChannelSpaceDefault withCompletionHandler:^(BOOL success, id obj) {
+        @strongify(self);
+        if (!self) {
+            return ;
+        }
+        
+        [self->_layoutTV YYK_endPullToRefresh];
+        
+        if (success) {
+            [self->_layoutTV reloadData];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UITableViewDelegate,UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.channelModel.fetchedChannels.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    YYKChannelCell *cell = [tableView dequeueReusableCellWithIdentifier:kChannelCellReusableIdentifier forIndexPath:indexPath];
+    cell.placeholderImage = [UIImage imageNamed:@"placeholder_5_2"];
+    
+    if (indexPath.section < self.channelModel.fetchedChannels.count) {
+        YYKChannel *channel = self.channelModel.fetchedChannels[indexPath.section];
+        cell.imageURL = [NSURL URLWithString:channel.columnImg];
+        cell.title = channel.name;
+        cell.subtitle = channel.columnDesc;
+        cell.popularity = channel.spare.integerValue;
+    }
+    return cell;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UITableViewHeaderFooterView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:kChannelHeaderReusableIdentifier];
+    
+    if (!headerView.backgroundView) {
+        headerView.backgroundView = [[UIView alloc] init];
+    }
+    
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return CGRectGetWidth(tableView.bounds)/2;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 10;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section < self.channelModel.fetchedChannels.count) {
+        YYKChannel *channel = self.channelModel.fetchedChannels[indexPath.section];
+        [self openChannel:channel];
+    }
 }
 @end

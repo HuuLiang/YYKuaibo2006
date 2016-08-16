@@ -10,12 +10,17 @@
 #import "YYKTagSearchFooterView.h"
 #import "YYKKeywordTagModel.h"
 #import "YYKKeyword.h"
+#import "YYKVideoCell.h"
+#import "YYKVideoSectionHeader.h"
 
 static NSString *const kTagSearchCellReusableIdentifier = @"TagSearchCellReusableIdentifier";
 static NSString *const kSearchErrorCellReusableIdentifier = @"SearchErrorCellReusableIdentifier";
 
 static NSString *const kTagSearchHeaderReusableIdentifier = @"TagSearchHeaderReusableIdentifier";
 static NSString *const kTagSearchFooterReusableIdentifier = @"TagSearchFooterReusableIdentifier";
+
+static NSString *const kFeaturedHeaderReusableIdentifier = @"FeaturedHeaderReusableIdentifier";
+static NSString *const kFeaturedCellReusableIdentifier = @"FeaturedCellReusableIdentifier";
 
 static const void *kTextLabelAssociatedKey = &kTextLabelAssociatedKey;
 static const void *kImageViewAssociatedKey = &kImageViewAssociatedKey;
@@ -25,7 +30,7 @@ static const NSUInteger kUnexpandedItemCount = 9;
 typedef NS_ENUM(NSUInteger, YYKTagSearchSection) {
     YYKErrorSection,
     YYKTagSection,
-    YYKHistorySection,
+    YYKFeaturedVideoSection,
     YYKTagSearchSectionCount
 };
 
@@ -57,8 +62,11 @@ DefineLazyPropertyInitialization(YYKKeywordTagModel, tagModel)
     _layoutCV.dataSource = self;
     [_layoutCV registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kTagSearchCellReusableIdentifier];
     [_layoutCV registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kSearchErrorCellReusableIdentifier];
+    [_layoutCV registerClass:[YYKVideoCell class] forCellWithReuseIdentifier:kFeaturedCellReusableIdentifier];
+    
     [_layoutCV registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kTagSearchHeaderReusableIdentifier];
     [_layoutCV registerClass:[YYKTagSearchFooterView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kTagSearchFooterReusableIdentifier];
+    [_layoutCV registerClass:[YYKVideoSectionHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kFeaturedHeaderReusableIdentifier];
     [self.view addSubview:_layoutCV];
     {
         [_layoutCV mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -81,14 +89,14 @@ DefineLazyPropertyInitialization(YYKKeywordTagModel, tagModel)
     
 }
 
-- (void)reloadSearchedKeywords {
-    self.searchedKeywords = [YYKKeyword allKeywords];
-    
-    NSUInteger numberOfSections = [_layoutCV numberOfSections];
-    if (numberOfSections > YYKHistorySection) {
-        [_layoutCV reloadSections:[NSIndexSet indexSetWithIndex:YYKHistorySection]];
-    }
-}
+//- (void)reloadSearchedKeywords {
+//    self.searchedKeywords = [YYKKeyword allKeywords];
+//    
+//    NSUInteger numberOfSections = [_layoutCV numberOfSections];
+//    if (numberOfSections > YYKHistorySection) {
+//        [_layoutCV reloadSections:[NSIndexSet indexSetWithIndex:YYKHistorySection]];
+//    }
+//}
 
 - (void)reloadHotTags {
     @weakify(self);
@@ -135,8 +143,8 @@ DefineLazyPropertyInitialization(YYKKeywordTagModel, tagModel)
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (section == YYKHistorySection) {
-        return (self.searchedKeywords.count + 2) / 3 * 3;
+    if (section == YYKFeaturedVideoSection) {
+        return self.tagModel.fetchedHotChannel.programList.count;
     } else if (section == YYKErrorSection) {
         if ([self.delegate respondsToSelector:@selector(searchErrorMessageInTagSearchViewController:)]) {
             if ([self.delegate searchErrorMessageInTagSearchViewController:self].length > 0) {
@@ -169,12 +177,12 @@ DefineLazyPropertyInitialization(YYKKeywordTagModel, tagModel)
             textLabel.attributedText = nil;
         }
         return cell;
-    } else {
+    } else if (indexPath.section == YYKTagSection) {
         UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kTagSearchCellReusableIdentifier forIndexPath:indexPath];
         cell.backgroundColor = [UIColor whiteColor];
         
         UILabel *textLabel = [self textLabelInCell:cell];
-        if (indexPath.section == YYKHistorySection) {
+        if (indexPath.section == YYKFeaturedVideoSection) {
             if (indexPath.item < self.searchedKeywords.count) {
                 YYKKeyword *keyword = self.searchedKeywords[indexPath.item];
                 textLabel.text = keyword.text;
@@ -190,72 +198,77 @@ DefineLazyPropertyInitialization(YYKKeywordTagModel, tagModel)
             }
         }
         return cell;
+    } else if (indexPath.section == YYKFeaturedVideoSection) {
+        YYKVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kFeaturedCellReusableIdentifier forIndexPath:indexPath];
+        if (!cell.placeholderImage) {
+            cell.placeholderImage = [UIImage imageNamed:@"placeholder_1_1"];
+        }
+        
+        if (indexPath.item < self.tagModel.fetchedHotChannel.programList.count) {
+            YYKProgram *program = self.tagModel.fetchedHotChannel.programList[indexPath.item];
+            cell.imageURL = [NSURL URLWithString:program.coverImg];
+            cell.title = program.title;
+            cell.tagText = program.tag;
+            cell.tagBackgroundColor = kThemeColor;
+            cell.popularity = program.spare.integerValue;
+        }
+        return cell;
     }
+    return nil;
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
 
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kTagSearchHeaderReusableIdentifier forIndexPath:indexPath];
-        
-        UIImageView *imageView = objc_getAssociatedObject(headerView, kImageViewAssociatedKey);
-        if (!imageView) {
-            imageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"section_title_tag"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-            objc_setAssociatedObject(headerView, kImageViewAssociatedKey, imageView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        if (indexPath.section == YYKTagSection) {
+            UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kTagSearchHeaderReusableIdentifier forIndexPath:indexPath];
             
-            imageView.tintColor = [UIColor darkPink];
-            imageView.contentMode = UIViewContentModeScaleAspectFit;
-            [headerView addSubview:imageView];
-            {
-                [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.centerY.equalTo(headerView);
-                    make.left.equalTo(headerView).offset(5);
-                    make.height.equalTo(headerView).multipliedBy(0.5);
-                    make.width.equalTo(imageView.mas_height);
-                }];
+            UIImageView *imageView = objc_getAssociatedObject(headerView, kImageViewAssociatedKey);
+            if (!imageView) {
+                imageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"section_title_tag"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+                objc_setAssociatedObject(headerView, kImageViewAssociatedKey, imageView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                
+                imageView.tintColor = kThemeColor;
+                imageView.contentMode = UIViewContentModeScaleAspectFit;
+                [headerView addSubview:imageView];
+                {
+                    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.centerY.equalTo(headerView);
+                        make.left.equalTo(headerView).offset(5);
+                        make.height.equalTo(headerView).multipliedBy(0.5);
+                        make.width.equalTo(imageView.mas_height);
+                    }];
+                }
             }
+            
+            UILabel *textLabel = objc_getAssociatedObject(headerView, kTextLabelAssociatedKey);
+            if (!textLabel) {
+                textLabel = [[UILabel alloc] init];
+                objc_setAssociatedObject(headerView, kTextLabelAssociatedKey, textLabel, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                
+                textLabel.textColor = [UIColor colorWithWhite:0.3 alpha:1];
+                textLabel.font = kMediumFont;
+                [headerView addSubview:textLabel];
+                {
+                    [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.left.equalTo(imageView.mas_right).offset(5);
+                        make.centerY.equalTo(headerView);
+                    }];
+                }
+            }
+            textLabel.text = indexPath.section == YYKTagSection ? @"热门搜索" : @"搜索历史";
+            return headerView;
+        } else if (indexPath.section == YYKFeaturedVideoSection) {
+            YYKVideoSectionHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kFeaturedHeaderReusableIdentifier forIndexPath:indexPath];
+            headerView.title = @"热搜影片";
+            return headerView;
         }
         
-        UILabel *textLabel = objc_getAssociatedObject(headerView, kTextLabelAssociatedKey);
-        if (!textLabel) {
-            textLabel = [[UILabel alloc] init];
-            objc_setAssociatedObject(headerView, kTextLabelAssociatedKey, textLabel, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            
-            textLabel.textColor = [UIColor colorWithWhite:0.3 alpha:1];
-            textLabel.font = kMediumFont;
-            [headerView addSubview:textLabel];
-            {
-                [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.equalTo(imageView.mas_right).offset(5);
-                    make.centerY.equalTo(headerView);
-                }];
-            }
-        }
-        textLabel.text = indexPath.section == YYKTagSection ? @"热门搜索" : @"搜索历史";
-        return headerView;
     } else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
         YYKTagSearchFooterView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kTagSearchFooterReusableIdentifier forIndexPath:indexPath];
         footerView.backgroundColor = [UIColor whiteColor];
         
-        if (indexPath.section == YYKHistorySection) {
-            footerView.title = @"清空记录";
-            
-            @weakify(self);
-            footerView.tapAction = ^(id obj) {
-                [UIAlertView bk_showAlertViewWithTitle:@"是否确认清空搜索记录？"
-                                               message:nil
-                                     cancelButtonTitle:@"取消"
-                                     otherButtonTitles:@[@"确认"] handler:^(UIAlertView *alertView, NSInteger buttonIndex)
-                 {
-                     if (buttonIndex == 1) {
-                         [YYKKeyword deleteAllKeywords];
-                         
-                         @strongify(self);
-                         [self reloadSearchedKeywords];
-                     }
-                 }];
-            };
-        } else if (indexPath.section == YYKTagSection) {
+        if (indexPath.section == YYKTagSection) {
             footerView.image = [UIImage imageNamed:@"search_tag_expand"];
             
             if (self.shouldExpandTags) {
@@ -277,7 +290,11 @@ DefineLazyPropertyInitialization(YYKKeywordTagModel, tagModel)
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == YYKErrorSection) {
+    if (indexPath.section == YYKFeaturedVideoSection) {
+        const CGFloat itemWidth = (CGRectGetWidth(collectionView.bounds) - kDefaultCollectionViewInteritemSpace)/2;
+        const CGFloat itemHeight = [YYKVideoCell heightRelativeToWidth:itemWidth withScale:5./3.];
+        return CGSizeMake(itemWidth, itemHeight);
+    } else if (indexPath.section == YYKErrorSection) {
         return CGSizeMake(CGRectGetWidth(collectionView.bounds), 100);
     } else {
         return CGSizeMake(CGRectGetWidth(collectionView.bounds)/3, 44);
@@ -291,14 +308,16 @@ DefineLazyPropertyInitialization(YYKKeywordTagModel, tagModel)
         if (self.tagModel.fetchedTags.count == 0) {
             return CGSizeZero;
         }
+    } else if (section == YYKFeaturedVideoSection) {
+        if (self.tagModel.fetchedHotChannel.programList.count == 0) {
+            return CGSizeZero;
+        }
     }
-    return CGSizeMake(0, 40);
+    return CGSizeMake(0, 45);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    if (section == YYKHistorySection) {
-        return self.searchedKeywords.count > 0 ? CGSizeMake(0, 35):CGSizeZero;
-    } else if (section == YYKTagSection) {
+    if (section == YYKTagSection) {
         if (self.tagModel.fetchedTags.count <= kUnexpandedItemCount) {
             return CGSizeZero;
         } else {
@@ -308,27 +327,43 @@ DefineLazyPropertyInitialization(YYKKeywordTagModel, tagModel)
     return CGSizeZero;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    UILabel *textLabel = objc_getAssociatedObject(cell, kTextLabelAssociatedKey);
-    if (textLabel.text.length == 0) {
-        return ;
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    if (section == YYKFeaturedVideoSection) {
+        return kDefaultCollectionViewInteritemSpace;
     }
-    
-    if (indexPath.section == YYKErrorSection) {
-        if ([self.delegate respondsToSelector:@selector(tagSearchViewController:didSelectErrorMessage:)]) {
-            [self.delegate tagSearchViewController:self didSelectErrorMessage:textLabel.text];
+    return 0;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    if (section == YYKFeaturedVideoSection) {
+        return kDefaultCollectionViewInteritemSpace;
+    }
+    return 0;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == YYKFeaturedVideoSection) {
+        if (indexPath.item < self.tagModel.fetchedHotChannel.programList.count) {
+            YYKProgram *program = self.tagModel.fetchedHotChannel.programList[indexPath.item];
+            [self switchToPlayProgram:program programLocation:indexPath.item inChannel:self.tagModel.fetchedHotChannel];
         }
     } else {
-        if ([self.delegate respondsToSelector:@selector(tagSearchViewController:didSelectKeyword:)]) {
-            BOOL isTag = indexPath.section == YYKTagSection;
-            if (indexPath.section == YYKHistorySection && indexPath.item < self.searchedKeywords.count  ) {
-                YYKKeyword *keyword = self.searchedKeywords[indexPath.item];
-                isTag = keyword.isTag;
+        UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+        UILabel *textLabel = objc_getAssociatedObject(cell, kTextLabelAssociatedKey);
+        if (textLabel.text.length == 0) {
+            return ;
+        }
+        
+        if (indexPath.section == YYKErrorSection) {
+            if ([self.delegate respondsToSelector:@selector(tagSearchViewController:didSelectErrorMessage:)]) {
+                [self.delegate tagSearchViewController:self didSelectErrorMessage:textLabel.text];
             }
-            [self.delegate tagSearchViewController:self didSelectKeyword:[YYKKeyword keywordWithText:textLabel.text isTag:isTag]];
+        } else {
+            if ([self.delegate respondsToSelector:@selector(tagSearchViewController:didSelectKeyword:)]) {
+                BOOL isTag = indexPath.section == YYKTagSection;
+                [self.delegate tagSearchViewController:self didSelectKeyword:[YYKKeyword keywordWithText:textLabel.text isTag:isTag]];
+            }
         }
     }
-    
 }
 @end

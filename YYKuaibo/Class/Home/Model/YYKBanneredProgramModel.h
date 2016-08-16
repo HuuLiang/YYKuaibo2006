@@ -23,6 +23,7 @@ typedef NS_ENUM(NSUInteger, YYKBanneredProgramSpace) {
 @property (nonatomic,retain,readonly) NSArray<YYKChannel *> *fetchedVideoProgramList;
 
 @property (nonatomic,retain,readonly) YYKChannel *fetchedBannerChannel;
+@property (nonatomic,retain,readonly) YYKChannel *fetchedRankingChannel;
 @property (nonatomic,retain,readonly) YYKChannel *fetchedTrialChannel;
 
 - (BOOL)fetchProgramsInSpace:(YYKBanneredProgramSpace)space withCompletionHandler:(YYKCompletionHandler)handler;

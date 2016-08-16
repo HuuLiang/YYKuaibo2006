@@ -44,7 +44,7 @@
     }
     
     _textLabel = [[UILabel alloc] init];
-    _textLabel.textColor = [UIColor darkPink];
+    _textLabel.textColor = kThemeColor;
     _textLabel.font = kMediumFont;
     _textLabel.text = @"清空记录";
     _textLabel.textAlignment = NSTextAlignmentCenter;

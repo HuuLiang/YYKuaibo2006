@@ -11,6 +11,7 @@
 #import "YYKVideoPlayerViewController.h"
 #import "YYKWebViewController.h"
 #import "YYKVideoDetailViewController.h"
+#import "YYKChannelVideoViewController.h"
 //@import MediaPlayer;
 //@import AVKit;
 //@import AVFoundation.AVPlayer;
@@ -117,6 +118,14 @@
                                          isProgramDetail:shouldShowDetail];
 }
 
+- (void)openChannel:(YYKChannel *)channel {
+    YYKChannelVideoViewController *channelVideoVC = [[YYKChannelVideoViewController alloc] initWithChannel:channel];
+    channelVideoVC.hidesBottomBarWhenPushed = YES;
+    channelVideoVC.tagBackgroundColor = kThemeColor;//[UIColor featuredColorWithIndex:indexPath.section];
+    [self.navigationController pushViewController:channelVideoVC animated:YES];
+    
+    [[YYKStatsManager sharedManager] statsCPCWithChannel:channel inTabIndex:[YYKUtil currentTabPageIndex]];
+}
 //- (void)playVideo:(YYKProgram *)video videoLocation {
 //    [self playVideo:video withTimeControl:YES shouldPopPayment:NO];
 //}

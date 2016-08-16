@@ -104,5 +104,11 @@
     //        }
     //    }];
     _fetchedTrialChannel = trailChannels.firstObject;
+    
+    NSArray<YYKChannel *> *rankingChannels = [self.fetchedProgramList bk_select:^BOOL(id obj) {
+        YYKProgramType type = ((YYKChannel *)obj).type.unsignedIntegerValue;
+        return type == YYKProgramTypeRanking;
+    }];
+    _fetchedRankingChannel = rankingChannels.firstObject;
 }
 @end

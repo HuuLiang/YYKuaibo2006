@@ -36,7 +36,7 @@
     _window.backgroundColor              = [UIColor whiteColor];
     
     YYKHomeViewController *homeVC = [[YYKHomeViewController alloc] init];
-    homeVC.title = @"成人大片";
+    homeVC.title = @"AV爽片";
     
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeVC];
     homeNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:homeVC.title
@@ -44,7 +44,7 @@
                                                selectedImage:[UIImage imageNamed:@"tabbar_home_selected"]];
     
     YYKVideoLibViewController *libVC = [[YYKVideoLibViewController alloc] init];
-    libVC.title = @"成人片库";
+    libVC.title = @"AV片库";
     
     UINavigationController *channelNav = [[UINavigationController alloc] initWithRootViewController:libVC];
     channelNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:libVC.title
@@ -61,7 +61,7 @@
     vipNav.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
     
     YYKSearchViewController *searchVC = [[YYKSearchViewController alloc] init];
-    searchVC.title = @"热搜";
+    searchVC.title = @"AV热搜";
     
     UINavigationController *searchNav = [[UINavigationController alloc] initWithRootViewController:searchVC];
     searchNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:searchVC.title
@@ -69,7 +69,7 @@
                                                  selectedImage:[UIImage imageNamed:@"tabbar_search_selected"]];
     
     YYKMineViewController *mineVC = [[YYKMineViewController alloc] init];
-    mineVC.title = @"我的";
+    mineVC.title = @"我的AV";
     
     UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
     mineNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:mineVC.title
@@ -88,10 +88,10 @@
 //    [[UITabBar appearance] setBarStyle:UIBarStyleBlack];
 //    [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
 //    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UITabBar appearance] setSelectedImageTintColor:[UIColor darkPink]];
-    [[UITabBar appearance] setTintColor:[UIColor darkPink]];
+    [[UITabBar appearance] setSelectedImageTintColor:kThemeColor];
+    [[UITabBar appearance] setTintColor:kThemeColor];
 //    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor darkPink]];
+    [[UINavigationBar appearance] setBarTintColor:kThemeColor];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.],
                                                            NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
@@ -204,8 +204,8 @@
     
     [self.window makeKeyAndVisible];
     
-    YYKLaunchView *launchView = [[YYKLaunchView alloc] init];
-    [launchView show];
+//    YYKLaunchView *launchView = [[YYKLaunchView alloc] init];
+//    [launchView show];
     
     if (![YYKUtil isRegistered]) {
         [[YYKActivateModel sharedModel] activateWithCompletionHandler:^(BOOL success, NSString *userId) {
