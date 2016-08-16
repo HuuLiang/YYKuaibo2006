@@ -21,8 +21,8 @@
 #import "MingPayManager.h"
 
 //static NSString *const kAlipaySchemeUrl = @"comyykuaibo2016appalipayurlscheme";
-static NSString *const kVIAPaySchemeUrl = @"comyykuaibov35appviapayurlscheme";
-static NSString *const kIappPaySchemeUrl = @"comyykuaibov35appiapppayurlscheme";
+static NSString *const kVIAPaySchemeUrl = @"comqskuaiboappviapayurlscheme";
+static NSString *const kIappPaySchemeUrl = @"comqskuaiboappiapppayurlscheme";
 
 typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
     YYKVIAPayTypeNone,
