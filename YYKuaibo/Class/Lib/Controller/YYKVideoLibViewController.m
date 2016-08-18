@@ -102,7 +102,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, numbersOfupdates)
         YYKChannel *channel = self.channelModel.fetchedChannels[indexPath.section];
         cell.imageURL = [NSURL URLWithString:channel.columnImg];
         cell.title = channel.name;
-        cell.subtitle = [NSString stringWithFormat:@"今日更新%ld部", (unsigned long)[self numberOfUpdatesForChannel:channel]];
+        cell.subtitle = [NSString stringWithFormat:@"更新%ld部 >", (unsigned long)[self numberOfUpdatesForChannel:channel]];
         cell.popularity = channel.spare.integerValue;
     }
     return cell;

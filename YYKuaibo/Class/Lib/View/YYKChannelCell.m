@@ -51,7 +51,7 @@ DefineLazyPropertyInitialization(NSMutableDictionary, titleSeparators)
 
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = [UIColor whiteColor];
-        _titleLabel.font = kExExExBigFont;
+        _titleLabel.font = kExtraExtraBigFont;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_titleLabel];
         {
@@ -115,18 +115,26 @@ DefineLazyPropertyInitialization(NSMutableDictionary, titleSeparators)
         }];
         
         _subtitleLabel = [[UILabel alloc] init];
-        _subtitleLabel.textColor = [UIColor whiteColor];
-        _subtitleLabel.font = kBigFont;
+        _subtitleLabel.clipsToBounds = YES;
+        _subtitleLabel.font = kSmallFont;
         _subtitleLabel.textAlignment = NSTextAlignmentCenter;
+        _subtitleLabel.backgroundColor = [UIColor whiteColor];
         [self addSubview:_subtitleLabel];
-        {
-            [_subtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.equalTo(self);
-                make.top.equalTo(self.titleSeparators[@(SeparatorPositionBottom)].mas_bottom).offset(kTopBottomContentMarginSpacing);
-            }];
-        }
     }
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    CGSize subtitleSize = [_subtitleLabel.text sizeWithAttributes:@{NSFontAttributeName:_subtitleLabel.font}];
+    
+    const CGFloat subtitleY = self.bounds.size.height * 0.7;
+    const CGFloat width = subtitleSize.width + 15;
+    const CGFloat height = subtitleSize.height + 10;
+    const CGFloat subtitleX = (self.bounds.size.width - width)/2;
+    _subtitleLabel.frame = CGRectMake(subtitleX, subtitleY, width, height);
+    _subtitleLabel.layer.cornerRadius = height * 0.2;
 }
 
 - (void)setTitle:(NSString *)title {
@@ -137,6 +145,8 @@ DefineLazyPropertyInitialization(NSMutableDictionary, titleSeparators)
 - (void)setSubtitle:(NSString *)subtitle {
     _subtitle = subtitle;
     _subtitleLabel.text = subtitle;
+    
+    [self setNeedsLayout];
 }
 
 - (void)setImageURL:(NSURL *)imageURL {
