@@ -103,14 +103,17 @@ static const void *kYYKShowStateAssociatedKey = &kYYKShowStateAssociatedKey;
 }
 
 - (void)YYK_endPullToRefresh {
-    if ([self.YYK_refreshView isKindOfClass:[MJRefreshComponent class]]) {
-        MJRefreshComponent *refresh = (MJRefreshComponent *)self.YYK_refreshView;
-        [refresh endRefreshing];
-        [self.footer resetNoMoreData];
-//    } else if ([self.YYK_refreshView isKindOfClass:[ODRefreshControl class]]) {
-//        ODRefreshControl *refresh = (ODRefreshControl *)self.YYK_refreshView;
-//        [refresh performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.01];
-    }
+//    if ([self.YYK_refreshView isKindOfClass:[MJRefreshComponent class]]) {
+//        MJRefreshComponent *refresh = (MJRefreshComponent *)self.YYK_refreshView;
+//        [refresh endRefreshing];
+//        [self.footer resetNoMoreData];
+////    } else if ([self.YYK_refreshView isKindOfClass:[ODRefreshControl class]]) {
+////        ODRefreshControl *refresh = (ODRefreshControl *)self.YYK_refreshView;
+////        [refresh performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.01];
+//    }
+    
+    [self.header endRefreshing];
+    [self.footer endRefreshing];
 }
 
 - (void)YYK_addPagingRefreshWithHandler:(void (^)(void))handler {

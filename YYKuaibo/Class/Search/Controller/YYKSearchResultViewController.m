@@ -71,7 +71,10 @@ DefineLazyPropertyInitialization(NSMutableArray, resultPrograms)
                    completionHandler:(YYKCompletionHandler)completionHandler
 {
     @weakify(self);
-    [self.view beginLoading];
+    if (!isForNextPage) {
+        [self.view beginLoading];
+    }
+    
     [self.searchModel searchKeywords:keyword.text
                         isTagKeyword:keyword.isTag
                               inPage:isForNextPage ? self.searchModel.searchedResults.page.unsignedIntegerValue + 1 : 1
@@ -82,7 +85,10 @@ DefineLazyPropertyInitialization(NSMutableArray, resultPrograms)
             return ;
         }
         
-        [self.view endLoading];
+        if (!isForNextPage) {
+            [self.view endLoading];
+        }
+        
         [self->_layoutCV YYK_endPullToRefresh];
         
         if (results) {
