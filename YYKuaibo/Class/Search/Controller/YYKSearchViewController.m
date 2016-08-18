@@ -31,6 +31,8 @@ DefineLazyPropertyInitialization(YYKSearchResultViewController, resultVC)
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.navigationItem.title = nil;
+    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self.navigationController.navigationBar addSubview:self.searchBar];
@@ -238,6 +240,12 @@ DefineLazyPropertyInitialization(YYKSearchResultViewController, resultVC)
 
 #pragma mark - YYKTagSearchViewControllerDelegate
 
+- (void)tagSearchViewControllerDidScroll:(YYKTagSearchViewController *)tagSearchVC {
+    if ([_searchBar isFirstResponder]) {
+        [_searchBar resignFirstResponder];
+    }
+}
+
 - (void)tagSearchViewController:(YYKTagSearchViewController *)tagSearchVC didSelectKeyword:(YYKKeyword *)keyword {
     _searchBar.text = keyword.text;
     [self searchKeyword:keyword];
@@ -252,6 +260,12 @@ DefineLazyPropertyInitialization(YYKSearchResultViewController, resultVC)
         [self payForPayPointType:YYKPayPointTypeVIP];
     } else {
         [self searchKeyword:self.resultVC.searchedKeyword];
+    }
+}
+
+- (void)tagSearchViewController:(YYKTagSearchViewController *)tagSearchVC didSelectProgram:(YYKProgram *)program {
+    if ([_searchBar isFirstResponder]) {
+        [_searchBar resignFirstResponder];
     }
 }
 @end

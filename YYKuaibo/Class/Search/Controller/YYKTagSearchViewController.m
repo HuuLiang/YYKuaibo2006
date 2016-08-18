@@ -73,6 +73,13 @@ DefineLazyPropertyInitialization(YYKKeywordTagModel, tagModel)
             make.edges.equalTo(self.view);
         }];
     }
+    
+//    @weakify(self);
+//    [self.view aspect_hookSelector:@selector(hitTest:withEvent:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo)
+//    {
+//        @strongify(self);
+//        
+//    } error:nil];
 }
 
 - (void)reloadData {
@@ -129,6 +136,12 @@ DefineLazyPropertyInitialization(YYKKeywordTagModel, tagModel)
         }
     }
     return textLabel;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if ([self.delegate respondsToSelector:@selector(tagSearchViewControllerDidScroll:)]) {
+        [self.delegate tagSearchViewControllerDidScroll:self];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -346,6 +359,10 @@ DefineLazyPropertyInitialization(YYKKeywordTagModel, tagModel)
         if (indexPath.item < self.tagModel.fetchedHotChannel.programList.count) {
             YYKProgram *program = self.tagModel.fetchedHotChannel.programList[indexPath.item];
             [self switchToPlayProgram:program programLocation:indexPath.item inChannel:self.tagModel.fetchedHotChannel];
+            
+            if ([self.delegate respondsToSelector:@selector(tagSearchViewController:didSelectProgram:)]) {
+                [self.delegate tagSearchViewController:self didSelectProgram:program];
+            }
         }
     } else {
         UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];

@@ -10,22 +10,23 @@
 #import "YYKVideoPlayer.h"
 #import "YYKPaymentViewController.h"
 
-@interface YYKVideoPlayerViewController ()
+@interface YYKVideoPlayerViewController () <YYKVideoPlayerDelegate>
 {
     YYKVideoPlayer *_videoPlayer;
     UIButton *_closeButton;
+    
+    UIView *_controlView;
+    UILabel *_playedSecLabel;
+    UISlider *_progressSlider;
 }
 @end
 
 @implementation YYKVideoPlayerViewController
 
-- (instancetype)initWithVideo:(YYKProgram *)video videoLocation:(NSUInteger)videoLocation channel:(YYKChannel *)channel {
+- (instancetype)initWithVideo:(YYKProgram *)video {
     self = [self init];
     if (self) {
         _video = video;
-        _videoLocation = videoLocation;
-        _channel = channel;
-        _shouldPopupPaymentIfNotPaid = YES;
     }
     return self;
 }
@@ -36,11 +37,8 @@
     self.view.backgroundColor = [UIColor blackColor];
     
     @weakify(self);
-    _videoPlayer = [[YYKVideoPlayer alloc] initWithVideoURL:[NSURL URLWithString:self.video.videoUrl]];
-    _videoPlayer.endPlayAction = ^(id sender) {
-        @strongify(self);
-        [self dismissAndPopPayment];
-    };
+    _videoPlayer = [[YYKVideoPlayer alloc] initWithVideoURL:[NSURL URLWithString:self.video.videoUrl]
+                                                   delegate:self];
     [self.view addSubview:_videoPlayer];
     {
         [_videoPlayer mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -48,22 +46,72 @@
         }];
     }
     
+    _controlView = [[UIView alloc] init];
+    _controlView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+    [self.view addSubview:_controlView];
+    {
+        [_controlView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.top.equalTo(self.view);
+            make.height.mas_equalTo(50);
+        }];
+    }
+
+    
     _closeButton = [[UIButton alloc] init];
     [_closeButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
-    [self.view addSubview:_closeButton];
+    [_controlView addSubview:_closeButton];
     {
         [_closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.view).offset(15);
-            make.top.equalTo(self.view).offset(30);
+            make.left.top.bottom.equalTo(_controlView);
+            make.width.equalTo(_closeButton.mas_height);
         }];
     }
     
     [_closeButton bk_addEventHandler:^(id sender) {
         @strongify(self);
+        SafelyCallBlock(self.closeAction, self);
+    } forControlEvents:UIControlEventTouchUpInside];
+    
+    const CGSize thumbSize = CGSizeMake(15, 15);
+    UIGraphicsBeginImageContextWithOptions(thumbSize, NO, 0);
+    CGContextRef currentContext = UIGraphicsGetCurrentContext();
+    CGContextAddEllipseInRect(currentContext, CGRectMake(0, 0, thumbSize.width, thumbSize.height));
+    CGContextSetFillColorWithColor(currentContext, [UIColor whiteColor].CGColor);
+    CGContextFillPath(currentContext);
+    UIImage *thumbImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    _progressSlider = [[UISlider alloc] init];
+    [_progressSlider setThumbImage:thumbImage forState:UIControlStateNormal];
+    _progressSlider.maximumValue = 60 * 30;
+    _progressSlider.continuous = NO;
+    _progressSlider.enabled = NO;
+    [_controlView addSubview:_progressSlider];
+    {
+        [_progressSlider mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_closeButton.mas_right).offset(kLeftRightContentMarginSpacing);
+            make.right.equalTo(_controlView).offset(-kLeftRightContentMarginSpacing);
+            make.centerY.equalTo(_controlView);
+        }];
+    }
+    
+    [_progressSlider bk_addEventHandler:^(id sender) {
+        @strongify(self);
+        if (!self) {
+            return ;
+        }
+        
         [self->_videoPlayer pause];
         
-        [self dismissAndPopPayment];
-    } forControlEvents:UIControlEventTouchUpInside];
+        [UIAlertView bk_showAlertViewWithTitle:@"只有VIP会员用户才可以控制播放进度，是否购买VIP会员？" message:nil cancelButtonTitle:@"取消" otherButtonTitles:@[@"确认"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            @strongify(self);
+            if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"确认"]) {
+                SafelyCallBlock(self.playEndAction, self);
+            } else {
+                [self->_videoPlayer startToPlay];
+            }
+        }];
+    } forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -71,31 +119,42 @@
     [_videoPlayer startToPlay];
 }
 
-- (void)dismissAndPopPayment {
-    [self payForProgram:self.video programLocation:self.videoLocation inChannel:self.channel];
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)pause {
+    [_videoPlayer pause];
 }
-//- (BOOL)shouldAutorotate {
-//    return YES;
-//}
-//
-//- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-//    return UIInterfaceOrientationMaskAll;
-//}
+
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskLandscape;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - YYKVideoPlayerDelegate
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)videoPlayerDidStartPlayVideo:(YYKVideoPlayer *)videoPlayer {
+    _progressSlider.enabled = YES;
 }
-*/
 
+- (void)videoPlayerDidEndPlayVideo:(YYKVideoPlayer *)videoPlayer {
+    
+    @weakify(self);
+    CGFloat duration = videoPlayer.duration == 0 ? 20 : videoPlayer.duration;
+    [UIAlertView bk_showAlertViewWithTitle:[NSString stringWithFormat:@"非VIP用户只能观看此视频的前%ld秒，成为VIP后可观看完整视频", (unsigned long)duration] message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        @strongify(self);
+        SafelyCallBlock(self.playEndAction, self);
+    }];
+    
+}
+
+- (void)videoPlayer:(YYKVideoPlayer *)videoPlayer playingVideoInSeconds:(CGFloat)seconds withDuration:(CGFloat)duration {
+//    _progressSlider.maximumValue = duration;
+    [_progressSlider setValue:seconds animated:YES];
+}
 @end

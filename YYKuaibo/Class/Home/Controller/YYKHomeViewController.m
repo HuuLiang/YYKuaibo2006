@@ -37,9 +37,6 @@ typedef NS_ENUM(NSUInteger, YYKHomeSection) {
 @interface YYKHomeViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,YYKBannerCellDelegate>
 {
     UICollectionView *_layoutCollectionView;
-    
-//    UICollectionViewCell *_bannerCell;
-//    SDCycleScrollView *_bannerView;
 }
 @property (nonatomic,retain) YYKBanneredProgramModel *programModel;
 @property (nonatomic) BOOL hasShownSpreadBanner;
@@ -144,15 +141,7 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
             [bannerItems addObject:[YYKBannerItem itemWithImageURL:[NSURL URLWithString:bannerProgram.coverImg] title:bannerProgram.title]];
         }
         cell.items = bannerItems;
-        
-//        @weakify(self);
-//        cell.selectionAction = ^(NSUInteger index, id obj) {
-//            @strongify(self);
-//            if (index < self.programModel.fetchedBannerChannel.programList.count) {
-//                YYKProgram *program = self.programModel.fetchedBannerChannel.programList[index];
-//                [self switchToPlayProgram:program programLocation:index inChannel:self.programModel.fetchedBannerChannel];
-//            }
-//        };
+
         return cell;
     } else if (indexPath.section == YYKHomeSectionTrial) {
         YYKHomeTrialCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kTrialCellReusableIdentifier forIndexPath:indexPath];
@@ -225,7 +214,7 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
     if (section == YYKHomeSectionBanner) {
         return 1;
     } else if (section == YYKHomeSectionTrial) {
-        return self.programModel.fetchedTrialChannel.programList.count;
+        return [YYKUtil isVIP] ? 0 : self.programModel.fetchedTrialChannel.programList.count;
     } else if (section == YYKHomeSectionRanking) {
         return 1;
     } else if (section >= YYKHomeSectionChannelOffset) {
@@ -265,20 +254,37 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
         return headerView;
     } else {
         YYKVideoSectionFooter *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionFooterReusableIdentifier forIndexPath:indexPath];
-        footerView.title = @"查看全部 >>";
+        footerView.titleColor = nil;
         
-        @weakify(self);
-        footerView.tapAction = ^(id obj) {
-            @strongify(self);
-            NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
-            if (programsIndex >= self.programModel.fetchedVideoProgramList.count) {
-                return ;
-            }
+        if (indexPath.section == YYKHomeSectionTrial) {
+            BOOL shouldBeSVIP = [YYKUtil isVIP] && ![YYKUtil isSVIP];
+            footerView.title = shouldBeSVIP ? [NSString stringWithFormat:@"成为%@ 所有爽片任意看 >>", kSVIPText] : @"怎可不尽兴 充值VIP观看完整版 >>";
+            footerView.titleColor = [UIColor redColor];
             
-            YYKChannel *channel = self.programModel.fetchedVideoProgramList[programsIndex];
-            [self openChannel:channel];
-
-        };
+            @weakify(self);
+            footerView.tapAction = ^(id obj) {
+                @strongify(self);
+                
+                YYKPayPointType payPointType = shouldBeSVIP ? YYKPayPointTypeSVIP : YYKPayPointTypeVIP;
+                [self payForPayPointType:payPointType];
+            };
+        } else {
+            footerView.title = @"查看全部 >>";
+            
+            @weakify(self);
+            footerView.tapAction = ^(id obj) {
+                @strongify(self);
+                NSUInteger programsIndex = indexPath.section - YYKHomeSectionChannelOffset;
+                if (programsIndex >= self.programModel.fetchedVideoProgramList.count) {
+                    return ;
+                }
+                
+                YYKChannel *channel = self.programModel.fetchedVideoProgramList[programsIndex];
+                [self openChannel:channel];
+                
+            };
+        }
+        
         return footerView;
     }
 }
@@ -313,7 +319,7 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
     if (section == YYKHomeSectionBanner) {
         return CGSizeZero;
     } else if (section == YYKHomeSectionTrial) {
-        return self.programModel.fetchedTrialChannel.programList.count > 0 ? CGSizeMake(0, 45) : CGSizeZero;
+        return ![YYKUtil isVIP] && self.programModel.fetchedTrialChannel.programList.count > 0 ? CGSizeMake(0, 45) : CGSizeZero;
     } else if (section == YYKHomeSectionRanking) {
         return self.programModel.fetchedRankingChannel.programList.count > 0 ? CGSizeMake(0, 45) : CGSizeZero;
     } else {
@@ -322,10 +328,10 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    if (section < YYKHomeSectionChannelOffset) {
+    if (section == YYKHomeSectionBanner || section == YYKHomeSectionRanking || (section == YYKHomeSectionTrial && [YYKUtil isVIP])) {
         return CGSizeZero;
     } else {
-        return CGSizeMake(0, 40);
+        return CGSizeMake(0, MAX(30,kScreenHeight*0.057));
     }
 }
 

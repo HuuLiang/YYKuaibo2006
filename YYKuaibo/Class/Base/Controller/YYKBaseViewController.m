@@ -158,9 +158,25 @@
         webVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:webVC animated:YES];
     } else {
-        YYKVideoPlayerViewController *playerVC = [[YYKVideoPlayerViewController alloc] initWithVideo:video videoLocation:videoLocation channel:channel];
-        playerVC.hidesBottomBarWhenPushed = YES;
-        playerVC.shouldPopupPaymentIfNotPaid = shouldPopPayment;
+        @weakify(self);
+        YYKVideoPlayerViewController *playerVC = [[YYKVideoPlayerViewController alloc] initWithVideo:video];
+        playerVC.playEndAction = ^(id obj) {
+            
+            YYKVideoPlayerViewController *playerVC = obj;
+            [playerVC dismissViewControllerAnimated:YES completion:^{
+                @strongify(self);
+                [self payForProgram:video programLocation:videoLocation inChannel:channel];
+            }];
+        };
+        
+        playerVC.closeAction = ^(id obj) {
+            YYKVideoPlayerViewController *playerVC = obj;
+            [playerVC pause];
+            [playerVC dismissViewControllerAnimated:YES completion:^{
+                @strongify(self);
+                [self payForProgram:video programLocation:videoLocation inChannel:channel];
+            }];
+        };
         [self presentViewController:playerVC animated:YES completion:nil];
     }
     

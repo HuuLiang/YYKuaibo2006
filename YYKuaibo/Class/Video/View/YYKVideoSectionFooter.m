@@ -11,6 +11,7 @@
 @interface YYKVideoSectionFooter ()
 {
     UILabel *_titleLabel;
+    UIView *_separatorView;
 }
 @end
 
@@ -19,6 +20,8 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        _showSeparator = YES;
+        
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = [UIColor colorWithHexString:@"#666666"];
         _titleLabel.font = kMediumFont;
@@ -26,6 +29,16 @@
         {
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.center.equalTo(self);
+            }];
+        }
+        
+        _separatorView = [[UIView alloc] init];
+        _separatorView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+        [self addSubview:_separatorView];
+        {
+            [_separatorView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.top.right.equalTo(self);
+                make.height.mas_equalTo(0.5);
             }];
         }
         
@@ -41,5 +54,20 @@
 - (void)setTitle:(NSString *)title {
     _title = title;
     _titleLabel.text = title;
+}
+
+- (void)setShowSeparator:(BOOL)showSeparator {
+    _showSeparator = showSeparator;
+    
+    _separatorView.hidden = !showSeparator;
+}
+
+- (void)setTitleColor:(UIColor *)titleColor {
+    _titleColor = titleColor;
+    
+    if (!titleColor) {
+        titleColor = [UIColor colorWithHexString:@"#333333"];
+    }
+    _titleLabel.textColor = titleColor;
 }
 @end

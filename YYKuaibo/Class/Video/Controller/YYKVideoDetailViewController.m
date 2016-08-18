@@ -14,12 +14,14 @@
 
 typedef NS_ENUM(NSUInteger, VideoDetailSection) {
     VDThumbSection,
+    VDVIPSection,
     VDSpreadSection,
     VDFeaturedSection,
     VDSectionCount
 };
 
 static NSString *const kVideoThumbCellReusableIdentifier = @"VideoThumbCellReusableIdentifier";
+static NSString *const kVIPCellReusableIdentifier = @"VIPCellReusableIdentifier";
 static NSString *const kSpreadCellReusableIdentifier = @"SpreadCellReusableIdentifier";
 static NSString *const kFeaturedCellReusableIdentifier = @"FeaturedCellReusableIdentifier";
 static NSString *const kHeaderSectionReusableIdentifier = @"HeaderSectionReusableIdentifier";
@@ -62,6 +64,7 @@ DefineLazyPropertyInitialization(YYKVideoDetailModel, detailModel)
     _layoutCV.delegate = self;
     _layoutCV.dataSource = self;
     [_layoutCV registerClass:[YYKVideoThumbCell class] forCellWithReuseIdentifier:kVideoThumbCellReusableIdentifier];
+    [_layoutCV registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kVIPCellReusableIdentifier];
     [_layoutCV registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kSpreadCellReusableIdentifier];
     [_layoutCV registerClass:[YYKVideoCell class] forCellWithReuseIdentifier:kFeaturedCellReusableIdentifier];
     [_layoutCV registerClass:[YYKVideoSectionHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kHeaderSectionReusableIdentifier];
@@ -98,6 +101,10 @@ DefineLazyPropertyInitialization(YYKVideoDetailModel, detailModel)
     }];
 }
 
+- (BOOL)shouldShowSpread {
+    return self.detailModel.fetchedDetail.spreadApp && [YYKUtil isVIP];
+}
+
 - (void)onPaidNotification {
     [_layoutCV reloadData];
 }
@@ -116,6 +123,10 @@ DefineLazyPropertyInitialization(YYKVideoDetailModel, detailModel)
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (section == VDFeaturedSection) {
         return self.detailModel.fetchedDetail.hotProgramList.count;
+    } else if (section == VDVIPSection) {
+        return [YYKUtil isVIP] ? 0 : 1;
+    } else if (section == VDSpreadSection) {
+        return [self shouldShowSpread] ? 1 : 0;
     } else {
         return 1;
     }
@@ -125,6 +136,22 @@ DefineLazyPropertyInitialization(YYKVideoDetailModel, detailModel)
     if (indexPath.section == VDThumbSection) {
         YYKVideoThumbCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVideoThumbCellReusableIdentifier forIndexPath:indexPath];
         cell.imageURL = [NSURL URLWithString:self.detailModel.fetchedDetail.program.coverImg];
+        return cell;
+    } else if (indexPath.section == VDVIPSection) {
+        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVIPCellReusableIdentifier forIndexPath:indexPath];
+        
+        if (!cell.backgroundView) {
+            UILabel *vipLabel = [[UILabel alloc] init];
+            vipLabel.layer.cornerRadius = 5;
+            vipLabel.layer.masksToBounds = YES;
+            vipLabel.font = kMediumFont;
+            vipLabel.textAlignment = NSTextAlignmentCenter;
+            vipLabel.text = @"怎可不尽兴 充值VIP观看完整版 >>";
+            vipLabel.textColor = [UIColor whiteColor];
+            
+            cell.backgroundView = vipLabel;
+            cell.backgroundView.backgroundColor = [UIColor colorWithHexString:@"#ff680d"];
+        }
         return cell;
     } else if (indexPath.section == VDSpreadSection) {
         UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSpreadCellReusableIdentifier forIndexPath:indexPath];
@@ -166,10 +193,13 @@ DefineLazyPropertyInitialization(YYKVideoDetailModel, detailModel)
     }
     
     const UIEdgeInsets sectionInsets = [self collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:indexPath.section];
-    if (indexPath.section == VDSpreadSection) {
-        if (self.detailModel.fetchedDetail.spreadApp && [YYKUtil isVIP]) {
-            const CGFloat spreadWidth = fullWidth - sectionInsets.left - sectionInsets.right;
-            return CGSizeMake(spreadWidth, spreadWidth * 1 / 5);
+    if (indexPath.section == VDSpreadSection || indexPath.section == VDVIPSection) {
+        const CGFloat sectionWidth = fullWidth - sectionInsets.left - sectionInsets.right;
+        
+        if (indexPath.section == VDSpreadSection && [self shouldShowSpread]) {
+            return CGSizeMake(sectionWidth, sectionWidth / 5);
+        } else if (indexPath.section == VDVIPSection && ![YYKUtil isVIP]) {
+            return CGSizeMake(sectionWidth, sectionWidth / 8);
         } else {
             return CGSizeZero;
         }
@@ -202,9 +232,11 @@ DefineLazyPropertyInitialization(YYKVideoDetailModel, detailModel)
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     if (section == VDSpreadSection) {
-        return UIEdgeInsetsMake(5, 5, 5, 5);
+        return [self shouldShowSpread] ? UIEdgeInsetsMake(5, 5, 5, 5) : UIEdgeInsetsZero;
     } else if (section == VDFeaturedSection) {
         return UIEdgeInsetsMake(0, 5, 5, 5);
+    } else if (section == VDVIPSection) {
+        return [YYKUtil isVIP] ? UIEdgeInsetsZero : UIEdgeInsetsMake(15, 15, 10, 15);
     } else {
         return UIEdgeInsetsZero;
     }
@@ -219,6 +251,10 @@ DefineLazyPropertyInitialization(YYKVideoDetailModel, detailModel)
         if (indexPath.item < self.detailModel.fetchedDetail.hotProgramList.count) {
             YYKProgram *featuredVideo = self.detailModel.fetchedDetail.hotProgramList[indexPath.item];
             [self switchToPlayProgram:featuredVideo programLocation:indexPath.item inChannel:self.channel shouldShowDetail:YES];
+        }
+    } else if (indexPath.section == VDVIPSection) {
+        if (![YYKUtil isVIP]) {
+            [self payForPayPointType:YYKPayPointTypeVIP];
         }
     }
 }

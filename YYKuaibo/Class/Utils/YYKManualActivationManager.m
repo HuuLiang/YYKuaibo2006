@@ -29,6 +29,7 @@ DefineLazyPropertyInitialization(YYKOrderQueryModel, orderQueryModel)
 
 - (void)doActivation {
     if ([YYKUtil isAllVIPs]) {
+        [UIAlertView bk_showAlertViewWithTitle:@"您已经购买了全部VIP，无需再激活！" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
         return ;
     }
     

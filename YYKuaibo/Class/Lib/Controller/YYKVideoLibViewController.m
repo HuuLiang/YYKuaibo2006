@@ -9,6 +9,7 @@
 #import "YYKVideoLibViewController.h"
 #import "YYKChannelModel.h"
 #import "YYKChannelCell.h"
+#import "NSDate+Utilities.h"
 
 static NSString *const kChannelCellReusableIdentifier = @"ChannelCellReusableIdentifier";
 static NSString *const kChannelHeaderReusableIdentifier = @"ChannelHeaderReusableIdentifier";
@@ -18,11 +19,13 @@ static NSString *const kChannelHeaderReusableIdentifier = @"ChannelHeaderReusabl
     UITableView *_layoutTV;
 }
 @property (nonatomic,retain) YYKChannelModel *channelModel;
+@property (nonatomic,retain) NSMutableDictionary<NSNumber *, NSNumber *> *numbersOfupdates;
 @end
 
 @implementation YYKVideoLibViewController
 
 DefineLazyPropertyInitialization(YYKChannelModel, channelModel)
+DefineLazyPropertyInitialization(NSMutableDictionary, numbersOfupdates)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -70,6 +73,17 @@ DefineLazyPropertyInitialization(YYKChannelModel, channelModel)
     // Dispose of any resources that can be recreated.
 }
 
+- (unsigned long)numberOfUpdatesForChannel:(YYKChannel *)channel {
+    if (!channel.columnId) {
+        return 20;
+    }
+    
+    NSDate *date = [[NSDate date] dateAtStartOfDay];
+    NSTimeInterval timeInterval = [date timeIntervalSince1970];
+    unsigned long ref = timeInterval * channel.columnId.unsignedIntegerValue / 99999;
+    return ref % 30 + 10;
+}
+
 #pragma mark - UITableViewDelegate,UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -88,7 +102,7 @@ DefineLazyPropertyInitialization(YYKChannelModel, channelModel)
         YYKChannel *channel = self.channelModel.fetchedChannels[indexPath.section];
         cell.imageURL = [NSURL URLWithString:channel.columnImg];
         cell.title = channel.name;
-        cell.subtitle = channel.columnDesc;
+        cell.subtitle = [NSString stringWithFormat:@"今日更新%ld部", (unsigned long)[self numberOfUpdatesForChannel:channel]];
         cell.popularity = channel.spare.integerValue;
     }
     return cell;

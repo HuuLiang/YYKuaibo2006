@@ -34,19 +34,6 @@
             }];
         }
 
-        _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = kSmallFont;
-        _titleLabel.textAlignment = NSTextAlignmentCenter;
-        //_titleLabel.textColor = [UIColor colorWithWhite:0.9 alpha:1];
-        [_footerView addSubview:_titleLabel];
-        {
-            [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(_footerView).offset(5);
-                make.bottom.equalTo(_footerView).offset(-kMediumVerticalSpacing);
-                make.right.equalTo(_footerView).offset(-5);
-            }];
-        }
-        
         _popLabel = [[UILabel alloc] init];
         _popLabel.textColor = [UIColor colorWithHexString:@"#888888"];
         _popLabel.font = kExtraSmallFont;
@@ -54,11 +41,24 @@
         [_footerView addSubview:_popLabel];
         {
             [_popLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.right.equalTo(_titleLabel);
-                make.bottom.equalTo(_titleLabel.mas_top).offset(-kSmallVerticalSpacing);
+                make.left.equalTo(_footerView).offset(5);
+                make.bottom.equalTo(_footerView).offset(-kMediumVerticalSpacing);
+                make.right.equalTo(_footerView).offset(-5);
             }];
         }
         
+        _titleLabel = [[UILabel alloc] init];
+        _titleLabel.font = kSmallFont;
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        //_titleLabel.textColor = [UIColor colorWithWhite:0.9 alpha:1];
+        [_footerView addSubview:_titleLabel];
+        {
+            [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.equalTo(_popLabel);
+                make.bottom.equalTo(_popLabel.mas_top).offset(-kSmallVerticalSpacing);
+            }];
+        }
+
         _coverImageView = [[UIImageView alloc] init];
         _coverImageView.contentMode = UIViewContentModeScaleAspectFill;
         _coverImageView.clipsToBounds = YES;
@@ -69,15 +69,8 @@
                 make.bottom.equalTo(_footerView.mas_top);
             }];
         }
-        
-        
     }
     return self;
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    //_tagLabel.layer.cornerRadius = CGRectGetWidth(_popLabel.frame)/2;
 }
 
 - (void)setTitle:(NSString *)title {
@@ -115,10 +108,11 @@
         } error:nil];
         [self addSubview:_tagLabel];
         {
+            const CGSize tagSize = CGSizeMake(30, 30);
             [_tagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self);
-                make.centerY.equalTo(_coverImageView.mas_bottom);
-                make.size.mas_equalTo(CGSizeMake(30, 30));
+                make.centerY.equalTo(_coverImageView.mas_bottom).offset(-tagSize.height/4);
+                make.size.mas_equalTo(tagSize);
             }];
         }
     }
@@ -143,6 +137,6 @@
 }
 
 + (CGFloat)titleHeight {
-    return 56;
+    return 50;
 }
 @end

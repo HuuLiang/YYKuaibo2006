@@ -22,6 +22,8 @@
     if (self) {
         _iconImageView = [[UIImageView alloc] init];
         _iconImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _iconImageView.layer.cornerRadius = 15;
+        _iconImageView.clipsToBounds = YES;
         [self addSubview:_iconImageView];
         {
             [_iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {

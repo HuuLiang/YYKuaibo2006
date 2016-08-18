@@ -12,5 +12,7 @@
 
 @property (nonatomic) NSString *title;
 @property (nonatomic,copy) YYKAction tapAction;
+@property (nonatomic) BOOL showSeparator;
+@property (nonatomic) UIColor *titleColor;
 
 @end

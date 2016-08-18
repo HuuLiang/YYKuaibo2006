@@ -114,6 +114,8 @@ DefineLazyPropertyInitialization(NSMutableArray, programs)
         }];
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification) name:kPaidNotificationName object:nil];
+    
     @weakify(self);
     [_videoCV YYK_addPullToRefreshWithHandler:^{
         @strongify(self);
@@ -127,6 +129,18 @@ DefineLazyPropertyInitialization(NSMutableArray, programs)
 }
 
 - (void)loadVideosInPage:(NSUInteger)page {
+    if (page > 1 && page * self.programModel.fetchedVideoChannel.pageSize.unsignedIntegerValue > self.programModel.fetchedVideoChannel.items.unsignedIntegerValue) {
+        if (![YYKUtil isSVIP]) {
+            [_videoCV YYK_setPagingRefreshText:[NSString stringWithFormat:@"成为%@后，解锁所有视频", kSVIPText]];
+            [_videoCV YYK_endPullToRefresh];
+            
+            [self payForPayPointType:YYKPayPointTypeSVIP];
+        }
+        return ;
+    } else {
+        [_videoCV YYK_setPagingRefreshText:@"上拉或点击加载更多"];
+    }
+    
     @weakify(self);
     [self.programModel fetchVideosInColumn:_channel.columnId page:page withCompletionHandler:^(BOOL success, id obj) {
         @strongify(self);
@@ -149,11 +163,20 @@ DefineLazyPropertyInitialization(NSMutableArray, programs)
                 [self->_videoCV reloadData];
             }
             
-            if (self.currentPage * channel.pageSize.unsignedIntegerValue >= channel.items.unsignedIntegerValue) {
+            if ([YYKUtil isSVIP] && self.currentPage * channel.pageSize.unsignedIntegerValue >= channel.items.unsignedIntegerValue) {
                 [self->_videoCV YYK_pagingRefreshNoMoreData];
             }
         }
     }];
+}
+
+- (void)onPaidNotification {
+    _videoCV.contentOffset = CGPointZero;
+    [_videoCV reloadData];
+    
+    if (self.currentPage * self.programModel.fetchedVideoChannel.pageSize.unsignedIntegerValue >= self.programModel.fetchedVideoChannel.items.unsignedIntegerValue) {
+        [_videoCV YYK_pagingRefreshNoMoreData];
+    }
 }
 
 - (BOOL)shouldShowLandscapeImageAtIndexPath:(NSIndexPath *)indexPath {
