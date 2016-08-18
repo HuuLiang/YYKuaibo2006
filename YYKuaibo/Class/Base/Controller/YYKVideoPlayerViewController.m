@@ -83,7 +83,7 @@
     
     _progressSlider = [[UISlider alloc] init];
     [_progressSlider setThumbImage:thumbImage forState:UIControlStateNormal];
-    _progressSlider.maximumValue = 60 * 30;
+    _progressSlider.maximumValue = 60 * 10;
     _progressSlider.continuous = NO;
     _progressSlider.enabled = NO;
     [_controlView addSubview:_progressSlider];

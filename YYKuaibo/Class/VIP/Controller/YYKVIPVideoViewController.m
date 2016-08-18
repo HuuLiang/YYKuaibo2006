@@ -171,6 +171,10 @@ DefineLazyPropertyInitialization(NSMutableArray, programs)
 }
 
 - (void)onPaidNotification {
+    if (![YYKUtil isSVIP]) {
+        return ;
+    }
+    
     _videoCV.contentOffset = CGPointZero;
     [_videoCV reloadData];
     
