@@ -51,8 +51,8 @@
         
         _subtitleLabel = [[UILabel alloc] init];
         _subtitleLabel.textColor = _titleLabel.textColor;
-        _subtitleLabel.font = kBigFont;
-        _subtitleLabel.numberOfLines = 2;
+        _subtitleLabel.font = kSmallFont;
+        _subtitleLabel.numberOfLines = 3;
         [rightView addSubview:_subtitleLabel];
 
         _popIconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"popularity_icon"]];
@@ -75,7 +75,7 @@
         
         _popLabel = [[UILabel alloc] init];
         _popLabel.textColor = [UIColor colorWithHexString:@"#888888"];
-        _popLabel.font = kMediumFont;
+        _popLabel.font = kSmallFont;
         [rightView addSubview:_popLabel];
         {
             [_popLabel mas_makeConstraints:^(MASConstraintMaker *make) {

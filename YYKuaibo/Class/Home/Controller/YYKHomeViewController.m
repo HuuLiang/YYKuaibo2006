@@ -128,13 +128,16 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
     if (indexPath.section == YYKHomeSectionBanner) {
         YYKBannerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kBannerCellReusableIdentifier forIndexPath:indexPath];
         cell.delegate = self;
-        cell.style = YYKBannerCellStyleTile;
-        cell.showPageControl = YES;
         
-        if (!cell.backgroundImage) {
-            NSString *filePath = [[NSBundle mainBundle] pathForResource:@"home_banner_background" ofType:@"jpg"];
-            cell.backgroundImage = [UIImage imageWithContentsOfFile:filePath];
+        if (!cell.placeholderImage) {
+            cell.placeholderImage = [UIImage imageNamed:@"placeholder_5_2"];
         }
+//        cell.showPageControl = YES;
+//        
+//        if (!cell.backgroundImage) {
+//            NSString *filePath = [[NSBundle mainBundle] pathForResource:@"home_banner_background" ofType:@"jpg"];
+//            cell.backgroundImage = [UIImage imageWithContentsOfFile:filePath];
+//        }
         
         NSMutableArray<YYKBannerItem *> *bannerItems = [NSMutableArray array];
         for (YYKProgram *bannerProgram in self.programModel.fetchedBannerChannel.programList) {

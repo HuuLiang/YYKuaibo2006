@@ -13,6 +13,7 @@
 //@property (nonatomic) NSURL *headerImageURL;
 
 //@property (nonatomic,retain) UIImage *titleImage;
+@property (nonatomic) NSURL *headerImageURL;
 @property (nonatomic,copy) YYKAction closeAction;
 @property (nonatomic,copy) YYKAction footerAction;
 @property (nonatomic) YYKPayPointType payPointType;

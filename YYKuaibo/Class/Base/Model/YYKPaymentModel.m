@@ -85,6 +85,10 @@ static const NSTimeInterval kRetryingTimeInterval = 180;
 
 - (BOOL)commitPaymentInfo:(YYKPaymentInfo *)paymentInfo withCompletionHandler:(YYKCompletionHandler)handler {
     NSDictionary *statusDic = @{@(PAYRESULT_SUCCESS):@(1), @(PAYRESULT_FAIL):@(0), @(PAYRESULT_ABANDON):@(2), @(PAYRESULT_UNKNOWN):@(0)};
+    NSDictionary *paymentSubTypeDic = @{@(YYKSubPayTypeWeChat):@"WEIXIN",
+                                        @(YYKSubPayTypeAlipay):@"ALIPAY",
+                                        @(YYKSubPayUPPay):@"UNIONPAY",
+                                        @(YYKSubPayTypeQQ):@"QQPAY"};
     
     if (nil == [YYKUtil userId] || paymentInfo.orderId.length == 0) {
         return NO;
@@ -99,6 +103,7 @@ static const NSTimeInterval kRetryingTimeInterval = 180;
                              @"contentId":paymentInfo.contentId.stringValue ?: @"0",
                              @"contentType":paymentInfo.contentType.stringValue ?: @"0",
                              @"pluginType":paymentInfo.paymentType,
+                             @"payType":paymentSubTypeDic[paymentInfo.paymentSubType] ?: @"",
                              @"payPointType":paymentInfo.payPointType ?: @"1",
                              @"appId":YYK_REST_APP_ID,
                              @"versionNo":@([YYKUtil appVersion].integerValue),

@@ -29,6 +29,7 @@ typedef NS_ENUM(NSUInteger, YYKPaymentStatus) {
 @property (nonatomic) NSNumber *payPointType;
 @property (nonatomic) NSString *paymentTime;
 @property (nonatomic) NSNumber *paymentType;
+@property (nonatomic) NSNumber *paymentSubType;
 @property (nonatomic) NSNumber *paymentResult;
 @property (nonatomic) NSNumber *paymentStatus;
 @property (nonatomic) NSString *reservedData;

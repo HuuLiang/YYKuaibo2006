@@ -20,6 +20,7 @@ static NSString *const kPaymentInfoColumnIdKeyName = @"yykuaibov_paymentinfo_col
 static NSString *const kPaymentInfoColumnTypeKeyName = @"yykuaibov_paymentinfo_columntype_keyname";
 static NSString *const kPaymentInfoPayPointTypeKeyName = @"yykuaibov_paymentinfo_paypointtype_keyname";
 static NSString *const kPaymentInfoPaymentTypeKeyName = @"yykuaibov_paymentinfo_paymenttype_keyname";
+static NSString *const kPaymentInfoPaymentSubTypeKeyName = @"yykuaibov_paymentinfo_paymentsubtype_keyname";
 static NSString *const kPaymentInfoPaymentResultKeyName = @"yykuaibov_paymentinfo_paymentresult_keyname";
 static NSString *const kPaymentInfoPaymentStatusKeyName = @"yykuaibov_paymentinfo_paymentstatus_keyname";
 static NSString *const kPaymentInfoPaymentTimeKeyName = @"yykuaibov_paymentinfo_paymenttime_keyname";
@@ -54,6 +55,7 @@ static NSString *const kPaymentInfoPaymentNotifyUrl = @"yykuaibov_paymentinfo_pa
     paymentInfo.columnType = payment[kPaymentInfoColumnTypeKeyName];
     paymentInfo.payPointType = payment[kPaymentInfoPayPointTypeKeyName];
     paymentInfo.paymentType = payment[kPaymentInfoPaymentTypeKeyName];
+    paymentInfo.paymentSubType = payment[kPaymentInfoPaymentSubTypeKeyName];
     paymentInfo.paymentResult = payment[kPaymentInfoPaymentResultKeyName];
     paymentInfo.paymentStatus = payment[kPaymentInfoPaymentStatusKeyName];
     paymentInfo.paymentTime = payment[kPaymentInfoPaymentTimeKeyName];
@@ -78,6 +80,7 @@ static NSString *const kPaymentInfoPaymentNotifyUrl = @"yykuaibov_paymentinfo_pa
     [payment safelySetObject:self.columnType forKey:kPaymentInfoColumnTypeKeyName];
     [payment safelySetObject:self.payPointType forKey:kPaymentInfoPayPointTypeKeyName];
     [payment safelySetObject:self.paymentType forKey:kPaymentInfoPaymentTypeKeyName];
+    [payment safelySetObject:self.paymentSubType forKey:kPaymentInfoPaymentSubTypeKeyName];
     [payment safelySetObject:self.paymentResult forKey:kPaymentInfoPaymentResultKeyName];
     [payment safelySetObject:self.paymentStatus forKey:kPaymentInfoPaymentStatusKeyName];
     [payment safelySetObject:self.paymentTime forKey:kPaymentInfoPaymentTimeKeyName];

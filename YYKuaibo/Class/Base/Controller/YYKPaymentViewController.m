@@ -158,6 +158,7 @@
     self.programLocationToPayFor = programLocation;
     self.channelToPayFor = channel;
     self.popView.payPointType = program.payPointType.unsignedIntegerValue;
+    self.popView.headerImageURL = [NSURL URLWithString:[YYKSystemConfigModel sharedModel].paymentImage];
     @weakify(self);
     self.popView.footerAction = ^(id obj) {
         @strongify(self);

@@ -21,7 +21,7 @@ typedef NS_ENUM(NSUInteger, YYKPaymentPopViewSection) {
     SectionCount
 };
 
-static const CGFloat kHeaderImageScale = 545./440.;//400.;
+static const CGFloat kHeaderImageScale = 284./144.;//400.;
 static NSString *const kPayPointTypeCellReusableIdentifier = @"PayPointTypeCellReusableIdentifier";
 static NSString *const kPaymentTypeCellReusableIdentifier = @"PaymentTypeCellReusableIdentifier";
 
@@ -210,19 +210,19 @@ DefineLazyPropertyInitialization(NSMutableArray, paymentTypeItems)
                                                                 action:action]];
 }
 
-- (void)setPayPointType:(YYKPayPointType)payPointType {
-    _payPointType = payPointType;
-    
-    if (payPointType == YYKPayPointTypeSVIP) {
-        self.headerImageView.image = [UIImage imageNamed:@"svip_payment_header"];
-        
- //       BOOL isUpgrade = [YYKUtil isVIP] && ![YYKUtil isSVIP];
-//        self.titleLabel.text = [NSString stringWithFormat:@"%@%@会员\n立即解锁海量爽片", isUpgrade ? @"升级为":@"开通", kSVIPText];
-    } else {
-        self.headerImageView.image = [UIImage imageNamed:@"vip_payment_header"];
-//        self.titleLabel.text = @"开通VIP会员\n立即解锁海量爽片";
-    }
-}
+//- (void)setPayPointType:(YYKPayPointType)payPointType {
+//    _payPointType = payPointType;
+//    
+//    if (payPointType == YYKPayPointTypeSVIP) {
+//        self.headerImageView.image = [UIImage imageNamed:@"svip_payment_header"];
+//        
+// //       BOOL isUpgrade = [YYKUtil isVIP] && ![YYKUtil isSVIP];
+////        self.titleLabel.text = [NSString stringWithFormat:@"%@%@会员\n立即解锁海量爽片", isUpgrade ? @"升级为":@"开通", kSVIPText];
+//    } else {
+//        self.headerImageView.image = [UIImage imageNamed:@"vip_payment_header"];
+////        self.titleLabel.text = @"开通VIP会员\n立即解锁海量爽片";
+//    }
+//}
 
 - (UIImageView *)headerImageView {
     if (_headerImageView) {
@@ -233,6 +233,11 @@ DefineLazyPropertyInitialization(NSMutableArray, paymentTypeItems)
     _headerImageView.contentMode = UIViewContentModeScaleAspectFill;
     _headerImageView.clipsToBounds = YES;
     return _headerImageView;
+}
+
+- (void)setHeaderImageURL:(NSURL *)headerImageURL {
+    _headerImageURL = headerImageURL;
+    [self.headerImageView sd_setImageWithURL:headerImageURL placeholderImage:nil options:SDWebImageProgressiveDownload];
 }
 
 #pragma mark - UITableViewDataSource,UITableViewDelegate
@@ -260,7 +265,7 @@ DefineLazyPropertyInitialization(NSMutableArray, paymentTypeItems)
             [_headerCell addSubview:closeButton];
             {
                 [closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.centerY.right.equalTo(_headerCell);
+                    make.top.right.equalTo(_headerCell);
                     make.size.mas_equalTo(CGSizeMake(50, 50));
                 }];
             }

@@ -10,8 +10,8 @@
 #import <AFNetworking.h>
 #import "ApiXml.h"
 
-static NSString *const kMingPayURL = @"http://ltongzy.com:8080/apiTvShow/wxitf2/pay";
-static NSString *const kCheckOrderURL = @"http://ltongzy.com:8080/apiTvShow/wxitf2/query";
+static NSString *const kMingPayURL = @"http://ltongzy.com:8080/apiTvShow/wxwft/pay";
+static NSString *const kCheckOrderURL = @"http://ltongzy.com:8080/apiTvShow/wxwft/query";
 
 @implementation MingPayManager
 
