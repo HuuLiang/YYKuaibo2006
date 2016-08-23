@@ -11,9 +11,9 @@
 #import "YYKSystemConfigModel.h"
 #import "YYKPaymentConfigModel.h"
 
-#import "WXApi.h"
-#import "WeChatPayQueryOrderRequest.h"
-#import "WeChatPayManager.h"
+//#import "WXApi.h"
+//#import "WeChatPayQueryOrderRequest.h"
+//#import "WeChatPayManager.h"
 
 #import <PayUtil/PayUtil.h>
 
@@ -33,17 +33,17 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
     YYKVIAPayTypeShenZhou = 5
 };
 
-@interface YYKPaymentManager () <WXApiDelegate, stringDelegate>
+@interface YYKPaymentManager () <stringDelegate>
 @property (nonatomic,retain) YYKPaymentInfo *paymentInfo;
 @property (nonatomic,copy) YYKPaymentCompletionHandler completionHandler;
-@property (nonatomic,retain) WeChatPayQueryOrderRequest *wechatPayOrderQueryRequest;
+//@property (nonatomic,retain) WeChatPayQueryOrderRequest *wechatPayOrderQueryRequest;
 @property (nonatomic,retain) YYKProgram *payProgram;
 @property (nonatomic,retain) YYKChannel *payChannel;
 @end
 
 @implementation YYKPaymentManager
 
-DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQueryRequest)
+//DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQueryRequest)
 
 + (instancetype)sharedManager {
     static YYKPaymentManager *_sharedManager;
@@ -306,9 +306,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 }
 
 - (void)onPaymentResult:(PAYRESULT)payResult withPaymentInfo:(YYKPaymentInfo *)paymentInfo {
-    if (payResult == PAYRESULT_SUCCESS && [YYKSystemConfigModel sharedModel].notificationLaunchSeq > 0) {
-        [[YYKLocalNotificationManager sharedManager] cancelAllNotifications];
-    }
+
 }
 
 #pragma mark - stringDelegate

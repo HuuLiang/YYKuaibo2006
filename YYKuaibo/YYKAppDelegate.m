@@ -18,7 +18,6 @@
 #import "YYKSystemConfigModel.h"
 #import "YYKAppSpreadBannerModel.h"
 #import "MobClick.h"
-#import "YYKLaunchView.h"
 #import "YYKVersionUpdateModel.h"
 
 @interface YYKAppDelegate () <UITabBarControllerDelegate>
@@ -184,14 +183,6 @@
     
 }
 
-- (void)registerUserNotification {
-    if (NSClassFromString(@"UIUserNotificationSettings")) {
-        UIUserNotificationType notiType = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
-        UIUserNotificationSettings *notiSettings = [UIUserNotificationSettings settingsForTypes:notiType categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:notiSettings];
-    }
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [YYKUtil accumateLaunchSeq];
@@ -226,20 +217,6 @@
             statsTimeInterval = [YYKSystemConfigModel sharedModel].statsTimeInterval;
         }
         [[YYKStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
-        
-        if ([YYKSystemConfigModel sharedModel].notificationLaunchSeq > 0) {
-            [self registerUserNotification];
-        }
-        if (!success) {
-            return ;
-        }
-
-        if ([YYKSystemConfigModel sharedModel].startupInstall.length == 0
-            || [YYKSystemConfigModel sharedModel].startupPrompt.length == 0) {
-            return ;
-        }
-        
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[YYKSystemConfigModel sharedModel].startupInstall]];
     }];
     
     [[YYKAppSpreadBannerModel sharedModel] fetchAppSpreadWithCompletionHandler:nil];
@@ -271,18 +248,6 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    if ([YYKUtil isAllVIPs] || [YYKSystemConfigModel sharedModel].notificationLaunchSeq <= 0) {
-        return ;
-    }
-    
-    UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
-        DLog(@"Application expired background task!");
-        [application endBackgroundTask:bgTask];
-    }];
-    
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [[YYKLocalNotificationManager sharedManager] scheduleLocalNotificationInEnteringBackground];
-    });
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
