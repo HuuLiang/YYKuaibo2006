@@ -48,11 +48,12 @@
 @property (nonatomic) NSString *mch;
 
 @end
-//@interface YYKSPayConfig : NSObject
-//@property (nonatomic) NSString *signKey;
-//@property (nonatomic) NSString *mchId;
-//@property (nonatomic) NSString *notifyUrl;
-//@end
+
+@interface YYKSPayConfig : NSObject
+@property (nonatomic) NSString *signKey;
+@property (nonatomic) NSString *mchId;
+@property (nonatomic) NSString *notifyUrl;
+@end
 //
 //@interface YYKHTPayConfig : NSObject
 //@property (nonatomic) NSString *key;
@@ -68,7 +69,7 @@
 @property (nonatomic,retain) YYKVIAPayConfig *syskPayInfo;
 @property (nonatomic,retain) YYKMingPayConfig *mpPayInfo;
 
-//@property (nonatomic,retain) YYKSPayConfig *wftPayInfo;
+@property (nonatomic,retain) YYKSPayConfig *wftPayInfo;
 //@property (nonatomic,retain) YYKHTPayConfig *haitunPayInfo;
 
 + (instancetype)sharedConfig;

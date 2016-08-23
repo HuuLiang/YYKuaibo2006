@@ -19,6 +19,7 @@
 
 #import "IappPayMananger.h"
 #import "MingPayManager.h"
+#import "SPayUtil.h"
 
 //static NSString *const kAlipaySchemeUrl = @"comyykuaibo2016appalipayurlscheme";
 static NSString *const kVIAPaySchemeUrl = @"comqskuaiboappviapayurlscheme";
@@ -96,6 +97,8 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
         return YYKPaymentTypeIAppPay;
     } else if ([YYKPaymentConfig sharedConfig].mpPayInfo.mch.length > 0) {
         return YYKPaymentTypeMingPay;
+    } else if ([YYKPaymentConfig sharedConfig].wftPayInfo) {
+        return YYKPaymentTypeSPay;
     }
     return YYKPaymentTypeNone;
 }
@@ -275,6 +278,19 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
                 self.completionHandler(payResult, self.paymentInfo);
             }
         }];
+    } else if (type == YYKPaymentTypeSPay) {
+        @weakify(self);
+        [[SPayUtil sharedInstance] registerMchId:[YYKPaymentConfig sharedConfig].wftPayInfo.mchId
+                                         signKey:[YYKPaymentConfig sharedConfig].wftPayInfo.signKey
+                                       notifyUrl:[YYKPaymentConfig sharedConfig].wftPayInfo.notifyUrl];
+        [[SPayUtil sharedInstance] payWithPaymentInfo:paymentInfo completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
+            @strongify(self);
+            [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
+            
+            if (self.completionHandler) {
+                self.completionHandler(payResult, self.paymentInfo);
+            }
+        }];
     } else {
         success = NO;
         
@@ -286,7 +302,7 @@ DefineLazyPropertyInitialization(WeChatPayQueryOrderRequest, wechatPayOrderQuery
 }
 
 - (void)applicationWillEnterForeground {
-//    [[SPayUtil sharedInstance] applicationWillEnterForeground];
+    [[SPayUtil sharedInstance] applicationWillEnterForeground];
 }
 
 - (void)onPaymentResult:(PAYRESULT)payResult withPaymentInfo:(YYKPaymentInfo *)paymentInfo {
