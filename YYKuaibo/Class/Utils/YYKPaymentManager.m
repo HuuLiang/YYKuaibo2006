@@ -188,7 +188,10 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
     if (type == YYKPaymentTypeMingPay) {
         paymentInfo.orderDescription = servicePhone ?: @"VIP";
     } else {
-       paymentInfo.orderDescription = servicePhone.length > 0 ? [tradeName stringByAppendingFormat:@"(客服电话: %@)", servicePhone] : tradeName;
+        if (type == YYKPaymentTypeSPay) {
+            servicePhone = @"4008079233";
+        }
+        paymentInfo.orderDescription = servicePhone.length > 0 ? [tradeName stringByAppendingFormat:@"(客服电话: %@)", servicePhone] : tradeName;
     }
     
     paymentInfo.contentId = program.programId;

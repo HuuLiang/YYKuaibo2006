@@ -73,7 +73,8 @@
                               notify_url:notify_url
                               time_start:nil
                               time_expire:nil
-                              nonce_str:nonce_str];
+                              nonce_str:nonce_str
+                              attach:paymentInfo.reservedData];
     
     //调用支付预下单接口
     [[SPHTTPManager sharedInstance] post:@"pay/gateway"

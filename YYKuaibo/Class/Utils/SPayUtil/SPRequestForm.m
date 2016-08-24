@@ -57,7 +57,9 @@
                        notify_url:(NSString*)notify_url
                        time_start:(NSString*)time_start
                       time_expire:(NSString*)time_expire
-                        nonce_str:(NSString*)nonce_str{
+                        nonce_str:(NSString*)nonce_str
+                           attach:(NSString*)attach
+{
 
     NSDictionary *mustInfo = @{@"service":service,
                            @"mch_id":mch_id,
@@ -77,7 +79,8 @@
     [postInfo safeSetValue:@"device_info" val:device_info];
     [postInfo safeSetValue:@"time_start" val:time_start];
     [postInfo safeSetValue:@"time_expire" val:time_expire];
- 
+    [postInfo safeSetValue:@"attach" val:attach];
+    
     return [self packingRequestForm:postInfo withSignKey:sign_key];
 };
 

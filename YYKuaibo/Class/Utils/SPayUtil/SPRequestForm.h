@@ -48,7 +48,8 @@
                        notify_url:(NSString*)notify_url
                        time_start:(NSString*)time_start
                       time_expire:(NSString*)time_expire
-                        nonce_str:(NSString*)nonce_str;
+                        nonce_str:(NSString*)nonce_str
+                           attach:(NSString*)attach;
 
 
 @end
