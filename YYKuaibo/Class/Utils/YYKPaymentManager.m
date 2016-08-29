@@ -184,14 +184,14 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
     paymentInfo.orderPrice = @(price);
     
     NSString *tradeName = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP ? [kSVIPText stringByAppendingString:@"会员"] : @"VIP会员";
-    NSString *servicePhone = [YYKSystemConfigModel sharedModel].contact;
+    NSString *contactName = [YYKSystemConfigModel sharedModel].contactName;
     if (type == YYKPaymentTypeMingPay) {
-        paymentInfo.orderDescription = servicePhone ?: @"VIP";
+        paymentInfo.orderDescription = contactName ?: @"VIP";
     } else {
         if (type == YYKPaymentTypeSPay) {
-            servicePhone = @"4008079233";
+            contactName = @"客服热线：4008079233";
         }
-        paymentInfo.orderDescription = servicePhone.length > 0 ? [tradeName stringByAppendingFormat:@"(客服电话: %@)", servicePhone] : tradeName;
+        paymentInfo.orderDescription = contactName.length > 0 ? [tradeName stringByAppendingFormat:@"(%@)", contactName] : tradeName;
     }
     
     paymentInfo.contentId = program.programId;

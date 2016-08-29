@@ -266,10 +266,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, spreadModel)
                 [UIAlertView bk_showAlertViewWithTitle:@"当前版本已经是最新版本！" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
             }
         } else if (indexPath.item == YYKContactItem) {
-            NSString *phoneNum = [YYKSystemConfigModel sharedModel].contact;
-            if (phoneNum.length > 0) {
-                [YYKUtil callPhoneNumber:phoneNum];
-            }
+            [YYKUtil contactCustomerService];
         }
     } else if ([self sectionTypeWithSectionIndex:indexPath.section] == YYKSpreadSection) {
         if (indexPath.item < self.spreadModel.fetchedSpreadChannel.programList.count) {

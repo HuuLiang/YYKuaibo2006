@@ -14,6 +14,7 @@
 #import "YYKSpreadBannerViewController.h"
 #import "YYKAppSpreadBannerModel.h"
 #import "YYKApplicationManager.h"
+#import "YYKSystemConfigModel.h"
 #include <ifaddrs.h>
 #include <arpa/inet.h>
 
@@ -208,6 +209,26 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneUrl]];
         }
     }];
+}
+
++ (void)contactCustomerService {
+    NSString *contactScheme = [YYKSystemConfigModel sharedModel].contactScheme;
+    NSString *contactName = [YYKSystemConfigModel sharedModel].contactName;
+    
+    if (contactScheme.length == 0) {
+        return ;
+    }
+    
+    [UIAlertView bk_showAlertViewWithTitle:nil
+                                   message:[NSString stringWithFormat:@"是否联系客服%@？", contactName ?: @""]
+                         cancelButtonTitle:@"取消"
+                         otherButtonTitles:@[@"确认"]
+                                   handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+     {
+         if (buttonIndex == 1) {
+             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:contactScheme]];
+         }
+     }];
 }
 
 + (NSUInteger)launchSeq {

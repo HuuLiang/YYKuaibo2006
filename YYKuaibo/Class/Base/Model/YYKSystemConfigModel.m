@@ -98,8 +98,10 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
                                     //                    self.spreadRightImage = config.value;
                                     //                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_SPREAD_RIGHT_URL]) {
                                     //                    self.spreadRightUrl = config.value;
-                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_CONTACT]) {
-                                    self.contact = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_CONTACT_NAME]){
+                                    self.contactName = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_CONTACT_SCHEME]) {
+                                    self.contactScheme = config.value;
                                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_CONTACT_TIME]) {
                                     self.contactTime = config.value;
                                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_DISCOUNT_AMOUNT]) {
