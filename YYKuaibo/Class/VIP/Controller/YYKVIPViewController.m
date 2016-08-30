@@ -11,10 +11,15 @@
 #import "YYKChannelModel.h"
 #import "YYKPaymentInfo.h"
 #import "YYKVIPVideoViewController.h"
+#import "YYKSVIPPopView.h"
+#import "YYKWebViewController.h"
+#import <UIButton+WebCache.h>
+#import "NSDate+Utilities.h"
 
-@interface YYKVIPViewController () <YYKCardSliderDelegate,YYKCardSliderDataSource>
+@interface YYKVIPViewController () <YYKCardSliderDelegate,YYKCardSliderDataSource,YYKSVIPPopViewDelegate>
 {
     YYKCardSlider *_contentView;
+    UIButton *_leftNavigationButton;
 }
 @property (nonatomic,retain) YYKChannelModel *channelModel;
 @property (nonatomic) BOOL initialLoad;
@@ -29,19 +34,6 @@ DefineLazyPropertyInitialization(YYKChannelModel, channelModel)
     // Do any additional setup after loading the view.
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
-    //self.view.backgroundColor = [UIColor colorWithWhite:0.75 alpha:1];
-    
-//    NSString *bgImagePath = [[NSBundle mainBundle] pathForResource:@"svip_background" ofType:@"jpg"];
-//    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:bgImagePath]];
-//    backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-//    backgroundImageView.clipsToBounds = YES;
-//    [self.view addSubview:backgroundImageView];
-//    {
-//        [backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.edges.equalTo(self.view);
-//        }];
-//    }
-    
     _contentView = [[YYKCardSlider alloc] initWithFrame:self.view.bounds];
     _contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     _contentView.delegate = self;
@@ -54,16 +46,55 @@ DefineLazyPropertyInitialization(YYKChannelModel, channelModel)
         [self loadChannels];
     }];
     
+    
+    _leftNavigationButton = [[UIButton alloc] init];
+    _leftNavigationButton.hidden = YES;
+    [_leftNavigationButton addTarget:self action:@selector(onLeftNavigationButton) forControlEvents:UIControlEventTouchUpInside];
+    
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"svip_navigation_item" ofType:@"gif"];
+    [_leftNavigationButton sd_setImageWithURL:[NSURL fileURLWithPath:imagePath] forState:UIControlStateNormal completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        @strongify(self);
+        if (image) {
+            const CGFloat height = 33;
+            self->_leftNavigationButton.frame = CGRectMake(0, 0, height*image.size.width/image.size.height, height);
+        }
+    }];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_leftNavigationButton];
+    
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification:) name:kPaidNotificationName object:nil];
 
     [self loadChannels];
+    
+    
 }
 
-//- (void)onPaidNotification:(NSNotification *)notification {
-//    if ([YYKUtil isSVIP]) {
-//        [_contentView reloadData];
-//    }
-//}
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (![YYKSVIPPopView hasShown]) {
+        [YYKSVIPPopView showPopViewInWindowWithDelegate:self];
+    } else {
+        _leftNavigationButton.hidden = NO;
+    }
+}
+
+- (void)onLeftNavigationButton {
+    if (![YYKUtil isSVIP]) {
+        [self payForPayPointType:YYKPayPointTypeSVIP];
+        return ;
+    }
+    
+    NSDate *currentDate = [NSDate date];
+    if (currentDate.hour > 3) {
+        [UIAlertView bk_showAlertViewWithTitle:@"午夜专区的开放时间为\n凌晨0点到3点" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
+        return ;
+    }
+    
+    YYKWebViewController *webVC = [[YYKWebViewController alloc] initWithURL:[NSURL URLWithString:@"http://h5tg.sqdgd.com/h5-009997/"] standbyURL:nil];
+    webVC.title = @"午夜专区";
+    [self.navigationController pushViewController:webVC animated:YES];
+}
 
 - (void)loadChannels {
     @weakify(self);
@@ -89,6 +120,16 @@ DefineLazyPropertyInitialization(YYKChannelModel, channelModel)
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - YYKSVIPPopViewDelegate
+
+- (void)popViewDidFinishAnimatingForHiding:(YYKSVIPPopView *)popView {
+    _leftNavigationButton.hidden = NO;
+}
+
+- (CGRect)popViewAnimatingTargetRectForHiding:(YYKSVIPPopView *)popView {
+    return [_leftNavigationButton convertRect:_leftNavigationButton.bounds toView:self.view.window];
 }
 
 #pragma mark - YYKCardSliderDelegate,YYKCardSliderDataSource

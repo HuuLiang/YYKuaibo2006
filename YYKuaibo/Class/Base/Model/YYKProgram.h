@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger, YYKProgramType) {
 @property (nonatomic) NSString *offUrl;
 @property (nonatomic) NSString *tag;
 @property (nonatomic) NSString *spare;
+@property (nonatomic) NSString *spareUrl;
 @property (nonatomic,retain) NSArray<YYKProgramUrl *> *urlList; // type==2有集合，目前为图集url集合
 
 // Channel info

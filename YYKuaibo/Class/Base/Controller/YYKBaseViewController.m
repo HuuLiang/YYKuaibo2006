@@ -12,6 +12,7 @@
 #import "YYKWebViewController.h"
 #import "YYKVideoDetailViewController.h"
 #import "YYKChannelVideoViewController.h"
+#import "YYKWebPlayerViewController.h"
 //@import MediaPlayer;
 //@import AVKit;
 //@import AVFoundation.AVPlayer;
@@ -153,10 +154,8 @@
  shouldPopPayment:(BOOL)shouldPopPayment
 {
     if (hasTimeControl) {
-        YYKWebViewController *webVC = [[YYKWebViewController alloc] initWithURL:[NSURL URLWithString:video.videoUrl] standbyURL:nil];
-        webVC.title = video.title;
-        webVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:webVC animated:YES];
+        YYKWebPlayerViewController *webPlayerVC = [[YYKWebPlayerViewController alloc] initWithProgram:video];
+        [self.navigationController pushViewController:webPlayerVC animated:YES];
     } else {
         @weakify(self);
         YYKVideoPlayerViewController *playerVC = [[YYKVideoPlayerViewController alloc] initWithVideo:video];

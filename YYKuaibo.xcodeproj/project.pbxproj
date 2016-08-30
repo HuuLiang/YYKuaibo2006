@@ -48,6 +48,8 @@
 		BC660B121C97275100E04D23 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BC660B111C97275100E04D23 /* libc++.tbd */; };
 		BC6C80481D48ADD500AF2872 /* YYKVIPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6C80471D48ADD500AF2872 /* YYKVIPViewController.m */; };
 		BC6C804E1D48C4E000AF2872 /* YYKBanneredProgramModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6C804D1D48C4E000AF2872 /* YYKBanneredProgramModel.m */; };
+		BC6C81621D757F6000EB658A /* svip_navigation_item.gif in Resources */ = {isa = PBXBuildFile; fileRef = BC6C81611D757F6000EB658A /* svip_navigation_item.gif */; };
+		BC6C81651D75921100EB658A /* YYKWebPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6C81641D75921100EB658A /* YYKWebPlayerViewController.m */; };
 		BC6F00CA1D00712800AC01D9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC6F00C91D00712800AC01D9 /* Security.framework */; };
 		BC6F00CC1D00723300AC01D9 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC6F00CB1D00723300AC01D9 /* CoreMotion.framework */; };
 		BC6F6E1F1D44A487002FD77C /* Config.txt in Resources */ = {isa = PBXBuildFile; fileRef = BC6F6E1D1D44A487002FD77C /* Config.txt */; };
@@ -82,6 +84,8 @@
 		BC7BF6AA1D460BAE00756287 /* YYKPaymentTypeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7BF6A91D460BAE00756287 /* YYKPaymentTypeCell.m */; };
 		BC7EEBEC1D13EF89008D9A32 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC7EEBEA1D13EF89008D9A32 /* AlipaySDK.bundle */; };
 		BC7EEBED1D13EF89008D9A32 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC7EEBEB1D13EF89008D9A32 /* AlipaySDK.framework */; };
+		BC808CEE1D756F8200E7DCBC /* svip_popup_background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC808CED1D756F8200E7DCBC /* svip_popup_background.jpg */; };
+		BC808CF11D756FD500E7DCBC /* YYKSVIPPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC808CF01D756FD500E7DCBC /* YYKSVIPPopView.m */; };
 		BC89D2801D6C56E3007EB979 /* libSPaySDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC89D27E1D6C56E3007EB979 /* libSPaySDK.a */; };
 		BC89D2811D6C56E3007EB979 /* SPaySDKResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC89D27F1D6C56E3007EB979 /* SPaySDKResource.bundle */; };
 		BC89D28B1D6C56F1007EB979 /* SPayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BC89D2841D6C56F1007EB979 /* SPayUtil.m */; };
@@ -260,6 +264,9 @@
 		BC6C80471D48ADD500AF2872 /* YYKVIPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVIPViewController.m; sourceTree = "<group>"; };
 		BC6C804C1D48C4E000AF2872 /* YYKBanneredProgramModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKBanneredProgramModel.h; sourceTree = "<group>"; };
 		BC6C804D1D48C4E000AF2872 /* YYKBanneredProgramModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKBanneredProgramModel.m; sourceTree = "<group>"; };
+		BC6C81611D757F6000EB658A /* svip_navigation_item.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = svip_navigation_item.gif; sourceTree = "<group>"; };
+		BC6C81631D75921100EB658A /* YYKWebPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKWebPlayerViewController.h; sourceTree = "<group>"; };
+		BC6C81641D75921100EB658A /* YYKWebPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKWebPlayerViewController.m; sourceTree = "<group>"; };
 		BC6F00C91D00712800AC01D9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		BC6F00CB1D00723300AC01D9 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		BC6F6E1D1D44A487002FD77C /* Config.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Config.txt; sourceTree = "<group>"; };
@@ -313,6 +320,9 @@
 		BC7BF6A91D460BAE00756287 /* YYKPaymentTypeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKPaymentTypeCell.m; sourceTree = "<group>"; };
 		BC7EEBEA1D13EF89008D9A32 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		BC7EEBEB1D13EF89008D9A32 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		BC808CED1D756F8200E7DCBC /* svip_popup_background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = svip_popup_background.jpg; sourceTree = "<group>"; };
+		BC808CEF1D756FD500E7DCBC /* YYKSVIPPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKSVIPPopView.h; sourceTree = "<group>"; };
+		BC808CF01D756FD500E7DCBC /* YYKSVIPPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKSVIPPopView.m; sourceTree = "<group>"; };
 		BC89D26C1D6C56E3007EB979 /* NSDictionary+SPayUtilsExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+SPayUtilsExtras.h"; sourceTree = "<group>"; };
 		BC89D26D1D6C56E3007EB979 /* NSString+SPayUtilsExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SPayUtilsExtras.h"; sourceTree = "<group>"; };
 		BC89D26E1D6C56E3007EB979 /* SPayClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClient.h; sourceTree = "<group>"; };
@@ -670,6 +680,8 @@
 		BC660B051C9720BB00E04D23 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BC6C81611D757F6000EB658A /* svip_navigation_item.gif */,
+				BC808CED1D756F8200E7DCBC /* svip_popup_background.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -917,6 +929,8 @@
 				BC5542331D62E9B500E93D56 /* YYKCardSlider.m */,
 				BC5542391D63111D00E93D56 /* YYKVIPVideoCell.h */,
 				BC55423A1D63111D00E93D56 /* YYKVIPVideoCell.m */,
+				BC808CEF1D756FD500E7DCBC /* YYKSVIPPopView.h */,
+				BC808CF01D756FD500E7DCBC /* YYKSVIPPopView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1038,6 +1052,8 @@
 				BCE2575C1C96F4F800133F4F /* YYKInputTextViewController.m */,
 				BC7643401CD04C680059E1C3 /* YYKSpreadBannerViewController.h */,
 				BC7643411CD04C680059E1C3 /* YYKSpreadBannerViewController.m */,
+				BC6C81631D75921100EB658A /* YYKWebPlayerViewController.h */,
+				BC6C81641D75921100EB658A /* YYKWebPlayerViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1362,6 +1378,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC808CEE1D756F8200E7DCBC /* svip_popup_background.jpg in Resources */,
 				BC7EEBEC1D13EF89008D9A32 /* AlipaySDK.bundle in Resources */,
 				BC7BF6981D45F54000756287 /* btn1.png in Resources */,
 				BC6F6E201D44A487002FD77C /* VIASDKVERSION.txt in Resources */,
@@ -1370,6 +1387,7 @@
 				BC7BF69D1D45F54000756287 /* btn6.png in Resources */,
 				BC7BF6991D45F54000756287 /* btn10.png in Resources */,
 				BC89D2811D6C56E3007EB979 /* SPaySDKResource.bundle in Resources */,
+				BC6C81621D757F6000EB658A /* svip_navigation_item.gif in Resources */,
 				BCE256111C966A8E00133F4F /* LaunchScreen.storyboard in Resources */,
 				BC7BF6A41D45F54000756287 /* private_key.p12 in Resources */,
 				BC7BF6A11D45F54000756287 /* seperator.png in Resources */,
@@ -1527,6 +1545,7 @@
 				BCE348581D62633D00750D4F /* YYKChannelCell.m in Sources */,
 				BC660B081C97243F00E04D23 /* YYKPaymentManager.m in Sources */,
 				BCE256661C966C2600133F4F /* YYKEncryptedURLRequest.m in Sources */,
+				BC808CF11D756FD500E7DCBC /* YYKSVIPPopView.m in Sources */,
 				BC4E66661D2EBCFF0012C2B4 /* YYKVersionUpdateModel.m in Sources */,
 				BCF8C06E1D17F73400F0E198 /* YYKOrderQueryModel.m in Sources */,
 				BCE257071C966DB400133F4F /* UIImage+color.m in Sources */,
@@ -1560,6 +1579,7 @@
 				BC42C3551CE0946E00ECCD65 /* DBPersistence.m in Sources */,
 				BC89D2931D6C780A007EB979 /* ApiXml.mm in Sources */,
 				BCE2566F1C966C2600133F4F /* YYKUserAccessModel.m in Sources */,
+				BC6C81651D75921100EB658A /* YYKWebPlayerViewController.m in Sources */,
 				BC39DE701D37B47E002D5E26 /* YYKTagSearchFooterView.m in Sources */,
 				BC4CCD721D363A14001518F1 /* YYKSearchViewController.m in Sources */,
 				BCE2575A1C96F31200133F4F /* YYKWebViewController.m in Sources */,
