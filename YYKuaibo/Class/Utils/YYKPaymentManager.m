@@ -59,7 +59,7 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
     [paySender getIntents].delegate = self;
     
     [[YYKPaymentConfigModel sharedModel] fetchConfigWithCompletionHandler:^(BOOL success, id obj) {
-        [MingPayManager sharedManager].mch = [YYKPaymentConfig sharedConfig].mpPayInfo.mch;
+        [MingPayManager sharedManager].mch = [YYKPaymentConfig sharedConfig].configDetails.mingPayConfig.mch;
     }];
     [IappPayMananger sharedMananger].alipayURLScheme = kIappPaySchemeUrl;
     
@@ -87,29 +87,11 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
 }
 
 - (YYKPaymentType)wechatPaymentType {
-    if ([YYKPaymentConfig sharedConfig].syskPayInfo.supportPayTypes.integerValue & YYKSubPayTypeWeChat) {
-        return YYKPaymentTypeVIAPay;
-//    } else if ([YYKPaymentConfig sharedConfig].wftPayInfo) {
-//        return YYKPaymentTypeSPay;
-//    } else if ([YYKPaymentConfig sharedConfig].haitunPayInfo) {
-//        return YYKPaymentTypeHTPay;
-    } else if ([YYKPaymentConfig sharedConfig].iappPayInfo.supportPayTypes.integerValue & YYKSubPayTypeWeChat) {
-        return YYKPaymentTypeIAppPay;
-    } else if ([YYKPaymentConfig sharedConfig].mpPayInfo.mch.length > 0) {
-        return YYKPaymentTypeMingPay;
-    } else if ([YYKPaymentConfig sharedConfig].wftPayInfo) {
-        return YYKPaymentTypeSPay;
-    }
-    return YYKPaymentTypeNone;
+    return [YYKPaymentConfig sharedConfig].wechatPaymentType;
 }
 
 - (YYKPaymentType)alipayPaymentType {
-    if ([YYKPaymentConfig sharedConfig].syskPayInfo.supportPayTypes.integerValue & YYKSubPayTypeAlipay) {
-        return YYKPaymentTypeVIAPay;
-    } else if ([YYKPaymentConfig sharedConfig].iappPayInfo.supportPayTypes.integerValue & YYKSubPayTypeAlipay) {
-        return YYKPaymentTypeIAppPay;
-    }
-    return YYKPaymentTypeNone;
+    return [YYKPaymentConfig sharedConfig].alipayPaymentType;
 }
 
 - (YYKPaymentType)cardPayPaymentType {
@@ -120,10 +102,7 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
 }
 
 - (YYKPaymentType)qqPaymentType {
-    if ([YYKPaymentConfig sharedConfig].syskPayInfo.supportPayTypes.unsignedIntegerValue & YYKSubPayTypeQQ) {
-        return YYKPaymentTypeVIAPay;
-    }
-    return YYKPaymentTypeNone;
+    return [YYKPaymentConfig sharedConfig].qqPaymentType;
 }
 
 - (void)handleOpenUrl:(NSURL *)url {
@@ -239,14 +218,15 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
 //        }];
     } else if (type == YYKPaymentTypeIAppPay) {
         @weakify(self);
+        YYKIAppPayConfig *payConfig = [YYKPaymentConfig sharedConfig].configDetails.iAppPayConfig;
         IappPayMananger *iAppMgr = [IappPayMananger sharedMananger];
-        iAppMgr.appId = [YYKPaymentConfig sharedConfig].iappPayInfo.appid;
-        iAppMgr.privateKey = [YYKPaymentConfig sharedConfig].iappPayInfo.privateKey;
-        iAppMgr.waresid = [YYKPaymentConfig sharedConfig].iappPayInfo.waresid.stringValue;
+        iAppMgr.appId = payConfig.appid;
+        iAppMgr.privateKey = payConfig.privateKey;
+        iAppMgr.waresid = payConfig.waresid.stringValue;
         iAppMgr.appUserId = [YYKUtil userId] ?: @"UnregisterUser";
         iAppMgr.privateInfo = YYK_PAYMENT_RESERVE_DATA;
-        iAppMgr.notifyUrl = [YYKPaymentConfig sharedConfig].iappPayInfo.notifyUrl;
-        iAppMgr.publicKey = [YYKPaymentConfig sharedConfig].iappPayInfo.publicKey;
+        iAppMgr.notifyUrl = payConfig.notifyUrl;
+        iAppMgr.publicKey = payConfig.publicKey;
         
         [iAppMgr payWithPaymentInfo:paymentInfo payType:subType completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
             @strongify(self);
@@ -283,9 +263,11 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
         }];
     } else if (type == YYKPaymentTypeSPay) {
         @weakify(self);
-        [[SPayUtil sharedInstance] registerMchId:[YYKPaymentConfig sharedConfig].wftPayInfo.mchId
-                                         signKey:[YYKPaymentConfig sharedConfig].wftPayInfo.signKey
-                                       notifyUrl:[YYKPaymentConfig sharedConfig].wftPayInfo.notifyUrl];
+        YYKSPayConfig *payConfig = [YYKPaymentConfig sharedConfig].configDetails.spayConfig;
+        
+        [[SPayUtil sharedInstance] registerMchId:payConfig.mchId
+                                         signKey:payConfig.signKey
+                                       notifyUrl:payConfig.notifyUrl];
         [[SPayUtil sharedInstance] payWithPaymentInfo:paymentInfo completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
             @strongify(self);
             [self onPaymentResult:payResult withPaymentInfo:paymentInfo];

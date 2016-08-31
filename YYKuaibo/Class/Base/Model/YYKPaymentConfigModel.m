@@ -54,8 +54,8 @@
 - (BOOL)fetchConfigWithCompletionHandler:(YYKCompletionHandler)handler {
     @weakify(self);
     BOOL ret = [self requestURLPath:YYK_PAYMENT_CONFIG_URL
-                     standbyURLPath:[NSString stringWithFormat:YYK_STANDBY_PAYMENT_CONFIG_URL, YYK_REST_APP_ID]
-                         withParams:@{@"appId":YYK_REST_APP_ID, @"channelNo":YYK_CHANNEL_NO, @"pV":YYK_PAYMENT_PV}
+                     standbyURLPath:nil
+                         withParams:@{@"appId":YYK_REST_APP_ID, @"channelNo":YYK_CHANNEL_NO, @"pv":YYK_PAYMENT_PV}
                     responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
     {
         @strongify(self);

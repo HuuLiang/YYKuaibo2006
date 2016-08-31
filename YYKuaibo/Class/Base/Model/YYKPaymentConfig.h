@@ -2,77 +2,24 @@
 //  YYKPaymentConfig.h
 //  YYKuaibo
 //
-//  Created by Sean Yue on 16/3/22.
+//  Created by Sean Yue on 16/8/31.
 //  Copyright © 2016年 iqu8. All rights reserved.
 //
 
 #import "YYKURLResponse.h"
-
-@interface YYKWeChatPaymentConfig : NSObject
-@property (nonatomic) NSString *appId;
-@property (nonatomic) NSString *mchId;
-@property (nonatomic) NSString *signKey;
-@property (nonatomic) NSString *notifyUrl;
-
-//+ (instancetype)defaultConfig;
-@end
-
-@interface YYKAlipayConfig : NSObject
-@property (nonatomic) NSString *partner;
-@property (nonatomic) NSString *seller;
-@property (nonatomic) NSString *productInfo;
-@property (nonatomic) NSString *privateKey;
-@property (nonatomic) NSString *notifyUrl;
-@end
-
-@interface YYKIAppPayConfig : NSObject
-@property (nonatomic) NSString *appid;
-@property (nonatomic) NSString *privateKey;
-@property (nonatomic) NSString *publicKey;
-@property (nonatomic) NSString *notifyUrl;
-@property (nonatomic) NSNumber *waresid;
-@property (nonatomic) NSNumber *supportPayTypes;
-
-//+ (instancetype)defaultConfig;
-@end
-
-@interface YYKVIAPayConfig : NSObject
-
-//@property (nonatomic) NSString *packageId;
-@property (nonatomic) NSNumber *supportPayTypes;
-
-@end
-
-@interface YYKMingPayConfig : NSObject
-
-@property (nonatomic) NSString *mch;
-
-@end
-
-@interface YYKSPayConfig : NSObject
-@property (nonatomic) NSString *signKey;
-@property (nonatomic) NSString *mchId;
-@property (nonatomic) NSString *notifyUrl;
-@end
-//
-//@interface YYKHTPayConfig : NSObject
-//@property (nonatomic) NSString *key;
-//@property (nonatomic) NSString *mchId;
-//@property (nonatomic) NSString *notifyUrl;
-//@end
+#import "YYKPaymentConfigSummary.h"
+#import "YYKPaymentConfigDetail.h"
 
 @interface YYKPaymentConfig : YYKURLResponse
 
-@property (nonatomic,retain) YYKWeChatPaymentConfig *weixinInfo;
-@property (nonatomic,retain) YYKAlipayConfig *alipayInfo;
-@property (nonatomic,retain) YYKIAppPayConfig *iappPayInfo;
-@property (nonatomic,retain) YYKVIAPayConfig *syskPayInfo;
-@property (nonatomic,retain) YYKMingPayConfig *mpPayInfo;
-
-@property (nonatomic,retain) YYKSPayConfig *wftPayInfo;
-//@property (nonatomic,retain) YYKHTPayConfig *haitunPayInfo;
+@property (nonatomic,retain) YYKPaymentConfigSummary *payConfig;
+@property (nonatomic,retain) YYKPaymentConfigDetail *configDetails;
 
 + (instancetype)sharedConfig;
 - (void)setAsCurrentConfig;
+
+- (YYKPaymentType)wechatPaymentType;
+- (YYKPaymentType)alipayPaymentType;
+- (YYKPaymentType)qqPaymentType;
 
 @end
