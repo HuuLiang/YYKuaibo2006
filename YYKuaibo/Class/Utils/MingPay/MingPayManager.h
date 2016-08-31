@@ -11,6 +11,8 @@
 @interface MingPayManager : NSObject
 
 @property (nonatomic) NSString *mch;
+@property (nonatomic) NSString *payUrl;
+@property (nonatomic) NSString *queryOrderUrl;
 
 + (instancetype)sharedManager;
 

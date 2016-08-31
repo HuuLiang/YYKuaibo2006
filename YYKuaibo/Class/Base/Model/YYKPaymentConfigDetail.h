@@ -49,6 +49,8 @@ extern NSString *const kYYKSPayConfigName;
 
 @interface YYKMingPayConfig : NSObject
 
+@property (nonatomic) NSString *payUrl;
+@property (nonatomic) NSString *queryOrderUrl;
 @property (nonatomic) NSString *mch;
 
 @end

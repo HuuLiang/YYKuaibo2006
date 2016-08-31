@@ -10,9 +10,6 @@
 #import <AFNetworking.h>
 #import "ApiXml.h"
 
-static NSString *const kMingPayURL = @"http://ltongzy.com:8080/apiTvShow/wxwft/pay";
-static NSString *const kCheckOrderURL = @"http://ltongzy.com:8080/apiTvShow/wxwft/query";
-
 @implementation MingPayManager
 
 + (instancetype)sharedManager {
@@ -25,7 +22,7 @@ static NSString *const kCheckOrderURL = @"http://ltongzy.com:8080/apiTvShow/wxwf
 }
 
 - (void)payWithPaymentInfo:(YYKPaymentInfo *)paymentInfo completionHandler:(YYKPaymentCompletionHandler)completionHandler {
-    if (!paymentInfo.orderId || paymentInfo.orderPrice.unsignedIntegerValue == 0 || self.mch.length == 0) {
+    if (!paymentInfo.orderId || paymentInfo.orderPrice.unsignedIntegerValue == 0 || self.mch.length == 0 || self.payUrl.length == 0 || self.queryOrderUrl.length == 0) {
         SafelyCallBlock(completionHandler, PAYRESULT_FAIL, paymentInfo);
         return ;
     }
@@ -40,7 +37,7 @@ static NSString *const kCheckOrderURL = @"http://ltongzy.com:8080/apiTvShow/wxwf
     AFHTTPSessionManager *sessionManager = [[AFHTTPSessionManager alloc] init];
     sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    [sessionManager POST:kMingPayURL
+    [sessionManager POST:self.payUrl
               parameters:params
                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject)
     {
@@ -112,7 +109,7 @@ static NSString *const kCheckOrderURL = @"http://ltongzy.com:8080/apiTvShow/wxwf
     AFHTTPSessionManager *sessionManager = [[AFHTTPSessionManager alloc] init];
     sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", nil];
     
-    [sessionManager POST:kCheckOrderURL
+    [sessionManager POST:self.queryOrderUrl
               parameters:@{@"out_trade_no":paymentInfo.orderId}
                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject)
     {
