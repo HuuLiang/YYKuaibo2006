@@ -12,7 +12,7 @@
 NSString *const kYYKIAppPayConfigName = @"IAPPPAY";
 NSString *const kYYKVIAPayConfigName = @"SYSK";
 NSString *const kYYKMingPayConfigName = @"MPENG";
-NSString *const kYYKSPayConfigName = @"WTF";
+NSString *const kYYKSPayConfigName = @"WFT";
 
 @implementation YYKPaymentConfigDetail
 

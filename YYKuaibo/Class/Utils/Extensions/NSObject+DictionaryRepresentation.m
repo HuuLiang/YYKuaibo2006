@@ -13,11 +13,19 @@ NSString *const kPersistenceTypeKey = @"com.yykuaibo.persistenceTypeKey";
 
 @implementation NSObject (DictionaryRepresentation)
 
++ (NSArray *)commonExcludedProperties {
+    return @[@"debugDescription", @"description", @"hash"];
+}
+
 - (NSDictionary *)dictionaryRepresentationWithEncryptBlock:(YYKPlistPersistenceCryptBlock)encryptBlock {
     NSArray *properties = self.allProperties;
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [properties enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([[[self class] commonExcludedProperties] containsObject:obj]) {
+            return ;
+        }
+        
         id value = [self valueForKey:obj];
         if (!value) {
             return ;
@@ -68,6 +76,19 @@ NSString *const kPersistenceTypeKey = @"com.yykuaibo.persistenceTypeKey";
                 }
             }];
 
+        } else if (value != nil) {
+            NSDictionary *valueDic = [value dictionaryRepresentationWithEncryptBlock:encryptBlock];
+            if (valueDic) {
+                NSMutableDictionary *typeDic = [dic objectForKey:kPersistenceTypeKey];
+                if (!typeDic) {
+                    typeDic = [NSMutableDictionary dictionary];
+                }
+                
+                [typeDic setObject:NSStringFromClass([value class]) forKey:obj];
+                [dic setObject:typeDic forKey:kPersistenceTypeKey];
+                
+                [dic setObject:valueDic forKey:obj];
+            }
         }
     }];
     return dic.count > 0 ? dic : nil;
@@ -81,6 +102,10 @@ NSString *const kPersistenceTypeKey = @"com.yykuaibo.persistenceTypeKey";
     id object = [[self alloc] init];
     
     [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        if ([key isEqualToString:kPersistenceTypeKey]) {
+            return ;
+        }
+        
         if ([obj isKindOfClass:[NSNumber class]]
             || [obj isKindOfClass:[NSDate class]]) {
             if ([object respondsToSelector:NSSelectorFromString(key)]) {
@@ -125,6 +150,17 @@ NSString *const kPersistenceTypeKey = @"com.yykuaibo.persistenceTypeKey";
                 if ([object respondsToSelector:NSSelectorFromString(key)]) {
                     [object setValue:arr forKey:key];
                 }
+            }
+        } else if ([obj isKindOfClass:[NSDictionary class]]) {
+            NSString *className = dic[kPersistenceTypeKey][key];
+            Class objClass = NSClassFromString(className);
+            if (!objClass) {
+                return ;
+            }
+            
+            id instance = [objClass objectFromDictionary:obj withDecryptBlock:nil];
+            if (instance) {
+                [object setValue:instance forKey:key];
             }
         }
     }];
