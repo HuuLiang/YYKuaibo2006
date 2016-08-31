@@ -12,6 +12,7 @@
 {
     UIImageView *_thumbImageView;
     UILabel *_titleLabel;
+    UIImageView *_playIconImageView;
 }
 @end
 
@@ -44,6 +45,14 @@
             }];
         }
         
+        _playIconImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"video_thumb_play"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+        _playIconImageView.tintColor = kThemeColor;
+        [self addSubview:_playIconImageView];
+        {
+            [_playIconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.center.equalTo(self);
+            }];
+        }
     }
     return self;
 }
