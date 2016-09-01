@@ -12,11 +12,13 @@
 @class YYKVIAPayConfig;
 @class YYKMingPayConfig;
 @class YYKSPayConfig;
+@class YYKHTPayConfig;
 
 extern NSString *const kYYKIAppPayConfigName;
 extern NSString *const kYYKVIAPayConfigName;
 extern NSString *const kYYKMingPayConfigName;
 extern NSString *const kYYKSPayConfigName;
+extern NSString *const kYYKHTPayConfigName;
 
 @interface YYKPaymentConfigDetail : NSObject <YYKResponseParsable>
 
@@ -24,6 +26,7 @@ extern NSString *const kYYKSPayConfigName;
 @property (nonatomic,retain) YYKVIAPayConfig *viaPayConfig; //首游时空
 @property (nonatomic,retain) YYKMingPayConfig *mingPayConfig; //明鹏支付
 @property (nonatomic,retain) YYKSPayConfig *spayConfig; //威富通
+@property (nonatomic,retain) YYKHTPayConfig *htpayConfig; //海豚支付
 
 @end
 
@@ -60,9 +63,9 @@ extern NSString *const kYYKSPayConfigName;
 @property (nonatomic) NSString *mchId;
 @property (nonatomic) NSString *notifyUrl;
 @end
-//
-//@interface YYKHTPayConfig : NSObject
-//@property (nonatomic) NSString *key;
-//@property (nonatomic) NSString *mchId;
-//@property (nonatomic) NSString *notifyUrl;
-//@end
+
+@interface YYKHTPayConfig : NSObject
+@property (nonatomic) NSString *key;
+@property (nonatomic) NSString *mchId;
+@property (nonatomic) NSString *notifyUrl;
+@end

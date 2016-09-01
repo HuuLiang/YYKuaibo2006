@@ -12,8 +12,20 @@
 static const void *kUILoadingViewAssociatedKey = &kUILoadingViewAssociatedKey;
 static const void *kUIProgressingViewAssociatedKey = &kUIProgressingViewAssociatedKey;
 static const void *kUIMessageViewAssociatedKey = &kUIMessageViewAssociatedKey;
+static const void *kActivityIndicatorView = &kActivityIndicatorView;
 
 @implementation UIView (Loading)
+
+- (void)setLoadingViewActivityIndicatorStyle:(UIActivityIndicatorViewStyle)style {
+    UIActivityIndicatorView *indicatorView = objc_getAssociatedObject(self.ypb_loadingView, kActivityIndicatorView);
+    indicatorView.activityIndicatorViewStyle = style;
+    
+    if (style == UIActivityIndicatorViewStyleWhite || style == UIActivityIndicatorViewStyleWhiteLarge) {
+        self.ypb_loadingView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+    } else {
+        self.ypb_loadingView.backgroundColor = [UIColor whiteColor];
+    }
+}
 
 - (UIView *)ypb_loadingView {
     UIView *loadingView = objc_getAssociatedObject(self, kUILoadingViewAssociatedKey);
@@ -26,6 +38,8 @@ static const void *kUIMessageViewAssociatedKey = &kUIMessageViewAssociatedKey;
     objc_setAssociatedObject(self, kUILoadingViewAssociatedKey, loadingView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    objc_setAssociatedObject(loadingView, kActivityIndicatorView, indicatorView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
     [indicatorView startAnimating];
     [loadingView addSubview:indicatorView];
     {

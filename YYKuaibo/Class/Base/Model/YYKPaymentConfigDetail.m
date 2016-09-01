@@ -13,6 +13,7 @@ NSString *const kYYKIAppPayConfigName = @"IAPPPAY";
 NSString *const kYYKVIAPayConfigName = @"SYSK";
 NSString *const kYYKMingPayConfigName = @"MPENG";
 NSString *const kYYKSPayConfigName = @"WFT";
+NSString *const kYYKHTPayConfigName = @"HAITUN";
 
 @implementation YYKPaymentConfigDetail
 
@@ -25,6 +26,8 @@ NSString *const kYYKSPayConfigName = @"WFT";
         return [YYKMingPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(spayConfig))]) {
         return [YYKSPayConfig class];
+    } else if ([propName isEqualToString:NSStringFromSelector(@selector(htpayConfig))]) {
+        return [YYKHTPayConfig class];
     }
     return nil;
 }
@@ -38,6 +41,8 @@ NSString *const kYYKSPayConfigName = @"WFT";
         return NSStringFromSelector(@selector(mingPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kYYKSPayConfigName]]) {
         return NSStringFromSelector(@selector(spayConfig));
+    } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kYYKHTPayConfigName]]) {
+        return NSStringFromSelector(@selector(htpayConfig));
     }
     return nil;
 }
@@ -133,36 +138,36 @@ NSString *const kYYKSPayConfigName = @"WFT";
     return config;
 }
 @end
-//
-//@implementation YYKHTPayConfig
-//
-//+ (instancetype)defaultConfig {
-//    YYKHTPayConfig *config = [[self alloc] init];
-//    config.mchId = @"10605";
-//    config.key = @"e7c549c833cb9108e6524d075942119d";
-//    config.notifyUrl = @"http://phas.ihuiyx.com/pd-has/notifyHtPay.json";
-//    return config;
-//}
-//
-//- (NSDictionary *)dictionaryRepresentation {
-//    NSMutableDictionary *dicRep = [NSMutableDictionary dictionary];
-//    [dicRep safelySetObject:self.mchId forKey:@"mchId"];
-//    [dicRep safelySetObject:self.key forKey:@"key"];
-//    [dicRep safelySetObject:self.notifyUrl forKey:@"notifyUrl"];
-//    return dicRep;
-//}
-//
-//+ (instancetype)configFromDictionary:(NSDictionary *)dic {
-//    YYKHTPayConfig *config = [[self alloc] init];
-//    [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-//        if (obj) {
-//            [config setValue:obj forKey:key];
-//        }
-//    }];
-//    return config;
-//}
-//
-//@end
+
+@implementation YYKHTPayConfig
+
++ (instancetype)defaultConfig {
+    YYKHTPayConfig *config = [[self alloc] init];
+    config.mchId = @"10605";
+    config.key = @"e7c549c833cb9108e6524d075942119d";
+    config.notifyUrl = @"http://phas.ihuiyx.com/pd-has/notifyHtPay.json";
+    return config;
+}
+
+- (NSDictionary *)dictionaryRepresentation {
+    NSMutableDictionary *dicRep = [NSMutableDictionary dictionary];
+    [dicRep safelySetObject:self.mchId forKey:@"mchId"];
+    [dicRep safelySetObject:self.key forKey:@"key"];
+    [dicRep safelySetObject:self.notifyUrl forKey:@"notifyUrl"];
+    return dicRep;
+}
+
++ (instancetype)configFromDictionary:(NSDictionary *)dic {
+    YYKHTPayConfig *config = [[self alloc] init];
+    [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        if (obj) {
+            [config setValue:obj forKey:key];
+        }
+    }];
+    return config;
+}
+
+@end
 
 @implementation YYKMingPayConfig
 

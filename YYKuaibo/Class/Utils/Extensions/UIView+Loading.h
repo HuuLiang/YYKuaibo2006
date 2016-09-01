@@ -24,4 +24,6 @@
 - (void)showMessageWithTitle:(NSString *)title;
 - (void)showMessageWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
 
+- (void)setLoadingViewActivityIndicatorStyle:(UIActivityIndicatorViewStyle)style;
+
 @end

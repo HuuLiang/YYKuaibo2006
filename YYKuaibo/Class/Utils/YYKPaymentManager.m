@@ -20,6 +20,7 @@
 #import "IappPayMananger.h"
 #import "MingPayManager.h"
 #import "SPayUtil.h"
+#import "HTPayManager.h"
 
 //static NSString *const kAlipaySchemeUrl = @"comyykuaibo2016appalipayurlscheme";
 static NSString *const kVIAPaySchemeUrl = @"comqskuaiboappviapayurlscheme";
@@ -128,7 +129,7 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
     }
     
 #ifdef DEBUG
-    if (type == YYKPaymentTypeIAppPay) {
+    if (type == YYKPaymentTypeIAppPay || type == YYKPaymentTypeHTPay) {
         if (payPointType == YYKPayPointTypeSVIP) {
             price = 210;
         } else {
@@ -249,6 +250,22 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
 //                 self.completionHandler(payResult, self.paymentInfo);
 //             }
 //         }];
+    } else if (type == YYKPaymentTypeHTPay) {
+        @weakify(self);
+        [HTPayManager sharedManager].mchId = [YYKPaymentConfig sharedConfig].configDetails.htpayConfig.mchId;
+        [HTPayManager sharedManager].key = [YYKPaymentConfig sharedConfig].configDetails.htpayConfig.key;
+        [HTPayManager sharedManager].notifyUrl = [YYKPaymentConfig sharedConfig].configDetails.htpayConfig.notifyUrl;
+        
+        [[HTPayManager sharedManager] payWithPaymentInfo:paymentInfo
+                                       completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo)
+        {
+            @strongify(self);
+            [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
+            
+            if (self.completionHandler) {
+                self.completionHandler(payResult, self.paymentInfo);
+            }
+        }];
     } else if (type == YYKPaymentTypeMingPay) {
         @weakify(self);
         [MingPayManager sharedManager].mch = [YYKPaymentConfig sharedConfig].configDetails.mingPayConfig.mch;
