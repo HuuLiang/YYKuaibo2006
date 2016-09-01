@@ -9,6 +9,7 @@
 #import "HTPayManager.h"
 #import "HaiTunPay.h"
 #import "YYKWebViewController.h"
+#import <AFNetworking.h>
 
 static NSString *const kPayUrl = @"http://pay.ylsdk.com/";
 static NSString *const kQueryOrderUrl = @"http://check.ylsdk.com/";
@@ -88,12 +89,14 @@ static NSString *const kQueryOrderUrl = @"http://check.ylsdk.com/";
              {
                  @strongify(self);
                  [[UIApplication sharedApplication].keyWindow beginLoading];
+                 
                  [self checkPayment:paymentInfo withCompletionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
                      [nav dismissViewControllerAnimated:YES completion:nil];
                      
                      [[UIApplication sharedApplication].keyWindow endLoading];
                      SafelyCallBlock(completionHandler, payResult, paymentInfo);
                  }];
+                 
              }];
         }];
     } error:^(NSError *error) {
@@ -106,16 +109,36 @@ static NSString *const kQueryOrderUrl = @"http://check.ylsdk.com/";
 }
 
 - (void)checkPayment:(YYKPaymentInfo *)paymentInfo withCompletionHandler:(YYKPaymentCompletionHandler)completionHandler {
-    NSDictionary *transDic = @{@"Sjt_TransID": paymentInfo.orderId};
+    NSDictionary *transDic = @{@"Sjt_TransID": @"IOS_B_00000001_63c9da2e7510b7d1"};// paymentInfo.orderId};
     
-    [[HaiTunPay shareInstance] requestWithUrl:kQueryOrderUrl requestType:RequestTypePOST parDic:transDic finish:^(NSData *data) {
-        
-    } error:^(NSError *error) {
-        DLog(@"HaiTun Pay Error: %@", error.localizedDescription);
-        SafelyCallBlock(completionHandler, PAYRESULT_FAIL, paymentInfo);
-    } result:^(NSString *state) {
-        DLog(@"HaiTun Pay Order state: %@", state);
-        SafelyCallBlock(completionHandler, [state isEqualToString:@"1"] ? PAYRESULT_SUCCESS : PAYRESULT_FAIL, paymentInfo);
-    }];
+//    paymentInfo.orderId = @"IOS_B_00000001_25ef3c0829913bb6";
+    
+//    [[HaiTunPay shareInstance] requestWithUrl:kQueryOrderUrl requestType:RequestTypePOST parDic:transDic finish:^(NSData *data) {
+//        
+//    } error:^(NSError *error) {
+//        DLog(@"HaiTun Pay Error: %@", error.localizedDescription);
+//        SafelyCallBlock(completionHandler, PAYRESULT_FAIL, paymentInfo);
+//    } result:^(NSString *state) {
+//        DLog(@"HaiTun Pay Order state: %@", state);
+//        SafelyCallBlock(completionHandler, [state isEqualToString:@"1"] ? PAYRESULT_SUCCESS : PAYRESULT_FAIL, paymentInfo);
+//    }];
+//    
+    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+    sessionManager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
+    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", @"application/json",@"text/json", nil];
+    
+    [sessionManager POST:kQueryOrderUrl
+              parameters:transDic
+                 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject)
+     {
+         NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+         DLog(@"海豚支付-查询订单： %@", response);
+         
+         BOOL success = [response[@"status"] isEqual:@"1"];
+         SafelyCallBlock(completionHandler, success ? PAYRESULT_SUCCESS : PAYRESULT_FAIL, paymentInfo);
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+         DLog(@"海豚支付-查询订单错误：%@", error.localizedDescription);
+         SafelyCallBlock(completionHandler, PAYRESULT_FAIL, paymentInfo);
+     }];
 }
 @end

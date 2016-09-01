@@ -19,7 +19,7 @@
 
 #import "IappPayMananger.h"
 #import "MingPayManager.h"
-#import "SPayUtil.h"
+//#import "SPayUtil.h"
 #import "HTPayManager.h"
 
 //static NSString *const kAlipaySchemeUrl = @"comyykuaibo2016appalipayurlscheme";
@@ -166,9 +166,9 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
     if (type == YYKPaymentTypeMingPay) {
         paymentInfo.orderDescription = contactName ?: @"VIP";
     } else {
-        if (type == YYKPaymentTypeSPay) {
-            contactName = @"客服热线：4008079233";
-        }
+//        if (type == YYKPaymentTypeSPay) {
+//            contactName = @"客服热线：4008079233";
+//        }
         paymentInfo.orderDescription = contactName.length > 0 ? [tradeName stringByAppendingFormat:@"(%@)", contactName] : tradeName;
     }
     
@@ -279,21 +279,21 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
                 self.completionHandler(payResult, self.paymentInfo);
             }
         }];
-    } else if (type == YYKPaymentTypeSPay) {
-        @weakify(self);
-        YYKSPayConfig *payConfig = [YYKPaymentConfig sharedConfig].configDetails.spayConfig;
-        
-        [[SPayUtil sharedInstance] registerMchId:payConfig.mchId
-                                         signKey:payConfig.signKey
-                                       notifyUrl:payConfig.notifyUrl];
-        [[SPayUtil sharedInstance] payWithPaymentInfo:paymentInfo completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
-            @strongify(self);
-            [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
-            
-            if (self.completionHandler) {
-                self.completionHandler(payResult, self.paymentInfo);
-            }
-        }];
+//    } else if (type == YYKPaymentTypeSPay) {
+//        @weakify(self);
+//        YYKSPayConfig *payConfig = [YYKPaymentConfig sharedConfig].configDetails.spayConfig;
+//        
+//        [[SPayUtil sharedInstance] registerMchId:payConfig.mchId
+//                                         signKey:payConfig.signKey
+//                                       notifyUrl:payConfig.notifyUrl];
+//        [[SPayUtil sharedInstance] payWithPaymentInfo:paymentInfo completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
+//            @strongify(self);
+//            [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
+//            
+//            if (self.completionHandler) {
+//                self.completionHandler(payResult, self.paymentInfo);
+//            }
+//        }];
     } else {
         success = NO;
         
@@ -305,7 +305,7 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
 }
 
 - (void)applicationWillEnterForeground {
-    [[SPayUtil sharedInstance] applicationWillEnterForeground];
+//    [[SPayUtil sharedInstance] applicationWillEnterForeground];
 }
 
 - (void)onPaymentResult:(PAYRESULT)payResult withPaymentInfo:(YYKPaymentInfo *)paymentInfo {

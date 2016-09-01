@@ -61,6 +61,8 @@ static NSString *const kSVIPPopViewShownKeyName = @"yykuaibov_svippopview_keynam
             [_textImageView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(_contentImageView);
                 make.top.equalTo(_contentImageView).offset(kTopBottomContentMarginSpacing);
+                make.height.equalTo(_contentImageView).multipliedBy(0.63);
+                make.width.equalTo(_textImageView.mas_height).multipliedBy(_textImageView.image.size.width/_textImageView.image.size.height);
             }];
         }
         
