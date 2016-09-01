@@ -109,7 +109,7 @@ static NSString *const kQueryOrderUrl = @"http://check.ylsdk.com/";
 }
 
 - (void)checkPayment:(YYKPaymentInfo *)paymentInfo withCompletionHandler:(YYKPaymentCompletionHandler)completionHandler {
-    NSDictionary *transDic = @{@"Sjt_TransID": @"IOS_B_00000001_63c9da2e7510b7d1"};// paymentInfo.orderId};
+    NSDictionary *transDic = @{@"Sjt_TransID": paymentInfo.orderId};
     
 //    paymentInfo.orderId = @"IOS_B_00000001_25ef3c0829913bb6";
     
