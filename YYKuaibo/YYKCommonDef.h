@@ -32,7 +32,8 @@ typedef NS_ENUM(NSUInteger, YYKPaymentType) {
     YYKPaymentTypeVIAPay = 1010, //首游时空
 //    YYKPaymentTypeSPay = 1012, //威富通
     YYKPaymentTypeHTPay = 1015, //海豚支付
-    YYKPaymentTypeMingPay = 1018
+    YYKPaymentTypeMingPay = 1018, //明鹏支付
+    YYKPaymentTypeWeiYingPay = 1022, //微赢支付
 };
 
 typedef NS_ENUM(NSUInteger, YYKSubPayType) {

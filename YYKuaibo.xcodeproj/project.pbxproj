@@ -15,6 +15,8 @@
 		BC2FB7791CDA0A5700645070 /* DBHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2FB7751CDA0A5700645070 /* DBHandler.m */; };
 		BC2FB77A1CDA0A5700645070 /* DBTableVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2FB7781CDA0A5700645070 /* DBTableVersion.m */; };
 		BC30FBE51CE21A4300E49B98 /* YYKNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BC30FBE41CE21A4300E49B98 /* YYKNetworkInfo.m */; };
+		BC3207191D7FE1D100CC0D75 /* HeePay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3207171D7FE1D100CC0D75 /* HeePay.framework */; };
+		BC32071A1D7FE1D100CC0D75 /* WYPay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3207181D7FE1D100CC0D75 /* WYPay.framework */; };
 		BC32FD1E1CCF4E190030EB79 /* UIView+Loading.m in Sources */ = {isa = PBXBuildFile; fileRef = BC32FD1D1CCF4E190030EB79 /* UIView+Loading.m */; };
 		BC32FD221CCF97A10030EB79 /* YYKAppSpreadBannerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC32FD211CCF97A10030EB79 /* YYKAppSpreadBannerModel.m */; };
 		BC39DE701D37B47E002D5E26 /* YYKTagSearchFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC39DE6F1D37B47E002D5E26 /* YYKTagSearchFooterView.m */; };
@@ -197,6 +199,8 @@
 		BC2FB7781CDA0A5700645070 /* DBTableVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBTableVersion.m; sourceTree = "<group>"; };
 		BC30FBE31CE21A4300E49B98 /* YYKNetworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKNetworkInfo.h; sourceTree = "<group>"; };
 		BC30FBE41CE21A4300E49B98 /* YYKNetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKNetworkInfo.m; sourceTree = "<group>"; };
+		BC3207171D7FE1D100CC0D75 /* HeePay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HeePay.framework; sourceTree = "<group>"; };
+		BC3207181D7FE1D100CC0D75 /* WYPay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WYPay.framework; sourceTree = "<group>"; };
 		BC32FD1C1CCF4E190030EB79 /* UIView+Loading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Loading.h"; sourceTree = "<group>"; };
 		BC32FD1D1CCF4E190030EB79 /* UIView+Loading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Loading.m"; sourceTree = "<group>"; };
 		BC32FD201CCF97A10030EB79 /* YYKAppSpreadBannerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKAppSpreadBannerModel.h; sourceTree = "<group>"; };
@@ -477,11 +481,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC6F00CC1D00723300AC01D9 /* CoreMotion.framework in Frameworks */,
+				BC32071A1D7FE1D100CC0D75 /* WYPay.framework in Frameworks */,
 				BC6F00CA1D00712800AC01D9 /* Security.framework in Frameworks */,
 				BC7BF6A31D45F54000756287 /* PayUtil.framework in Frameworks */,
 				BC660B121C97275100E04D23 /* libc++.tbd in Frameworks */,
 				BCC839B01D783C25006CAE5F /* libHaiTunPay.a in Frameworks */,
 				BCE2572C1C968B5100133F4F /* libsqlite3.tbd in Frameworks */,
+				BC3207191D7FE1D100CC0D75 /* HeePay.framework in Frameworks */,
 				BCE2572A1C968B4800133F4F /* libz.tbd in Frameworks */,
 				BC7EEBED1D13EF89008D9A32 /* AlipaySDK.framework in Frameworks */,
 				BC91131A1D59BDC70033C922 /* IapppayAlphaKit.framework in Frameworks */,
@@ -573,6 +579,15 @@
 				BC42C3541CE0946E00ECCD65 /* DBPersistence.m */,
 			);
 			path = DataBase;
+			sourceTree = "<group>";
+		};
+		BC3207161D7FE1D100CC0D75 /* WeiYingSDK */ = {
+			isa = PBXGroup;
+			children = (
+				BC3207171D7FE1D100CC0D75 /* HeePay.framework */,
+				BC3207181D7FE1D100CC0D75 /* WYPay.framework */,
+			);
+			path = WeiYingSDK;
 			sourceTree = "<group>";
 		};
 		BC4298501D625229008C7F12 /* Model */ = {
@@ -1151,6 +1166,7 @@
 		BCE2571A1C968AED00133F4F /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				BC3207161D7FE1D100CC0D75 /* WeiYingSDK */,
 				BCC839AD1D783BFD006CAE5F /* HTPaySDK */,
 				BCBDB8C01D435307004EA95D /* iAppPay */,
 				BC0C85D21CD3398D00C51480 /* VIAPay */,
@@ -1685,6 +1701,7 @@
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/iAppPay",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/AlipaySDK",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay",
+					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/WeiYingSDK",
 				);
 				INFOPLIST_FILE = YYKuaibo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1717,6 +1734,7 @@
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/iAppPay",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/AlipaySDK",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/VIAPay",
+					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/WeiYingSDK",
 				);
 				INFOPLIST_FILE = YYKuaibo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

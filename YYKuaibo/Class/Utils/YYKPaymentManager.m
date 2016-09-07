@@ -16,6 +16,7 @@
 //#import "WeChatPayManager.h"
 
 #import <PayUtil/PayUtil.h>
+#import <WYPay/WYPayManager.h>
 
 #import "IappPayMananger.h"
 #import "MingPayManager.h"
@@ -83,6 +84,10 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
         } error:nil];
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWeiYingErrorNotification) name:WY_NOTIFICATION_ERROR object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWeiYingFailNotification) name:WY_NOTIFICATION_FAIL object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWeiYingCancelNotification) name:WY_NOTIFICATION_CANCEL object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onWeiYingSuccessNotification) name:WY_NOTIFICATION_SUCCESS object:nil];
 }
 
 - (YYKPaymentType)wechatPaymentType {
@@ -129,7 +134,7 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
     }
     
 #ifdef DEBUG
-    if (type == YYKPaymentTypeIAppPay || type == YYKPaymentTypeHTPay) {
+    if (type == YYKPaymentTypeIAppPay || type == YYKPaymentTypeHTPay || type == YYKPaymentTypeWeiYingPay) {
         if (payPointType == YYKPayPointTypeSVIP) {
             price = 210;
         } else {
@@ -294,6 +299,26 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
 //                self.completionHandler(payResult, self.paymentInfo);
 //            }
 //        }];
+    } else if (type == YYKPaymentTypeWeiYingPay) {
+        
+        NSString *mchId = [YYKPaymentConfig sharedConfig].configDetails.weiYingPayConfig.mchId;
+        if (mchId.length == 0) {
+            [self onPaymentResult:PAYRESULT_FAIL withPaymentInfo:self.paymentInfo];
+            SafelyCallBlock(self.completionHandler, PAYRESULT_FAIL, self.paymentInfo);
+            return nil;
+        }
+        
+        NSString *notifyUrl = [YYKPaymentConfig sharedConfig].configDetails.weiYingPayConfig.notifyUrl;
+        NSString *wyOrder = [NSString stringWithFormat:@"%@_%@", mchId, paymentInfo.orderId];
+        NSString *payAmount = [NSString stringWithFormat:@"%.2f", paymentInfo.orderPrice.floatValue/100];
+        
+        NSString *goodsName = [[paymentInfo.orderDescription stringByReplacingOccurrencesOfString:@" " withString:@""] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        [[[WYPayManager alloc] init] sendPayRequestWithViewController:[YYKUtil currentVisibleViewController]
+                                                        Agent_bill_id:wyOrder
+                                                              pay_amt:payAmount
+                                                           goods_name:goodsName
+                                                           notify_url:notifyUrl
+                                                               custom:paymentInfo.reservedData];
     } else {
         success = NO;
         
@@ -305,11 +330,36 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
 }
 
 - (void)applicationWillEnterForeground {
+    [WYPayManager heepaySDKWillEnterForeground];
 //    [[SPayUtil sharedInstance] applicationWillEnterForeground];
 }
 
 - (void)onPaymentResult:(PAYRESULT)payResult withPaymentInfo:(YYKPaymentInfo *)paymentInfo {
+    
+}
 
+- (void)onWeiYingErrorNotification {
+    [self onPaymentResult:PAYRESULT_FAIL withPaymentInfo:self.paymentInfo];
+    
+    SafelyCallBlock(self.completionHandler, PAYRESULT_FAIL, self.paymentInfo);
+}
+
+- (void)onWeiYingFailNotification {
+    [self onPaymentResult:PAYRESULT_FAIL withPaymentInfo:self.paymentInfo];
+    
+    SafelyCallBlock(self.completionHandler, PAYRESULT_FAIL, self.paymentInfo);
+}
+
+- (void)onWeiYingCancelNotification {
+    [self onPaymentResult:PAYRESULT_ABANDON withPaymentInfo:self.paymentInfo];
+    
+    SafelyCallBlock(self.completionHandler, PAYRESULT_ABANDON, self.paymentInfo);
+}
+
+- (void)onWeiYingSuccessNotification {
+    [self onPaymentResult:PAYRESULT_SUCCESS withPaymentInfo:self.paymentInfo];
+    
+    SafelyCallBlock(self.completionHandler, PAYRESULT_SUCCESS, self.paymentInfo);
 }
 
 #pragma mark - stringDelegate
