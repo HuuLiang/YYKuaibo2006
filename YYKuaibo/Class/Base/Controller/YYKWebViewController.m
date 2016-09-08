@@ -25,6 +25,14 @@
     return self;
 }
 
+- (instancetype)initWithHTML:(NSString *)htmlString {
+    self = [super init];
+    if (self) {
+        _htmlString = htmlString;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -37,26 +45,31 @@
         }];
     }
     
-    NSURLRequest *urlReq = [NSURLRequest requestWithURL:_url];
-    NSURLRequest *standUrlReq = [NSURLRequest requestWithURL:_standbyUrl];
-    
-    if (_standbyUrl) {
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            NSHTTPURLResponse *response;
-            NSError *error;
-            [NSURLConnection sendSynchronousRequest:urlReq returningResponse:&response error:&error];
-            NSInteger responseCode = response.statusCode;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (responseCode == 502 || responseCode == 404) {
-                    [_webView loadRequest:standUrlReq];
-                } else {
-                    [_webView loadRequest:urlReq];
-                }
-            });
-        });
+    if (_htmlString.length > 0) {
+        [_webView loadHTMLString:_htmlString baseURL:nil];
     } else {
-        [_webView loadRequest:urlReq];
+        NSURLRequest *urlReq = [NSURLRequest requestWithURL:_url];
+        NSURLRequest *standUrlReq = [NSURLRequest requestWithURL:_standbyUrl];
+        
+        if (_standbyUrl) {
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                NSHTTPURLResponse *response;
+                NSError *error;
+                [NSURLConnection sendSynchronousRequest:urlReq returningResponse:&response error:&error];
+                NSInteger responseCode = response.statusCode;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (responseCode == 502 || responseCode == 404) {
+                        [_webView loadRequest:standUrlReq];
+                    } else {
+                        [_webView loadRequest:urlReq];
+                    }
+                });
+            });
+        } else {
+            [_webView loadRequest:urlReq];
+        }
     }
+    
 }
 
 - (void)didReceiveMemoryWarning {

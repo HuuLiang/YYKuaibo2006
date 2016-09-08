@@ -14,6 +14,7 @@ NSString *const kYYKVIAPayConfigName = @"SYSK";
 NSString *const kYYKMingPayConfigName = @"MPENG";
 NSString *const kYYKSPayConfigName = @"WFT";
 NSString *const kYYKHTPayConfigName = @"HAITUN";
+NSString *const kYYKDXTXPayConfigName = @"DXTX";
 
 @implementation YYKPaymentConfigDetail
 
@@ -28,6 +29,8 @@ NSString *const kYYKHTPayConfigName = @"HAITUN";
         return [YYKSPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(htpayConfig))]) {
         return [YYKHTPayConfig class];
+    } else if ([propName isEqualToString:NSStringFromSelector(@selector(dxtxPayConfig))]) {
+        return [YYKDXTXPayConfig class];
     }
     return nil;
 }
@@ -43,6 +46,8 @@ NSString *const kYYKHTPayConfigName = @"HAITUN";
         return NSStringFromSelector(@selector(spayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kYYKHTPayConfigName]]) {
         return NSStringFromSelector(@selector(htpayConfig));
+    } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kYYKDXTXPayConfigName]]) {
+        return NSStringFromSelector(@selector(dxtxPayConfig));
     }
     return nil;
 }
@@ -186,5 +191,9 @@ NSString *const kYYKHTPayConfigName = @"HAITUN";
     }];
     return config;
 }
+
+@end
+
+@implementation YYKDXTXPayConfig
 
 @end

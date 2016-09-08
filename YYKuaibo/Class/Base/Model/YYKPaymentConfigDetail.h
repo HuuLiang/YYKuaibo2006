@@ -13,12 +13,14 @@
 @class YYKMingPayConfig;
 @class YYKSPayConfig;
 @class YYKHTPayConfig;
+@class YYKDXTXPayConfig;
 
 extern NSString *const kYYKIAppPayConfigName;
 extern NSString *const kYYKVIAPayConfigName;
 extern NSString *const kYYKMingPayConfigName;
 extern NSString *const kYYKSPayConfigName;
 extern NSString *const kYYKHTPayConfigName;
+extern NSString *const kYYKDXTXPayConfigName;
 
 @interface YYKPaymentConfigDetail : NSObject <YYKResponseParsable>
 
@@ -27,10 +29,11 @@ extern NSString *const kYYKHTPayConfigName;
 @property (nonatomic,retain) YYKMingPayConfig *mingPayConfig; //明鹏支付
 @property (nonatomic,retain) YYKSPayConfig *spayConfig; //威富通
 @property (nonatomic,retain) YYKHTPayConfig *htpayConfig; //海豚支付
-
+@property (nonatomic,retain) YYKDXTXPayConfig *dxtxPayConfig; //盾行天下
 @end
 
 @interface YYKIAppPayConfig : NSObject
+
 @property (nonatomic) NSString *appid;
 @property (nonatomic) NSString *privateKey;
 @property (nonatomic) NSString *publicKey;
@@ -68,4 +71,12 @@ extern NSString *const kYYKHTPayConfigName;
 @property (nonatomic) NSString *key;
 @property (nonatomic) NSString *mchId;
 @property (nonatomic) NSString *notifyUrl;
+@end
+
+@interface YYKDXTXPayConfig : NSObject
+
+@property (nonatomic) NSString *appKey;
+@property (nonatomic) NSString *notifyUrl;
+@property (nonatomic) NSNumber *waresid;
+
 @end
