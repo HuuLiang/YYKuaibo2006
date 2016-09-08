@@ -59,7 +59,13 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
     [[PayUitls getIntents] initSdk];
     [paySender getIntents].delegate = self;
     
-    [[YYKPaymentConfigModel sharedModel] fetchConfigWithCompletionHandler:nil];
+    [[YYKPaymentConfigModel sharedModel] fetchConfigWithCompletionHandler:^(BOOL success, id obj) {
+        if ([YYKPaymentConfig sharedConfig].configDetails.mingPayConfig) {
+            [MingPayManager sharedManager].mch = [YYKPaymentConfig sharedConfig].configDetails.mingPayConfig.mch;
+            [MingPayManager sharedManager].payUrl = [YYKPaymentConfig sharedConfig].configDetails.mingPayConfig.payUrl;
+            [MingPayManager sharedManager].queryOrderUrl = [YYKPaymentConfig sharedConfig].configDetails.mingPayConfig.queryOrderUrl;
+        }
+    }];
     [IappPayMananger sharedMananger].alipayURLScheme = kIappPaySchemeUrl;
     
     Class class = NSClassFromString(@"VIASZFViewController");
@@ -268,9 +274,6 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
         }];
     } else if (type == YYKPaymentTypeMingPay) {
         @weakify(self);
-        [MingPayManager sharedManager].mch = [YYKPaymentConfig sharedConfig].configDetails.mingPayConfig.mch;
-        [MingPayManager sharedManager].payUrl = [YYKPaymentConfig sharedConfig].configDetails.mingPayConfig.payUrl;
-        [MingPayManager sharedManager].queryOrderUrl = [YYKPaymentConfig sharedConfig].configDetails.mingPayConfig.queryOrderUrl;
         [[MingPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
             @strongify(self);
             [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
