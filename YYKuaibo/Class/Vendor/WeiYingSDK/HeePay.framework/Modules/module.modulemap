@@ -1,6 +1,0 @@
-framework module HeePay {
-  umbrella header "HeePay.h"
-
-  export *
-  module * { export * }
-}
