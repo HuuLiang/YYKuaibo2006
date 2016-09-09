@@ -9,6 +9,7 @@
 #import "MingPayManager.h"
 #import <AFNetworking.h>
 #import "ApiXml.h"
+#import "YYKWebViewController.h"
 
 @implementation MingPayManager
 
@@ -37,10 +38,13 @@
     AFHTTPSessionManager *sessionManager = [[AFHTTPSessionManager alloc] init];
     sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
+    [[UIApplication sharedApplication].keyWindow beginLoading];
     [sessionManager POST:self.payUrl
               parameters:params
                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject)
     {
+        [[UIApplication sharedApplication].keyWindow endLoading];
+        
         NSDictionary *xmlDic = [self dictionaryFromXMLData:responseObject];
         DLog(@"MingPay pay response: %@", xmlDic);
         
@@ -50,10 +54,23 @@
             return ;
         }
         
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:payInfo]];
-        [self waitForPayResultWithPaymentInfo:paymentInfo withCompletionHandler:completionHandler];
+        NSURL *url = [NSURL URLWithString:[payInfo stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        YYKWebViewController *webVC = [[YYKWebViewController alloc] initWithURL:url standbyURL:nil];
+        webVC.title = @"微信支付";
+        [webVC.view setLoadingViewActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [webVC.view beginLoading];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:webVC];
         
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:nav animated:YES completion:^{
+            [self waitForPayResultWithPaymentInfo:paymentInfo withCompletionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
+                [nav dismissViewControllerAnimated:YES completion:nil];
+                
+                SafelyCallBlock(completionHandler, payResult, paymentInfo);
+            }];
+        }];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [[UIApplication sharedApplication].keyWindow endLoading];
+        
         DLog(@"MingPay Error : %@", error.localizedDescription);
         SafelyCallBlock(completionHandler, PAYRESULT_FAIL, paymentInfo);
     }];

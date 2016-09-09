@@ -39,6 +39,7 @@
 		BC5542411D631BD600E93D56 /* YYKMineVIPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5542401D631BD600E93D56 /* YYKMineVIPCell.m */; };
 		BC5542441D63232300E93D56 /* YYKMineMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5542431D63232300E93D56 /* YYKMineMenuCell.m */; };
 		BC5542471D632DFB00E93D56 /* YYKIconSpreadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5542461D632DFB00E93D56 /* YYKIconSpreadCell.m */; };
+		BC5C18281D81D78000FECE81 /* DXTXPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5C18271D81D78000FECE81 /* DXTXPayManager.m */; };
 		BC5D5ABE1D61A6C900BC5F03 /* YYKHomeTrialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5D5ABD1D61A6C900BC5F03 /* YYKHomeTrialCell.m */; };
 		BC5D5AC11D61B77E00BC5F03 /* YYKHomeRankingRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5D5AC01D61B77E00BC5F03 /* YYKHomeRankingRowCell.m */; };
 		BC5D5AC41D61B8CA00BC5F03 /* YYKHomeRankingHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5D5AC31D61B8CA00BC5F03 /* YYKHomeRankingHeaderView.m */; };
@@ -245,6 +246,8 @@
 		BC5542431D63232300E93D56 /* YYKMineMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKMineMenuCell.m; sourceTree = "<group>"; };
 		BC5542451D632DFB00E93D56 /* YYKIconSpreadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKIconSpreadCell.h; sourceTree = "<group>"; };
 		BC5542461D632DFB00E93D56 /* YYKIconSpreadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKIconSpreadCell.m; sourceTree = "<group>"; };
+		BC5C18261D81D78000FECE81 /* DXTXPayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXTXPayManager.h; sourceTree = "<group>"; };
+		BC5C18271D81D78000FECE81 /* DXTXPayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXTXPayManager.m; sourceTree = "<group>"; };
 		BC5D5ABC1D61A6C900BC5F03 /* YYKHomeTrialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKHomeTrialCell.h; sourceTree = "<group>"; };
 		BC5D5ABD1D61A6C900BC5F03 /* YYKHomeTrialCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKHomeTrialCell.m; sourceTree = "<group>"; };
 		BC5D5ABF1D61B77E00BC5F03 /* YYKHomeRankingRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKHomeRankingRowCell.h; sourceTree = "<group>"; };
@@ -653,6 +656,15 @@
 				BC4E66651D2EBCFF0012C2B4 /* YYKVersionUpdateModel.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		BC5C18251D81D75700FECE81 /* DunXingTianXia */ = {
+			isa = PBXGroup;
+			children = (
+				BC5C18261D81D78000FECE81 /* DXTXPayManager.h */,
+				BC5C18271D81D78000FECE81 /* DXTXPayManager.m */,
+			);
+			path = DunXingTianXia;
 			sourceTree = "<group>";
 		};
 		BC5D5AB81D619DC800BC5F03 /* View */ = {
@@ -1083,6 +1095,7 @@
 		BCE256C51C966DB400133F4F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				BC5C18251D81D75700FECE81 /* DunXingTianXia */,
 				BCC839B11D783D75006CAE5F /* HTPayUtil */,
 				BC8A65D51D5C574C007A39D4 /* MingPay */,
 				BCD826CF1D114D49003B14ED /* iAppPayUtil */,
@@ -1448,6 +1461,7 @@
 				BC4CCD6B1D3639DF001518F1 /* YYKAppSpreadModel.m in Sources */,
 				BC0C86091CD3608A00C51480 /* YYKCPCStatsModel.m in Sources */,
 				BC0C860C1CD367F800C51480 /* YYKStatsBaseModel.m in Sources */,
+				BC5C18281D81D78000FECE81 /* DXTXPayManager.m in Sources */,
 				BCE257031C966DB400133F4F /* NSString+length.m in Sources */,
 				BC937FDE1D5DB06D00112079 /* YYKBannerCell.m in Sources */,
 				BCE257091C966DB400133F4F /* UIImageView+YPBAnimation.m in Sources */,

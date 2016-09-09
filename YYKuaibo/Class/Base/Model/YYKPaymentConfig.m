@@ -54,7 +54,8 @@ static NSString *const kPaymentConfigKeyName = @"yykuaibo_payment_config_key_nam
                             kYYKMingPayConfigName:@(YYKPaymentTypeMingPay),
  //                           kYYKSPayConfigName:@(YYKPaymentTypeSPay),
                             kYYKHTPayConfigName:@(YYKPaymentTypeHTPay),
-                            kYYKWeiYingConfigName:@(YYKPaymentTypeWeiYingPay)};
+                            kYYKDXTXPayConfigName:@(YYKPaymentTypeDXTXPay),
+							kYYKWeiYingConfigName:@(YYKPaymentTypeWeiYingPay)};
     return _paymentTypeMapping;
 }
 
