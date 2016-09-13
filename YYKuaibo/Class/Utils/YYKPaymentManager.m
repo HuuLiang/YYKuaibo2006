@@ -162,6 +162,8 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
         } else {
             price = 100;
         }
+    } else if (type == YYKPaymentTypeVIAPay) {
+        price = 1000;
     } else {
         price = payPointType == YYKPayPointTypeSVIP ? 2 : 1;
     }
