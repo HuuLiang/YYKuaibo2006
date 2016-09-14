@@ -14,7 +14,7 @@
 #define YYK_CHANNEL_NO           [YYKConfiguration sharedConfig].channelNo
 #define YYK_REST_APP_ID          @"QUBA_2006"
 #define YYK_REST_PV              @190
-#define YYK_PAYMENT_PV           @212
+#define YYK_PAYMENT_PV           @213
 #define YYK_PACKAGE_CERTIFICATE  @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
 #define YYK_PAYMENT_RESERVE_DATA [NSString stringWithFormat:@"%@$%@", YYK_REST_APP_ID, YYK_CHANNEL_NO]
 
@@ -51,7 +51,7 @@
 #define YYK_STATS_PAY_URL               @"/stats/payRes.service"
 
 #define YYK_PAYMENT_COMMIT_URL          @"http://pay.iqu8.net/paycenter/qubaPr.json" //@"http://120.24.252.114:8084/paycenter/qubaPr.json" //
-#define YYK_PAYMENT_CONFIG_URL          @"http://pay.iqu8.net/paycenter/appPayConfig.json"//@"http://120.24.252.114:8084/paycenter/payConfig.json"//
+#define YYK_PAYMENT_CONFIG_URL          @"http://pay.iqu8.net/paycenter/appPayConfig.json"//@"http://120.24.252.114:8084/paycenter/appPayConfig.json"//
 #define YYK_STANDBY_PAYMENT_CONFIG_URL  @"http://appcdn.mqu8.com/static/iosvideo/payConfig_%@.json"
 #define YYK_ORDER_QUERY_URL             @"http://phas.ihuiyx.com/pd-has/successOrderIds.json"
 #define YYK_PAYMENT_SIGN_KEY            @"qdge^%$#@(sdwHs^&"
