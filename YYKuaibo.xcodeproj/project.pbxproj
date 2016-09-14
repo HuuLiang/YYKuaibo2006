@@ -23,8 +23,6 @@
 		BC42C3551CE0946E00ECCD65 /* DBPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = BC42C3541CE0946E00ECCD65 /* DBPersistence.m */; };
 		BC42FAA71D82A9930015661B /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCE257211C968AED00133F4F /* libWeChatSDK.a */; };
 		BC42FAA81D82A9AF0015661B /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC7EEBEB1D13EF89008D9A32 /* AlipaySDK.framework */; };
-		BC42FAAD1D82CBA50015661B /* libDXTXPaySDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC42FAAA1D82CBA50015661B /* libDXTXPaySDK.a */; };
-		BC42FAAE1D82CBA50015661B /* SPaySDKResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BC42FAAC1D82CBA50015661B /* SPaySDKResource.bundle */; };
 		BC4CCD651D3639D1001518F1 /* YYKSpreadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4CCD641D3639D1001518F1 /* YYKSpreadCell.m */; };
 		BC4CCD6B1D3639DF001518F1 /* YYKAppSpreadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4CCD6A1D3639DF001518F1 /* YYKAppSpreadModel.m */; };
 		BC4CCD721D363A14001518F1 /* YYKSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4CCD711D363A14001518F1 /* YYKSearchViewController.m */; };
@@ -155,6 +153,8 @@
 		BCE348541D62618500750D4F /* YYKChannelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE348531D62618500750D4F /* YYKChannelModel.m */; };
 		BCE348581D62633D00750D4F /* YYKChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE348571D62633D00750D4F /* YYKChannelCell.m */; };
 		BCE663CC1CCE0C4700A54E8D /* YYKChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE663CB1CCE0C4700A54E8D /* YYKChannel.m */; };
+		BCF4B1D51D894B30006315C3 /* libHaiTunPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCF4B1D31D894B30006315C3 /* libHaiTunPay.a */; };
+		BCF4B1D91D894BE0006315C3 /* HTPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF4B1D81D894BE0006315C3 /* HTPayManager.m */; };
 		BCF8C06E1D17F73400F0E198 /* YYKOrderQueryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF8C06D1D17F73400F0E198 /* YYKOrderQueryModel.m */; };
 		C6C5EAAAA388AFBA0CF247A6 /* libPods-YYKuaibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1E2D934F7E11701EDA8B6F /* libPods-YYKuaibo.a */; };
 /* End PBXBuildFile section */
@@ -207,9 +207,6 @@
 		BC42984E1D6250D8008C7F12 /* YYKVideoLibViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVideoLibViewController.m; sourceTree = "<group>"; };
 		BC42C3531CE0946E00ECCD65 /* DBPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPersistence.h; sourceTree = "<group>"; };
 		BC42C3541CE0946E00ECCD65 /* DBPersistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPersistence.m; sourceTree = "<group>"; };
-		BC42FAAA1D82CBA50015661B /* libDXTXPaySDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDXTXPaySDK.a; sourceTree = "<group>"; };
-		BC42FAAB1D82CBA50015661B /* PayuPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayuPlugin.h; sourceTree = "<group>"; };
-		BC42FAAC1D82CBA50015661B /* SPaySDKResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SPaySDKResource.bundle; sourceTree = "<group>"; };
 		BC4CCD631D3639D1001518F1 /* YYKSpreadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKSpreadCell.h; sourceTree = "<group>"; };
 		BC4CCD641D3639D1001518F1 /* YYKSpreadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKSpreadCell.m; sourceTree = "<group>"; };
 		BC4CCD691D3639DF001518F1 /* YYKAppSpreadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKAppSpreadModel.h; sourceTree = "<group>"; };
@@ -458,6 +455,12 @@
 		BCE663CA1CCE0C4700A54E8D /* YYKChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKChannel.h; sourceTree = "<group>"; };
 		BCE663CB1CCE0C4700A54E8D /* YYKChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKChannel.m; sourceTree = "<group>"; };
 		BCF346F41CCAB9FE005DEFFF /* YYKuaibo copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "YYKuaibo copy-Info.plist"; path = "/Users/seanyue/QuBaProjects/YYKuaibo/YYKuaibo copy-Info.plist"; sourceTree = "<absolute>"; };
+		BCF4B1D21D894B30006315C3 /* HaiTunPay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HaiTunPay.h; sourceTree = "<group>"; };
+		BCF4B1D31D894B30006315C3 /* libHaiTunPay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libHaiTunPay.a; sourceTree = "<group>"; };
+		BCF4B1D41D894B30006315C3 /* SPayClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClient.h; sourceTree = "<group>"; };
+		BCF4B1D71D894BE0006315C3 /* HTPayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTPayManager.h; sourceTree = "<group>"; };
+		BCF4B1D81D894BE0006315C3 /* HTPayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTPayManager.m; sourceTree = "<group>"; };
+		BCF4B1DA1D89502E006315C3 /* SPayClientWechatConfigModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPayClientWechatConfigModel.h; sourceTree = "<group>"; };
 		BCF8C06C1D17F73400F0E198 /* YYKOrderQueryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKOrderQueryModel.h; sourceTree = "<group>"; };
 		BCF8C06D1D17F73400F0E198 /* YYKOrderQueryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKOrderQueryModel.m; sourceTree = "<group>"; };
 		F74F2DBA22222B6A63038AB9 /* Pods-YYKuaibo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YYKuaibo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YYKuaibo/Pods-YYKuaibo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -474,13 +477,13 @@
 				BC6F00CA1D00712800AC01D9 /* Security.framework in Frameworks */,
 				BC7BF6A31D45F54000756287 /* PayUtil.framework in Frameworks */,
 				BC660B121C97275100E04D23 /* libc++.tbd in Frameworks */,
+				BCF4B1D51D894B30006315C3 /* libHaiTunPay.a in Frameworks */,
 				BCE2572C1C968B5100133F4F /* libsqlite3.tbd in Frameworks */,
 				BC42FAA81D82A9AF0015661B /* AlipaySDK.framework in Frameworks */,
 				BCE2572A1C968B4800133F4F /* libz.tbd in Frameworks */,
 				BC91131A1D59BDC70033C922 /* IapppayAlphaKit.framework in Frameworks */,
 				BCE257281C968B4100133F4F /* CoreTelephony.framework in Frameworks */,
 				BCE257251C968AED00133F4F /* libMobClickLibrary.a in Frameworks */,
-				BC42FAAD1D82CBA50015661B /* libDXTXPaySDK.a in Frameworks */,
 				C6C5EAAAA388AFBA0CF247A6 /* libPods-YYKuaibo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -575,16 +578,6 @@
 				BCE348531D62618500750D4F /* YYKChannelModel.m */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		BC42FAA91D82CBA50015661B /* DXTXPay */ = {
-			isa = PBXGroup;
-			children = (
-				BC42FAAA1D82CBA50015661B /* libDXTXPaySDK.a */,
-				BC42FAAB1D82CBA50015661B /* PayuPlugin.h */,
-				BC42FAAC1D82CBA50015661B /* SPaySDKResource.bundle */,
-			);
-			path = DXTXPay;
 			sourceTree = "<group>";
 		};
 		BC4CCD6C1D3639EF001518F1 /* Search */ = {
@@ -1042,6 +1035,7 @@
 		BCE256C51C966DB400133F4F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				BCF4B1D61D894BE0006315C3 /* HTPayUtil */,
 				BCD826CF1D114D49003B14ED /* iAppPayUtil */,
 				BC2FB7731CDA0A5700645070 /* DataBase */,
 				BCE256C61C966DB400133F4F /* Extensions */,
@@ -1123,7 +1117,7 @@
 		BCE2571A1C968AED00133F4F /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				BC42FAA91D82CBA50015661B /* DXTXPay */,
+				BCF4B1D11D894B30006315C3 /* HTPaySDK */,
 				BCBDB8C01D435307004EA95D /* iAppPay */,
 				BC0C85D21CD3398D00C51480 /* VIAPay */,
 				BC8E02971CD25FF9004F5780 /* AlipaySDK */,
@@ -1191,6 +1185,26 @@
 				BCE348571D62633D00750D4F /* YYKChannelCell.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		BCF4B1D11D894B30006315C3 /* HTPaySDK */ = {
+			isa = PBXGroup;
+			children = (
+				BCF4B1DA1D89502E006315C3 /* SPayClientWechatConfigModel.h */,
+				BCF4B1D21D894B30006315C3 /* HaiTunPay.h */,
+				BCF4B1D31D894B30006315C3 /* libHaiTunPay.a */,
+				BCF4B1D41D894B30006315C3 /* SPayClient.h */,
+			);
+			path = HTPaySDK;
+			sourceTree = "<group>";
+		};
+		BCF4B1D61D894BE0006315C3 /* HTPayUtil */ = {
+			isa = PBXGroup;
+			children = (
+				BCF4B1D71D894BE0006315C3 /* HTPayManager.h */,
+				BCF4B1D81D894BE0006315C3 /* HTPayManager.m */,
+			);
+			path = HTPayUtil;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1313,7 +1327,6 @@
 				BC7BF6A41D45F54000756287 /* private_key.p12 in Resources */,
 				BC7BF6A11D45F54000756287 /* seperator.png in Resources */,
 				BC7BF69A1D45F54000756287 /* btn2.png in Resources */,
-				BC42FAAE1D82CBA50015661B /* SPaySDKResource.bundle in Resources */,
 				BC91131B1D59BDC70033C922 /* IapppayAlphaResource.bundle in Resources */,
 				BC7BF6A51D45F54000756287 /* public_key.der in Resources */,
 				BC7BF69F1D45F54000756287 /* btn8.png in Resources */,
@@ -1413,6 +1426,7 @@
 				BCE348541D62618500750D4F /* YYKChannelModel.m in Sources */,
 				BCA1B7D61D23AC10004B492B /* YYKVideoDetailViewController.m in Sources */,
 				BCE256681C966C2600133F4F /* YYKPaymentModel.m in Sources */,
+				BCF4B1D91D894BE0006315C3 /* HTPayManager.m in Sources */,
 				BC7AC67B1D38D7B800B1DA5E /* YYKKeyword.m in Sources */,
 				BC6C80481D48ADD500AF2872 /* YYKVIPViewController.m in Sources */,
 				BC7BF6AA1D460BAE00756287 /* YYKPaymentTypeCell.m in Sources */,

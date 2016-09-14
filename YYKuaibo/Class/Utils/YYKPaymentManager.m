@@ -19,10 +19,10 @@
 //#import <WYPay/WYPayManager.h>
 
 #import "IappPayMananger.h"
-#import "PayuPlugin.h"
+//#import "PayuPlugin.h"
 //#import "MingPayManager.h"
 //#import "SPayUtil.h"
-//#import "HTPayManager.h"
+#import "HTPayManager.h"
 //#import "DXTXPayManager.h"
 
 //static NSString *const kAlipaySchemeUrl = @"comyykuaibo2016appalipayurlscheme";
@@ -70,15 +70,16 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
 //            [MingPayManager sharedManager].queryOrderUrl = [YYKPaymentConfig sharedConfig].configDetails.mingPayConfig.queryOrderUrl;
 //        }
 //        
-//        if ([YYKPaymentConfig sharedConfig].configDetails.htpayConfig) {
-//            [HTPayManager sharedManager].mchId = [YYKPaymentConfig sharedConfig].configDetails.htpayConfig.mchId;
-//            [HTPayManager sharedManager].key = [YYKPaymentConfig sharedConfig].configDetails.htpayConfig.key;
-//            [HTPayManager sharedManager].notifyUrl = [YYKPaymentConfig sharedConfig].configDetails.htpayConfig.notifyUrl;
-//        }
-//        
-        if ([YYKPaymentConfig sharedConfig].configDetails.dxtxPayConfig) {
-            [[PayuPlugin defaultPlugin] registWithAppKey:[YYKPaymentConfig sharedConfig].configDetails.dxtxPayConfig.appKey];
+        if ([YYKPaymentConfig sharedConfig].configDetails.htpayConfig) {
+            [HTPayManager sharedManager].mchId = [YYKPaymentConfig sharedConfig].configDetails.htpayConfig.mchId;
+            [HTPayManager sharedManager].key = [YYKPaymentConfig sharedConfig].configDetails.htpayConfig.key;
+            [HTPayManager sharedManager].notifyUrl = [YYKPaymentConfig sharedConfig].configDetails.htpayConfig.notifyUrl;
+            [[HTPayManager sharedManager] setup];
         }
+//
+//        if ([YYKPaymentConfig sharedConfig].configDetails.dxtxPayConfig) {
+//            [[PayuPlugin defaultPlugin] registWithAppKey:[YYKPaymentConfig sharedConfig].configDetails.dxtxPayConfig.appKey];
+//        }
     }];
     [IappPayMananger sharedMananger].alipayURLScheme = kIappPaySchemeUrl;
     
@@ -128,8 +129,8 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
         [[IappPayMananger sharedMananger] handleOpenURL:url];
     } else if ([url.absoluteString rangeOfString:kVIAPaySchemeUrl].location == 0) {
         [[PayUitls getIntents] paytoAli:url];
-    } else if ([url.absoluteString rangeOfString:kDXTXPaySchemeUrl].location == 0) {
-        [[PayuPlugin defaultPlugin] processOrderWithPaymentResult:url];
+//    } else if ([url.absoluteString rangeOfString:kDXTXPaySchemeUrl].location == 0) {
+//        [[PayuPlugin defaultPlugin] processOrderWithPaymentResult:url];
     }
 }
 
@@ -258,18 +259,18 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
                 self.completionHandler(payResult, self.paymentInfo);
             }
         }];
-//    } else if (type == YYKPaymentTypeHTPay) {
-//        @weakify(self);
-//        [[HTPayManager sharedManager] payWithPaymentInfo:paymentInfo
-//                                       completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo)
-//        {
-//            @strongify(self);
-//            [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
-//            
-//            if (self.completionHandler) {
-//                self.completionHandler(payResult, self.paymentInfo);
-//            }
-//        }];
+    } else if (type == YYKPaymentTypeHTPay) {
+        @weakify(self);
+        [[HTPayManager sharedManager] payWithPaymentInfo:paymentInfo
+                                       completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo)
+        {
+            @strongify(self);
+            [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
+            
+            if (self.completionHandler) {
+                self.completionHandler(payResult, self.paymentInfo);
+            }
+        }];
 //    } else if (type == YYKPaymentTypeMingPay) {
 //        @weakify(self);
 //        [[MingPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo) {
@@ -315,27 +316,27 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
 //                                                           goods_name:goodsName
 //                                                           notify_url:notifyUrl
 //                                                               custom:paymentInfo.reservedData];
-    } else if (type == YYKPaymentTypeDXTXPay && (subType == YYKSubPayTypeWeChat || subType == YYKSubPayTypeAlipay)) {
-        @weakify(self);
-        NSNumber *goodsId = [YYKPaymentConfig sharedConfig].configDetails.dxtxPayConfig.waresid;
-        NSString *appKey = [YYKPaymentConfig sharedConfig].configDetails.dxtxPayConfig.appKey;
-        [[PayuPlugin defaultPlugin] payWithViewController:[YYKUtil currentVisibleViewController]
-                                             o_paymode_id:subType==YYKSubPayTypeWeChat?PayTypeWX:PayTypeAliPay
-                                                O_bizcode:paymentInfo.orderId
-                                               o_goods_id:goodsId.intValue
-                                             o_goods_name:paymentInfo.orderDescription
-                                                  o_price:paymentInfo.orderPrice.doubleValue/100
-                                            o_privateinfo:paymentInfo.reservedData
-                                                   Scheme:kDXTXPaySchemeUrl
-                                                   AppKey:appKey
-                                            completeBlock:^(NSDictionary *result)
-        {
-            @strongify(self);
-            NSInteger code = [result[@"resultStatus"] integerValue];
-            PAYRESULT payResult = code == 9000 ? PAYRESULT_SUCCESS : PAYRESULT_FAIL;
-            [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
-            SafelyCallBlock(self.completionHandler, payResult, paymentInfo);
-        }];
+//    } else if (type == YYKPaymentTypeDXTXPay && (subType == YYKSubPayTypeWeChat || subType == YYKSubPayTypeAlipay)) {
+//        @weakify(self);
+//        NSNumber *goodsId = [YYKPaymentConfig sharedConfig].configDetails.dxtxPayConfig.waresid;
+//        NSString *appKey = [YYKPaymentConfig sharedConfig].configDetails.dxtxPayConfig.appKey;
+//        [[PayuPlugin defaultPlugin] payWithViewController:[YYKUtil currentVisibleViewController]
+//                                             o_paymode_id:subType==YYKSubPayTypeWeChat?PayTypeWX:PayTypeAliPay
+//                                                O_bizcode:paymentInfo.orderId
+//                                               o_goods_id:goodsId.intValue
+//                                             o_goods_name:paymentInfo.orderDescription
+//                                                  o_price:paymentInfo.orderPrice.doubleValue/100
+//                                            o_privateinfo:paymentInfo.reservedData
+//                                                   Scheme:kDXTXPaySchemeUrl
+//                                                   AppKey:appKey
+//                                            completeBlock:^(NSDictionary *result)
+//        {
+//            @strongify(self);
+//            NSInteger code = [result[@"resultStatus"] integerValue];
+//            PAYRESULT payResult = code == 9000 ? PAYRESULT_SUCCESS : PAYRESULT_FAIL;
+//            [self onPaymentResult:payResult withPaymentInfo:paymentInfo];
+//            SafelyCallBlock(self.completionHandler, payResult, paymentInfo);
+//        }];
     } else {
         success = NO;
         
@@ -349,7 +350,7 @@ typedef NS_ENUM(NSUInteger, YYKVIAPayType) {
 - (void)applicationWillEnterForeground {
 //    [WYPayManager heepaySDKWillEnterForeground];
 //    [[SPayUtil sharedInstance] applicationWillEnterForeground];
-    [[PayuPlugin defaultPlugin] applicationWillEnterForeground:[UIApplication sharedApplication]];
+//    [[PayuPlugin defaultPlugin] applicationWillEnterForeground:[UIApplication sharedApplication]];
 }
 
 - (void)onPaymentResult:(PAYRESULT)payResult withPaymentInfo:(YYKPaymentInfo *)paymentInfo {
