@@ -51,6 +51,6 @@ FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
 
 - (void)usePaymentConfigInTestServer:(BOOL)useTestConfig;
 
-- (void)queryOrder:(NSString *)orderNo withCompletionHandler:(QBCompletionHandler)completionHandler;
+- (void)activatePaymentInfos:(NSArray<QBPaymentInfo *> *)paymentInfos withCompletionHandler:(QBCompletionHandler)completionHandler;
 
 @end

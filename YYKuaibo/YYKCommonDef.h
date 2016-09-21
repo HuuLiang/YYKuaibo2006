@@ -116,6 +116,9 @@ extern NSString *const kSearchErrorMessageKey;
 #define kDefaultCollectionViewInteritemSpace  (5)
 #define kThemeColor [UIColor colorWithHexString:@"#ab47bc"]
 
+#define QBPayPointTypeVIP (1)
+#define QBPayPointTypeSVIP (2)
+
 static NSString *const kChannelPersistenceSpace = @"yykuaibo_1";
 static NSString *const kChannelProgramPersistenceSpace = @"yykuaibo_2";
 static NSString *const kHomePersistenceSpace = @"yykuaibo_3";

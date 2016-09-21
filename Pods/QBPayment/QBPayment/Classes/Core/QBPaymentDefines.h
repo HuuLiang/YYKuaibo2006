@@ -22,11 +22,13 @@ typedef NS_ENUM(NSUInteger, QBPayType) {
     QBPayTypeWeiYingPay = 1022, //微赢支付
 };
 
-typedef NS_ENUM(NSUInteger, QBPayPointType) {
-    QBPayPointTypeNone,
-    QBPayPointTypeVIP,
-    QBPayPointTypeSVIP
-};
+typedef NSUInteger QBPayPointType;
+
+//typedef NS_ENUM(NSUInteger, QBPayPointType) {
+//    QBPayPointTypeNone,
+//    QBPayPointTypeVIP,
+//    QBPayPointTypeSVIP
+//};
 
 typedef NS_ENUM(NSUInteger, QBPaySubType) {
     QBPaySubTypeNone = 0,

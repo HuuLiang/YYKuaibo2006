@@ -444,8 +444,52 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     self.configModel.isTest = useTestConfig;
 }
 
-- (void)queryOrder:(NSString *)orderNo withCompletionHandler:(QBCompletionHandler)completionHandler {
-    [self.orderQueryModel queryOrder:orderNo withCompletionHandler:completionHandler];
+- (void)activatePaymentInfos:(NSArray<QBPaymentInfo *> *)paymentInfos
+       withCompletionHandler:(QBCompletionHandler)completionHandler
+{
+    NSMutableString *orders = [NSMutableString string];
+    [paymentInfos enumerateObjectsUsingBlock:^(QBPaymentInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj.orderId.length > 0) {
+            [orders appendString:obj.orderId];
+            
+            if (idx != paymentInfos.count-1) {
+                [orders appendString:@"|"];
+            }
+        }
+    }];
+    
+    if (orders.length == 0) {
+        QBSafelyCallBlock(completionHandler, NO, nil);
+        return ;
+    }
+    
+    @weakify(self);
+    [self.orderQueryModel queryOrder:orders withCompletionHandler:^(BOOL success, id obj) {
+        if (success) {
+            if (![obj isKindOfClass:[NSString class]]) {
+                QBSafelyCallBlock(completionHandler, NO, nil);
+                return ;
+            }
+            
+            NSArray<NSString *> *paidOrders = [obj componentsSeparatedByString:@"|"];
+            __block QBPaymentInfo *paidPaymentInfo;
+            [paymentInfos enumerateObjectsUsingBlock:^(QBPaymentInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([paidOrders containsObject:obj.orderId]) {
+                    paidPaymentInfo = obj;
+                    *stop = YES;
+                }
+            }];
+            
+            if (paidPaymentInfo) {
+                @strongify(self);
+                [self onPaymentResult:QBPayResultSuccess withPaymentInfo:paidPaymentInfo];
+            }
+            
+            QBSafelyCallBlock(completionHandler, paidPaymentInfo != nil, paidPaymentInfo);
+        } else {
+            QBSafelyCallBlock(completionHandler, NO, nil);
+        }
+    }];
 }
 
 #ifdef QBPAYMENT_VIAPAY_ENABLED
