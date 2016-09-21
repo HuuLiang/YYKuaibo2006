@@ -8,6 +8,9 @@
 
 #import "QBEncryptedURLRequest.h"
 
+extern NSString *const kQBPaymentSignKey;
+extern NSString *const kQBPaymentEncryptionPassword;
+
 @interface QBPaymentURLRequest : QBEncryptedURLRequest
 
 @end

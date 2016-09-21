@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "QBPaymentDefines.h"
+#import "QBDefines.h"
 
 FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
 
@@ -49,5 +50,7 @@ FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
 - (void)refreshAvailablePaymentTypesWithCompletionHandler:(void (^)(void))completionHandler;
 
 - (void)usePaymentConfigInTestServer:(BOOL)useTestConfig;
+
+- (void)queryOrder:(NSString *)orderNo withCompletionHandler:(QBCompletionHandler)completionHandler;
 
 @end

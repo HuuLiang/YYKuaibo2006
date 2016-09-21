@@ -42,24 +42,24 @@ PODS:
   - QBNetworking (0.0.5):
     - AFNetworking (~> 3.1.0)
     - QBExtensions (~> 0.0.3)
-  - QBPayment/Core (0.0.13):
+  - QBPayment/Core (0.0.15):
     - Aspects (~> 1.4.1)
     - QBExtensions (~> 0.0.6)
     - QBNetworking (~> 0.0.4)
-  - QBPayment/CorePay (0.0.13):
+  - QBPayment/CorePay (0.0.15):
     - OpenSSL (~> 1.0.208)
-  - QBPayment/DXTXPay (0.0.13):
+  - QBPayment/DXTXPay (0.0.15):
     - MBProgressHUD (~> 0.9.2)
     - QBPayment/Core
     - QBPayment/CorePay
     - QBPayment/WFTPay
-  - QBPayment/IappPay (0.0.13):
+  - QBPayment/IappPay (0.0.15):
     - QBPayment/Core
     - QBPayment/CorePay
-  - QBPayment/VIAPay (0.0.13):
+  - QBPayment/VIAPay (0.0.15):
     - QBPayment/Core
     - QBPayment/CorePay
-  - QBPayment/WFTPay (0.0.13):
+  - QBPayment/WFTPay (0.0.15):
     - MBProgressHUD (~> 0.9.2)
     - QBPayment/Core
     - QBPayment/CorePay
@@ -82,10 +82,10 @@ DEPENDENCIES:
   - Masonry (~> 0.6.2)
   - MBProgressHUD (~> 0.9.1)
   - MJRefresh (~> 2.4.7)
-  - QBPayment/DXTXPay (~> 0.0.12)
-  - QBPayment/IappPay (~> 0.0.12)
-  - QBPayment/VIAPay (~> 0.0.12)
-  - QBPayment/WFTPay (~> 0.0.12)
+  - QBPayment/DXTXPay (~> 0.0.14)
+  - QBPayment/IappPay (~> 0.0.14)
+  - QBPayment/VIAPay (~> 0.0.14)
+  - QBPayment/WFTPay (~> 0.0.14)
   - SDCycleScrollView (~> 1.3)
   - SDWebImage (~> 3.7.3)
   - SFHFKeychainUtils (~> 0.0.1)
@@ -103,7 +103,7 @@ SPEC CHECKSUMS:
   OpenSSL: b187269d386b07452f56af273764ea0636dd5da8
   QBExtensions: 9c4def5e3cd2eebabb3d9e9057f1fbbce5a04849
   QBNetworking: b2e4fffb974f86563854488736452d0fcb530f4c
-  QBPayment: 4109e2ac9c23d9e01b7beec7ed028e158aa9665c
+  QBPayment: 040aa3f697652dfc0df592087adeeee59cb92998
   SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
   SFHFKeychainUtils: 9576b411a79a058f4d5381ace6f3242b9a62e664

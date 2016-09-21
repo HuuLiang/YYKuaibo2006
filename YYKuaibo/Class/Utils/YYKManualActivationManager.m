@@ -7,16 +7,12 @@
 //
 
 #import "YYKManualActivationManager.h"
-#import "YYKOrderQueryModel.h" 
 #import "YYKPaymentViewController.h"
 
 @interface YYKManualActivationManager ()
-@property (nonatomic,retain) YYKOrderQueryModel *orderQueryModel;
 @end
 
 @implementation YYKManualActivationManager
-
-DefineLazyPropertyInitialization(YYKOrderQueryModel, orderQueryModel)
 
 + (instancetype)sharedManager {
     static YYKManualActivationManager *_sharedManager;
@@ -57,7 +53,7 @@ DefineLazyPropertyInitialization(YYKOrderQueryModel, orderQueryModel)
     }
     
     [[UIApplication sharedApplication].keyWindow beginLoading];
-    [self.orderQueryModel queryOrder:orders withCompletionHandler:^(BOOL success, id obj) {
+    [[QBPaymentManager sharedManager] queryOrder:orders withCompletionHandler:^(BOOL success, id obj) {
         [[UIApplication sharedApplication].keyWindow endLoading];
         
         if (success) {

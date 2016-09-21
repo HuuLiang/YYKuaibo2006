@@ -11,8 +11,8 @@
 #import "QBPaymentNetworkingConfiguration.h"
 #import "QBDefines.h"
 
-static NSString *const kQBPaymentSignKey = @"qdge^%$#@(sdwHs^&";
-static NSString *const kQBPaymentEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
+NSString *const kQBPaymentSignKey = @"qdge^%$#@(sdwHs^&";
+NSString *const kQBPaymentEncryptionPassword = @"wdnxs&*@#!*qb)*&qiang";
 
 @implementation QBPaymentURLRequest
 

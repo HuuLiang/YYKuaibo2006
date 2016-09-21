@@ -18,6 +18,7 @@
 //#import "QBSystemConfigModel.h"
 #import "QBPaymentConfigModel.h"
 #import "QBPaymentCommitModel.h"
+#import "QBOrderQueryModel.h"
 
 #ifdef QBPAYMENT_VIAPAY_ENABLED
     #import <PayUtil/PayUtil.h>
@@ -61,6 +62,7 @@ NSString *const kQBPaymentFetchConfigNotification = @"com.qbpayment.app.config";
 @property (nonatomic,copy) QBPaymentCompletionHandler completionHandler;
 @property (nonatomic,retain) QBPaymentConfigModel *configModel;
 @property (nonatomic,retain) QBPaymentCommitModel *commitModel;
+@property (nonatomic,retain) QBOrderQueryModel *orderQueryModel;
 @property (nonatomic) NSString *urlScheme;
 @end
 
@@ -68,6 +70,7 @@ NSString *const kQBPaymentFetchConfigNotification = @"com.qbpayment.app.config";
 
 QBDefineLazyPropertyInitialization(QBPaymentConfigModel, configModel)
 QBDefineLazyPropertyInitialization(QBPaymentCommitModel, commitModel)
+QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 
 + (instancetype)sharedManager {
     static QBPaymentManager *_sharedManager;
@@ -440,6 +443,11 @@ QBDefineLazyPropertyInitialization(QBPaymentCommitModel, commitModel)
 - (void)usePaymentConfigInTestServer:(BOOL)useTestConfig {
     self.configModel.isTest = useTestConfig;
 }
+
+- (void)queryOrder:(NSString *)orderNo withCompletionHandler:(QBCompletionHandler)completionHandler {
+    [self.orderQueryModel queryOrder:orderNo withCompletionHandler:completionHandler];
+}
+
 #ifdef QBPAYMENT_VIAPAY_ENABLED
 
 #pragma mark - stringDelegate
