@@ -33,6 +33,8 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic) NSString *startupInstall;
 @property (nonatomic) NSString *startupPrompt;
 
+@property (nonatomic) NSString *H5Region;
+
 //@property (nonatomic) NSString *contact;
 @property (nonatomic) NSString *contactScheme;
 @property (nonatomic) NSString *contactName;

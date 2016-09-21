@@ -14,6 +14,7 @@
 #import "YYKWebViewController.h"
 #import <UIButton+WebCache.h>
 #import "NSDate+Utilities.h"
+#import "YYKSystemConfigModel.h"
 
 @interface YYKVIPViewController () <YYKCardSliderDelegate,YYKCardSliderDataSource,YYKSVIPPopViewDelegate>
 {
@@ -90,7 +91,7 @@ DefineLazyPropertyInitialization(YYKChannelModel, channelModel)
         return ;
     }
     
-    YYKWebViewController *webVC = [[YYKWebViewController alloc] initWithURL:[NSURL URLWithString:@"http://h5tg.sqdgd.com/h5-009997/"] standbyURL:nil];
+    YYKWebViewController *webVC = [[YYKWebViewController alloc] initWithURL:[NSURL URLWithString:[YYKSystemConfigModel sharedModel].H5Region] standbyURL:nil];
     webVC.title = @"午夜专区";
     [self.navigationController pushViewController:webVC animated:YES];
 }
