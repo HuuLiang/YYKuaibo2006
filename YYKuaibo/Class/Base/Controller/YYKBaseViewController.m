@@ -99,8 +99,8 @@
                 detailVC.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:detailVC animated:YES];
             } else {
-                BOOL vipProgramButNoVIP = program.payPointType.unsignedIntegerValue == YYKPayPointTypeVIP && ![YYKUtil isVIP];
-                BOOL svipProgramButNoSVIP = program.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && ![YYKUtil isSVIP];
+                BOOL vipProgramButNoVIP = program.payPointType.unsignedIntegerValue == QBPayPointTypeVIP && ![YYKUtil isVIP];
+                BOOL svipProgramButNoSVIP = program.payPointType.unsignedIntegerValue == QBPayPointTypeSVIP && ![YYKUtil isSVIP];
                 if (vipProgramButNoVIP || svipProgramButNoSVIP) {
                     [self payForProgram:program programLocation:programLocation inChannel:channel];
                 } else {
@@ -197,7 +197,7 @@
     }];
 }
 
-- (void)payForPayPointType:(YYKPayPointType)payPointType {
+- (void)payForPayPointType:(QBPayPointType)payPointType {
     YYKProgram *program = [[YYKProgram alloc] init];
     program.payPointType = @(payPointType);
     [self payForProgram:program programLocation:0 inChannel:nil];

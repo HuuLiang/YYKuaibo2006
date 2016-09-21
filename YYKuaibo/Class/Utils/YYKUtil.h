@@ -8,10 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *const kPaymentInfoKeyName;
-
-@class YYKPaymentInfo;
-
 @interface YYKUtil : NSObject
 
 + (BOOL)isRegistered;

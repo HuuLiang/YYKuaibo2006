@@ -9,10 +9,7 @@
 #import "YYKPaymentViewController.h"
 #import "YYKPaymentPopView.h"
 #import "YYKSystemConfigModel.h"
-#import "YYKPaymentModel.h"
 #import <objc/runtime.h>
-#import "YYKPaymentInfo.h"
-#import "YYKPaymentConfig.h"
 
 @interface YYKPaymentViewController ()
 @property (nonatomic,retain) YYKPaymentPopView *popView;
@@ -46,7 +43,7 @@
     }
     
     @weakify(self);
-    void (^Pay)(YYKPaymentType type, YYKSubPayType subType) = ^(YYKPaymentType type, YYKSubPayType subType)
+    void (^Pay)(QBPayType type, QBPaySubType subType) = ^(QBPayType type, QBPaySubType subType)
     {
         @strongify(self);
         [self payForPaymentType:type paymentSubType:subType];
@@ -57,28 +54,28 @@
 //    _popView.headerImageURL = [NSURL URLWithString:[YYKSystemConfigModel sharedModel].hasDiscount ? [YYKSystemConfigModel sharedModel].discountImage : [YYKSystemConfigModel sharedModel].paymentImage];
 //    _popView.titleImage = [UIImage imageNamed:@"payment_title"];
     
-    YYKPaymentType wechatPaymentType = [[YYKPaymentManager sharedManager] wechatPaymentType];
-    if (wechatPaymentType != YYKPaymentTypeNone) {
+    QBPayType wechatPaymentType = [[QBPaymentManager sharedManager] wechatPaymentType];
+    if (wechatPaymentType != QBPayTypeNone) {
         [_popView addPaymentWithImage:[UIImage imageNamed:@"wechat_icon"] title:@"微信支付" backgroundColor:[UIColor colorWithHexString:@"#05c30b"] action:^(id sender) {
-            Pay(wechatPaymentType, YYKSubPayTypeWeChat);
+            Pay(wechatPaymentType, QBPaySubTypeWeChat);
         }];
     }
     
-    YYKPaymentType alipayPaymentType = [[YYKPaymentManager sharedManager] alipayPaymentType];
-    if (alipayPaymentType != YYKPaymentTypeNone) {
+    QBPayType alipayPaymentType = [[QBPaymentManager sharedManager] alipayPaymentType];
+    if (alipayPaymentType != QBPayTypeNone) {
         [_popView addPaymentWithImage:[UIImage imageNamed:@"alipay_icon"] title:@"支付宝" backgroundColor:[UIColor colorWithHexString:@"#02a0e9"] action:^(id sender) {
-            Pay(alipayPaymentType, YYKSubPayTypeAlipay);
+            Pay(alipayPaymentType, QBPaySubTypeAlipay);
         }];
     }
     
-    YYKPaymentType qqPaymentType = [[YYKPaymentManager sharedManager] qqPaymentType];
-    if (qqPaymentType != YYKPaymentTypeNone) {
+    QBPayType qqPaymentType = [[QBPaymentManager sharedManager] qqPaymentType];
+    if (qqPaymentType != QBPayTypeNone) {
         [_popView addPaymentWithImage:[UIImage imageNamed:@"qq_icon"] title:@"QQ钱包" backgroundColor:[UIColor redColor] action:^(id sender) {
-            Pay(alipayPaymentType, YYKSubPayTypeQQ);
+            Pay(alipayPaymentType, QBPaySubTypeQQ);
         }];
     }
     
-//    YYKPaymentType cardPayPaymentType = [[YYKPaymentManager sharedManager] cardPayPaymentType];
+//    QBPayType cardPayPaymentType = [[YYKPaymentManager sharedManager] cardPayPaymentType];
 //    if (cardPayPaymentType != YYKPaymentTypeNone) {
 //        [_popView addPaymentWithImage:[UIImage imageNamed:@"card_pay_icon"] title:@"购卡支付" subtitle:@"支持微信和支付宝" backgroundColor:[UIColor darkPink] action:^(id sender) {
 //            Pay(cardPayPaymentType, YYKSubPayTypeNone);
@@ -107,7 +104,7 @@
         
         [[YYKStatsManager sharedManager] statsPayWithOrderNo:nil
                                                    payAction:YYKStatsPayActionClose
-                                                   payResult:PAYRESULT_UNKNOWN
+                                                   payResult:QBPayResultUnknown
                                                   forProgram:self.programToPayFor
                                              programLocation:self.programLocationToPayFor
                                                    inChannel:self.channelToPayFor
@@ -227,29 +224,77 @@
     }];
 }
 
-- (void)payForPaymentType:(YYKPaymentType)paymentType
-           paymentSubType:(YYKSubPayType)paymentSubType {
+- (void)payForPaymentType:(QBPayType)paymentType
+           paymentSubType:(QBPaySubType)paymentSubType {
     @weakify(self);
-    YYKPayPointType payPointType = self.popView.payPointType;
+    QBPayPointType payPointType = self.popView.payPointType == QBPayPointTypeSVIP ? QBPayPointTypeSVIP : QBPayPointTypeVIP;
     NSUInteger price = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:payPointType];
     if (price == 0) {
         [[YYKHudManager manager] showHudWithText:@"无法获取价格信息,请检查网络配置！"];
         return ;
     }
-    YYKPaymentInfo *paymentInfo = [[YYKPaymentManager sharedManager] startPaymentWithType:paymentType
-                                                                                  subType:paymentSubType
-                                                                                    price:price
-                                                                             payPointType:payPointType
-                                                                               forProgram:self.programToPayFor
-                                                                          programLocation:self.programLocationToPayFor
-                                                                                inChannel:self.channelToPayFor
-                                                                        completionHandler:^(PAYRESULT payResult, YYKPaymentInfo *paymentInfo)
-                                   {
-                                       @strongify(self);
-                                       [self notifyPaymentResult:payResult withPaymentInfo:paymentInfo];
-                                   }];
     
-    if (paymentInfo) {
+#ifdef DEBUG
+    if (paymentType == QBPayTypeIAppPay || paymentType == QBPayTypeHTPay || paymentType == QBPayTypeWeiYingPay) {
+        if (payPointType == QBPayPointTypeSVIP) {
+            price = 210;
+        } else {
+            price = 200;
+        }
+    } else if (paymentType == QBPayTypeMingPay || paymentType == QBPayTypeDXTXPay) {
+        if (payPointType == QBPayPointTypeSVIP) {
+            price = 110;
+        } else {
+            price = 100;
+        }
+    } else if (paymentType == QBPayTypeVIAPay) {
+        price = 1000;
+    } else {
+        price = payPointType == QBPayPointTypeSVIP ? 2 : 1;
+    }
+    
+#endif
+    
+    QBPaymentInfo *paymentInfo = [[QBPaymentInfo alloc] init];
+    
+    NSString *channelNo = YYK_CHANNEL_NO;
+    channelNo = [channelNo substringFromIndex:channelNo.length-14];
+    NSString *uuid = [[NSUUID UUID].UUIDString.md5 substringWithRange:NSMakeRange(8, 16)];
+    NSString *orderNo = [NSString stringWithFormat:@"%@_%@", channelNo, uuid];
+    
+    paymentInfo.orderId = orderNo;
+    paymentInfo.orderPrice = price;
+    paymentInfo.paymentType = paymentType;
+    paymentInfo.paymentSubType = paymentSubType;
+    paymentInfo.payPointType = payPointType;
+    paymentInfo.paymentTime = [YYKUtil currentTimeString];
+    paymentInfo.paymentResult = QBPayResultUnknown;
+    paymentInfo.paymentStatus = QBPayStatusPaying;
+    paymentInfo.reservedData = [YYKUtil paymentReservedData];
+    
+    NSString *tradeName = self.programToPayFor.payPointType.unsignedIntegerValue == QBPayPointTypeSVIP ? [kSVIPText stringByAppendingString:@"会员"] : @"VIP会员";
+    NSString *contactName = [YYKSystemConfigModel sharedModel].contactName;
+    if (paymentType == QBPayTypeMingPay) {
+        paymentInfo.orderDescription = contactName ?: @"VIP";
+    } else {
+        paymentInfo.orderDescription = contactName.length > 0 ? [tradeName stringByAppendingFormat:@"(%@)", contactName] : tradeName;
+    }
+    
+    paymentInfo.contentId = self.programToPayFor.programId;
+    paymentInfo.contentType = self.programToPayFor.type;
+    paymentInfo.contentLocation = @(self.programLocationToPayFor+1);
+    paymentInfo.columnId = self.channelToPayFor.realColumnId;
+    paymentInfo.columnType = self.channelToPayFor.type;
+    paymentInfo.userId = [YYKUtil userId];
+    
+    BOOL success = [[QBPaymentManager sharedManager] startPaymentWithPaymentInfo:paymentInfo
+                                                                              completionHandler:^(QBPayResult payResult, QBPaymentInfo *paymentInfo)
+    {
+        @strongify(self);
+        [self notifyPaymentResult:payResult withPaymentInfo:paymentInfo];
+    }];
+    
+    if (success) {
         [[YYKStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo
                                                     forPayAction:YYKStatsPayActionGoToPay
                                                      andTabIndex:[YYKUtil currentTabPageIndex]
@@ -262,39 +307,29 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)notifyPaymentResult:(PAYRESULT)result withPaymentInfo:(YYKPaymentInfo *)paymentInfo {
-    if (result == PAYRESULT_SUCCESS) {
-        if (paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeVIP && [YYKUtil isVIP]) {
-            return ;
-        }
-        
-        if (paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP && [YYKUtil isSVIP]) {
-            return ;
-        }
-    }
+- (void)notifyPaymentResult:(QBPayResult)result withPaymentInfo:(YYKPaymentInfo *)paymentInfo {
+//    if (result == QBPayResultSuccess) {
+//        if (paymentInfo.payPointType == QBPayPointTypeVIP && [YYKUtil isVIP]) {
+//            return ;
+//        }
+//        
+//        if (paymentInfo.payPointType == QBPayPointTypeSVIP && [YYKUtil isSVIP]) {
+//            return ;
+//        }
+//    }
     
-    NSDateFormatter *dateFormmater = [[NSDateFormatter alloc] init];
-    [dateFormmater setDateFormat:@"yyyyMMddHHmmss"];
-    
-    paymentInfo.paymentResult = @(result);
-    paymentInfo.paymentStatus = @(YYKPaymentStatusNotProcessed);
-    paymentInfo.paymentTime = [dateFormmater stringFromDate:[NSDate date]];
-    [paymentInfo save];
-    
-    if (result == PAYRESULT_SUCCESS) {
+    if (result == QBPayResultSuccess) {
         [self hidePayment];
         [[YYKHudManager manager] showHudWithText:@"支付成功"];
         [[NSNotificationCenter defaultCenter] postNotificationName:kPaidNotificationName object:paymentInfo];
         
         [self.popView reloadData];
         [YYKUtil showSpreadBanner];
-    } else if (result == PAYRESULT_ABANDON) {
+    } else if (result == QBPayResultCancelled) {
         [[YYKHudManager manager] showHudWithText:@"支付取消"];
     } else {
         [[YYKHudManager manager] showHudWithText:@"支付失败"];
     }
-    
-    [[YYKPaymentModel sharedModel] commitPaymentInfo:paymentInfo];
     
     [[YYKStatsManager sharedManager] statsPayWithPaymentInfo:paymentInfo
                                                 forPayAction:YYKStatsPayActionPayBack

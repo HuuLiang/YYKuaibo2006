@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YYKURLResponse.h"
 
 @interface YYKChannel : YYKURLResponse
 

@@ -14,11 +14,11 @@
 #import "YYKSearchViewController.h"
 #import "YYKActivateModel.h"
 #import "YYKUserAccessModel.h"
-#import "YYKPaymentModel.h"
 #import "YYKSystemConfigModel.h"
 #import "YYKAppSpreadBannerModel.h"
 #import "MobClick.h"
 #import "YYKVersionUpdateModel.h"
+#import <QBNetworkingConfiguration.h>
 
 @interface YYKAppDelegate () <UITabBarControllerDelegate>
 
@@ -185,13 +185,24 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [QBNetworkingConfiguration defaultConfiguration].baseURL = YYK_BASE_URL;
+    [QBNetworkingConfiguration defaultConfiguration].channelNo = YYK_CHANNEL_NO;
+    [QBNetworkingConfiguration defaultConfiguration].RESTpV = YYK_REST_PV;
+    [QBNetworkingConfiguration defaultConfiguration].RESTAppId = YYK_REST_APP_ID;
+#ifdef DEBUG
+    [QBNetworkingConfiguration defaultConfiguration].logEnabled = YES;
+#endif
+    
     [YYKUtil accumateLaunchSeq];
-    [[YYKPaymentManager sharedManager] setup];
+    [[QBPaymentManager sharedManager] registerPaymentWithAppId:YYK_REST_APP_ID
+                                                     paymentPv:YYK_PAYMENT_PV
+                                                     channelNo:YYK_CHANNEL_NO
+                                                     urlScheme:@"comqskuaiboapppayurlscheme"];
     [[YYKErrorHandler sharedHandler] initialize];
     [self setupMobStatistics];
     [self setupCommonStyles];
 //    [self registerUserNotification];
-    [[YYKNetworkInfo sharedInfo] startMonitoring];
+    [[QBNetworkInfo sharedInfo] startMonitoring];
     
     [self.window makeKeyAndVisible];
     
@@ -203,13 +214,19 @@
             if (success) {
                 [YYKUtil setRegisteredWithUserId:userId];
                 [[YYKUserAccessModel sharedModel] requestUserAccess];
+                
+                [[YYKUtil allUnsuccessfulPaymentInfos] enumerateObjectsUsingBlock:^(YYKPaymentInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if (obj.userId == nil) {
+                        obj.userId = userId;
+                        [obj save];
+                    }
+                }];
             }
         }];
     } else {
         [[YYKUserAccessModel sharedModel] requestUserAccess];
     }
     
-    [[YYKPaymentModel sharedModel] startRetryingToCommitUnprocessedOrders];
     [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
         
         NSUInteger statsTimeInterval = 180;
@@ -252,7 +269,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    [[YYKPaymentManager sharedManager] applicationWillEnterForeground];
+    [[QBPaymentManager sharedManager] applicationWillEnterForeground:application];
 //    if (![YYKUtil isAllVIPs]) {
 //        [[YYKPaymentManager sharedManager] checkPayment];
 //    }
@@ -272,17 +289,17 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    [[YYKPaymentManager sharedManager] handleOpenUrl:url];
+    [[QBPaymentManager sharedManager] handleOpenUrl:url];
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
-    [[YYKPaymentManager sharedManager] handleOpenUrl:url];
+    [[QBPaymentManager sharedManager] handleOpenUrl:url];
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    [[YYKPaymentManager sharedManager] handleOpenUrl:url];
+    [[QBPaymentManager sharedManager] handleOpenUrl:url];
     return YES;
 }
 #pragma mark - UITabBarControllerDelegate

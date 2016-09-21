@@ -6,7 +6,6 @@
 //  Copyright © 2016年 iqu8. All rights reserved.
 //
 
-#import "YYKEncryptedURLRequest.h"
 
 @interface YYKVideoDetail : YYKURLResponse
 @property (nonatomic) NSArray<YYKProgram *> *hotProgramList;

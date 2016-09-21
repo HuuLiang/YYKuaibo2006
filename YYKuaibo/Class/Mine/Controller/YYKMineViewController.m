@@ -242,7 +242,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, spreadModel)
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([self sectionTypeWithSectionIndex:indexPath.section] == YYKVIPSection) {
-        YYKPayPointType payPointType = [YYKUtil isVIP] && ![YYKUtil isSVIP] ? YYKPayPointTypeSVIP : YYKPayPointTypeVIP;
+        QBPayPointType payPointType = [YYKUtil isVIP] && ![YYKUtil isSVIP] ? QBPayPointTypeSVIP : QBPayPointTypeVIP;
         [self payForPayPointType:payPointType];
     } else if ([self sectionTypeWithSectionIndex:indexPath.section] == YYKMenuSection) {
         YYKMineMenuCell *cell = (YYKMineMenuCell *)[collectionView cellForItemAtIndexPath:indexPath];

@@ -1,0 +1,1 @@
+../../../QBExtensions/QBExtensions/Classes/Foundation/NSObject+DictionaryRepresentation.h

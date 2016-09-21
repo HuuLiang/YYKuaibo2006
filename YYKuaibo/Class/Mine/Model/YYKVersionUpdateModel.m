@@ -41,7 +41,7 @@
     NSString *bundleId = [NSBundle mainBundle].bundleIdentifier;
     BOOL ret = [self requestURLPath:YYK_VERSION_UPDATE_URL
                          withParams:@{@"versionNo":currentVersion, @"packageId":bundleId}
-                    responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
+                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
         @strongify(self);
         if (!self) {
@@ -49,12 +49,12 @@
         }
         
         YYKVersionUpdateInfo *versionInfo;
-        if (respStatus == YYKURLResponseSuccess) {
+        if (respStatus == QBURLResponseSuccess) {
             versionInfo = self.response;
             self->_fetchedVersionInfo = versionInfo;
         }
         
-        SafelyCallBlock(completionHandler, respStatus==YYKURLResponseSuccess, versionInfo);
+        SafelyCallBlock(completionHandler, respStatus==QBURLResponseSuccess, versionInfo);
     }];
     return ret;
 }

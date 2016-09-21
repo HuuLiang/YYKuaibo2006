@@ -6,8 +6,6 @@
 //  Copyright © 2015年 kuaibov. All rights reserved.
 //
 
-#import "YYKEncryptedURLRequest.h"
-
 typedef void (^YYKUserAccessCompletionHandler)(BOOL success);
 
 @interface YYKUserAccessModel : YYKEncryptedURLRequest

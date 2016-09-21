@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 kuaibov. All rights reserved.
 //
 
-#import "YYKEncryptedURLRequest.h"
 
 typedef void (^YYKActivateHandler)(BOOL success, NSString *userId);
 

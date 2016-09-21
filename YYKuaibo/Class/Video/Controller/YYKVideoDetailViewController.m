@@ -254,7 +254,7 @@ DefineLazyPropertyInitialization(YYKVideoDetailModel, detailModel)
         }
     } else if (indexPath.section == VDVIPSection) {
         if (![YYKUtil isVIP]) {
-            [self payForPayPointType:YYKPayPointTypeVIP];
+            [self payForPayPointType:QBPayPointTypeVIP];
         }
     }
 }

@@ -38,18 +38,18 @@
     BOOL ret = [self requestURLPath:YYK_APP_SPREAD_BANNER_URL
                      standbyURLPath:YYK_STANDBY_APP_SPREAD_BANNER_URL
                          withParams:nil
-                    responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
+                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                 {
                     @strongify(self);
                     NSArray *fetchedSpreads;
-                    if (respStatus == YYKURLResponseSuccess) {
+                    if (respStatus == QBURLResponseSuccess) {
                         YYKAppSpreadBannerResponse *resp = self.response;
                         _fetchedSpreads = resp.programList;
                         fetchedSpreads = _fetchedSpreads;
                     }
                     
                     if (handler) {
-                        handler(respStatus==YYKURLResponseSuccess, fetchedSpreads);
+                        handler(respStatus==QBURLResponseSuccess, fetchedSpreads);
                     }
                 }];
     return ret;

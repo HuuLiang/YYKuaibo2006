@@ -25,7 +25,7 @@
 //- (void)playVideo:(YYKVideo *)video withTimeControl:(BOOL)hasTimeControl shouldPopPayment:(BOOL)shouldPopPayment;
 
 //- (void)payForProgram:(YYKProgram *)program programLocation:(NSUInteger)programLocation inChannel:(YYKChannel *)channel;
-- (void)payForPayPointType:(YYKPayPointType)payPointType;
+- (void)payForPayPointType:(QBPayPointType)payPointType;
 - (void)payForProgram:(YYKProgram *)program programLocation:(NSUInteger)programLocation inChannel:(YYKChannel *)channel;
 //- (void)onPaidNotification:(NSNotification *)notification;
 

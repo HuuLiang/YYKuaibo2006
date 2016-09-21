@@ -6,8 +6,6 @@
 //  Copyright © 2016年 iqu8. All rights reserved.
 //
 
-#import "YYKEncryptedURLRequest.h"
-
 typedef NS_ENUM(NSUInteger, YYKChannelSpace) {
     YYKChannelSpaceDefault,
     YYKChannelSpaceSVIP

@@ -47,12 +47,12 @@ static NSString *const kSuccessResponse = @"SUCCESS";
                              @"appV":[YYKUtil appVersion],
                              @"appVN":@"",
                              @"ccn":YYK_PACKAGE_CERTIFICATE,
-                             @"operator":[YYKNetworkInfo sharedInfo].carriarName ?: @"",
+                             @"operator":[QBNetworkInfo sharedInfo].carriarName ?: @"",
                              @"systemVersion":[UIDevice currentDevice].systemVersion};
     
-    BOOL success = [self requestURLPath:YYK_ACTIVATE_URL withParams:params responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage) {
+    BOOL success = [self requestURLPath:YYK_ACTIVATE_URL withParams:params responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
         NSString *userId;
-        if (respStatus == YYKURLResponseSuccess) {
+        if (respStatus == QBURLResponseSuccess) {
             NSString *resp = self.response;
             NSArray *resps = [resp componentsSeparatedByString:@";"];
             
@@ -63,7 +63,7 @@ static NSString *const kSuccessResponse = @"SUCCESS";
         }
         
         if (handler) {
-            handler(respStatus == YYKURLResponseSuccess && userId, userId);
+            handler(respStatus == QBURLResponseSuccess && userId, userId);
         }
     }];
     return success;

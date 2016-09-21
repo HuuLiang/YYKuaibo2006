@@ -130,7 +130,7 @@ DefineLazyPropertyInitialization(NSMutableArray, paymentTypeItems)
             if ([YYKUtil isVIP] && ![YYKUtil isSVIP]) {
                 svipRow = 0;
             }
-            [thisTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:thisTableView.payPointType==YYKPayPointTypeSVIP?svipRow:0
+            [thisTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:thisTableView.payPointType==QBPayPointTypeSVIP?svipRow:0
                                                                    inSection:PayPointTypeSection]
                                        animated:NO
                                  scrollPosition:UITableViewScrollPositionNone];
@@ -287,18 +287,18 @@ DefineLazyPropertyInitialization(NSMutableArray, paymentTypeItems)
         if (indexPath.row == 0 && !isUpgrade) {
             cell.titleLabel.text = @"普通VIP";
             cell.subtitleLabel.text = [NSString stringWithFormat:@"可观看除%@区的所有视频",kSVIPShortText];
-            cell.currentPrice = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:YYKPayPointTypeVIP] / 100.;
+            cell.currentPrice = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:QBPayPointTypeVIP] / 100.;
             cell.originalPrice = [YYKSystemConfigModel sharedModel].originalPayAmount / 100.;
             
-            objc_setAssociatedObject(cell, kPayPointTypeAssociatedKey, @(YYKPayPointTypeVIP), OBJC_ASSOCIATION_COPY_NONATOMIC);
+            objc_setAssociatedObject(cell, kPayPointTypeAssociatedKey, @(QBPayPointTypeVIP), OBJC_ASSOCIATION_COPY_NONATOMIC);
         } else {
             cell.userInteractionEnabled = YES;
             cell.titleLabel.text = isUpgrade ? [NSString stringWithFormat:@"升级成为%@",kSVIPText] : kSVIPText;
             cell.subtitleLabel.text = @"可观看所有视频";
-            cell.currentPrice = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:YYKPayPointTypeSVIP] / 100.;
+            cell.currentPrice = [[YYKSystemConfigModel sharedModel] paymentPriceWithPayPointType:QBPayPointTypeSVIP] / 100.;
             cell.originalPrice = [YYKSystemConfigModel sharedModel].originalSVIPPayAmount / 100.;
             
-            objc_setAssociatedObject(cell, kPayPointTypeAssociatedKey, @(YYKPayPointTypeSVIP), OBJC_ASSOCIATION_COPY_NONATOMIC);
+            objc_setAssociatedObject(cell, kPayPointTypeAssociatedKey, @(QBPayPointTypeSVIP), OBJC_ASSOCIATION_COPY_NONATOMIC);
         }
         return cell;
     } else if (indexPath.section == PaymentTypeSection) {

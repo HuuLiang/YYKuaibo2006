@@ -1,0 +1,1 @@
+../../../QBPayment/QBPayment/Vendor/SPaySDK/include/SPayClientReverseScanPayDetailModel.h

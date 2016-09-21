@@ -9,6 +9,12 @@
 #ifndef YYKCommonDef_h
 #define YYKCommonDef_h
 
+#import <QBDefines.h>
+#import <QBPaymentDefines.h>
+#import <QBURLRequest.h>
+#import <QBURLResponse.h>
+#import <QBEncryptedURLRequest.h>
+
 typedef NS_ENUM(NSUInteger, YYKDeviceType) {
     YYKDeviceTypeUnknown,
     YYKDeviceType_iPhone4,
@@ -23,41 +29,41 @@ typedef NS_ENUM(NSUInteger, YYKDeviceType) {
     YYKDeviceType_iPhoneSE,
     YYKDeviceType_iPad = 100
 };
-
-typedef NS_ENUM(NSUInteger, YYKPaymentType) {
-    YYKPaymentTypeNone,
-    YYKPaymentTypeAlipay = 1001,
-    YYKPaymentTypeWeChatPay = 1008,
-    YYKPaymentTypeIAppPay = 1009, //爱贝支付
-    YYKPaymentTypeVIAPay = 1010, //首游时空
-//    YYKPaymentTypeSPay = 1012, //威富通
-    YYKPaymentTypeHTPay = 1015, //海豚支付
-    YYKPaymentTypeMingPay = 1018, //明鹏支付
-    YYKPaymentTypeDXTXPay = 1019, //盾行天下
-	YYKPaymentTypeWeiYingPay = 1022, //微赢支付
-};
-
-typedef NS_ENUM(NSUInteger, YYKSubPayType) {
-    YYKSubPayTypeNone = 0,
-    YYKSubPayTypeWeChat = 1 << 0,
-    YYKSubPayTypeAlipay = 1 << 1,
-    YYKSubPayUPPay = 1 << 2,
-    YYKSubPayTypeQQ = 1 << 3
-};
-
-typedef NS_ENUM(NSInteger, PAYRESULT)
-{
-    PAYRESULT_SUCCESS   = 0,
-    PAYRESULT_FAIL      = 1,
-    PAYRESULT_ABANDON   = 2,
-    PAYRESULT_UNKNOWN   = 3
-};
-
-typedef NS_ENUM(NSUInteger, YYKPayPointType) {
-    YYKPayPointTypeNone,
-    YYKPayPointTypeVIP,
-    YYKPayPointTypeSVIP
-};
+//
+//typedef NS_ENUM(NSUInteger, YYKPaymentType) {
+//    YYKPaymentTypeNone,
+//    YYKPaymentTypeAlipay = 1001,
+//    YYKPaymentTypeWeChatPay = 1008,
+//    YYKPaymentTypeIAppPay = 1009, //爱贝支付
+//    YYKPaymentTypeVIAPay = 1010, //首游时空
+////    YYKPaymentTypeSPay = 1012, //威富通
+//    YYKPaymentTypeHTPay = 1015, //海豚支付
+//    YYKPaymentTypeMingPay = 1018, //明鹏支付
+//    YYKPaymentTypeDXTXPay = 1019, //盾行天下
+//	YYKPaymentTypeWeiYingPay = 1022, //微赢支付
+//};
+//
+//typedef NS_ENUM(NSUInteger, YYKSubPayType) {
+//    YYKSubPayTypeNone = 0,
+//    YYKSubPayTypeWeChat = 1 << 0,
+//    YYKSubPayTypeAlipay = 1 << 1,
+//    YYKSubPayUPPay = 1 << 2,
+//    YYKSubPayTypeQQ = 1 << 3
+//};
+//
+//typedef NS_ENUM(NSInteger, PAYRESULT)
+//{
+//    PAYRESULT_SUCCESS   = 0,
+//    PAYRESULT_FAIL      = 1,
+//    PAYRESULT_ABANDON   = 2,
+//    PAYRESULT_UNKNOWN   = 3
+//};
+//
+//typedef NS_ENUM(NSUInteger, YYKPayPointType) {
+//    YYKPayPointTypeNone,
+//    YYKPayPointTypeVIP,
+//    YYKPayPointTypeSVIP
+//};
 
 typedef NS_ENUM(NSUInteger, YYKVideoSpec) {
     YYKVideoSpecNone,
@@ -78,30 +84,32 @@ extern const NSInteger kSearchUnknownErrorCode;
 extern NSString *const kSearchErrorMessageKey;
 
 // DLog
-#ifdef  DEBUG
-#define DLog(fmt,...) {NSLog((@"%s [Line:%d]" fmt),__PRETTY_FUNCTION__,__LINE__,##__VA_ARGS__);}
-#else
-#define DLog(...)
-#endif
+//#ifdef  DEBUG
+//#define DLog(fmt,...) {NSLog((@"%s [Line:%d]" fmt),__PRETTY_FUNCTION__,__LINE__,##__VA_ARGS__);}
+//#else
+//#define DLog(...)
+//#endif
 
-#define DefineLazyPropertyInitialization(propertyType, propertyName) \
--(propertyType *)propertyName { \
-if (_##propertyName) { \
-return _##propertyName; \
-} \
-_##propertyName = [[propertyType alloc] init]; \
-return _##propertyName; \
-}
+#define DLog QBLog
+//
+//#define DefineLazyPropertyInitialization(propertyType, propertyName) \
+//-(propertyType *)propertyName { \
+//if (_##propertyName) { \
+//return _##propertyName; \
+//} \
+//_##propertyName = [[propertyType alloc] init]; \
+//return _##propertyName; \
+//}
 
-#define SafelyCallBlock(block,...) \
-    if (block) block(__VA_ARGS__);
+#define DefineLazyPropertyInitialization(propertyType, propertyName) QBDefineLazyPropertyInitialization(propertyType, propertyName)
+//#define SafelyCallBlock(block,...) \
+//    if (block) block(__VA_ARGS__);
+//
+//#define SafelyCallBlockAndRelease(block,...) \
+//    if (block) { block(__VA_ARGS__); block = nil;};
 
-#define SafelyCallBlockAndRelease(block,...) \
-    if (block) { block(__VA_ARGS__); block = nil;};
-
-
-#define kScreenHeight     [ [ UIScreen mainScreen ] bounds ].size.height
-#define kScreenWidth      [ [ UIScreen mainScreen ] bounds ].size.width
+#define SafelyCallBlock(block,...) QBSafelyCallBlock(block, __VA_ARGS__)
+#define SafelyCallBlockAndRelease(block,...) QBSafelyCallBlockAndRelease(block, __VA_ARGS__)
 
 #define kPaidNotificationName @"yykuaibo_paid_notification"
 #define kDefaultDateFormat    @"yyyyMMddHHmmss"
@@ -118,10 +126,15 @@ static NSString *const kChannelPrimaryKey = @"columnId";
 static NSString *const kSVIPText = @"黑钻VIP";
 static NSString *const kSVIPShortText = @"黑钻";
 
-@class YYKPaymentInfo;
-typedef void (^YYKAction)(id obj);
-typedef void (^YYKCompletionHandler)(BOOL success, id obj);
-typedef void (^YYKPaymentCompletionHandler)(PAYRESULT payResult, YYKPaymentInfo *paymentInfo);
+
+typedef QBAction YYKAction;
+typedef QBCompletionHandler YYKCompletionHandler;
+typedef QBPaymentCompletionHandler YYKPaymentCompletionHandler;
+typedef QBPaymentInfo YYKPaymentInfo;
+typedef QBURLRequest YYKURLRequest;
+typedef QBURLResponse YYKURLResponse;
+typedef QBEncryptedURLRequest YYKEncryptedURLRequest;
+
 typedef void (^YYKSelectionAction)(NSUInteger index, id obj);
 
 FOUNDATION_STATIC_INLINE NSString * YYKIntegralPrice(const CGFloat price) {

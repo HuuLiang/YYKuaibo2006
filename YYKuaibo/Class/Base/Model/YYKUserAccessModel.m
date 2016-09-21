@@ -32,12 +32,12 @@
     @weakify(self);
     BOOL ret = [super requestURLPath:YYK_USER_ACCESS_URL
                           withParams:@{@"userId":userId,@"accessId":[YYKUtil accessId]}
-                    responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
+                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
         @strongify(self);
         
         BOOL success = NO;
-        if (respStatus == YYKURLResponseSuccess) {
+        if (respStatus == QBURLResponseSuccess) {
             NSString *resp = self.response;
             success = [resp isEqualToString:@"SUCCESS"];
             if (success) {

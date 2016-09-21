@@ -5,8 +5,6 @@
 //  Created by Sean Yue on 15/9/10.
 //  Copyright (c) 2015年 kuaibov. All rights reserved.
 //
-
-#import "YYKEncryptedURLRequest.h"
 #import "YYKSystemConfig.h"
 
 @class YYKProgram;
@@ -75,8 +73,8 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(YYKFetchSystemConfigCompletionHandler)handler;
 - (NSUInteger)paymentPriceWithProgram:(YYKProgram *)program;
-- (NSUInteger)paymentPriceWithPayPointType:(YYKPayPointType)payPointType;
+- (NSUInteger)paymentPriceWithPayPointType:(QBPayPointType)payPointType;
 - (NSString *)paymentImageWithProgram:(YYKProgram *)program;
-- (NSString *)paymentImageWithPayPointType:(YYKPayPointType)payPointType;
+- (NSString *)paymentImageWithPayPointType:(QBPayPointType)payPointType;
 
 @end

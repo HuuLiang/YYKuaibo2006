@@ -7,7 +7,6 @@
 //
 
 #import "YYKErrorHandler.h"
-#import "YYKURLRequest.h"
 
 NSString *const kNetworkErrorNotification = @"YYKNetworkErrorNotification";
 NSString *const kNetworkErrorCodeKey = @"YYKNetworkErrorCodeKey";
@@ -34,11 +33,11 @@ NSString *const kNetworkErrorMessageKey = @"YYKNetworkErrorMessageKey";
 
 - (void)onNetworkError:(NSNotification *)notification {
     NSDictionary *userInfo = notification.userInfo;
-    YYKURLResponseStatus resp = (YYKURLResponseStatus)(((NSNumber *)userInfo[kNetworkErrorCodeKey]).unsignedIntegerValue);
+    QBURLResponseStatus resp = (QBURLResponseStatus)(((NSNumber *)userInfo[kNetworkErrorCodeKey]).unsignedIntegerValue);
     
-    if (resp == YYKURLResponseFailedByInterface) {
+    if (resp == QBURLResponseFailedByInterface) {
         [[YYKHudManager manager] showHudWithText:@"获取网络数据失败"];
-    } else if (resp == YYKURLResponseFailedByNetwork) {
+    } else if (resp == QBURLResponseFailedByNetwork) {
         [[YYKHudManager manager] showHudWithText:@"网络错误，请检查网络连接！"];
     }
     

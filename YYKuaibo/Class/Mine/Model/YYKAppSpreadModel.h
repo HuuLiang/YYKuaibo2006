@@ -6,7 +6,6 @@
 //  Copyright © 2016年 iqu8. All rights reserved.
 //
 
-#import "YYKEncryptedURLRequest.h"
 
 //@interface YYKAppSpreadResponse : YYKURLResponse
 //@property (nonatomic,retain) NSArray<YYKProgram *> *programList;

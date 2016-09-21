@@ -9,7 +9,6 @@
 #import "YYKVIPViewController.h"
 #import "YYKCardSlider.h"
 #import "YYKChannelModel.h"
-#import "YYKPaymentInfo.h"
 #import "YYKVIPVideoViewController.h"
 #import "YYKSVIPPopView.h"
 #import "YYKWebViewController.h"
@@ -81,7 +80,7 @@ DefineLazyPropertyInitialization(YYKChannelModel, channelModel)
 
 - (void)onLeftNavigationButton {
     if (![YYKUtil isSVIP]) {
-        [self payForPayPointType:YYKPayPointTypeSVIP];
+        [self payForPayPointType:QBPayPointTypeSVIP];
         return ;
     }
     

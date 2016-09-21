@@ -6,8 +6,6 @@
 //  Copyright © 2016年 iqu8. All rights reserved.
 //
 
-#import "YYKEncryptedURLRequest.h"
-
 @interface YYKKeywordTags : YYKURLResponse
 @property (nonatomic,retain) NSArray<NSString *> *tags;
 @property (nonatomic,retain) NSArray<YYKProgram *> *hotSearch;

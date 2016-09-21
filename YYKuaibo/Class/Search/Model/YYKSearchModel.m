@@ -48,7 +48,7 @@ NSString *const kSearchErrorMessageKey = @"errorMessage";
     NSDictionary *params = @{@"word":keywords, @"searchTag":isTagKeyword?@1:@2, @"page":@(page)};
     BOOL ret = [self requestURLPath:YYK_SEARCH_URL
                          withParams:params
-                    responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
+                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
         @strongify(self);
         if (!self) {
@@ -57,12 +57,12 @@ NSString *const kSearchErrorMessageKey = @"errorMessage";
         
         YYKSearchResults *results;
         NSError *error;
-        if (respStatus == YYKURLResponseSuccess) {
+        if (respStatus == QBURLResponseSuccess) {
             results = self.response;
             self->_searchedResults = results;
-        } else if (respStatus == YYKURLResponseFailedByInterface) {
+        } else if (respStatus == QBURLResponseFailedByInterface) {
             error = [NSError errorWithDomain:kSearchErrorDomain code:kSearchLogicErrorCode userInfo:@{kSearchErrorMessageKey:@"接口逻辑错误"}];
-        } else if (respStatus == YYKURLResponseFailedByNetwork) {
+        } else if (respStatus == QBURLResponseFailedByNetwork) {
             error = [NSError errorWithDomain:kSearchErrorDomain code:kSearchNetworkErrorCode userInfo:@{kSearchErrorMessageKey:@"网络错误"}];
         } else {
             error = [NSError errorWithDomain:kSearchErrorMessageKey code:kSearchUnknownErrorCode userInfo:@{kSearchErrorMessageKey:@"未知错误"}];

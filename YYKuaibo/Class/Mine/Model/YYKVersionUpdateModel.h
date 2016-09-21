@@ -6,8 +6,6 @@
 //  Copyright © 2016年 iqu8. All rights reserved.
 //
 
-#import "YYKEncryptedURLRequest.h"
-
 @interface YYKVersionUpdateInfo : YYKURLResponse
 
 @property (nonatomic) NSString *versionNo;

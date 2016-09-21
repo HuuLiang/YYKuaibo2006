@@ -9,7 +9,6 @@
 #import "YYKBaseViewController.h"
 
 @class YYKProgram;
-@class YYKPaymentInfo;
 
 @interface YYKPaymentViewController : YYKBaseViewController
 
@@ -23,6 +22,6 @@
               footerAction:(YYKAction)footerAction;
 - (void)hidePayment;
 
-- (void)notifyPaymentResult:(PAYRESULT)result withPaymentInfo:(YYKPaymentInfo *)paymentInfo;
+- (void)notifyPaymentResult:(QBPayResult)result withPaymentInfo:(YYKPaymentInfo *)paymentInfo;
 
 @end

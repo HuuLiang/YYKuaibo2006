@@ -268,7 +268,7 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
             footerView.tapAction = ^(id obj) {
                 @strongify(self);
                 
-                YYKPayPointType payPointType = shouldBeSVIP ? YYKPayPointTypeSVIP : YYKPayPointTypeVIP;
+                QBPayPointType payPointType = shouldBeSVIP ? QBPayPointTypeSVIP : QBPayPointTypeVIP;
                 [self payForPayPointType:payPointType];
             };
         } else {

@@ -43,7 +43,7 @@ DefineLazyPropertyInitialization(YYKChannelProgramModel, videoModel)
     
     if (isPaging && ![YYKUtil isVIP] && self.videoModel.fetchedVideoChannel.page.unsignedIntegerValue > 1) {
         [self disableVideoLoadingWithNotifiedText:@"成为VIP后，上拉或点击加载更多"];
-        [self payForPayPointType:YYKPayPointTypeVIP];
+        [self payForPayPointType:QBPayPointTypeVIP];
         return ;
     }
 

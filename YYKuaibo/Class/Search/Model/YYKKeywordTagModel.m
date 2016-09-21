@@ -34,7 +34,7 @@
     @weakify(self);
     BOOL ret = [self requestURLPath:YYK_HOT_TAG_URL
                          withParams:nil
-                    responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
+                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
         @strongify(self);
         if (!self) {
@@ -42,7 +42,7 @@
         }
         
         YYKKeywordTags *resp;
-        if (respStatus == YYKURLResponseSuccess) {
+        if (respStatus == QBURLResponseSuccess) {
             resp = self.response;
             self->_fetchedTags = resp.tags;
             
@@ -55,7 +55,7 @@
             self->_fetchedHotChannel = channel;
         }
         
-        SafelyCallBlock(completionHandler, respStatus == YYKURLResponseSuccess, resp);
+        SafelyCallBlock(completionHandler, respStatus == QBURLResponseSuccess, resp);
     }];
     return ret;
 }

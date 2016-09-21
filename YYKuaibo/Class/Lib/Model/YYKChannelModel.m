@@ -31,7 +31,7 @@
     @weakify(self);
     BOOL ret = [self requestURLPath:space == YYKChannelSpaceSVIP ? YYK_VIP_CHANNEL_URL : YYK_CHANNEL_URL
                          withParams:nil
-                    responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
+                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
         @strongify(self);
         if (!self) {
@@ -39,13 +39,13 @@
         }
         
         NSArray *channels;
-        if (respStatus == YYKURLResponseSuccess) {
+        if (respStatus == QBURLResponseSuccess) {
             YYKChannelResponse *resp = self.response;
             channels = resp.columnList;
             self->_fetchedChannels = channels;
         }
         
-        SafelyCallBlock(handler, respStatus == YYKURLResponseSuccess, channels);
+        SafelyCallBlock(handler, respStatus == QBURLResponseSuccess, channels);
     }];
     return ret;
 }

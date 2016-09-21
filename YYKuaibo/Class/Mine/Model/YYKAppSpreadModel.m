@@ -19,17 +19,17 @@
     BOOL ret = [self requestURLPath:YYK_APP_SPREAD_LIST_URL
                      standbyURLPath:YYK_STANDBY_APP_SPREAD_LIST_URL
                          withParams:nil
-                    responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
+                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
         @strongify(self);
         YYKChannel *fetchedSpreadChannel;
-        if (respStatus == YYKURLResponseSuccess) {
+        if (respStatus == QBURLResponseSuccess) {
             fetchedSpreadChannel = self.response;
             _fetchedSpreadChannel = fetchedSpreadChannel;
         }
         
         if (handler) {
-            handler(respStatus==YYKURLResponseSuccess, fetchedSpreadChannel);
+            handler(respStatus==QBURLResponseSuccess, fetchedSpreadChannel);
         }
     }];
     return ret;

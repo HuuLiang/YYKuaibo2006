@@ -259,8 +259,8 @@ static NSString *const kEncryptionPassword = @"qb%stats_2016&";
     return [NSURL URLWithString:YYK_STATS_BASE_URL];
 }
 
-- (YYKURLRequestMethod)requestMethod {
-    return YYKURLPostRequest;
+- (QBURLRequestMethod)requestMethod {
+    return QBURLPostRequest;
 }
 
 - (NSArray<NSDictionary *> *)validateParamsWithStatsInfos:(NSArray<YYKStatsInfo *> *)statsInfos {

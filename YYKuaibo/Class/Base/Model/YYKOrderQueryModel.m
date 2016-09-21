@@ -14,8 +14,8 @@
     return nil;
 }
 
-- (YYKURLRequestMethod)requestMethod {
-    return YYKURLGetRequest;
+- (QBURLRequestMethod)requestMethod {
+    return QBURLGetRequest;
 }
 
 - (BOOL)isPlainResponse {
@@ -55,18 +55,18 @@
     
     return [self requestURLPath:YYK_ORDER_QUERY_URL
                      withParams:@{@"orderId":orderId}
-                responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
+                responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
-        SafelyCallBlock(completionHandler, respStatus == YYKURLResponseSuccess, respStatus == YYKURLResponseSuccess ? self.response : errorMessage);
+        SafelyCallBlock(completionHandler, respStatus == QBURLResponseSuccess, respStatus == QBURLResponseSuccess ? self.response : errorMessage);
     }];
 }
 
-- (void)processResponseObject:(id)responseObject withResponseHandler:(YYKURLResponseHandler)responseHandler {
+- (void)processResponseObject:(id)responseObject withResponseHandler:(QBURLResponseHandler)responseHandler {
     id jsonObj = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
     
     NSString *decryptedResponse = [self decryptResponse:jsonObj];
     self.response = decryptedResponse;
     DLog(@"Manual activation response : %@", decryptedResponse);
-    SafelyCallBlock(responseHandler, decryptedResponse.length>0?YYKURLResponseSuccess:YYKURLResponseFailedByInterface, decryptedResponse.length>0?nil:@"无该订单或者该笔订单未支付");
+    SafelyCallBlock(responseHandler, decryptedResponse.length>0?QBURLResponseSuccess:QBURLResponseFailedByInterface, decryptedResponse.length>0?nil:@"无该订单或者该笔订单未支付");
 }
 @end

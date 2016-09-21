@@ -36,7 +36,7 @@ DefineLazyPropertyInitialization(YYKOrderQueryModel, orderQueryModel)
     NSArray<YYKPaymentInfo *> *paymentInfos = [YYKUtil allUnsuccessfulPaymentInfos];
     if ([YYKUtil isVIP] && ![YYKUtil isSVIP]) {
         paymentInfos = [paymentInfos bk_select:^BOOL(YYKPaymentInfo *paymentInfo) {
-            return paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP;
+            return paymentInfo.payPointType == QBPayPointTypeSVIP;
         }];
     }
     
@@ -72,18 +72,18 @@ DefineLazyPropertyInitialization(YYKOrderQueryModel, orderQueryModel)
             }];
             
             YYKPaymentInfo *paidPaymentInfo = [paidPaymentInfos bk_match:^BOOL(YYKPaymentInfo *paymentInfo) {
-                return paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP;
+                return paymentInfo.payPointType == QBPayPointTypeSVIP;
             }];
             
             if (!paidPaymentInfo) {
                 paidPaymentInfo = [paidPaymentInfos bk_match:^BOOL(YYKPaymentInfo *paymentInfo) {
-                    return paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeVIP;
+                    return paymentInfo.payPointType == QBPayPointTypeVIP;
                 }];
             }
             
             if (paidPaymentInfo) {
                 [UIAlertView bk_showAlertViewWithTitle:@"激活成功" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
-                [[YYKPaymentViewController sharedPaymentVC] notifyPaymentResult:PAYRESULT_SUCCESS withPaymentInfo:paidPaymentInfo];
+                [[YYKPaymentViewController sharedPaymentVC] notifyPaymentResult:QBPayResultSuccess withPaymentInfo:paidPaymentInfo];
             } else {
                 [UIAlertView bk_showAlertViewWithTitle:@"未找到支付成功的订单" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
             }

@@ -44,7 +44,7 @@
     BOOL ret = [self requestURLPath:YYK_VIDEO_DETAIL_URL
                          withParams:@{@"columnId":channel.columnId,
                                       @"programId":video.programId}
-                    responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
+                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
         @strongify(self);
         if (!self) {
@@ -52,7 +52,7 @@
         }
         
         YYKVideoDetail *detail;
-        if (respStatus == YYKURLResponseSuccess) {
+        if (respStatus == QBURLResponseSuccess) {
             detail = self.response;
             
             [YYKUtil requestAllInstalledAppIdsWithCompletionHandler:^(NSArray<NSString *> *appIds) {

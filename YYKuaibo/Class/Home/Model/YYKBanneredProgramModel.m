@@ -39,7 +39,7 @@
     BOOL success = [self requestURLPath:space == YYKBanneredProgramSpaceHome ? YYK_HOME_VIDEO_URL : YYK_VIP_VIDEO_URL
                          standbyURLPath:space == YYKBanneredProgramSpaceHome ? YYK_STANDBY_HOME_VIDEO_URL : YYK_STANDBY_VIP_VIDEO_URL
                              withParams:nil
-                        responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
+                        responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {
                         @strongify(self);
                         
@@ -48,7 +48,7 @@
                         }
                         
                         NSArray *programs;
-                        if (respStatus == YYKURLResponseSuccess) {
+                        if (respStatus == QBURLResponseSuccess) {
                             YYKBanneredProgramResponse *resp = (YYKBanneredProgramResponse *)self.response;
                             programs = resp.columnList;
                             self->_fetchedProgramList = programs;
@@ -65,7 +65,7 @@
                         }
                         
                         if (handler) {
-                            handler(respStatus==YYKURLResponseSuccess, programs);
+                            handler(respStatus==QBURLResponseSuccess, programs);
                         }
                     }];
     return success;

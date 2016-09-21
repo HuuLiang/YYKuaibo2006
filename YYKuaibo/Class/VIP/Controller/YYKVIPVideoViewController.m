@@ -134,7 +134,7 @@ DefineLazyPropertyInitialization(NSMutableArray, programs)
             [_videoCV YYK_setPagingRefreshText:[NSString stringWithFormat:@"成为%@后，解锁所有视频", kSVIPText]];
             [_videoCV YYK_endPullToRefresh];
             
-            [self payForPayPointType:YYKPayPointTypeSVIP];
+            [self payForPayPointType:QBPayPointTypeSVIP];
         }
         return ;
     } else {

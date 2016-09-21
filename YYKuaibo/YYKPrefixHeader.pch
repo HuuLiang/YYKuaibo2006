@@ -19,22 +19,23 @@
 #import <BlocksKit+UIKit.h>
 #import <Masonry.h>
 #import <UIImageView+WebCache.h>
+#import <RACEXTScope.h>
+
+#import <QBPaymentManager.h>
+#import <QBPaymentInfo.h>
+#import <QBNetworkInfo.h>
 
 #import "YYKCommonDef.h"
 #import "YYKConfig.h"
-#import "RACEXTScope.h"
-#import "YYKExtensions.h"
 
+#import "YYKExtensions.h"
 #import "YYKProgram.h"
 #import "YYKChannel.h"
-#import "YYKPaymentInfo.h"
 
 #import "YYKUtil.h"
 #import "YYKErrorHandler.h"
 #import "YYKHudManager.h"
-#import "YYKPaymentManager.h"
 #import "DBHandler.h"
-#import "YYKNetworkInfo.h"
 #import "YYKStatsManager.h"
 #import "YYKManualActivationManager.h"
 #endif /* YYKPrefixHeader_pch */

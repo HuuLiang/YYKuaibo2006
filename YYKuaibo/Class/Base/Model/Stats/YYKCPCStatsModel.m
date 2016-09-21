@@ -21,9 +21,9 @@
 
     BOOL ret = [self requestURLPath:YYK_STATS_CPC_URL
                          withParams:params
-                    responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
+                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                 {
-                    SafelyCallBlock(completionHandler, respStatus==YYKURLResponseSuccess, errorMessage);
+                    SafelyCallBlock(completionHandler, respStatus==QBURLResponseSuccess, errorMessage);
                 }];
     return ret;
 }

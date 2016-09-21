@@ -1,0 +1,1 @@
+../../../QBPayment/QBPayment/Vendor/SPaySDK/include/SPayClientPaySuccessDetailModel.h

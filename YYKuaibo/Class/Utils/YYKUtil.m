@@ -10,15 +10,12 @@
 #import <SFHFKeychainUtils.h>
 #import <sys/sysctl.h>
 #import "NSDate+Utilities.h"
-#import "YYKPaymentInfo.h"
 #import "YYKSpreadBannerViewController.h"
 #import "YYKAppSpreadBannerModel.h"
 #import "YYKApplicationManager.h"
 #import "YYKSystemConfigModel.h"
 #include <ifaddrs.h>
 #include <arpa/inet.h>
-
-NSString *const kPaymentInfoKeyName = @"yykuaibov_paymentinfo_keyname";
 
 static NSString *const kRegisterKeyName = @"yykuaibov_register_keyname";
 static NSString *const kUserAccessUsername = @"yykuaibov_user_access_username";
@@ -48,34 +45,27 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
 }
 
 + (NSArray<YYKPaymentInfo *> *)allPaymentInfos {
-    NSArray<NSDictionary *> *paymentInfoArr = [[NSUserDefaults standardUserDefaults] objectForKey:kPaymentInfoKeyName];
-    
-    NSMutableArray *paymentInfos = [NSMutableArray array];
-    [paymentInfoArr enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        YYKPaymentInfo *paymentInfo = [YYKPaymentInfo paymentInfoFromDictionary:obj];
-        [paymentInfos addObject:paymentInfo];
-    }];
-    return paymentInfos;
+    return [QBPaymentInfo allPaymentInfos];
 }
 
 + (NSArray<YYKPaymentInfo *> *)payingPaymentInfos {
     return [self.allPaymentInfos bk_select:^BOOL(id obj) {
         YYKPaymentInfo *paymentInfo = obj;
-        return paymentInfo.paymentStatus.unsignedIntegerValue == YYKPaymentStatusPaying;
+        return paymentInfo.paymentStatus == QBPayStatusPaying;
     }];
 }
 
 + (NSArray<YYKPaymentInfo *> *)paidNotProcessedPaymentInfos {
     return [self.allPaymentInfos bk_select:^BOOL(id obj) {
         YYKPaymentInfo *paymentInfo = obj;
-        return paymentInfo.paymentStatus.unsignedIntegerValue == YYKPaymentStatusNotProcessed;
+        return paymentInfo.paymentStatus == QBPayStatusNotProcessed;
     }];
 }
 
 + (NSArray<YYKPaymentInfo *> *)allSuccessfulPaymentInfos {
     return [self.allPaymentInfos bk_select:^BOOL(id obj) {
         YYKPaymentInfo *paymentInfo = obj;
-        if (paymentInfo.paymentResult.unsignedIntegerValue == PAYRESULT_SUCCESS) {
+        if (paymentInfo.paymentResult == QBPayResultSuccess) {
             return YES;
         }
         return NO;
@@ -85,7 +75,7 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
 + (NSArray<YYKPaymentInfo *> *)allUnsuccessfulPaymentInfos {
     return [self.allPaymentInfos bk_select:^BOOL(id obj) {
         YYKPaymentInfo *paymentInfo = obj;
-        if (paymentInfo.paymentResult.unsignedIntegerValue != PAYRESULT_SUCCESS) {
+        if (paymentInfo.paymentResult != QBPayResultSuccess) {
             return YES;
         }
         return NO;
@@ -104,8 +94,8 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
 + (BOOL)isVIP {
     YYKPaymentInfo *vipPaymentInfo = [[self allSuccessfulPaymentInfos] bk_match:^BOOL(id obj) {
         YYKPaymentInfo *paymentInfo = obj;
-        return paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeVIP
-        || paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP;
+        return paymentInfo.payPointType == QBPayPointTypeVIP
+        || paymentInfo.payPointType == QBPayPointTypeSVIP;
     }];
     return vipPaymentInfo != nil;
 }
@@ -113,7 +103,7 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
 + (BOOL)isSVIP {
     YYKPaymentInfo *vipPaymentInfo = [[self allSuccessfulPaymentInfos] bk_match:^BOOL(id obj) {
         YYKPaymentInfo *paymentInfo = obj;
-        return paymentInfo.payPointType.unsignedIntegerValue == YYKPayPointTypeSVIP;
+        return paymentInfo.payPointType == QBPayPointTypeSVIP;
     }];
     return vipPaymentInfo != nil;
 }

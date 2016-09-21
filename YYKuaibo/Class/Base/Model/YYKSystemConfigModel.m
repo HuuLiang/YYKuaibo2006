@@ -55,11 +55,11 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
     BOOL success = [self requestURLPath:YYK_SYSTEM_CONFIG_URL
                          standbyURLPath:YYK_STANDBY_SYSTEM_CONFIG_URL
                              withParams:@{@"type":@([YYKUtil deviceType])}
-                        responseHandler:^(YYKURLResponseStatus respStatus, NSString *errorMessage)
+                        responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {
                         @strongify(self);
                         
-                        if (respStatus == YYKURLResponseSuccess) {
+                        if (respStatus == QBURLResponseSuccess) {
                             YYKSystemConfigResponse *resp = self.response;
                             
                             [resp.confis enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -146,7 +146,7 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
                         }
                         
                         if (handler) {
-                            handler(respStatus==YYKURLResponseSuccess);
+                            handler(respStatus==QBURLResponseSuccess);
                         }
                     }];
     return success;
@@ -264,8 +264,8 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
     return [self paymentPriceWithPayPointType:program.payPointType.unsignedIntegerValue];
 }
 
-- (NSUInteger)paymentPriceWithPayPointType:(YYKPayPointType)payPointType {
-    if (payPointType == YYKPayPointTypeSVIP && /*[YYKUtil isVIP] &&*/ ![YYKUtil isSVIP]) {
+- (NSUInteger)paymentPriceWithPayPointType:(QBPayPointType)payPointType {
+    if (payPointType == QBPayPointTypeSVIP && /*[YYKUtil isVIP] &&*/ ![YYKUtil isSVIP]) {
         
         if ([YYKUtil isVIP]) {
             return self.svipPayAmount;
@@ -281,8 +281,8 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
     return [self paymentImageWithPayPointType:program.payPointType.unsignedIntegerValue];
 }
 
-- (NSString *)paymentImageWithPayPointType:(YYKPayPointType)payPointType {
-    if (payPointType == YYKPayPointTypeSVIP && /*[YYKUtil isVIP] &&*/ ![YYKUtil isSVIP]) {
+- (NSString *)paymentImageWithPayPointType:(QBPayPointType)payPointType {
+    if (payPointType == QBPayPointTypeSVIP && /*[YYKUtil isVIP] &&*/ ![YYKUtil isSVIP]) {
         return self.svipPaymentImage;
     } else if ([self hasDiscount]) {
         return self.discountImage;

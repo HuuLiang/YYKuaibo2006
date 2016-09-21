@@ -16,7 +16,7 @@
 @property (nonatomic) NSURL *headerImageURL;
 @property (nonatomic,copy) YYKAction closeAction;
 @property (nonatomic,copy) YYKAction footerAction;
-@property (nonatomic) YYKPayPointType payPointType;
+@property (nonatomic) QBPayPointType payPointType;
 
 - (void)addPaymentWithImage:(UIImage *)image
                       title:(NSString *)title

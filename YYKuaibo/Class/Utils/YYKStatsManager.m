@@ -10,7 +10,6 @@
 #import "YYKCPCStatsModel.h"
 #import "YYKTabStatsModel.h"
 #import "YYKPayStatsModel.h"
-#import "YYKPaymentInfo.h"
 #import "MobClick.h"
 
 static NSString *const kUmengCPCChannelEvent = @"CPC_CHANNEL";
@@ -269,7 +268,7 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
 
 - (void)statsPayWithOrderNo:(NSString *)orderNo
                   payAction:(YYKStatsPayAction)payAction
-                  payResult:(PAYRESULT)payResult
+                  payResult:(QBPayResult)payResult
                  forProgram:(YYKProgram *)program
             programLocation:(NSUInteger)programLocation
                   inChannel:(YYKChannel *)channel
@@ -294,7 +293,7 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
         } else if (payAction == YYKStatsPayActionGoToPay) {
             statsInfo.isPayConfirm = @(1);
         } else if (payAction == YYKStatsPayActionPayBack) {
-            NSDictionary *payStautsMapping = @{@(PAYRESULT_SUCCESS):@(1), @(PAYRESULT_FAIL):@(2), @(PAYRESULT_ABANDON):@(3)};
+            NSDictionary *payStautsMapping = @{@(QBPayResultSuccess):@(1), @(QBPayResultFailure):@(2), @(QBPayResultCancelled):@(3)};
             NSNumber *payStatus = payStautsMapping[@(payResult)];
             statsInfo.payStatus = payStatus;
         } else {
@@ -303,7 +302,7 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
         
         statsInfo.paySeq = @([YYKUtil launchSeq]);
         statsInfo.statsType = @(YYKStatsTypePay);
-        statsInfo.network = @([YYKNetworkInfo sharedInfo].networkStatus);
+        statsInfo.network = @([QBNetworkInfo sharedInfo].networkStatus);
         [statsInfo save];
         
         [MobClick event:kUmengPayEvent attributes:statsInfo.umengAttributes];
@@ -333,8 +332,8 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
         } else if (payAction == YYKStatsPayActionGoToPay) {
             statsInfo.isPayConfirm = @(1);
         } else if (payAction == YYKStatsPayActionPayBack) {
-            NSDictionary *payStautsMapping = @{@(PAYRESULT_SUCCESS):@(1), @(PAYRESULT_FAIL):@(2), @(PAYRESULT_ABANDON):@(3)};
-            NSNumber *payStatus = payStautsMapping[paymentInfo.paymentResult];
+            NSDictionary *payStautsMapping = @{@(QBPayResultSuccess):@(1), @(QBPayResultFailure):@(2), @(QBPayResultCancelled):@(3)};
+            NSNumber *payStatus = payStautsMapping[@(paymentInfo.paymentResult)];
             statsInfo.payStatus = payStatus;
         } else {
             return ;
@@ -342,7 +341,7 @@ DefineLazyPropertyInitialization(YYKPayStatsModel, payStats)
     
         statsInfo.paySeq = @([YYKUtil launchSeq]);
         statsInfo.statsType = @(YYKStatsTypePay);
-        statsInfo.network = @([YYKNetworkInfo sharedInfo].networkStatus);
+        statsInfo.network = @([QBNetworkInfo sharedInfo].networkStatus);
         [statsInfo save];
         
         [MobClick event:kUmengPayEvent attributes:statsInfo.umengAttributes];

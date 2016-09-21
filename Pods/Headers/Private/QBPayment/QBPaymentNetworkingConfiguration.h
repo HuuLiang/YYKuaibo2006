@@ -1,0 +1,1 @@
+../../../QBPayment/QBPayment/Classes/Core/Private/QBPaymentNetworkingConfiguration.h
