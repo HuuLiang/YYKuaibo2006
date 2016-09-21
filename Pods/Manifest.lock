@@ -42,24 +42,24 @@ PODS:
   - QBNetworking (0.0.5):
     - AFNetworking (~> 3.1.0)
     - QBExtensions (~> 0.0.3)
-  - QBPayment/Core (0.0.18):
+  - QBPayment/Core (0.0.19):
     - Aspects (~> 1.4.1)
     - QBExtensions (~> 0.0.6)
     - QBNetworking (~> 0.0.4)
-  - QBPayment/CorePay (0.0.18):
+  - QBPayment/CorePay (0.0.19):
     - OpenSSL (~> 1.0.208)
-  - QBPayment/DXTXPay (0.0.18):
+  - QBPayment/DXTXPay (0.0.19):
     - MBProgressHUD (~> 0.9.2)
     - QBPayment/Core
     - QBPayment/CorePay
     - QBPayment/WFTPay
-  - QBPayment/IappPay (0.0.18):
+  - QBPayment/IappPay (0.0.19):
     - QBPayment/Core
     - QBPayment/CorePay
-  - QBPayment/VIAPay (0.0.18):
+  - QBPayment/VIAPay (0.0.19):
     - QBPayment/Core
     - QBPayment/CorePay
-  - QBPayment/WFTPay (0.0.18):
+  - QBPayment/WFTPay (0.0.19):
     - MBProgressHUD (~> 0.9.2)
     - QBPayment/Core
     - QBPayment/CorePay
@@ -103,7 +103,7 @@ SPEC CHECKSUMS:
   OpenSSL: b187269d386b07452f56af273764ea0636dd5da8
   QBExtensions: 9c4def5e3cd2eebabb3d9e9057f1fbbce5a04849
   QBNetworking: b2e4fffb974f86563854488736452d0fcb530f4c
-  QBPayment: fab3b40218a3a0d0eff3fd232792c51a6fa347a4
+  QBPayment: b85cf0bf1847bcb25d15465d2fdbe73cfdf26cf0
   SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
   SFHFKeychainUtils: 9576b411a79a058f4d5381ace6f3242b9a62e664

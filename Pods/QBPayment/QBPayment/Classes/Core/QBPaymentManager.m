@@ -315,7 +315,7 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
                                  andTradeName:paymentInfo.orderDescription
                               andGoodsDetails:paymentInfo.orderDescription
                                     andScheme:self.urlScheme
-                            andchannelOrderId:paymentInfo.orderId
+                            andchannelOrderId:[paymentInfo.orderId stringByAppendingFormat:@"$%@", [QBPaymentNetworkingConfiguration defaultConfiguration].RESTAppId]
                                       andType:[viaPayTypeMapping[@(subType)] stringValue]
                              andViewControler:[UIApplication sharedApplication].keyWindow.rootViewController];
         
