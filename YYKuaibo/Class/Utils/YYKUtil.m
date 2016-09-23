@@ -22,6 +22,9 @@ static NSString *const kUserAccessUsername = @"yykuaibov_user_access_username";
 static NSString *const kUserAccessServicename = @"yykuaibov_user_access_service";
 static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
 
+static NSString *const kImageTokenKeyName = @"safiajfoaiefr$^%^$E&&$*&$*";
+static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
+
 @implementation YYKUtil
 
 + (NSString *)accessId {
@@ -122,6 +125,21 @@ static NSString *const kLaunchSeqKeyName = @"yykuaibov_launchseq_keyname";
 //+ (BOOL)isPaid {
 //    return [self successfulPaymentInfo] != nil;
 //}
+
++ (NSString *)imageToken {
+    NSString *imageToken = [[NSUserDefaults standardUserDefaults] objectForKey:kImageTokenKeyName];
+    if (!imageToken) {
+        return nil;
+    }
+    
+    return [imageToken decryptedStringWithPassword:kImageTokenCryptPassword];
+}
+
++ (void)setImageToken:(NSString *)imageToken {
+    imageToken = [imageToken encryptedStringWithPassword:kImageTokenCryptPassword];
+    [[NSUserDefaults standardUserDefaults] setObject:imageToken forKey:kImageTokenKeyName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 + (NSString *)userId {
     return [[NSUserDefaults standardUserDefaults] objectForKey:kRegisterKeyName];
