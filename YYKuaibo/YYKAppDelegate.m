@@ -215,7 +215,7 @@
     
     NSString *imageToken = [YYKUtil imageToken];
     if (imageToken) {
-        [[SDWebImageDownloader sharedDownloader] setValue:imageToken forHTTPHeaderField:@"Referer"];
+        [[SDWebImageManager sharedManager].imageDownloader setValue:imageToken forHTTPHeaderField:@"Referer"];
         self.window.rootViewController = self.rootViewController;
         [self.window makeKeyAndVisible];
     } else {
@@ -226,10 +226,15 @@
         [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
             [self.window endProgressing];
             
-            if ([YYKSystemConfigModel sharedModel].imageToken) {
-                [YYKUtil setImageToken:[YYKSystemConfigModel sharedModel].imageToken];
-                [[SDWebImageDownloader sharedDownloader] setValue:[YYKSystemConfigModel sharedModel].imageToken forHTTPHeaderField:@"Referer"];
+            if (success) {
+                NSString *fetchedToken = [YYKSystemConfigModel sharedModel].imageToken;
+                [YYKUtil setImageToken:fetchedToken];
+                if (fetchedToken) {
+                    [[SDWebImageManager sharedManager].imageDownloader setValue:fetchedToken forHTTPHeaderField:@"Referer"];
+                }
+                
             }
+            
             self.window.rootViewController = self.rootViewController;
             
             NSUInteger statsTimeInterval = 180;
@@ -264,7 +269,7 @@
     if (imageToken) {
         [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
             
-            if ([YYKSystemConfigModel sharedModel].imageToken) {
+            if (success) {
                 [YYKUtil setImageToken:[YYKSystemConfigModel sharedModel].imageToken];
             }
             

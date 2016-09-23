@@ -136,8 +136,13 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
 }
 
 + (void)setImageToken:(NSString *)imageToken {
-    imageToken = [imageToken encryptedStringWithPassword:kImageTokenCryptPassword];
-    [[NSUserDefaults standardUserDefaults] setObject:imageToken forKey:kImageTokenKeyName];
+    if (imageToken) {
+        imageToken = [imageToken encryptedStringWithPassword:kImageTokenCryptPassword];
+        [[NSUserDefaults standardUserDefaults] setObject:imageToken forKey:kImageTokenKeyName];
+    } else {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kImageTokenKeyName];
+    }
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
