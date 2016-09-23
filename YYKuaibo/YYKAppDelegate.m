@@ -213,6 +213,8 @@
 //    [self registerUserNotification];
     [[QBNetworkInfo sharedInfo] startMonitoring];
     
+    BOOL requestedSystemConfig = NO;
+#ifdef YYK_IMAGE_TOKEN_ENABLED
     NSString *imageToken = [YYKUtil imageToken];
     if (imageToken) {
         [[SDWebImageManager sharedManager].imageDownloader setValue:imageToken forHTTPHeaderField:@"Referer"];
@@ -223,7 +225,7 @@
         [self.window makeKeyAndVisible];
         
         [self.window beginProgressingWithTitle:@"更新系统配置..." subtitle:nil];
-        [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+        requestedSystemConfig = [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
             [self.window endProgressing];
             
             if (success) {
@@ -244,7 +246,10 @@
             [[YYKStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
         }];
     }
-
+#else 
+    self.window.rootViewController = self.rootViewController;
+    [self.window makeKeyAndVisible];
+#endif
 //    YYKLaunchView *launchView = [[YYKLaunchView alloc] init];
 //    [launchView show];
     
@@ -266,13 +271,14 @@
         [[YYKUserAccessModel sharedModel] requestUserAccess];
     }
     
-    if (imageToken) {
+    if (!requestedSystemConfig) {
         [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
             
+#ifdef YYK_IMAGE_TOKEN_ENABLED
             if (success) {
                 [YYKUtil setImageToken:[YYKSystemConfigModel sharedModel].imageToken];
             }
-            
+#endif
             NSUInteger statsTimeInterval = 180;
             if ([YYKSystemConfigModel sharedModel].loaded && [YYKSystemConfigModel sharedModel].statsTimeInterval > 0) {
                 statsTimeInterval = [YYKSystemConfigModel sharedModel].statsTimeInterval;
@@ -281,6 +287,7 @@
         }];
     }
     
+    [[YYKVideoTokenManager sharedManager] requestTokenWithCompletionHandler:nil];
     [[YYKAppSpreadBannerModel sharedModel] fetchAppSpreadWithCompletionHandler:nil];
     [[YYKVersionUpdateModel sharedModel] fetchLatestVersionWithCompletionHandler:^(BOOL success, id obj) {
         if (success) {

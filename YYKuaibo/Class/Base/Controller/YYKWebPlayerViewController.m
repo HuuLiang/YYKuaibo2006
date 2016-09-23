@@ -39,18 +39,47 @@
             make.edges.equalTo(self.view);
         }];
     }
+    
+    @weakify(self);
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"svip_refresh"] style:UIBarButtonItemStylePlain handler:^(id sender) {
+        @strongify(self);
+        [self reloadPage];
+    }];
+    
+    [self reloadPage];
+}
 
-    NSMutableString *videoSources = [[NSMutableString alloc] initWithFormat:@"<source src='%@' />", self.program.videoUrl];
-    if (self.program.spareUrl.length > 0) {
-        [videoSources appendFormat:@"<source src='%@' />", self.program.spareUrl];
-    }
-    
-    NSString *htmlBody = [NSString stringWithFormat:@"<video width='%ld' height='%ld' poster='%@' autoplay='autoplay' controls='controls'>%@</video>", (unsigned long)kScreenWidth-1, (unsigned long)kScreenHeight, self.program.coverImg, videoSources];
-    
-    NSString *htmlString = [NSString stringWithFormat:@"<!DOCTYPE html><html lang='zh'><head><meta charset='UTF-8'></head><body bgColor='black'>%@</body></html>", htmlBody];
-    
-    [_webView loadHTMLString:htmlString baseURL:[NSURL fileURLWithPath:[NSBundle mainBundle].bundlePath]];
-    
+- (void)reloadPage {
+    @weakify(self);
+    [self.view beginProgressingWithTitle:@"加载中..." subtitle:nil];
+    [[YYKVideoTokenManager sharedManager] requestTokenWithCompletionHandler:^(BOOL success, NSString *token, NSString *userId) {
+        @strongify(self);
+        if (!self) {
+            return ;
+        }
+        
+        [self.view endProgressing];
+        
+        if (success) {
+            NSMutableString *videoSources = [[NSMutableString alloc] initWithFormat:@"<source src='%@' />", [[YYKVideoTokenManager sharedManager] videoLinkWithOriginalLink:self.program.videoUrl]];
+            if (self.program.spareUrl.length > 0) {
+                [videoSources appendFormat:@"<source src='%@' />", [[YYKVideoTokenManager sharedManager] videoLinkWithOriginalLink:self.program.spareUrl]];
+            }
+            
+            NSString *htmlBody = [NSString stringWithFormat:@"<video width='%ld' height='%ld' poster='%@' autoplay='autoplay' controls='controls'>%@</video>", (unsigned long)kScreenWidth-1, (unsigned long)kScreenHeight, self.program.coverImg, videoSources];
+            
+            NSString *htmlString = [NSString stringWithFormat:@"<!DOCTYPE html><html lang='zh'><head><meta charset='UTF-8'></head><body bgColor='black'>%@</body></html>", htmlBody];
+            
+            [_webView loadHTMLString:htmlString baseURL:[NSURL fileURLWithPath:[NSBundle mainBundle].bundlePath]];
+            
+#ifdef YYK_DISPLAY_VIDEO_URL
+            NSString *url = [[YYKVideoTokenManager sharedManager] videoLinkWithOriginalLink:self.program.videoUrl];
+            [UIAlertView bk_showAlertViewWithTitle:@"视频链接" message:url cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
+#endif
+        } else {
+            [[YYKHudManager manager] showHudWithText:@"无法获取视频信息,请刷新后重试"];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

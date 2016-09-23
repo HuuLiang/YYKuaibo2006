@@ -38,4 +38,6 @@
 #import "DBHandler.h"
 #import "YYKStatsManager.h"
 #import "YYKManualActivationManager.h"
+#import "YYKVideoTokenManager.h"
+
 #endif /* YYKPrefixHeader_pch */
