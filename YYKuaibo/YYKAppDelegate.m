@@ -11,7 +11,8 @@
 #import "YYKMineViewController.h"
 #import "YYKVideoLibViewController.h"
 #import "YYKVIPViewController.h"
-#import "YYKSearchViewController.h"
+//#import "YYKSearchViewController.h"
+#import "YYKRankingViewController.h"
 #import "YYKActivateModel.h"
 #import "YYKUserAccessModel.h"
 #import "YYKSystemConfigModel.h"
@@ -35,7 +36,7 @@
     _window.backgroundColor              = [UIColor whiteColor];
     
     YYKHomeViewController *homeVC = [[YYKHomeViewController alloc] init];
-    homeVC.title = @"AV爽片";
+    homeVC.title = @"大片";
     
     UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:homeVC];
     homeNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:homeVC.title
@@ -43,7 +44,7 @@
                                                selectedImage:[UIImage imageNamed:@"tabbar_home_selected"]];
     
     YYKVideoLibViewController *libVC = [[YYKVideoLibViewController alloc] init];
-    libVC.title = @"AV片库";
+    libVC.title = @"片库";
     
     UINavigationController *channelNav = [[UINavigationController alloc] initWithRootViewController:libVC];
     channelNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:libVC.title
@@ -59,16 +60,16 @@
                                               selectedImage:[UIImage imageNamed:@"tabbar_vip_selected"]];
     vipNav.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
     
-    YYKSearchViewController *searchVC = [[YYKSearchViewController alloc] init];
-    searchVC.title = @"AV热搜";
+    YYKRankingViewController *rankingVC = [[YYKRankingViewController alloc] init];
+    rankingVC.title = @"排行榜";
     
-    UINavigationController *searchNav = [[UINavigationController alloc] initWithRootViewController:searchVC];
-    searchNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:searchVC.title
-                                                         image:[UIImage imageNamed:@"tabbar_search_normal"]
-                                                 selectedImage:[UIImage imageNamed:@"tabbar_search_selected"]];
+    UINavigationController *rankingNav = [[UINavigationController alloc] initWithRootViewController:rankingVC];
+    rankingNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:rankingVC.title
+                                                         image:[UIImage imageNamed:@"tabbar_ranking_normal"]
+                                                 selectedImage:[UIImage imageNamed:@"tabbar_ranking_selected"]];
     
     YYKMineViewController *mineVC = [[YYKMineViewController alloc] init];
-    mineVC.title = @"我的AV";
+    mineVC.title = @"我的";
     
     UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
     mineNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:mineVC.title
@@ -76,7 +77,7 @@
                                                    selectedImage:[UIImage imageNamed:@"tabbar_mine_selected"]];
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[homeNav, channelNav, vipNav, searchNav, mineNav];
+    tabBarController.viewControllers = @[homeNav, channelNav, vipNav, rankingNav, mineNav];
 //    tabBarController.tabBar.translucent = NO;
     tabBarController.delegate = self;
     _window.rootViewController = tabBarController;
@@ -85,12 +86,11 @@
 
 - (void)setupCommonStyles {
 //    [[UITabBar appearance] setBarStyle:UIBarStyleBlack];
-//    [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
-//    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UITabBar appearance] setSelectedImageTintColor:kThemeColor];
-    [[UITabBar appearance] setTintColor:kThemeColor];
+//    [[UITabBar appearance] setSelectedImageTintColor:kThemeColor];
+    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UITabBar appearance] setBarTintColor:kBarColor];
 //    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
-    [[UINavigationBar appearance] setBarTintColor:kThemeColor];
+    [[UINavigationBar appearance] setBarTintColor:kBarColor];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.],
                                                            NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];

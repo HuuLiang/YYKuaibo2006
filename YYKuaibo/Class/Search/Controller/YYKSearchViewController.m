@@ -237,35 +237,4 @@ DefineLazyPropertyInitialization(YYKSearchResultViewController, resultVC)
         }
     }
 }
-
-#pragma mark - YYKTagSearchViewControllerDelegate
-
-- (void)tagSearchViewControllerDidScroll:(YYKTagSearchViewController *)tagSearchVC {
-    if ([_searchBar isFirstResponder]) {
-        [_searchBar resignFirstResponder];
-    }
-}
-
-- (void)tagSearchViewController:(YYKTagSearchViewController *)tagSearchVC didSelectKeyword:(YYKKeyword *)keyword {
-    _searchBar.text = keyword.text;
-    [self searchKeyword:keyword];
-}
-
-- (NSAttributedString *)searchErrorMessageInTagSearchViewController:(YYKTagSearchViewController *)tagSearchVC {
-    return self.errorMessage;
-}
-
-- (void)tagSearchViewController:(YYKTagSearchViewController *)tagSearchVC didSelectErrorMessage:(NSString *)errorMessage {
-    if ([errorMessage rangeOfString:kNonVIPSearchKeywordError].location == 0) {
-        [self payForPayPointType:QBPayPointTypeVIP];
-    } else {
-        [self searchKeyword:self.resultVC.searchedKeyword];
-    }
-}
-
-- (void)tagSearchViewController:(YYKTagSearchViewController *)tagSearchVC didSelectProgram:(YYKProgram *)program {
-    if ([_searchBar isFirstResponder]) {
-        [_searchBar resignFirstResponder];
-    }
-}
 @end

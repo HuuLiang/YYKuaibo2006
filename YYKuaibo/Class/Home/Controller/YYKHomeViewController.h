@@ -8,6 +8,10 @@
 
 #import "YYKBaseViewController.h"
 
+@class YYKBanneredProgramModel;
+
 @interface YYKHomeViewController : YYKBaseViewController
+
+@property (nonatomic,retain,readonly) YYKBanneredProgramModel *programModel;
 
 @end

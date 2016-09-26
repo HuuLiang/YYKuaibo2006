@@ -70,6 +70,9 @@
 		BCAAEB931CF83504000E9079 /* YYKPaymentButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAAEB921CF83504000E9079 /* YYKPaymentButton.m */; };
 		BCC00FBD1CD8B23B00F429B4 /* YYKTabStatsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC00FBC1CD8B23B00F429B4 /* YYKTabStatsModel.m */; };
 		BCC00FC41CD8B96D00F429B4 /* YYKPayStatsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC00FC31CD8B96D00F429B4 /* YYKPayStatsModel.m */; };
+		BCD4AF311D9513B0002E919E /* YYKRankingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4AF301D9513B0002E919E /* YYKRankingViewController.m */; };
+		BCD4AF371D951641002E919E /* YYKHomeViewController+CollectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4AF361D951641002E919E /* YYKHomeViewController+CollectionViewModel.m */; };
+		BCD4AF3A1D951CC3002E919E /* YYKHomeViewController+SearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4AF391D951CC3002E919E /* YYKHomeViewController+SearchBar.m */; };
 		BCE256031C966A8E00133F4F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE256021C966A8E00133F4F /* main.m */; };
 		BCE2560E1C966A8E00133F4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCE2560D1C966A8E00133F4F /* Assets.xcassets */; };
 		BCE256111C966A8E00133F4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BCE2560F1C966A8E00133F4F /* LaunchScreen.storyboard */; };
@@ -246,6 +249,12 @@
 		BCC00FBC1CD8B23B00F429B4 /* YYKTabStatsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKTabStatsModel.m; sourceTree = "<group>"; };
 		BCC00FC21CD8B96D00F429B4 /* YYKPayStatsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKPayStatsModel.h; sourceTree = "<group>"; };
 		BCC00FC31CD8B96D00F429B4 /* YYKPayStatsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = YYKPayStatsModel.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		BCD4AF2F1D9513B0002E919E /* YYKRankingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKRankingViewController.h; sourceTree = "<group>"; };
+		BCD4AF301D9513B0002E919E /* YYKRankingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKRankingViewController.m; sourceTree = "<group>"; };
+		BCD4AF351D951641002E919E /* YYKHomeViewController+CollectionViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YYKHomeViewController+CollectionViewModel.h"; sourceTree = "<group>"; };
+		BCD4AF361D951641002E919E /* YYKHomeViewController+CollectionViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YYKHomeViewController+CollectionViewModel.m"; sourceTree = "<group>"; };
+		BCD4AF381D951CC3002E919E /* YYKHomeViewController+SearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YYKHomeViewController+SearchBar.h"; sourceTree = "<group>"; };
+		BCD4AF391D951CC3002E919E /* YYKHomeViewController+SearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YYKHomeViewController+SearchBar.m"; sourceTree = "<group>"; };
 		BCE255FE1C966A8E00133F4F /* YYKuaibo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YYKuaibo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCE256021C966A8E00133F4F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BCE2560D1C966A8E00133F4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -631,6 +640,23 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		BCD4AF2D1D951391002E919E /* Ranking */ = {
+			isa = PBXGroup;
+			children = (
+				BCD4AF2E1D951391002E919E /* Controller */,
+			);
+			path = Ranking;
+			sourceTree = "<group>";
+		};
+		BCD4AF2E1D951391002E919E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BCD4AF2F1D9513B0002E919E /* YYKRankingViewController.h */,
+				BCD4AF301D9513B0002E919E /* YYKRankingViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		BCE255F51C966A8E00133F4F = {
 			isa = PBXGroup;
 			children = (
@@ -698,6 +724,7 @@
 				BCE2572D1C968CEA00133F4F /* Home */,
 				BC7A61841CFC508200021200 /* Lib */,
 				BCB1C4811CC66B3600F9B83B /* VIP */,
+				BCD4AF2D1D951391002E919E /* Ranking */,
 				BC4CCD6C1D3639EF001518F1 /* Search */,
 				BCB1C4651CC65E0400F9B83B /* Mine */,
 				BCA1B7D21D23AB59004B492B /* Video */,
@@ -866,6 +893,10 @@
 			children = (
 				BCE257311C968D5100133F4F /* YYKHomeViewController.h */,
 				BCE257321C968D5100133F4F /* YYKHomeViewController.m */,
+				BCD4AF351D951641002E919E /* YYKHomeViewController+CollectionViewModel.h */,
+				BCD4AF361D951641002E919E /* YYKHomeViewController+CollectionViewModel.m */,
+				BCD4AF381D951CC3002E919E /* YYKHomeViewController+SearchBar.h */,
+				BCD4AF391D951CC3002E919E /* YYKHomeViewController+SearchBar.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1099,6 +1130,7 @@
 				BC0C860C1CD367F800C51480 /* YYKStatsBaseModel.m in Sources */,
 				BC937FDE1D5DB06D00112079 /* YYKBannerCell.m in Sources */,
 				BCE257091C966DB400133F4F /* UIImageView+YPBAnimation.m in Sources */,
+				BCD4AF3A1D951CC3002E919E /* YYKHomeViewController+SearchBar.m in Sources */,
 				BC25F10C1D243BB300ECE1F6 /* YYKManualActivationManager.m in Sources */,
 				BCE348541D62618500750D4F /* YYKChannelModel.m in Sources */,
 				BCA1B7D61D23AC10004B492B /* YYKVideoDetailViewController.m in Sources */,
@@ -1145,6 +1177,7 @@
 				BC6C804E1D48C4E000AF2872 /* YYKBanneredProgramModel.m in Sources */,
 				BCA1B7DD1D23BC76004B492B /* YYKVideoListViewController.m in Sources */,
 				BCE257131C966DB400133F4F /* YYKHudManager.m in Sources */,
+				BCD4AF311D9513B0002E919E /* YYKRankingViewController.m in Sources */,
 				BC2BAB491D37E1B900691CB4 /* YYKSearchModel.m in Sources */,
 				BC2FB77A1CDA0A5700645070 /* DBTableVersion.m in Sources */,
 				BC89D2901D6C5F36007EB979 /* YYKApplicationManager.m in Sources */,
@@ -1171,6 +1204,7 @@
 				BC7643421CD04C680059E1C3 /* YYKSpreadBannerViewController.m in Sources */,
 				BCE2570C1C966DB400133F4F /* RACEXTRuntimeExtensions.m in Sources */,
 				BC32FD1E1CCF4E190030EB79 /* UIView+Loading.m in Sources */,
+				BCD4AF371D951641002E919E /* YYKHomeViewController+CollectionViewModel.m in Sources */,
 				BC89D28F1D6C5F34007EB979 /* YYKApplication.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
