@@ -138,6 +138,8 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
                                     self.statsTimeInterval = config.value.integerValue;
                                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_H5_REGION]) {
                                     self.H5Region = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_IMAGE_TOKEN]) {
+                                    self.imageToken = config.value;
                                 }
                                 
                             }];

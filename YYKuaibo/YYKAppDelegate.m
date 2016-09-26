@@ -22,7 +22,7 @@
 #import <QBNetworkingConfiguration.h>
 
 @interface YYKAppDelegate () <UITabBarControllerDelegate>
-
+@property (nonatomic,retain) UIViewController *rootViewController;
 @end
 
 @implementation YYKAppDelegate
@@ -34,6 +34,15 @@
     
     _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor              = [UIColor whiteColor];
+    
+    
+    return _window;
+}
+
+- (UIViewController *)rootViewController {
+    if (_rootViewController) {
+        return _rootViewController;
+    }
     
     YYKHomeViewController *homeVC = [[YYKHomeViewController alloc] init];
     homeVC.title = @"大片";
@@ -73,15 +82,15 @@
     
     UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
     mineNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:mineVC.title
-                                                           image:[UIImage imageNamed:@"tabbar_mine_normal"]
-                                                   selectedImage:[UIImage imageNamed:@"tabbar_mine_selected"]];
+                                                       image:[UIImage imageNamed:@"tabbar_mine_normal"]
+                                               selectedImage:[UIImage imageNamed:@"tabbar_mine_selected"]];
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = @[homeNav, channelNav, vipNav, rankingNav, mineNav];
 //    tabBarController.tabBar.translucent = NO;
     tabBarController.delegate = self;
-    _window.rootViewController = tabBarController;
-    return _window;
+    _rootViewController = tabBarController;
+    return _rootViewController;
 }
 
 - (void)setupCommonStyles {
@@ -204,8 +213,43 @@
 //    [self registerUserNotification];
     [[QBNetworkInfo sharedInfo] startMonitoring];
     
+    BOOL requestedSystemConfig = NO;
+#ifdef YYK_IMAGE_TOKEN_ENABLED
+    NSString *imageToken = [YYKUtil imageToken];
+    if (imageToken) {
+        [[SDWebImageManager sharedManager].imageDownloader setValue:imageToken forHTTPHeaderField:@"Referer"];
+        self.window.rootViewController = self.rootViewController;
+        [self.window makeKeyAndVisible];
+    } else {
+        self.window.rootViewController = [[UIViewController alloc] init];
+        [self.window makeKeyAndVisible];
+        
+        [self.window beginProgressingWithTitle:@"更新系统配置..." subtitle:nil];
+        requestedSystemConfig = [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+            [self.window endProgressing];
+            
+            if (success) {
+                NSString *fetchedToken = [YYKSystemConfigModel sharedModel].imageToken;
+                [YYKUtil setImageToken:fetchedToken];
+                if (fetchedToken) {
+                    [[SDWebImageManager sharedManager].imageDownloader setValue:fetchedToken forHTTPHeaderField:@"Referer"];
+                }
+                
+            }
+            
+            self.window.rootViewController = self.rootViewController;
+            
+            NSUInteger statsTimeInterval = 180;
+            if ([YYKSystemConfigModel sharedModel].loaded && [YYKSystemConfigModel sharedModel].statsTimeInterval > 0) {
+                statsTimeInterval = [YYKSystemConfigModel sharedModel].statsTimeInterval;
+            }
+            [[YYKStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
+        }];
+    }
+#else 
+    self.window.rootViewController = self.rootViewController;
     [self.window makeKeyAndVisible];
-    
+#endif
 //    YYKLaunchView *launchView = [[YYKLaunchView alloc] init];
 //    [launchView show];
     
@@ -227,15 +271,23 @@
         [[YYKUserAccessModel sharedModel] requestUserAccess];
     }
     
-    [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
-        
-        NSUInteger statsTimeInterval = 180;
-        if ([YYKSystemConfigModel sharedModel].loaded && [YYKSystemConfigModel sharedModel].statsTimeInterval > 0) {
-            statsTimeInterval = [YYKSystemConfigModel sharedModel].statsTimeInterval;
-        }
-        [[YYKStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
-    }];
+    if (!requestedSystemConfig) {
+        [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+            
+#ifdef YYK_IMAGE_TOKEN_ENABLED
+            if (success) {
+                [YYKUtil setImageToken:[YYKSystemConfigModel sharedModel].imageToken];
+            }
+#endif
+            NSUInteger statsTimeInterval = 180;
+            if ([YYKSystemConfigModel sharedModel].loaded && [YYKSystemConfigModel sharedModel].statsTimeInterval > 0) {
+                statsTimeInterval = [YYKSystemConfigModel sharedModel].statsTimeInterval;
+            }
+            [[YYKStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
+        }];
+    }
     
+    [[YYKVideoTokenManager sharedManager] requestTokenWithCompletionHandler:nil];
     [[YYKAppSpreadBannerModel sharedModel] fetchAppSpreadWithCompletionHandler:nil];
     [[YYKVersionUpdateModel sharedModel] fetchLatestVersionWithCompletionHandler:^(BOOL success, id obj) {
         if (success) {

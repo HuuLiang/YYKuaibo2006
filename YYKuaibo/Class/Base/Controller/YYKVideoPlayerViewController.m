@@ -37,15 +37,6 @@
     self.view.backgroundColor = [UIColor blackColor];
     
     @weakify(self);
-    _videoPlayer = [[YYKVideoPlayer alloc] initWithVideoURL:[NSURL URLWithString:self.video.videoUrl]
-                                                   delegate:self];
-    [self.view addSubview:_videoPlayer];
-    {
-        [_videoPlayer mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.view);
-        }];
-    }
-    
     _controlView = [[UIView alloc] init];
     _controlView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
     [self.view addSubview:_controlView];
@@ -112,6 +103,43 @@
             }
         }];
     } forControlEvents:UIControlEventValueChanged];
+    
+    [self.view beginProgressingWithTitle:@"加载中..." subtitle:nil];
+    [[YYKVideoTokenManager sharedManager] requestTokenWithCompletionHandler:^(BOOL success, NSString *token, NSString *userId) {
+        @strongify(self);
+        if (!self) {
+            return ;
+        }
+        
+        [self.view endProgressing];
+        
+        if (success) {
+            [self loadVideo:[NSURL URLWithString:[[YYKVideoTokenManager sharedManager] videoLinkWithOriginalLink:self.video.videoUrl]]];
+        } else {
+            [UIAlertView bk_showAlertViewWithTitle:@"无法获取视频信息" message:nil cancelButtonTitle:@"确定" otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                @strongify(self);
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+        }
+    }];
+     
+    
+}
+
+- (void)loadVideo:(NSURL *)videoUrl {
+
+    _videoPlayer = [[YYKVideoPlayer alloc] initWithVideoURL:videoUrl delegate:self];
+    [self.view insertSubview:_videoPlayer atIndex:0];
+    {
+        [_videoPlayer mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
+    }
+    
+#ifdef YYK_DISPLAY_VIDEO_URL
+    NSString *url = videoUrl.absoluteString;
+    [UIAlertView bk_showAlertViewWithTitle:@"视频链接" message:url cancelButtonTitle:@"确定" otherButtonTitles:nil handler:nil];
+#endif
 }
 
 - (void)viewDidAppear:(BOOL)animated {

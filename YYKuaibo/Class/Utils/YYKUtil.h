@@ -28,6 +28,9 @@
 + (BOOL)isVIP;
 + (BOOL)isSVIP;
 
++ (NSString *)imageToken;
++ (void)setImageToken:(NSString *)imageToken;
+
 + (NSString *)accessId;
 + (NSString *)userId;
 + (NSString *)deviceName;
