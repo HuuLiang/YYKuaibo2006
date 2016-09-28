@@ -22,6 +22,10 @@ DefineLazyPropertyInitialization(YYKChannelProgramModel, videoModel)
     if (self) {
         self.delegate = self;
         _channel = channel;
+        
+        if (channel.type.unsignedIntegerValue == YYKProgramTypePicture) {
+            self.presentationStyle = YYKVideoListPortraitStyle;
+        }
     }
     return self;
 }

@@ -17,7 +17,7 @@
 @property (nonatomic) NSString *baseURL;
 @property (nonatomic) NSString *standbyBaseURL;
 
-@property (nonatomic) BOOL logEnabled;
+@property (nonatomic) BOOL logEnabled DEPRECATED_ATTRIBUTE;
 
 + (instancetype)defaultConfiguration;
 

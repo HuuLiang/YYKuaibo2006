@@ -23,8 +23,6 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
-        
         _footerView = [[UIView alloc] init];
         [self addSubview:_footerView];
         {
@@ -35,7 +33,7 @@
         }
 
         _popLabel = [[UILabel alloc] init];
-        _popLabel.textColor = [UIColor colorWithHexString:@"#888888"];
+        _popLabel.textColor = kDefaultLightTextColor;
         _popLabel.font = kExtraSmallFont;
         _popLabel.textAlignment = NSTextAlignmentCenter;
         [_footerView addSubview:_popLabel];
@@ -50,7 +48,7 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = kSmallFont;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        //_titleLabel.textColor = [UIColor colorWithWhite:0.9 alpha:1];
+        _titleLabel.textColor = kDefaultTextColor;
         [_footerView addSubview:_titleLabel];
         {
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

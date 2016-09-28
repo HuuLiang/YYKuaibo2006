@@ -23,7 +23,7 @@
         _showSeparator = YES;
         
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.textColor = [UIColor colorWithHexString:@"#666666"];
+        _titleLabel.textColor = kDefaultTextColor;
         _titleLabel.font = kMediumFont;
         [self addSubview:_titleLabel];
         {
@@ -33,7 +33,7 @@
         }
         
         _separatorView = [[UIView alloc] init];
-        _separatorView.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+        _separatorView.backgroundColor = kDefaultTextColor;
         [self addSubview:_separatorView];
         {
             [_separatorView mas_makeConstraints:^(MASConstraintMaker *make) {

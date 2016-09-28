@@ -17,6 +17,7 @@
 @property (nonatomic) NSString *columnImg;
 @property (nonatomic) NSString *spreadUrl;
 @property (nonatomic) NSNumber *type;
+@property (nonatomic) NSNumber *showMode; //YYKCategoryShowMode
 @property (nonatomic) NSNumber *showNumber;
 @property (nonatomic) NSNumber *items;
 @property (nonatomic) NSNumber *page;

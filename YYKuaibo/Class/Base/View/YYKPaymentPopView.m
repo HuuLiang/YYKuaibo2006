@@ -95,11 +95,10 @@ DefineLazyPropertyInitialization(NSMutableArray, paymentTypeItems)
         self.scrollEnabled = NO;
         self.layer.cornerRadius = 4;
         self.layer.masksToBounds = YES;
-        self.separatorColor = [UIColor colorWithWhite:0.2 alpha:1];
         self.backgroundColor = [UIColor clearColor];
-        self.separatorColor = [UIColor lightGrayColor];
+        self.separatorColor = kDefaultTextColor;
         self.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, kFooterHeight)];
-        self.tableFooterView.backgroundColor = [UIColor colorWithWhite:0.96 alpha:1];
+        self.tableFooterView.backgroundColor = kLightBackgroundColor;
         [self registerClass:[YYKPayPointTypeCell class] forCellReuseIdentifier:kPayPointTypeCellReusableIdentifier];
         
         _selfActivateLabel = [[UILabel alloc] init];
@@ -281,6 +280,7 @@ DefineLazyPropertyInitialization(NSMutableArray, paymentTypeItems)
         return _headerCell;
     } else if (indexPath.section == PayPointTypeSection) {
         YYKPayPointTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:kPayPointTypeCellReusableIdentifier forIndexPath:indexPath];
+        cell.backgroundColor = kLightBackgroundColor;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         BOOL isUpgrade = [YYKUtil isVIP] && ![YYKUtil isSVIP];

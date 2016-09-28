@@ -12,11 +12,13 @@
 #import "YYKVideoSectionFooter.h"
 #import "YYKBannerCell.h"
 #import "YYKHomeTrialCell.h"
+#import "YYKSectionBackgroundFlowLayout.h"
 
 #import "YYKBanneredProgramModel.h"
 
 static const void *kYYKLayoutCollectionViewAssociatedKey = &kYYKLayoutCollectionViewAssociatedKey;
 
+static NSString *const kSectionBackgroundReusableIdentifier = @"SectionBackgroundReusableIdentifier";
 static NSString *const kBannerCellReusableIdentifier = @"BannerCellReusableIdentifier";
 static NSString *const kVideoLibCellReusableIdentifier = @"VideoLibCellReusableIdentifier";
 static NSString *const kSectionHeaderReusableIdentifier = @"SectionHeaderReusableIdentifier";
@@ -30,7 +32,7 @@ typedef NS_ENUM(NSUInteger, YYKHomeSection) {
     YYKHomeSectionChannelOffset
 };
 
-@interface YYKHomeViewController () <YYKBannerCellDelegate>
+@interface YYKHomeViewController () <YYKBannerCellDelegate,UICollectionViewDataSource,YYKSectionBackgroundFlowLayoutDelegate>
 
 @end
 
@@ -42,7 +44,7 @@ typedef NS_ENUM(NSUInteger, YYKHomeSection) {
         return collectionView;
     }
     
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    YYKSectionBackgroundFlowLayout *layout = [[YYKSectionBackgroundFlowLayout alloc] init];
     layout.minimumInteritemSpacing = kDefaultCollectionViewInteritemSpace;
     layout.minimumLineSpacing = layout.minimumInteritemSpacing;
     
@@ -51,14 +53,16 @@ typedef NS_ENUM(NSUInteger, YYKHomeSection) {
     }
     
     collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-    collectionView.backgroundColor = [UIColor whiteColor];
+    collectionView.backgroundColor = kDarkBackgroundColor;
     collectionView.delegate = self;
     collectionView.dataSource = self;
     [collectionView registerClass:[YYKVideoCell class] forCellWithReuseIdentifier:kVideoLibCellReusableIdentifier];
     [collectionView registerClass:[YYKBannerCell class] forCellWithReuseIdentifier:kBannerCellReusableIdentifier];
     [collectionView registerClass:[YYKVideoSectionHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kSectionHeaderReusableIdentifier];
     [collectionView registerClass:[YYKVideoSectionFooter class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kSectionFooterReusableIdentifier];
+    [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:YYKElementKindSectionBackground withReuseIdentifier:kSectionBackgroundReusableIdentifier];
     [collectionView registerClass:[YYKHomeTrialCell class] forCellWithReuseIdentifier:kTrialCellReusableIdentifier];
+    
     objc_setAssociatedObject(self, kYYKLayoutCollectionViewAssociatedKey, collectionView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     return collectionView;
@@ -97,7 +101,7 @@ typedef NS_ENUM(NSUInteger, YYKHomeSection) {
         return cell;
     } else if (indexPath.section == YYKHomeSectionTrial) {
         YYKHomeTrialCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kTrialCellReusableIdentifier forIndexPath:indexPath];
-        cell.backgroundColor = [UIColor whiteColor];
+//        cell.backgroundColor = [UIColor whiteColor];
         
         if (indexPath.row < self.programModel.fetchedTrialChannel.programList.count) {
             YYKProgram *trialProgram = self.programModel.fetchedTrialChannel.programList[indexPath.row];
@@ -180,6 +184,12 @@ typedef NS_ENUM(NSUInteger, YYKHomeSection) {
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if (kind == YYKElementKindSectionBackground) {
+        UICollectionReusableView *sectionBgView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionBackgroundReusableIdentifier forIndexPath:indexPath];
+        sectionBgView.backgroundColor = kDefaultSectionBackgroundColor;
+        return sectionBgView;
+    }
+    
     if (indexPath.section == YYKHomeSectionBanner) {
         return nil;
     }
@@ -193,6 +203,7 @@ typedef NS_ENUM(NSUInteger, YYKHomeSection) {
     
     if (kind == UICollectionElementKindSectionHeader) {
         YYKVideoSectionHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionHeaderReusableIdentifier forIndexPath:indexPath];
+        headerView.backgroundColor = kDefaultSectionBackgroundColor;
         
         if (indexPath.section == YYKHomeSectionTrial) {
             headerView.title = @"免费试播";
@@ -204,9 +215,10 @@ typedef NS_ENUM(NSUInteger, YYKHomeSection) {
             }
         }
         return headerView;
-    } else {
+    } else if (kind == UICollectionElementKindSectionFooter) {
         YYKVideoSectionFooter *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionFooterReusableIdentifier forIndexPath:indexPath];
-        footerView.titleColor = nil;
+        footerView.backgroundColor = kDefaultSectionBackgroundColor;
+        footerView.titleColor = [UIColor colorWithHexString:@"#627a9d"];
         
         if (indexPath.section == YYKHomeSectionTrial) {
             BOOL shouldBeSVIP = [YYKUtil isVIP] && ![YYKUtil isSVIP];
@@ -238,7 +250,8 @@ typedef NS_ENUM(NSUInteger, YYKHomeSection) {
         }
         
         return footerView;
-    }
+    }    
+    return nil;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -262,7 +275,7 @@ typedef NS_ENUM(NSUInteger, YYKHomeSection) {
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     if (section >= YYKHomeSectionChannelOffset || section == YYKHomeSectionTrial) {
-        return UIEdgeInsetsMake(0, kDefaultCollectionViewInteritemSpace, 0, kDefaultCollectionViewInteritemSpace);
+        return UIEdgeInsetsMake(kDefaultCollectionViewInteritemSpace, kDefaultCollectionViewInteritemSpace, kDefaultCollectionViewInteritemSpace, kDefaultCollectionViewInteritemSpace);
     }
     return UIEdgeInsetsZero;//UIEdgeInsetsMake(0, 0, 5, 0);
 }
@@ -285,6 +298,10 @@ typedef NS_ENUM(NSUInteger, YYKHomeSection) {
     } else {
         return CGSizeMake(0, MAX(30,kScreenHeight*0.057));
     }
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
+    return YES;
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {

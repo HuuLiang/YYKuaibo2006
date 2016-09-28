@@ -1,0 +1,1 @@
+../../../QBPayment/QBPayment/Vendor/MTDLPay/QJPayWithAliPay.h

@@ -79,7 +79,7 @@ static const void *kYYKShowStateAssociatedKey = &kYYKShowStateAssociatedKey;
 //    } else {
         if (!self.header) {
             MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:handler];
-//            refreshHeader.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+            refreshHeader.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
             refreshHeader.lastUpdatedTimeLabel.textColor = [self YYK_refreshTextColor];
             refreshHeader.stateLabel.textColor = [self YYK_refreshTextColor];
             refreshHeader.lastUpdatedTimeLabel.hidden = !self.YYK_showLastUpdatedTime;
@@ -119,7 +119,7 @@ static const void *kYYKShowStateAssociatedKey = &kYYKShowStateAssociatedKey;
 - (void)YYK_addPagingRefreshWithHandler:(void (^)(void))handler {
     if (!self.footer) {
         MJRefreshAutoNormalFooter *refreshFooter = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:handler];
-//        refreshFooter.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+        refreshFooter.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
         refreshFooter.stateLabel.textColor = [self YYK_refreshTextColor];
         self.footer = refreshFooter;
     }

@@ -36,8 +36,8 @@ static NSString *const kPaymentConfigKeyName = @"qbpayment_config_key_name";
     QBPaymentConfig *defaultConfig = [[self alloc] init];
     
     defaultConfig.payConfig = [[QBPaymentConfigSummary alloc] init];
-    defaultConfig.payConfig.wechat = kYYKVIAPayConfigName;
-    defaultConfig.payConfig.alipay = kYYKVIAPayConfigName;
+    defaultConfig.payConfig.wechat = kQBVIAPayConfigName;
+    defaultConfig.payConfig.alipay = kQBVIAPayConfigName;
     
     defaultConfig.configDetails = [[QBPaymentConfigDetail alloc] init];
     defaultConfig.configDetails.viaPayConfig = [QBVIAPayConfig defaultConfig];
@@ -50,13 +50,14 @@ static NSString *const kPaymentConfigKeyName = @"qbpayment_config_key_name";
         return _paymentTypeMapping;
     }
     
-    _paymentTypeMapping = @{kYYKVIAPayConfigName:@(QBPayTypeVIAPay),
-                            kYYKIAppPayConfigName:@(QBPayTypeIAppPay),
-                            kYYKMingPayConfigName:@(QBPayTypeMingPay),
-                            kYYKSPayConfigName:@(QBPayTypeSPay),
-                            kYYKHTPayConfigName:@(QBPayTypeHTPay),
-                            kYYKDXTXPayConfigName:@(QBPayTypeDXTXPay),
-							kYYKWeiYingConfigName:@(QBPayTypeWeiYingPay)};
+    _paymentTypeMapping = @{kQBVIAPayConfigName:@(QBPayTypeVIAPay),
+                            kQBIAppPayConfigName:@(QBPayTypeIAppPay),
+                            kQBMingPayConfigName:@(QBPayTypeMingPay),
+                            kQBSPayConfigName:@(QBPayTypeSPay),
+                            kQBHTPayConfigName:@(QBPayTypeHTPay),
+                            kQBMTDLPayConfigName:@(QBPayTypeMTDLPay),
+                            kQBDXTXPayConfigName:@(QBPayTypeDXTXPay),
+							kQBWeiYingConfigName:@(QBPayTypeWeiYingPay)};
     return _paymentTypeMapping;
 }
 

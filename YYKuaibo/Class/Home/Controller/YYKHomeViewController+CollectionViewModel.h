@@ -8,7 +8,7 @@
 
 #import "YYKHomeViewController.h"
 
-@interface YYKHomeViewController (CollectionViewModel) <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface YYKHomeViewController (CollectionViewModel)
 
 @property (nonatomic,retain,readonly) UICollectionView *layoutCollectionView;
 

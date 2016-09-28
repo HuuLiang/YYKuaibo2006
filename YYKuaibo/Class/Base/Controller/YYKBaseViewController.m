@@ -13,6 +13,7 @@
 #import "YYKVideoDetailViewController.h"
 #import "YYKChannelVideoViewController.h"
 #import "YYKWebPlayerViewController.h"
+#import "YYKPhotoBrowser.h"
 //@import MediaPlayer;
 //@import AVKit;
 //@import AVFoundation.AVPlayer;
@@ -34,7 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor colorWithWhite:0.94 alpha:1];
+    self.view.backgroundColor = kLightBackgroundColor;//[UIColor colorWithWhite:0.94 alpha:1];
     
     if (self.navigationController.viewControllers.count >= 4) {
         @weakify(self);
@@ -109,6 +110,13 @@
             }
             
         }
+    } else if (program.type.unsignedIntegerValue == YYKProgramTypePicture) {
+        if ([YYKUtil isNoVIP]) {
+            [self payForProgram:program programLocation:programLocation inChannel:channel];
+        } else {
+            YYKPhotoBrowser *photoBrowser = [[YYKPhotoBrowser alloc] initWithPhotoProgram:program];
+            [self.navigationController pushViewController:photoBrowser animated:YES];
+        }
     }
     
     [[YYKStatsManager sharedManager] statsCPCWithProgram:program
@@ -120,6 +128,10 @@
 }
 
 - (void)openChannel:(YYKChannel *)channel {
+    if (!channel) {
+        return ;
+    }
+    
     YYKChannelVideoViewController *channelVideoVC = [[YYKChannelVideoViewController alloc] initWithChannel:channel];
     channelVideoVC.hidesBottomBarWhenPushed = YES;
     channelVideoVC.tagBackgroundColor = kThemeColor;//[UIColor featuredColorWithIndex:indexPath.section];

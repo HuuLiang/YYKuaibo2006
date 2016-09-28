@@ -54,12 +54,23 @@ extern NSString *const kSearchErrorMessageKey;
 #define SafelyCallBlock(block,...) QBSafelyCallBlock(block, __VA_ARGS__)
 #define SafelyCallBlockAndRelease(block,...) QBSafelyCallBlockAndRelease(block, __VA_ARGS__)
 
+#define SynthesizePropertyClassMethod(propName, propClass) \
+- (Class)propName##Class { return [propClass class]; }
+
+#define SynthesizeContainerPropertyElementClassMethod(propName, elementClass) \
+- (Class)propName##ElementClass { return [elementClass class]; }
+
 #define kPaidNotificationName @"yykuaibo_paid_notification"
 #define kDefaultDateFormat    @"yyyyMMddHHmmss"
 #define kDefaultCollectionViewInteritemSpace  (5)
 
 #define kBarColor [UIColor colorWithHexString:@"#172857"]
 #define kThemeColor [UIColor colorWithHexString:@"#ab47bc"]
+#define kDefaultTextColor [UIColor colorWithHexString:@"#8eb1e5"]
+#define kDefaultLightTextColor [UIColor colorWithHexString:@"#5f7699"]
+#define kDarkBackgroundColor [UIColor colorWithHexString:@"#011122"]
+#define kLightBackgroundColor [UIColor colorWithHexString:@"#0e2341"]
+#define kDefaultSectionBackgroundColor kLightBackgroundColor
 
 #define QBPayPointTypeVIP (1)
 #define QBPayPointTypeSVIP (2)

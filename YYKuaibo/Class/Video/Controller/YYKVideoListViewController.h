@@ -8,6 +8,11 @@
 
 #import "YYKBaseViewController.h"
 
+typedef NS_ENUM(NSUInteger,YYKVideoListPresentationStyle) {
+    YYKVideoListLandscapeStyle,
+    YYKVideoListPortraitStyle
+};
+
 @class YYKVideoListViewController;
 @protocol YYKVideoListViewControllerDelegate <NSObject>
 
@@ -22,6 +27,7 @@
 @property (nonatomic,weak) id<YYKVideoListViewControllerDelegate> delegate;
 @property (nonatomic,retain) NSMutableArray<YYKProgram *> *videos;
 @property (nonatomic) UIColor *tagBackgroundColor;
+@property (nonatomic) YYKVideoListPresentationStyle presentationStyle;
 
 - (void)disableVideoLoadingWithNotifiedText:(NSString *)text;
 - (void)notifyNoMoreVideos;

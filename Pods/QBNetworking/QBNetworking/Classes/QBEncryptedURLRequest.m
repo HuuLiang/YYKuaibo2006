@@ -10,6 +10,7 @@
 #import "NSDictionary+QBSign.h"
 #import "NSString+crypt.h"
 #import "QBNetworkingConfiguration.h"
+#import "QBDefines.h"
 
 static NSString *const kEncryptionPasssword = @"f7@j3%#5aiG$4";
 
@@ -79,9 +80,7 @@ static NSString *const kEncryptionPasssword = @"f7@j3%#5aiG$4";
     
     id decryptedResponse = [self decryptResponse:responseObject];
 
-    if (self.configuration.logEnabled) {
-        NSLog(@"Decrypted response: %@", decryptedResponse);
-    }
+    QBLog(@"Decrypted response: %@", decryptedResponse);
     
     [super processResponseObject:decryptedResponse withResponseHandler:responseHandler];
 }

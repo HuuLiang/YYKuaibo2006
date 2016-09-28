@@ -22,7 +22,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+        _titleLabel.textColor = kDefaultTextColor;
         _titleLabel.font = kMediumFont;
         [self addSubview:_titleLabel];
         {

@@ -29,6 +29,8 @@ DefineLazyPropertyInitialization(NSMutableDictionary, numbersOfupdates)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = kDefaultSectionBackgroundColor;
+    
     // Do any additional setup after loading the view.
     _layoutTV = [[UITableView alloc] init];
     _layoutTV.backgroundColor = self.view.backgroundColor;

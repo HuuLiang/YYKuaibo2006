@@ -28,6 +28,10 @@
 
 #define YYK_CHANNEL_URL                 @"/iosvideo/channelRanking.htm"
 #define YYK_CHANNEL_PROGRAM_URL         @"/iosvideo/program.htm"
+#define YYK_PHOTO_PROGRAM_URL           @"/iosvideo/programUrl.htm"
+
+#define YYK_CATEGORY_URL                @"/iosvideo/category.htm"
+#define YYK_RANKING_URL                 @"/iosvideo/ranking.htm"
 
 #define YYK_VIP_CHANNEL_URL             @"/iosvideo/channel.htm"
 #define YYK_VIP_VIDEO_URL               @"/iosvideo/vipvideo.htm"

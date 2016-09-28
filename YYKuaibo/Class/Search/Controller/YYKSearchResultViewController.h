@@ -17,6 +17,7 @@
 //@property (nonatomic,readonly) NSString *searchedKeywords;
 //@property (nonatomic,readonly) BOOL isTagKeyword;
 
+- (instancetype)initWithKeyword:(YYKKeyword *)keyword;
 - (void)searchKeyword:(YYKKeyword *)keyword withCompletionHandler:(YYKCompletionHandler)completionHandler;
 
 @end

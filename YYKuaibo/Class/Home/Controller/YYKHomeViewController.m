@@ -9,6 +9,7 @@
 #import "YYKHomeViewController.h"
 #import "YYKHomeViewController+CollectionViewModel.h"
 #import "YYKHomeViewController+SearchBar.h"
+#import "YYKCategoryViewController.h"
 
 #import "YYKBanneredProgramModel.h"
 
@@ -24,9 +25,15 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    @weakify(self);
     self.navigationItem.title = nil;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"category"] style:UIBarButtonItemStylePlain handler:^(id sender) {
-        
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[[UIImage imageNamed:@"category"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                                                                                style:UIBarButtonItemStylePlain
+                                                                              handler:^(id sender)
+    {
+        @strongify(self);
+        YYKCategoryViewController *categoryVC = [[YYKCategoryViewController alloc] init];
+        [self.navigationController pushViewController:categoryVC animated:YES];
     }];
     [self.navigationController.navigationBar addSubview:self.searchBar];
     
@@ -37,7 +44,6 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
         }];
     }
 
-    @weakify(self);
     [self.layoutCollectionView YYK_addPullToRefreshWithHandler:^{
         @strongify(self);
         [self loadPrograms];
@@ -45,6 +51,27 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
     [self.layoutCollectionView YYK_triggerPullToRefresh];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification) name:kPaidNotificationName object:nil];
+}
+
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:animated];
+//    
+//    self.searchBar.hidden = NO;
+////    if (self.searchBar.hidden) {
+////        [UIView animateWithDuration:0.2 animations:^{
+////            self.searchBar.hidden = NO;
+////        }];
+////    }
+//}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.searchBar.hidden = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.searchBar.hidden = YES;
 }
 
 - (void)loadPrograms {

@@ -145,7 +145,7 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, spreadModel)
         return cell;
     } else if ([self sectionTypeWithSectionIndex:indexPath.section] == YYKMenuSection) {
         YYKMineMenuCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMenuCellReusableIdentifier forIndexPath:indexPath];
-        cell.backgroundColor = [UIColor whiteColor];
+        cell.backgroundColor = kDarkBackgroundColor;
         
         if (indexPath.item == YYKActivationItem) {
             cell.iconImage = [UIImage imageNamed:@"mine_activation"];

@@ -10,7 +10,8 @@
 #import "YYKVideoCell.h"
 
 static NSString *const kVideoListCellReusableIdentifier = @"VideoListCellReusableIdentifier";
-static const CGFloat kVideoLibImageScale = 5./3.;
+static const CGFloat kVideoLibLandscapeImageScale = 5./3.;
+static const CGFloat kVideoLibPortraitImageScale = 7./9.;
 
 @interface YYKVideoListViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
@@ -161,7 +162,7 @@ DefineLazyPropertyInitialization(NSMutableArray, videos)
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)collectionViewLayout;
     const CGFloat width = (CGRectGetWidth(collectionView.bounds) - layout.minimumInteritemSpacing - layout.sectionInset.left - layout.sectionInset.right)/2;
-    const CGFloat height = [YYKVideoCell heightRelativeToWidth:width withScale:kVideoLibImageScale];
+    const CGFloat height = [YYKVideoCell heightRelativeToWidth:width withScale:self.presentationStyle == YYKVideoListPortraitStyle ? kVideoLibPortraitImageScale : kVideoLibLandscapeImageScale];
     return CGSizeMake(width, height);
 }
 

@@ -10,6 +10,7 @@
 #import "QBNetworkingConfiguration.h"
 #import "AFNetworking.h"
 #import "RACEXTScope.h"
+#import "QBDefines.h"
 
 NSString *const kQBNetworkingErrorNotification = @"com.iqu8.qbnetworking.errornotification";
 NSString *const kQBNetworkingErrorCodeKey = @"com.iqu8.qbnetworking.errorcodekey";
@@ -99,9 +100,7 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
         return NO;
     }
     
-    if (self.configuration.logEnabled) {
-        NSLog(@"Requesting %@ !\nwith parameters: %@\n", urlPath, params);
-    }
+    QBLog(@"Requesting %@ !\nwith parameters: %@\n", urlPath, params);
 
     @weakify(self);
     self.response = [[[[self class] responseClass] alloc] init];
@@ -109,17 +108,13 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
     void (^success)(NSURLSessionDataTask *,id) = ^(NSURLSessionDataTask *task, id responseObject) {
         @strongify(self);
         
-        if (self.configuration.logEnabled) {
-            NSLog(@"Response for %@ : %@\n", urlPath, responseObject);
-        }
+        QBLog(@"Response for %@ : %@\n", urlPath, responseObject);
         
         [self processResponseObject:responseObject withResponseHandler:responseHandler];
     };
     
     void (^failure)(NSURLSessionDataTask *, NSError *) = ^(NSURLSessionDataTask *task, NSError *error) {
-        if (self.configuration.logEnabled) {
-            NSLog(@"Error for %@ : %@\n", urlPath, error.localizedDescription);
-        }
+        QBLog(@"Error for %@ : %@\n", urlPath, error.localizedDescription);
         
         if (shouldNotifyError) {
             if ([self shouldPostErrorNotification]) {
@@ -199,9 +194,7 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
     }
     
     if (status != QBURLResponseSuccess) {
-        if (self.configuration.logEnabled) {
-            NSLog(@"Error message : %@\n", errorMessage);
-        }
+        QBLog(@"Error message : %@\n", errorMessage);
         
         if ([self shouldPostErrorNotification]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kQBNetworkingErrorNotification

@@ -44,7 +44,7 @@
         }
         
         _originalPriceLabel = [[UILabel alloc] init];
-        _originalPriceLabel.textColor = [UIColor grayColor];
+        _originalPriceLabel.textColor = kDefaultLightTextColor;
         _originalPriceLabel.font = kExtraSmallFont;
         [self addSubview:_originalPriceLabel];
         {
@@ -56,6 +56,7 @@
         
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = kBigFont;
+        _titleLabel.textColor = kDefaultTextColor;
         [self addSubview:_titleLabel];
         {
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -66,7 +67,7 @@
         }
         
         _subtitleLabel = [[UILabel alloc] init];
-        _subtitleLabel.textColor = [UIColor grayColor];
+        _subtitleLabel.textColor = kDefaultLightTextColor;
         _subtitleLabel.font = kExtraSmallFont;
         [self addSubview:_subtitleLabel];
         {
@@ -87,10 +88,10 @@
     
     _selectImageView.image = selected ? [UIImage imageNamed:@"vip_type_selected_icon"] : [UIImage imageNamed:@"vip_type_normal_icon"];
     
-    _titleLabel.textColor = selected ? [UIColor blackColor] : [UIColor colorWithWhite:0.75 alpha:1];
-    _priceLabel.textColor = selected ? [UIColor redColor] : [UIColor colorWithWhite:0.75 alpha:1];
-    _originalPriceLabel.textColor = selected ? [UIColor grayColor] : [UIColor colorWithWhite:0.75 alpha:1];
-    _subtitleLabel.textColor = selected ? [UIColor grayColor] : [UIColor colorWithWhite:0.75 alpha:1];
+    _titleLabel.textColor = selected ? kDefaultTextColor : kDefaultLightTextColor;//[UIColor colorWithWhite:0.75 alpha:1];
+    _priceLabel.textColor = selected ? [UIColor redColor] : kDefaultLightTextColor;//[UIColor colorWithWhite:0.75 alpha:1];
+//    _originalPriceLabel.textColor = selected ? kDefaultLightTextColor : [UIColor colorWithWhite:0.75 alpha:1];
+//    _subtitleLabel.textColor = selected ? kDefaultLightTextColor : [UIColor colorWithWhite:0.75 alpha:1];
 }
 
 - (void)setCurrentPrice:(CGFloat)currentPrice {

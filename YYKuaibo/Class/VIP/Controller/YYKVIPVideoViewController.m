@@ -9,12 +9,14 @@
 #import "YYKVIPVideoViewController.h"
 #import "YYKVIPVideoCell.h"
 #import "YYKVideoSectionHeader.h"
+#import "YYKSectionBackgroundFlowLayout.h"
 #import "YYKChannelProgramModel.h"
 
+static NSString *const kSectionBackgroundReusableIdentifier = @"SectionBackgroundReusableIdentifier";
 static NSString *const kVideoCellReusableIdentifier = @"VideoCellReusableIdentifier";
 static NSString *const kVideoHeaderReusableIdentifier = @"VideoHeaderReusableIdentifier";
 
-@interface YYKVIPVideoViewController () <UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
+@interface YYKVIPVideoViewController () <YYKSectionBackgroundFlowLayoutDelegate,UICollectionViewDataSource>
 {
     UIView *_topView;
     UICollectionView *_videoCV;
@@ -45,7 +47,7 @@ DefineLazyPropertyInitialization(NSMutableArray, programs)
     self.title = [NSString stringWithFormat:@"%@专辑", _channel.name];
     
     _topView = [[UIView alloc] init];
-    _topView.backgroundColor = [UIColor whiteColor];
+    _topView.backgroundColor = kLightBackgroundColor;
     [self.view addSubview:_topView];
     {
         [_topView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -71,6 +73,7 @@ DefineLazyPropertyInitialization(NSMutableArray, programs)
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.font = kBigFont;
     titleLabel.text = _channel.name;
+    titleLabel.textColor = kDefaultTextColor;
     [_topView addSubview:titleLabel];
     {
         [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -82,7 +85,7 @@ DefineLazyPropertyInitialization(NSMutableArray, programs)
     
     UITextView *textView = [[UITextView alloc] init];
     textView.font = kSmallFont;
-    textView.textColor = [UIColor colorWithHexString:@"#555555"];
+    textView.textColor = kDefaultLightTextColor;
     textView.editable = NO;
     textView.backgroundColor = _topView.backgroundColor;
     textView.text = _channel.columnDesc;
@@ -95,17 +98,18 @@ DefineLazyPropertyInitialization(NSMutableArray, programs)
         }];
     }
     
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.sectionInset = UIEdgeInsetsMake(0, 5, 0, 5);
+    YYKSectionBackgroundFlowLayout *layout = [[YYKSectionBackgroundFlowLayout alloc] init];
+    layout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
     layout.minimumLineSpacing = 5;
     layout.minimumInteritemSpacing = layout.minimumLineSpacing;
     
     _videoCV = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-    _videoCV.backgroundColor = self.view.backgroundColor;
+    _videoCV.backgroundColor = kDarkBackgroundColor;
     _videoCV.delegate = self;
     _videoCV.dataSource = self;
     [_videoCV registerClass:[YYKVIPVideoCell class] forCellWithReuseIdentifier:kVideoCellReusableIdentifier];
     [_videoCV registerClass:[YYKVideoSectionHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kVideoHeaderReusableIdentifier];
+    [_videoCV registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:YYKElementKindSectionBackground withReuseIdentifier:kSectionBackgroundReusableIdentifier];
     [self.view addSubview:_videoCV];
     {
         [_videoCV mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -200,7 +204,6 @@ DefineLazyPropertyInitialization(NSMutableArray, programs)
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YYKVIPVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVideoCellReusableIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
     
     if ([self shouldShowLandscapeImageAtIndexPath:indexPath]) {
         cell.placeholderImage = [UIImage imageNamed:@"placeholder_5_2"];
@@ -217,13 +220,26 @@ DefineLazyPropertyInitialization(NSMutableArray, programs)
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    YYKVideoSectionHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kVideoHeaderReusableIdentifier forIndexPath:indexPath];
-    headerView.title = @"成名作";
-    return headerView;
+    if (kind == UICollectionElementKindSectionHeader) {
+        YYKVideoSectionHeader *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kVideoHeaderReusableIdentifier forIndexPath:indexPath];
+        headerView.title = @"成名作";
+        headerView.backgroundColor = kLightBackgroundColor;
+        return headerView;
+    } else if (kind == YYKElementKindSectionBackground) {
+        UICollectionReusableView *sectionBgView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSectionBackgroundReusableIdentifier forIndexPath:indexPath];
+        sectionBgView.backgroundColor = kLightBackgroundColor;
+        return sectionBgView;
+    }
+    return nil;
+    
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     return CGSizeMake(0, 45);
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout shouldDisplaySectionBackgroundInSection:(NSUInteger)section {
+    return YES;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {

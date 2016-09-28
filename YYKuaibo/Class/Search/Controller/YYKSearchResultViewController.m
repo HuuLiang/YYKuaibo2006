@@ -19,6 +19,7 @@ static NSString *const kVideoCellReusableIdentifier = @"VideoCellReusableIdentif
 }
 @property (nonatomic,retain) YYKSearchModel *searchModel;
 @property (nonatomic,retain) NSMutableArray<YYKProgram *> *resultPrograms;
+@property (nonatomic,retain) UILabel *errorLabel;
 @end
 
 @implementation YYKSearchResultViewController
@@ -26,9 +27,19 @@ static NSString *const kVideoCellReusableIdentifier = @"VideoCellReusableIdentif
 DefineLazyPropertyInitialization(YYKSearchModel, searchModel)
 DefineLazyPropertyInitialization(NSMutableArray, resultPrograms)
 
+- (instancetype)initWithKeyword:(YYKKeyword *)keyword {
+    self = [super init];
+    if (self) {
+        _searchedKeyword = keyword;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = self.searchedKeyword.text;
+    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumLineSpacing = 2;
     
@@ -45,10 +56,33 @@ DefineLazyPropertyInitialization(NSMutableArray, resultPrograms)
     }
     
     @weakify(self);
+    [_layoutCV YYK_addPullToRefreshWithHandler:^{
+        @strongify(self);
+        [self loadSearchResultsWithKeyword:self.searchedKeyword forNextPage:NO completionHandler:nil];
+    }];
     [_layoutCV YYK_addPagingRefreshWithHandler:^{
         @strongify(self);
         [self loadSearchResultsWithKeyword:self.searchedKeyword forNextPage:YES completionHandler:nil];
     }];
+    [_layoutCV YYK_triggerPullToRefresh];
+}
+
+- (UILabel *)errorLabel {
+    if (_errorLabel) {
+        return _errorLabel;
+    }
+    
+    _errorLabel = [[UILabel alloc] init];
+    _errorLabel.textColor = kDefaultTextColor;
+    _errorLabel.font = kBigFont;
+    _errorLabel.hidden = YES;
+    [self.view addSubview:_errorLabel];
+    {
+        [_errorLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(self.view);
+        }];
+    }
+    return _errorLabel;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,7 +92,7 @@ DefineLazyPropertyInitialization(NSMutableArray, resultPrograms)
 
 - (void)searchKeyword:(YYKKeyword *)keyword withCompletionHandler:(YYKCompletionHandler)completionHandler {
     _searchedKeyword = keyword;
-    [keyword markSearched];
+//    [keyword markSearched];
     
     [self.resultPrograms removeAllObjects];
     [self->_layoutCV reloadData];
@@ -71,10 +105,7 @@ DefineLazyPropertyInitialization(NSMutableArray, resultPrograms)
                    completionHandler:(YYKCompletionHandler)completionHandler
 {
     @weakify(self);
-    if (!isForNextPage) {
-        [self.view beginLoading];
-    }
-    
+    self.errorLabel.hidden = YES;
     [self.searchModel searchKeywords:keyword.text
                         isTagKeyword:keyword.isTag
                               inPage:isForNextPage ? self.searchModel.searchedResults.page.unsignedIntegerValue + 1 : 1
@@ -85,22 +116,24 @@ DefineLazyPropertyInitialization(NSMutableArray, resultPrograms)
             return ;
         }
         
-        if (!isForNextPage) {
-            [self.view endLoading];
-        }
-        
         [self->_layoutCV YYK_endPullToRefresh];
         
         if (results) {
 
-            if (results.programList) {
+            if (results.programList.count > 0) {
                 [self.resultPrograms addObjectsFromArray:results.programList];
                 [self->_layoutCV reloadData];
+            } else {
+                self.errorLabel.hidden = NO;
+                self.errorLabel.text = @"您搜索的内容未能找到！";
             }
             
             if (results.page.unsignedIntegerValue * results.pageSize.unsignedIntegerValue >= results.items.unsignedIntegerValue) {
                 [self->_layoutCV YYK_pagingRefreshNoMoreData];
             }
+        } else {
+            self.errorLabel.hidden = NO;
+            self.errorLabel.text = error.userInfo[kSearchErrorMessageKey];
         }
         
         SafelyCallBlock(completionHandler, results.programList.count > 0, error);
@@ -119,7 +152,6 @@ DefineLazyPropertyInitialization(NSMutableArray, resultPrograms)
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YYKVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kVideoCellReusableIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
     cell.placeholderImage = [UIImage imageNamed:@"placeholder_1_1"];
     cell.tagBackgroundColor = kThemeColor;
     

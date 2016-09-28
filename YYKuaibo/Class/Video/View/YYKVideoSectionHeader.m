@@ -23,10 +23,9 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithHexString:@"#efefef"];
+        [super setBackgroundColor:kDarkBackgroundColor];
         
         _contentView = [[UIView alloc] init];
-        _contentView.backgroundColor = [UIColor whiteColor];
         [self addSubview:_contentView];
         {
             [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -36,7 +35,7 @@
         }
         
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+        _titleLabel.textColor = kDefaultTextColor;
         _titleLabel.text = @"免费试播";
         _titleLabel.font = kBoldBigFont;
         [_contentView addSubview:_titleLabel];
@@ -88,6 +87,10 @@
         }
     }
     return self;
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    _contentView.backgroundColor = backgroundColor;
 }
 
 - (void)setTitle:(NSString *)title {

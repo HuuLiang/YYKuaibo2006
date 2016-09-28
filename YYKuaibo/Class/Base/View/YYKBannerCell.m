@@ -49,11 +49,12 @@
 //        _sliderView.pagingEnabled = YES;
 //        [self addSubview:_sliderView];
         _sliderView = [[SDCycleScrollView alloc] initWithFrame:frame];
+        _sliderView.backgroundColor = kLightBackgroundColor;
         _sliderView.delegate = self;
         _sliderView.autoScrollTimeInterval = 3;
         _sliderView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
         _sliderView.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated;
-
+        
         [self addSubview:_sliderView];
         
         @weakify(self);

@@ -40,6 +40,10 @@
 #ifdef QBPAYMENT_WFTPAY_ENABLED
     #import "SPayUtil.h"
 #endif
+
+#ifdef QBPAYMENT_MTDLPAY_ENABLED
+    #import "QJPaySDK.h"
+#endif
 //#import "MingPayManager.h"
 //#import "SPayUtil.h"
 //#import "HTPayManager.h"
@@ -55,9 +59,14 @@ typedef NS_ENUM(NSUInteger, QBVIAPayType) {
 NSString *const kQBPaymentFetchConfigNotification = @"com.qbpayment.app.config";
 
 @interface QBPaymentManager ()
+<NSObject
 #ifdef QBPAYMENT_VIAPAY_ENABLED
-<stringDelegate>
+,stringDelegate
 #endif
+#ifdef QBPAYMENT_MTDLPAY_ENABLED
+,QJPayManagerDelegate
+#endif
+>
 @property (nonatomic,retain) QBPaymentInfo *paymentInfo;
 @property (nonatomic,copy) QBPaymentCompletionHandler completionHandler;
 @property (nonatomic,retain) QBPaymentConfigModel *configModel;
@@ -237,6 +246,12 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #else
         return NO;
 #endif
+    } else if (payType == QBPayTypeMTDLPay) {
+#ifdef QBPAYMENT_MTDLPAY_ENABLED
+        return YES;
+#else
+        return NO;
+#endif
     }
     return NO;
 }
@@ -253,6 +268,10 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     } else if (self.paymentInfo.paymentType == QBPayTypeDXTXPay) {
 #ifdef QBPAYMENT_DXTXPAY_ENABLED
         [[PayuPlugin defaultPlugin] processOrderWithPaymentResult:url];
+#endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeMTDLPay) {
+#ifdef QBPAYMENT_MTDLPAY_ENABLED
+        [QJPaySDK handleOpenURL:url];
 #endif
     }
 }
@@ -394,6 +413,37 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     }
 #endif
     
+#ifdef QBPAYMENT_MTDLPAY_ENABLED
+    if (payType == QBPayTypeMTDLPay && (subType == QBPaySubTypeWeChat || subType == QBPaySubTypeAlipay)) {
+        
+        QBMTDLPayConfig *payConfig = [QBPaymentConfig sharedConfig].configDetails.mtdlPayConfig;
+        
+        if (!payConfig.appid || !payConfig.appKey) {
+            success = NO;
+        } else {
+            success = YES;
+            
+            NSString *contactInfo = @"客服电话：4008007161";
+            
+            NSMutableDictionary *params = @{@"amount":@(paymentInfo.orderPrice).stringValue,
+                                     @"appid":payConfig.appid,
+                                     @"body":contactInfo,
+                                     @"mchntOrderNo":paymentInfo.orderId,
+                                     @"subject":paymentInfo.orderDescription ?: @"",
+                                     @"notifyUrl":payConfig.notifyUrl ?: @"",
+                                     @"extra":paymentInfo.reservedData ?: @"",
+                                     @"payChannelId":subType == QBPaySubTypeWeChat ? [QJPaySDK PAY_WEIXIN] : [QJPaySDK PAY_APLIPAY]}.mutableCopy;
+
+            [QJPaySDK QJPayStart:params
+                       AppScheme:self.urlScheme
+                          appKey:payConfig.appKey
+        andCurrentViewController:[UIApplication sharedApplication].keyWindow.rootViewController
+                     andDelegate:self
+                            Flag:0x80];
+        }
+    }
+#endif
+    
 #ifdef QBPAYMENT_HTPAY_ENABLED
     if (payType == QBPayTypeHTPay) {
         [[HTPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
@@ -419,13 +469,23 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 - (void)applicationWillEnterForeground:(UIApplication *)application {
 //    [WYPayManager heepaySDKWillEnterForeground];
 //    [[SPayUtil sharedInstance] applicationWillEnterForeground];
+    if (self.paymentInfo.paymentType == QBPayTypeDXTXPay) {
 #ifdef QBPAYMENT_DXTXPAY_ENABLED
-    [[PayuPlugin defaultPlugin] applicationWillEnterForeground:application];
+        [[PayuPlugin defaultPlugin] applicationWillEnterForeground:application];
 #endif
-    
+    } else if (self.paymentInfo.paymentType == QBPayTypeSPay) {
 #ifdef QBPAYMENT_WFTPAY_ENABLED
-    [[SPayUtil sharedInstance] applicationWillEnterForeground];
+        [[SPayUtil sharedInstance] applicationWillEnterForeground];
 #endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeHTPay) {
+#ifdef QBPAYMENT_HTPAY_ENABLED
+        [[HTPayManager sharedManager] applicationWillEnterForeground:application];
+#endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeMTDLPay) {
+#ifdef QBPAYMENT_MTDLPAY_ENABLED
+        [[NSNotificationCenter defaultCenter] postNotificationName:[QJPaySDK WETCHAR] object:nil];
+#endif
+    }
 }
 
 - (void)onPaymentResult:(QBPayResult)payResult withPaymentInfo:(QBPaymentInfo *)paymentInfo {
@@ -519,5 +579,23 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         }
     }
 }
+#endif
+
+#ifdef QBPAYMENT_MTDLPAY_ENABLED
+
+#pragma mark - QJPayManagerDelegate
+
+- (void)QJPayResponseResult:(int)response {
+    NSDictionary *payResultMapping = @{@0:@(QBPayResultSuccess),
+                                       @1:@(QBPayResultCancelled),
+                                       @-1:@(QBPayResultFailure)};
+    
+    NSNumber *value = payResultMapping[@(response)];
+    QBPayResult payResult = value ? value.integerValue : QBPayResultFailure;
+    
+    [self onPaymentResult:payResult withPaymentInfo:self.paymentInfo];
+    QBSafelyCallBlock(self.completionHandler, payResult, self.paymentInfo);
+}
+
 #endif
 @end

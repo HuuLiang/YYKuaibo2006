@@ -21,7 +21,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.textColor = [UIColor colorWithHexString:@"#444444"];
+        _titleLabel.textColor = kDefaultTextColor;
         _titleLabel.font = kBigFont;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_titleLabel];

@@ -61,11 +61,11 @@ NSString *const kSearchErrorMessageKey = @"errorMessage";
             results = self.response;
             self->_searchedResults = results;
         } else if (respStatus == QBURLResponseFailedByInterface) {
-            error = [NSError errorWithDomain:kSearchErrorDomain code:kSearchLogicErrorCode userInfo:@{kSearchErrorMessageKey:@"接口逻辑错误"}];
+            error = [NSError errorWithDomain:kSearchErrorDomain code:kSearchLogicErrorCode userInfo:@{kSearchErrorMessageKey:@"由于业务逻辑问题，您搜索的内容无法显示！"}];
         } else if (respStatus == QBURLResponseFailedByNetwork) {
-            error = [NSError errorWithDomain:kSearchErrorDomain code:kSearchNetworkErrorCode userInfo:@{kSearchErrorMessageKey:@"网络错误"}];
+            error = [NSError errorWithDomain:kSearchErrorDomain code:kSearchNetworkErrorCode userInfo:@{kSearchErrorMessageKey:@"由于网络问题，您搜索的内容无法显示！"}];
         } else {
-            error = [NSError errorWithDomain:kSearchErrorMessageKey code:kSearchUnknownErrorCode userInfo:@{kSearchErrorMessageKey:@"未知错误"}];
+            error = [NSError errorWithDomain:kSearchErrorMessageKey code:kSearchUnknownErrorCode userInfo:@{kSearchErrorMessageKey:@"搜索的过程中出现了未知的错误！"}];
         }
         
         SafelyCallBlock(completionHandler, results, error);

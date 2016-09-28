@@ -15,10 +15,7 @@
 
 @optional
 - (void)tagSearchViewController:(YYKTagSearchViewController *)tagSearchVC didSelectKeyword:(YYKKeyword *)keyword;
-- (NSAttributedString *)searchErrorMessageInTagSearchViewController:(YYKTagSearchViewController *)tagSearchVC;
-- (void)tagSearchViewController:(YYKTagSearchViewController *)tagSearchVC didSelectErrorMessage:(NSString *)errorMessage;
 - (void)tagSearchViewControllerDidScroll:(YYKTagSearchViewController *)tagSearchVC;
-- (void)tagSearchViewController:(YYKTagSearchViewController *)tagSearchVC didSelectProgram:(YYKProgram *)program;
 
 @end
 

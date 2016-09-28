@@ -8,7 +8,6 @@ target 'YYKuaibo' do
     pod 'SDWebImage', '~> 3.7.3'
     pod 'MBProgressHUD', '~> 0.9.1'
     pod 'MJRefresh', '~> 2.4.7'
-    # pod 'OpenSSL', '~> 1.0.204'
     pod 'BlocksKit', '~> 2.2.5'
     pod 'Aspects','~>1.4.1'
     pod 'SFHFKeychainUtils', '~> 0.0.1'
@@ -17,6 +16,7 @@ target 'YYKuaibo' do
     # pod 'ODRefreshControl', '~> 1.2'
     pod 'FMDB', '~> 2.6.2'
     # pod 'XMLReader-Arc', '~> 1.1'
-    pod 'iCarousel', '~> 1.8.2'
-    pod 'QBPayment', '~> 0.0.14', :subspecs => ['VIAPay','IappPay','WFTPay','DXTXPay']
+    # pod 'iCarousel', '~> 1.8.2'
+    pod 'QBPayment', '~> 0.0.14', :subspecs => ['VIAPay','IappPay','WFTPay','DXTXPay','MTDLPay']
+    pod 'MWPhotoBrowser', '~> 2.1.2'
 end

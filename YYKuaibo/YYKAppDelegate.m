@@ -105,9 +105,9 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     if ([UITextField respondsToSelector:@selector(appearanceWhenContainedInInstancesOfClasses:)]) {
-        [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTintColor:[UIColor darkGrayColor]];
+        [[UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTintColor:[UIColor lightTextColor]];
     } else {
-        [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor:[UIColor darkGrayColor]];
+        [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor:[UIColor lightTextColor]];
     }
     
 //    [[UISegmentedControl appearance] setTintColor:[UIColor colorWithHexString:@"#ff226f"]];
@@ -198,9 +198,6 @@
     [QBNetworkingConfiguration defaultConfiguration].channelNo = YYK_CHANNEL_NO;
     [QBNetworkingConfiguration defaultConfiguration].RESTpV = YYK_REST_PV;
     [QBNetworkingConfiguration defaultConfiguration].RESTAppId = YYK_REST_APP_ID;
-#ifdef DEBUG
-    [QBNetworkingConfiguration defaultConfiguration].logEnabled = YES;
-#endif
     
     [YYKUtil accumateLaunchSeq];
     [[QBPaymentManager sharedManager] registerPaymentWithAppId:YYK_REST_APP_ID

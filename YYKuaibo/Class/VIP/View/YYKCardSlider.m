@@ -69,6 +69,7 @@ DefineLazyPropertyInitialization(NSMutableArray, reusableCards)
     
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.font = kExtraBigFont;
+    _titleLabel.textColor = kDefaultTextColor;
     [self addSubview:_titleLabel];
 //    {
 //        [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -79,7 +80,7 @@ DefineLazyPropertyInitialization(NSMutableArray, reusableCards)
 //    }
     
     _descTextView = [[UITextView alloc] init];
-    _descTextView.textColor = [UIColor colorWithHexString:@"#555555"];
+    _descTextView.textColor = kDefaultLightTextColor;
     _descTextView.font = kMediumFont;
     _descTextView.editable = NO;
     _descTextView.backgroundColor = self.backgroundColor;

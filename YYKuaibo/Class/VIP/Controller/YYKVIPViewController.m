@@ -33,6 +33,7 @@ DefineLazyPropertyInitialization(YYKChannelModel, channelModel)
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.view.backgroundColor = kDefaultSectionBackgroundColor;
     
     _contentView = [[YYKCardSlider alloc] initWithFrame:self.view.bounds];
     _contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;

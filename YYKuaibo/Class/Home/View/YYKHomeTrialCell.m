@@ -22,7 +22,7 @@
     if (self) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [[self class] titleFont];
-        _titleLabel.textColor = [UIColor colorWithHexString:@"#333333"];
+        _titleLabel.textColor = kDefaultTextColor;
         [self addSubview:_titleLabel];
         {
             [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
