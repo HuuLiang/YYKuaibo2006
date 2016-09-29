@@ -80,7 +80,7 @@ DefineLazyPropertyInitialization(YYKPhotoUrlModel, urlModel)
 
 - (NSString *)photoBrowser:(MWPhotoBrowser *)photoBrowser titleForPhotoAtIndex:(NSUInteger)index {
     if (index < self.photos.count) {
-        return [NSString stringWithFormat:@"第%ld张（共%ld张）", (unsigned long)(index+1), self.photos.count];
+        return [NSString stringWithFormat:@"第%ld张（共%ld张）", (unsigned long)(index+1), (unsigned long)self.photos.count];
     }
     return nil;
 }
