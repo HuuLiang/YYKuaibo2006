@@ -17,10 +17,13 @@ typedef NS_ENUM(NSInteger, QBNetworkStatus) {
     QBNetworkStatus4G = 4
 };
 
+typedef void (^QBNetworkReachabilityChangedAction)(BOOL reachable);
+
 @interface QBNetworkInfo : NSObject
 
 @property (nonatomic,readonly) QBNetworkStatus networkStatus;
 @property (nonatomic,readonly) NSString *carriarName;
+@property (nonatomic,copy) QBNetworkReachabilityChangedAction reachabilityChangedAction;
 
 + (instancetype)sharedInfo;
 - (void)startMonitoring;

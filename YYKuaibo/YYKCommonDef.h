@@ -15,6 +15,8 @@
 #import <QBURLResponse.h>
 #import <QBEncryptedURLRequest.h>
 
+#define YYK_IMAGE_TOKEN_ENABLED
+
 typedef NS_ENUM(NSUInteger, YYKDeviceType) {
     YYKDeviceTypeUnknown,
     YYKDeviceType_iPhone4,

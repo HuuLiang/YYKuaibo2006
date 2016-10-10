@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'D6B8485F31AE923ACA1DDC24'
+               BlueprintIdentifier = '26E47BEBCAC4712C2C20B2C9'
                BlueprintName = 'QBNetworking'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libQBNetworking.a'>

@@ -8,6 +8,8 @@
 
 #import "QBNetworkInfo.h"
 #import "AFNetworking.h"
+#import "RACEXTScope.h"
+#import "QBDefines.h"
 
 @import SystemConfiguration;
 @import CoreTelephony;
@@ -38,6 +40,16 @@
 }
 
 - (void)startMonitoring {
+    @weakify(self);
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        @strongify(self);
+        BOOL reachable = NO;
+        if (status == AFNetworkReachabilityStatusReachableViaWWAN
+            || status == AFNetworkReachabilityStatusReachableViaWiFi) {
+            reachable = YES;
+        }
+        QBSafelyCallBlock(self.reachabilityChangedAction, reachable);
+    }];
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 }
 

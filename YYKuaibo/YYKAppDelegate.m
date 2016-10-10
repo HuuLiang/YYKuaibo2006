@@ -210,6 +210,11 @@
 //    [self registerUserNotification];
     [[QBNetworkInfo sharedInfo] startMonitoring];
     
+    [QBNetworkInfo sharedInfo].reachabilityChangedAction = ^(BOOL reachable) {
+        if (reachable && ![YYKSystemConfigModel sharedModel].loaded) {
+            [self fetchSystemConfigWithCompletionHandler:nil];
+        }
+    };
     BOOL requestedSystemConfig = NO;
 #ifdef YYK_IMAGE_TOKEN_ENABLED
     NSString *imageToken = [YYKUtil imageToken];
@@ -222,25 +227,9 @@
         [self.window makeKeyAndVisible];
         
         [self.window beginProgressingWithTitle:@"更新系统配置..." subtitle:nil];
-        requestedSystemConfig = [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+        requestedSystemConfig = [self fetchSystemConfigWithCompletionHandler:^(BOOL success) {
             [self.window endProgressing];
-            
-            if (success) {
-                NSString *fetchedToken = [YYKSystemConfigModel sharedModel].imageToken;
-                [YYKUtil setImageToken:fetchedToken];
-                if (fetchedToken) {
-                    [[SDWebImageManager sharedManager].imageDownloader setValue:fetchedToken forHTTPHeaderField:@"Referer"];
-                }
-                
-            }
-            
             self.window.rootViewController = self.rootViewController;
-            
-            NSUInteger statsTimeInterval = 180;
-            if ([YYKSystemConfigModel sharedModel].loaded && [YYKSystemConfigModel sharedModel].statsTimeInterval > 0) {
-                statsTimeInterval = [YYKSystemConfigModel sharedModel].statsTimeInterval;
-            }
-            [[YYKStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
         }];
     }
 #else 
@@ -304,6 +293,24 @@
         }
     }];
     return YES;
+}
+
+- (BOOL)fetchSystemConfigWithCompletionHandler:(void (^)(BOOL success))completionHandler {
+    return [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
+        if (success) {
+            NSString *fetchedToken = [YYKSystemConfigModel sharedModel].imageToken;
+            [YYKUtil setImageToken:fetchedToken];
+            if (fetchedToken) {
+                [[SDWebImageManager sharedManager].imageDownloader setValue:fetchedToken forHTTPHeaderField:@"Referer"];
+            }
+            
+        }
+        
+        NSUInteger statsTimeInterval = 180;
+        [[YYKStatsManager sharedManager] scheduleStatsUploadWithTimeInterval:statsTimeInterval];
+        
+        SafelyCallBlock(completionHandler, success);
+    }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
