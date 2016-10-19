@@ -35,6 +35,7 @@
 + (NSString *)userId;
 + (NSString *)deviceName;
 + (YYKDeviceType)deviceType;
++ (BOOL)isIpad;
 + (NSString *)appVersion;
 
 + (NSString *)paymentReservedData;

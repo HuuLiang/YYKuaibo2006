@@ -165,6 +165,7 @@
   withTimeControl:(BOOL)hasTimeControl
  shouldPopPayment:(BOOL)shouldPopPayment
 {
+    
     if (hasTimeControl) {
         YYKWebPlayerViewController *webPlayerVC = [[YYKWebPlayerViewController alloc] initWithProgram:video];
         [self.navigationController pushViewController:webPlayerVC animated:YES];

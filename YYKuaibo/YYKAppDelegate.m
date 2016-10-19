@@ -210,11 +210,49 @@
 //    [self registerUserNotification];
     [[QBNetworkInfo sharedInfo] startMonitoring];
     
+//    [QBNetworkInfo sharedInfo].reachabilityChangedAction = ^(BOOL reachable) {
+//        if (reachable && ![YYKSystemConfigModel sharedModel].loaded) {
+//            [self fetchSystemConfigWithCompletionHandler:nil];
+//        }
+//    };
     [QBNetworkInfo sharedInfo].reachabilityChangedAction = ^(BOOL reachable) {
         if (reachable && ![YYKSystemConfigModel sharedModel].loaded) {
             [self fetchSystemConfigWithCompletionHandler:nil];
         }
+        if (reachable && ![YYKUtil isRegistered]) {
+            [[YYKActivateModel sharedModel] activateWithCompletionHandler:^(BOOL success, NSString *userId) {
+                if (success) {
+                    [YYKUtil setRegisteredWithUserId:userId];
+                    [[YYKUserAccessModel sharedModel] requestUserAccess];
+                    [[YYKUtil allUnsuccessfulPaymentInfos] enumerateObjectsUsingBlock:^(YYKPaymentInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        if (obj.userId == nil) {
+                            obj.userId = userId;
+                            [obj save];
+                        }
+                    }];
+
+                    [[YYKVideoTokenManager sharedManager] requestTokenWithCompletionHandler:nil];
+                }
+            }];
+        } else {
+            [[YYKUserAccessModel sharedModel] requestUserAccess];
+            [[YYKVideoTokenManager sharedManager] requestTokenWithCompletionHandler:nil];
+        }
+        if ([QBNetworkInfo sharedInfo].networkStatus <= QBNetworkStatusNotReachable && (![YYKUtil isRegistered] || ![YYKSystemConfigModel sharedModel].loaded)) {
+            if ([YYKUtil isIpad] || [UIDevice currentDevice].systemVersion.integerValue < 8.0) {
+                [UIAlertView bk_showAlertViewWithTitle:@"请检查您的网络连接!" message:nil cancelButtonTitle:@"确认" otherButtonTitles:nil handler:nil];
+            }else{
+                [UIAlertView bk_showAlertViewWithTitle:@"很抱歉!" message:@"您的应用未连接到网络,请检查您的网络设置" cancelButtonTitle:@"稍后" otherButtonTitles:@[@"设置"] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                    if (buttonIndex == 1) {
+                        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+                        if([[UIApplication sharedApplication] canOpenURL:url]) {
+                            [[UIApplication sharedApplication] openURL:url];
+                        }
+                    }
+                }];
+            }}
     };
+
     BOOL requestedSystemConfig = NO;
 #ifdef YYK_IMAGE_TOKEN_ENABLED
     NSString *imageToken = [YYKUtil imageToken];
@@ -239,23 +277,23 @@
 //    YYKLaunchView *launchView = [[YYKLaunchView alloc] init];
 //    [launchView show];
     
-    if (![YYKUtil isRegistered]) {
-        [[YYKActivateModel sharedModel] activateWithCompletionHandler:^(BOOL success, NSString *userId) {
-            if (success) {
-                [YYKUtil setRegisteredWithUserId:userId];
-                [[YYKUserAccessModel sharedModel] requestUserAccess];
-                
-                [[YYKUtil allUnsuccessfulPaymentInfos] enumerateObjectsUsingBlock:^(YYKPaymentInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    if (obj.userId == nil) {
-                        obj.userId = userId;
-                        [obj save];
-                    }
-                }];
-            }
-        }];
-    } else {
-        [[YYKUserAccessModel sharedModel] requestUserAccess];
-    }
+//    if (![YYKUtil isRegistered]) {
+//        [[YYKActivateModel sharedModel] activateWithCompletionHandler:^(BOOL success, NSString *userId) {
+//            if (success) {
+//                [YYKUtil setRegisteredWithUserId:userId];
+//                [[YYKUserAccessModel sharedModel] requestUserAccess];
+//                
+//                [[YYKUtil allUnsuccessfulPaymentInfos] enumerateObjectsUsingBlock:^(YYKPaymentInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//                    if (obj.userId == nil) {
+//                        obj.userId = userId;
+//                        [obj save];
+//                    }
+//                }];
+//            }
+//        }];
+//    } else {
+//        [[YYKUserAccessModel sharedModel] requestUserAccess];
+//    }
     
     if (!requestedSystemConfig) {
         [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
@@ -273,7 +311,7 @@
         }];
     }
     
-    [[YYKVideoTokenManager sharedManager] requestTokenWithCompletionHandler:nil];
+//    [[YYKVideoTokenManager sharedManager] requestTokenWithCompletionHandler:nil];
     [[YYKAppSpreadBannerModel sharedModel] fetchAppSpreadWithCompletionHandler:nil];
     [[YYKVersionUpdateModel sharedModel] fetchLatestVersionWithCompletionHandler:^(BOOL success, id obj) {
         if (success) {

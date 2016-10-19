@@ -254,7 +254,7 @@
     }
     
 #endif
-    
+//    price = 200;
     QBPaymentInfo *paymentInfo = [[QBPaymentInfo alloc] init];
     
     NSString *channelNo = YYK_CHANNEL_NO;

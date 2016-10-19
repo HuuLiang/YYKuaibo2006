@@ -1502,8 +1502,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Yu Xulu (HHS7K3EC7U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yu Xulu (HHS7K3EC7U)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yu xie (744P33ZS5T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yu xie (744P33ZS5T)";
+				DEVELOPMENT_TEAM = 7VHT3KAS56;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/iAppPay",
@@ -1525,7 +1526,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qskuaibo.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e9c71ac3-a844-42ad-a609-4b5a9dc39118";
+				PROVISIONING_PROFILE_SPECIFIER = QianSeKuaiboDevProvisioningProfile;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1538,6 +1539,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
+				DEVELOPMENT_TEAM = 7VHT3KAS56;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/iAppPay",
@@ -1559,7 +1561,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qskuaibo.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e5eef28f-c5cc-4e3b-bc50-d6ccc4a33214";
+				PROVISIONING_PROFILE_SPECIFIER = QianSeKuaiboInHouseProvisioningProfile;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
