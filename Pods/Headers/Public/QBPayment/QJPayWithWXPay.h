@@ -1,1 +1,0 @@
-../../../QBPayment/QBPayment/Vendor/MTDLPay/QJPayWithWXPay.h

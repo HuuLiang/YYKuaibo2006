@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		037D0468D685E4B72E0B6DD4 /* libPods-YYKuaibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1275EC47F0194073061FF488 /* libPods-YYKuaibo.a */; };
 		BC064B651D9C3AA60031BA87 /* YYKWeeklyRankingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC064B601D9C3AA60031BA87 /* YYKWeeklyRankingCell.m */; };
 		BC064B661D9C3AA60031BA87 /* YYKWeeklyRankingHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC064B621D9C3AA60031BA87 /* YYKWeeklyRankingHeaderView.m */; };
 		BC064B671D9C3AA60031BA87 /* YYKWeeklyRankingRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC064B641D9C3AA60031BA87 /* YYKWeeklyRankingRowCell.m */; };
@@ -117,7 +118,6 @@
 		BCE348541D62618500750D4F /* YYKChannelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE348531D62618500750D4F /* YYKChannelModel.m */; };
 		BCE348581D62633D00750D4F /* YYKChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE348571D62633D00750D4F /* YYKChannelCell.m */; };
 		BCE663CC1CCE0C4700A54E8D /* YYKChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE663CB1CCE0C4700A54E8D /* YYKChannel.m */; };
-		C6C5EAAAA388AFBA0CF247A6 /* libPods-YYKuaibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1E2D934F7E11701EDA8B6F /* libPods-YYKuaibo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,7 +138,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008ACC4CCCB3F4CC00B99ABE /* Pods-YYKuaibo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YYKuaibo.release.xcconfig"; path = "Pods/Target Support Files/Pods-YYKuaibo/Pods-YYKuaibo.release.xcconfig"; sourceTree = "<group>"; };
+		1275EC47F0194073061FF488 /* libPods-YYKuaibo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YYKuaibo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6032C10DFC5389978ACD1413 /* Pods-YYKuaibo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YYKuaibo.release.xcconfig"; path = "Pods/Target Support Files/Pods-YYKuaibo/Pods-YYKuaibo.release.xcconfig"; sourceTree = "<group>"; };
+		B42548BC60CBE6302A79141B /* Pods-YYKuaibo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YYKuaibo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YYKuaibo/Pods-YYKuaibo.debug.xcconfig"; sourceTree = "<group>"; };
 		BC064B5F1D9C3AA60031BA87 /* YYKWeeklyRankingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKWeeklyRankingCell.h; sourceTree = "<group>"; };
 		BC064B601D9C3AA60031BA87 /* YYKWeeklyRankingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKWeeklyRankingCell.m; sourceTree = "<group>"; };
 		BC064B611D9C3AA60031BA87 /* YYKWeeklyRankingHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKWeeklyRankingHeaderView.h; sourceTree = "<group>"; };
@@ -361,8 +363,6 @@
 		BCE663CA1CCE0C4700A54E8D /* YYKChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKChannel.h; sourceTree = "<group>"; };
 		BCE663CB1CCE0C4700A54E8D /* YYKChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKChannel.m; sourceTree = "<group>"; };
 		BCF346F41CCAB9FE005DEFFF /* YYKuaibo copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "YYKuaibo copy-Info.plist"; path = "/Users/seanyue/QuBaProjects/YYKuaibo/YYKuaibo copy-Info.plist"; sourceTree = "<absolute>"; };
-		F74F2DBA22222B6A63038AB9 /* Pods-YYKuaibo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YYKuaibo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YYKuaibo/Pods-YYKuaibo.debug.xcconfig"; sourceTree = "<group>"; };
-		FE1E2D934F7E11701EDA8B6F /* libPods-YYKuaibo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YYKuaibo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -377,7 +377,7 @@
 				BCE2572A1C968B4800133F4F /* libz.tbd in Frameworks */,
 				BCE257281C968B4100133F4F /* CoreTelephony.framework in Frameworks */,
 				BCE257251C968AED00133F4F /* libMobClickLibrary.a in Frameworks */,
-				C6C5EAAAA388AFBA0CF247A6 /* libPods-YYKuaibo.a in Frameworks */,
+				037D0468D685E4B72E0B6DD4 /* libPods-YYKuaibo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,11 +398,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3C8CCB0CB2FBF997E85D0F20 /* Pods */ = {
+		49A586C7775E4808F94B0B2F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F74F2DBA22222B6A63038AB9 /* Pods-YYKuaibo.debug.xcconfig */,
-				008ACC4CCCB3F4CC00B99ABE /* Pods-YYKuaibo.release.xcconfig */,
+				B42548BC60CBE6302A79141B /* Pods-YYKuaibo.debug.xcconfig */,
+				6032C10DFC5389978ACD1413 /* Pods-YYKuaibo.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -416,7 +416,7 @@
 				BCE2572B1C968B5100133F4F /* libsqlite3.tbd */,
 				BCE257291C968B4800133F4F /* libz.tbd */,
 				BCE257271C968B4100133F4F /* CoreTelephony.framework */,
-				FE1E2D934F7E11701EDA8B6F /* libPods-YYKuaibo.a */,
+				1275EC47F0194073061FF488 /* libPods-YYKuaibo.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -798,7 +798,7 @@
 				BCE255FF1C966A8E00133F4F /* Products */,
 				B8E3C88B58EDA7F709C6E55C /* Frameworks */,
 				BCF346F41CCAB9FE005DEFFF /* YYKuaibo copy-Info.plist */,
-				3C8CCB0CB2FBF997E85D0F20 /* Pods */,
+				49A586C7775E4808F94B0B2F /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1068,13 +1068,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BCE2562B1C966A8E00133F4F /* Build configuration list for PBXNativeTarget "YYKuaibo" */;
 			buildPhases = (
-				BABF4B805BA55881BC059782 /* [CP] Check Pods Manifest.lock */,
+				3BB71D3E0CCBC6CDD4B41F4F /* [CP] Check Pods Manifest.lock */,
 				BCE255FA1C966A8E00133F4F /* Sources */,
 				BCE255FB1C966A8E00133F4F /* Frameworks */,
 				BCE255FC1C966A8E00133F4F /* Resources */,
-				7899AE2C7EE7FF05200F69A6 /* [CP] Embed Pods Frameworks */,
-				1043F538B5EEF71F13C295AB /* [CP] Copy Pods Resources */,
-				37F80650FFEEBC57774D4EE6 /* Embed Pods Frameworks */,
+				F7E49E627DC1A81585B750DC /* [CP] Embed Pods Frameworks */,
+				A26F51C2A3F562F8BB92BE7B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1194,7 +1193,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1043F538B5EEF71F13C295AB /* [CP] Copy Pods Resources */ = {
+		3BB71D3E0CCBC6CDD4B41F4F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A26F51C2A3F562F8BB92BE7B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1209,22 +1223,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YYKuaibo/Pods-YYKuaibo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		37F80650FFEEBC57774D4EE6 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YYKuaibo/Pods-YYKuaibo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7899AE2C7EE7FF05200F69A6 /* [CP] Embed Pods Frameworks */ = {
+		F7E49E627DC1A81585B750DC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1237,21 +1236,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YYKuaibo/Pods-YYKuaibo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BABF4B805BA55881BC059782 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1498,7 +1482,7 @@
 		};
 		BCE2562C1C966A8E00133F4F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F74F2DBA22222B6A63038AB9 /* Pods-YYKuaibo.debug.xcconfig */;
+			baseConfigurationReference = B42548BC60CBE6302A79141B /* Pods-YYKuaibo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1533,7 +1517,7 @@
 		};
 		BCE2562D1C966A8E00133F4F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 008ACC4CCCB3F4CC00B99ABE /* Pods-YYKuaibo.release.xcconfig */;
+			baseConfigurationReference = 6032C10DFC5389978ACD1413 /* Pods-YYKuaibo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

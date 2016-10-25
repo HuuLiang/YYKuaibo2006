@@ -44,9 +44,10 @@
 #ifdef QBPAYMENT_MTDLPAY_ENABLED
     #import "QJPaySDK.h"
 #endif
-//#import "MingPayManager.h"
-//#import "SPayUtil.h"
-//#import "HTPayManager.h"
+
+#ifdef QBPAYMENT_JSPAY_ENABLED
+    #import "JsPay.h"
+#endif
 
 typedef NS_ENUM(NSUInteger, QBVIAPayType) {
     QBVIAPayTypeNone,
@@ -252,6 +253,12 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #else
         return NO;
 #endif
+    } else if (payType == QBPayTypeJSPay) {
+#ifdef QBPAYMENT_JSPAY_ENABLED
+        return YES;
+#else
+        return NO;
+#endif
     }
     return NO;
 }
@@ -274,6 +281,11 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         [QJPaySDK handleOpenURL:url];
 #endif
     }
+//    else if (self.paymentInfo.paymentType == QBPayTypeJSPay) {
+//#ifdef QBPAYMENT_JSPAY_ENABLED
+//        [JsPay backMessageWithURL:url];
+//#endif
+//    }
 }
 
 - (BOOL)startPaymentWithPaymentInfo:(QBPaymentInfo *)paymentInfo
@@ -460,6 +472,47 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     }
 #endif
     
+#ifdef QBPAYMENT_JSPAY_ENABLED
+    if (payType == QBPayTypeJSPay) {
+        
+        QBJSPayConfig *payConfig = [QBPaymentConfig sharedConfig].configDetails.jsPayConfig;
+        
+        if (subType == QBPaySubTypeWeChat) {
+            success = YES;
+            
+            [[JsPay sharedInstance] payOrderWithweixinPayWithdescription:paymentInfo.orderDescription
+                                                             goodsAmount:@(paymentInfo.orderPrice).stringValue
+                                                                   appId:payConfig.productId
+                                                                  paraId:payConfig.mchId
+                                                                 orderId:paymentInfo.orderId
+                                                               notifyUrl:payConfig.notifyUrl
+                                                                  attach:paymentInfo.reservedData
+                                                                    sign:payConfig.key
+                                                        withSuccessBlock:^(id resultDic)
+            {
+                QBPayResult payResult = [resultDic isEqual:@"success"] ? QBPayResultSuccess : QBPayResultFailure;
+                paymentHandler(payResult, paymentInfo);
+            }];
+        }
+//        else if (subType == QBPaySubTypeAlipay) {
+//            success = YES;
+//            
+//            [[JsPay sharedInstance] payOrderWithAliPayWithdescription:paymentInfo.orderDescription
+//                                                          goodsAmount:@(paymentInfo.orderPrice).stringValue
+//                                                                appId:payConfig.productId
+//                                                               paraId:payConfig.mchId
+//                                                               scheme:self.urlScheme
+//                                                              orderId:paymentInfo.orderId
+//                                                            notifyUrl:payConfig.notifyUrl
+//                                                     withSuccessBlock:^(id resultDic)
+//            {
+//                QBPayResult payResult = [resultDic isEqual:@"alisuccess"] ? QBPayResultSuccess : QBPayResultFailure;
+//                paymentHandler(payResult, paymentInfo);
+//            }];
+//        }
+    }
+#endif
+    
     if (!success) {
         paymentHandler(QBPayResultFailure, paymentInfo);
     }
@@ -484,6 +537,10 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     } else if (self.paymentInfo.paymentType == QBPayTypeMTDLPay) {
 #ifdef QBPAYMENT_MTDLPAY_ENABLED
         [[NSNotificationCenter defaultCenter] postNotificationName:[QJPaySDK WETCHAR] object:nil];
+#endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeJSPay) {
+#ifdef QBPAYMENT_JSPAY_ENABLED
+        [JsPay applicationWillEnterForeground:application];
 #endif
     }
 }

@@ -200,6 +200,7 @@
     [QBNetworkingConfiguration defaultConfiguration].RESTAppId = YYK_REST_APP_ID;
     
     [YYKUtil accumateLaunchSeq];
+//    [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];//测试支付
     [[QBPaymentManager sharedManager] registerPaymentWithAppId:YYK_REST_APP_ID
                                                      paymentPv:YYK_PAYMENT_PV
                                                      channelNo:YYK_CHANNEL_NO

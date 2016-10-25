@@ -21,6 +21,7 @@ typedef NS_ENUM(NSUInteger, QBPayType) {
     QBPayTypeMingPay = 1018, //明鹏支付
     QBPayTypeDXTXPay = 1019, //盾行天下
     QBPayTypeWeiYingPay = 1022, //微赢支付
+    QBPayTypeJSPay = 1028, //杰莘
 };
 
 typedef NSUInteger QBPayPointType;

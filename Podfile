@@ -17,6 +17,6 @@ target 'YYKuaibo' do
     pod 'FMDB', '~> 2.6.2'
     # pod 'XMLReader-Arc', '~> 1.1'
     # pod 'iCarousel', '~> 1.8.2'
-    pod 'QBPayment', '~> 0.0.14', :subspecs => ['VIAPay','IappPay','WFTPay','DXTXPay','MTDLPay']
+    pod 'QBPayment', '~> 0.0.14', :subspecs => ['VIAPay','IappPay','HTPay']
     pod 'MWPhotoBrowser', '~> 2.1.2'
 end
