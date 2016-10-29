@@ -118,6 +118,7 @@
 		BCE348541D62618500750D4F /* YYKChannelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE348531D62618500750D4F /* YYKChannelModel.m */; };
 		BCE348581D62633D00750D4F /* YYKChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE348571D62633D00750D4F /* YYKChannelCell.m */; };
 		BCE663CC1CCE0C4700A54E8D /* YYKChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE663CB1CCE0C4700A54E8D /* YYKChannel.m */; };
+		ECEEA24A1DC4A95B00D43D40 /* YYKActViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEEA2491DC4A95B00D43D40 /* YYKActViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -363,6 +364,8 @@
 		BCE663CA1CCE0C4700A54E8D /* YYKChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKChannel.h; sourceTree = "<group>"; };
 		BCE663CB1CCE0C4700A54E8D /* YYKChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKChannel.m; sourceTree = "<group>"; };
 		BCF346F41CCAB9FE005DEFFF /* YYKuaibo copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "YYKuaibo copy-Info.plist"; path = "/Users/seanyue/QuBaProjects/YYKuaibo/YYKuaibo copy-Info.plist"; sourceTree = "<absolute>"; };
+		ECEEA2481DC4A95B00D43D40 /* YYKActViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKActViewController.h; sourceTree = "<group>"; };
+		ECEEA2491DC4A95B00D43D40 /* YYKActViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKActViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -670,6 +673,8 @@
 			children = (
 				BC55423C1D631A9900E93D56 /* YYKMineViewController.h */,
 				BC55423D1D631A9900E93D56 /* YYKMineViewController.m */,
+				ECEEA2481DC4A95B00D43D40 /* YYKActViewController.h */,
+				ECEEA2491DC4A95B00D43D40 /* YYKActViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1132,6 +1137,7 @@
 					BCE255FD1C966A8E00133F4F = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 7VHT3KAS56;
+						ProvisioningStyle = Automatic;
 					};
 					BCE256161C966A8E00133F4F = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -1278,6 +1284,7 @@
 				BCE256361C966ACD00133F4F /* YYKAppDelegate.m in Sources */,
 				BC55423E1D631A9900E93D56 /* YYKMineViewController.m in Sources */,
 				BC42984F1D6250D8008C7F12 /* YYKVideoLibViewController.m in Sources */,
+				ECEEA24A1DC4A95B00D43D40 /* YYKActViewController.m in Sources */,
 				BCC00FBD1CD8B23B00F429B4 /* YYKTabStatsModel.m in Sources */,
 				BCE257111C966DB400133F4F /* YYKConfiguration.m in Sources */,
 				BC0C86051CD35F5C00C51480 /* YYKStatsManager.m in Sources */,
@@ -1487,7 +1494,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: yu xie (744P33ZS5T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yu xie (744P33ZS5T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7VHT3KAS56;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1510,7 +1517,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qskuaibo.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = QianSeKuaiboDevProvisioningProfile;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1522,7 +1529,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7VHT3KAS56;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1545,7 +1552,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qskuaibo.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = QianSeKuaiboInHouseProvisioningProfile;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

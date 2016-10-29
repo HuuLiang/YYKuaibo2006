@@ -128,6 +128,8 @@ FOUNDATION_STATIC_INLINE NSString * YYKIntegralPrice(const CGFloat price) {
 #define kMediumHorizontalSpacing    (kScreenWidth * 0.016)
 #define kSmallHorizontalSpacing     (kScreenWidth * 0.008)
 
+#define kWidth(width)                  kScreenWidth  * width  / 750
+
 #define kLeftRightContentMarginSpacing kExtraBigHorizontalSpacing
 #define kTopBottomContentMarginSpacing kExtraBigVerticalSpacing
 #endif /* YYKCommonDef_h */

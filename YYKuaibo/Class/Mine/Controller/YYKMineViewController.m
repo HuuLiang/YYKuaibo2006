@@ -15,7 +15,7 @@
 #import "YYKWebViewController.h"
 #import "YYKSystemConfigModel.h"
 #import "YYKVersionUpdateModel.h"
-
+#import "YYKActViewController.h"
 typedef NS_ENUM(NSUInteger, YYKMineSection) {
     YYKVIPSection,
     YYKMenuSection,
@@ -75,9 +75,10 @@ DefineLazyPropertyInitialization(YYKAppSpreadModel, spreadModel)
     [_layoutCV YYK_triggerPullToRefresh];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPaidNotification) name:kPaidNotificationName object:nil];
     
-    [self.navigationController.navigationBar bk_whenTouches:1 tapped:5 handler:^{
-        NSString *baseURLString = [YYK_BASE_URL stringByReplacingCharactersInRange:NSMakeRange(0, YYK_BASE_URL.length-6) withString:@"******"];
-        [[YYKHudManager manager] showHudWithText:[NSString stringWithFormat:@"Server:%@\nChannelNo:%@\nPackageCertificate:%@\npV:%@/%@", baseURLString, YYK_CHANNEL_NO, YYK_PACKAGE_CERTIFICATE, YYK_REST_PV, YYK_PAYMENT_PV]];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:@"我的订单" style:UIBarButtonItemStylePlain handler:^(id sender) {
+        @strongify(self);
+        YYKActViewController *actVC = [[YYKActViewController alloc] init];
+        [self.navigationController pushViewController:actVC animated:YES];
     }];
 }
 
