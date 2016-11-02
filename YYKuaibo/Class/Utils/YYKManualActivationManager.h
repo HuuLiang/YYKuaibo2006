@@ -14,6 +14,5 @@
 
 - (void)doActivation;
 
-- (void)autoActivationWithOrderId:(NSString *)orderId;
 
 @end

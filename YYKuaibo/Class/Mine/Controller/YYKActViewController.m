@@ -7,6 +7,7 @@
 //
 
 #import "YYKActViewController.h"
+#import "YYKAutoActivateManager.h"
 
 @interface YYKActViewController () <UITextFieldDelegate>
 {
@@ -78,7 +79,7 @@
     @weakify(self);
     [_nonAutoBtn bk_addEventHandler:^(id sender) {
         @strongify(self);
-        [[YYKManualActivationManager sharedManager] autoActivationWithOrderId:self->_textField.text];
+        [[YYKAutoActivateManager sharedManager] requestExchangeCode:self->_textField.text];
     } forControlEvents:UIControlEventTouchUpInside];
     
     {

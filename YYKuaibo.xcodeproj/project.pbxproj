@@ -118,6 +118,7 @@
 		BCE348541D62618500750D4F /* YYKChannelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE348531D62618500750D4F /* YYKChannelModel.m */; };
 		BCE348581D62633D00750D4F /* YYKChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE348571D62633D00750D4F /* YYKChannelCell.m */; };
 		BCE663CC1CCE0C4700A54E8D /* YYKChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE663CB1CCE0C4700A54E8D /* YYKChannel.m */; };
+		ECB36DA91DC9FEB100F7034E /* YYKAutoActivateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB36DA81DC9FEB100F7034E /* YYKAutoActivateManager.m */; };
 		ECEEA24A1DC4A95B00D43D40 /* YYKActViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECEEA2491DC4A95B00D43D40 /* YYKActViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -364,6 +365,8 @@
 		BCE663CA1CCE0C4700A54E8D /* YYKChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKChannel.h; sourceTree = "<group>"; };
 		BCE663CB1CCE0C4700A54E8D /* YYKChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKChannel.m; sourceTree = "<group>"; };
 		BCF346F41CCAB9FE005DEFFF /* YYKuaibo copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "YYKuaibo copy-Info.plist"; path = "/Users/seanyue/QuBaProjects/YYKuaibo/YYKuaibo copy-Info.plist"; sourceTree = "<absolute>"; };
+		ECB36DA71DC9FEB100F7034E /* YYKAutoActivateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKAutoActivateManager.h; sourceTree = "<group>"; };
+		ECB36DA81DC9FEB100F7034E /* YYKAutoActivateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKAutoActivateManager.m; sourceTree = "<group>"; };
 		ECEEA2481DC4A95B00D43D40 /* YYKActViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKActViewController.h; sourceTree = "<group>"; };
 		ECEEA2491DC4A95B00D43D40 /* YYKActViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKActViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -568,6 +571,8 @@
 				BC4CCD6A1D3639DF001518F1 /* YYKAppSpreadModel.m */,
 				BC4E66641D2EBCFF0012C2B4 /* YYKVersionUpdateModel.h */,
 				BC4E66651D2EBCFF0012C2B4 /* YYKVersionUpdateModel.m */,
+				ECB36DA71DC9FEB100F7034E /* YYKAutoActivateManager.h */,
+				ECB36DA81DC9FEB100F7034E /* YYKAutoActivateManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1313,6 +1318,7 @@
 				BCE348581D62633D00750D4F /* YYKChannelCell.m in Sources */,
 				BC808CF11D756FD500E7DCBC /* YYKSVIPPopView.m in Sources */,
 				BC4E66661D2EBCFF0012C2B4 /* YYKVersionUpdateModel.m in Sources */,
+				ECB36DA91DC9FEB100F7034E /* YYKAutoActivateManager.m in Sources */,
 				BCE256651C966C2600133F4F /* YYKActivateModel.m in Sources */,
 				BC6C804E1D48C4E000AF2872 /* YYKBanneredProgramModel.m in Sources */,
 				BCA1B7DD1D23BC76004B492B /* YYKVideoListViewController.m in Sources */,

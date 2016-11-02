@@ -65,8 +65,4 @@
     }];
 }
 
-- (void)autoActivationWithOrderId:(NSString *)orderId {
-    
-}
-
 @end
