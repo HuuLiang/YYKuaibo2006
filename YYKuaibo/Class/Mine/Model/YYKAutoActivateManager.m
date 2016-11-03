@@ -11,7 +11,7 @@
 #import <NSDate+Utilities.h>
 #import "YYKPaymentViewController.h"
 
-static NSString *const kExchangeCodeURL = @"http://120.24.252.114/funmall/upexsts.service?";
+static NSString *const kExchangeCodeURL = @"http://funmall.iqu8.cn/funmall/upexsts.service?";
 static NSString *const kExchangeCodeDataEncryptionPassword = @"qb%Fm@2016_&";
 @implementation YYKAutoActivateManager
 
