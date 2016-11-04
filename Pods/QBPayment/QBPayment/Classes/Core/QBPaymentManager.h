@@ -12,6 +12,8 @@
 
 FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
 
+@class QBPaymentConfig;
+
 @interface QBPaymentManager : NSObject
 
 + (instancetype)sharedManager;
@@ -23,8 +25,16 @@ FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
  *  @param pv        支付版本号(用于获取支付配置)
  *  @param channelNo 渠道号
  *  @param urlScheme 支付宝回调所用的url scheme；在某些第三方支付中，如果不注册该url scheme，可能会在调起时崩溃
+ *  @param config    支付配置，如果为nil，则从服务器端获取支付配置
+ *  @param shouldCommitPayment 是否提交支付信息
  */
 - (void)registerPaymentWithAppId:(NSString *)appId paymentPv:(NSNumber *)pv channelNo:(NSString *)channelNo urlScheme:(NSString *)urlScheme;
+- (void)registerPaymentWithAppId:(NSString *)appId
+                       paymentPv:(NSNumber *)pv
+                       channelNo:(NSString *)channelNo
+                       urlScheme:(NSString *)urlScheme
+                          config:(QBPaymentConfig *)config
+             shouldCommitPayment:(BOOL)shouldCommitPayment;
 
 /**
  *  开启支付
@@ -37,20 +47,53 @@ FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
 - (BOOL)startPaymentWithPaymentInfo:(QBPaymentInfo *)paymentInfo
                   completionHandler:(QBPaymentCompletionHandler)completionHandler;
 
-- (void)applicationWillEnterForeground:(UIApplication *)application;
-- (void)handleOpenUrl:(NSURL *)url;
+/**
+ *  手动激活，从回调数据中查询指定的订单状态
+ *
+ *  @param paymentInfos      支付信息
+ *  @param completionHandler 回调block，如果success为YES表示传入的paymentInfos中至少有一条支付成功的数据
+ *  @param retryTimes 重试次数，鉴于回调数据可能会有延迟，可以增大重试次数
+ */
+- (void)activatePaymentInfos:(NSArray<QBPaymentInfo *> *)paymentInfos withCompletionHandler:(QBCompletionHandler)completionHandler;
+- (void)activatePaymentInfos:(NSArray<QBPaymentInfo *> *)paymentInfos withRetryTimes:(NSUInteger)retryTimes completionHandler:(QBCompletionHandler)completionHandler;
+
+/**
+ *  查询当前支付是否集成了指定类型的SDK
+ *
+ *  @param payType       支付类型
+ *
+ *  @return 是否集成了该支付类型的SDK
+ */
+- (BOOL)IsSDKIntegratedForPayType:(QBPayType)payType;
+
+/**
+ *  刷新配置的支付类型
+ *
+ *  @param completionHandler    刷新操作之后的回调
+ *
+ */
+- (void)refreshAvailablePaymentTypesWithCompletionHandler:(void (^)(void))completionHandler;
+
+@end
+
+@interface QBPaymentManager (ConfiguredPaymentTypes)
 
 - (QBPayType)wechatPaymentType;
 - (QBPayType)alipayPaymentType;
 - (QBPayType)cardPayPaymentType;
 - (QBPayType)qqPaymentType;
 
-- (BOOL)IsSDKIntegratedForPayType:(QBPayType)payType;
+@end
 
-- (void)refreshAvailablePaymentTypesWithCompletionHandler:(void (^)(void))completionHandler;
+@interface QBPaymentManager (ApplicationCallback)
+
+- (void)applicationWillEnterForeground:(UIApplication *)application;
+- (void)handleOpenUrl:(NSURL *)url;
+
+@end
+
+@interface QBPaymentManager (Test)
 
 - (void)usePaymentConfigInTestServer:(BOOL)useTestConfig;
-
-- (void)activatePaymentInfos:(NSArray<QBPaymentInfo *> *)paymentInfos withCompletionHandler:(QBCompletionHandler)completionHandler;
 
 @end

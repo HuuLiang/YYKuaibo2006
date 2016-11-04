@@ -23,6 +23,8 @@ typedef void (^QBNetworkReachabilityChangedAction)(BOOL reachable);
 
 @property (nonatomic,readonly) QBNetworkStatus networkStatus;
 @property (nonatomic,readonly) NSString *carriarName;
+@property (nonatomic,readonly) NSString *ipAddress;
+
 @property (nonatomic,copy) QBNetworkReachabilityChangedAction reachabilityChangedAction;
 
 + (instancetype)sharedInfo;
