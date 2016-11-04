@@ -6,128 +6,103 @@
 	<dict>
 		<key>AFNetworking.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Aspects.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>BlocksKit.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>DACircularProgress.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>FMDB.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>5</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>7</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>MJRefresh.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>8</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>MWPhotoBrowser-MWPhotoBrowser.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>10</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>MWPhotoBrowser.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>9</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Masonry.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>6</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods-YYKuaibo.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>11</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>QBExtensions.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>12</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>QBNetworking.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>13</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>QBPayment.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>14</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>SDCycleScrollView.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>15</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>16</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>SFHFKeychainUtils.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>17</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>UITextView+Placeholder.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>18</integer>
-		</dict>
-		<key>XMLReader-Arc.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>19</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0ED3FABF1BE726DCA241983D8C9A7689</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>2B0E3AF005F1613EC4DA8D995B335035</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>30624F4DA5E7BF87D3AD156B0DA141A8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>35EF315E44DAC8032E3AF122DAC9FA7A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>4B5E222276DFD19790676703042835D3</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4D1863ABDD4C7E624541C64D533932FD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -143,11 +118,6 @@
 			<true/>
 		</dict>
 		<key>5813251FEA21E4AEE97385709F1912DE</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>599CA5E3A8E8EE8EC4556CEB2E957AF7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -187,17 +157,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A37ED6CD0D060D3524948CEBB87EA767</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>BD3954E81F0FDFAA6C8A5127539CF3D4</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C6D1A2837B72C9BB69D44D3E89FE1D6C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -213,11 +173,6 @@
 			<true/>
 		</dict>
 		<key>DE3B07ED7FF04F506B0C5E00F4973589</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E054137DFD8937478F0AF33DCA75B265</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -46,6 +46,15 @@ static NSString *const kPaymentInfoUserIdKeyName = @"qbpayment_paymentinfo_useri
     return _paymentId;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _paymentResult = QBPayResultUnknown;
+        _paymentStatus = QBPayStatusUnknown;
+    }
+    return self;
+}
+
 + (instancetype)paymentInfoFromDictionary:(NSDictionary *)payment {
     QBPaymentInfo *paymentInfo = [[self alloc] init];
     paymentInfo.paymentId = payment[kPaymentInfoPaymentIdKeyName];
