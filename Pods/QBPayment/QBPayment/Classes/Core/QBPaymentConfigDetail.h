@@ -88,6 +88,7 @@ extern NSString *const kQBXLTXPayConfigName;
 @property (nonatomic) NSString *key;
 @property (nonatomic) NSString *mchId;
 @property (nonatomic) NSString *appid;
+@property (nonatomic) NSString *payType;
 @property (nonatomic) NSString *notifyUrl;
 @end
 

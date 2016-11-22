@@ -11,7 +11,7 @@
 #import "RACEXTScope.h"
 #import "QBNetworkingConfiguration.h"
 
-static NSString *const kPaymentConfigURL = @"http://pay.iqu8.net/paycenter/appPayConfig.json";
+static NSString *const kPaymentConfigURL = @"http://pay.zcqcmj.com/paycenter/appPayConfig.json";
 static NSString *const kTestPaymentConfigURL = @"http://120.24.252.114:8084/paycenter/appPayConfig.json";
 
 @implementation QBPaymentConfigModel

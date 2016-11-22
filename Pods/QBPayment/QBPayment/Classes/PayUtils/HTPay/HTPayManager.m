@@ -34,17 +34,12 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
     return _sharedManager;
 }
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        [HaiTunPay shareInstance].haiTunPayBaseUrl = kPayUrl;
-        [HaiTunPay shareInstance].haiTunSelectUrl = kQueryOrderUrl;
-        [HaiTunPay shareInstance].Sjt_Paytype = @"y";
-    }
-    return self;
-}
-
 - (void)setup {
+    
+    [HaiTunPay shareInstance].haiTunPayBaseUrl = kPayUrl;
+    [HaiTunPay shareInstance].haiTunSelectUrl = kQueryOrderUrl;
+    [HaiTunPay shareInstance].Sjt_Paytype = self.payType;
+    
     SPayClientWechatConfigModel *wechatConfigModel = [[SPayClientWechatConfigModel alloc] init];
     wechatConfigModel.appScheme = self.appid;
     wechatConfigModel.wechatAppid = self.appid;
