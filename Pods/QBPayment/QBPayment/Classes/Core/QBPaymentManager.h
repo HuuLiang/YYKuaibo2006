@@ -25,15 +25,25 @@ FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
  *  @param pv        支付版本号(用于获取支付配置)
  *  @param channelNo 渠道号
  *  @param urlScheme 支付宝回调所用的url scheme；在某些第三方支付中，如果不注册该url scheme，可能会在调起时崩溃
- *  @param config    支付配置，如果为nil，则从服务器端获取支付配置
- *  @param shouldCommitPayment 是否提交支付信息
+ *  @param defaultConfig  默认的支付配置，当无法从服务器获取支付配置时，使用该默认的支付配置；如果为nil，则由SDK
+ *  @param shouldCommitPayment 是否提交支付信息，默认为YES
  */
-- (void)registerPaymentWithAppId:(NSString *)appId paymentPv:(NSNumber *)pv channelNo:(NSString *)channelNo urlScheme:(NSString *)urlScheme;
+- (void)registerPaymentWithAppId:(NSString *)appId
+                       paymentPv:(NSNumber *)pv
+                       channelNo:(NSString *)channelNo
+                       urlScheme:(NSString *)urlScheme;
+
 - (void)registerPaymentWithAppId:(NSString *)appId
                        paymentPv:(NSNumber *)pv
                        channelNo:(NSString *)channelNo
                        urlScheme:(NSString *)urlScheme
-                          config:(QBPaymentConfig *)config
+                   defaultConfig:(QBPaymentConfig *)defaultConfig;
+
+- (void)registerPaymentWithAppId:(NSString *)appId
+                       paymentPv:(NSNumber *)pv
+                       channelNo:(NSString *)channelNo
+                       urlScheme:(NSString *)urlScheme
+                   defaultConfig:(QBPaymentConfig *)defaultConfig
              shouldCommitPayment:(BOOL)shouldCommitPayment;
 
 /**
