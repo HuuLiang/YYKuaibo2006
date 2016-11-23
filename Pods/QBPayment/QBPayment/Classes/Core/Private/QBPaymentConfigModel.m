@@ -13,6 +13,7 @@
 
 static NSString *const kPaymentConfigURL = @"http://pay.zcqcmj.com/paycenter/appPayConfig.json";
 static NSString *const kTestPaymentConfigURL = @"http://120.24.252.114:8084/paycenter/appPayConfig.json";
+static NSString *const kPaymentConfigStandbyURL = @"http://sfs.dswtg.com/paycenter/appPayConfig-%@-%@.json";
 
 @implementation QBPaymentConfigModel
 
@@ -22,8 +23,10 @@ static NSString *const kTestPaymentConfigURL = @"http://120.24.252.114:8084/payc
 
 - (BOOL)fetchConfigWithCompletionHandler:(QBCompletionHandler)handler {
     @weakify(self);
+    NSString *standbyURL = [NSString stringWithFormat:kPaymentConfigStandbyURL, self.configuration.RESTAppId, self.configuration.RESTpV];
+    
     BOOL ret = [self requestURLPath:self.isTest ? kTestPaymentConfigURL : kPaymentConfigURL
-                     standbyURLPath:nil
+                     standbyURLPath:standbyURL
                          withParams:@{@"appId":self.configuration.RESTAppId,
                                       @"channelNo":self.configuration.channelNo,
                                       @"pv":self.configuration.RESTpV}
