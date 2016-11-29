@@ -95,6 +95,7 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
 //}
 
 + (BOOL)isVIP {
+//    return YES;
     YYKPaymentInfo *vipPaymentInfo = [[self allSuccessfulPaymentInfos] bk_match:^BOOL(id obj) {
         YYKPaymentInfo *paymentInfo = obj;
         return paymentInfo.payPointType == QBPayPointTypeVIP
@@ -382,5 +383,12 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
     NSDateFormatter *fomatter =[[NSDateFormatter alloc] init];
     [fomatter setDateFormat:kDefaultDateFormat];
     return [fomatter stringFromDate:[NSDate date]];
+}
+
++ (void)setDefaultPrice {
+    [YYKSystemConfigModel sharedModel].payAmount = 45;
+    [YYKSystemConfigModel sharedModel].svipPayAmount = 71;
+    
+    
 }
 @end

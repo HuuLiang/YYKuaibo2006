@@ -20,6 +20,7 @@
 #import "MobClick.h"
 #import "YYKVersionUpdateModel.h"
 #import <QBNetworkingConfiguration.h>
+#import <QBPaymentConfig.h>
 
 @interface YYKAppDelegate () <UITabBarControllerDelegate>
 @property (nonatomic,retain) UIViewController *rootViewController;
@@ -200,11 +201,13 @@
     [QBNetworkingConfiguration defaultConfiguration].RESTAppId = YYK_REST_APP_ID;
     
     [YYKUtil accumateLaunchSeq];
+    [YYKUtil setDefaultPrice];
 //    [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];//测试支付
     [[QBPaymentManager sharedManager] registerPaymentWithAppId:YYK_REST_APP_ID
                                                      paymentPv:YYK_PAYMENT_PV
                                                      channelNo:YYK_CHANNEL_NO
-                                                     urlScheme:@"comqskuaiboapppayurlscheme"];
+                                                     urlScheme:@"comqskuaiboapppayurlscheme"
+                                                     defaultConfig:[self setDefaultPaymentConfig]];
     [[YYKErrorHandler sharedHandler] initialize];
     [self setupMobStatistics];
     [self setupCommonStyles];
@@ -333,6 +336,48 @@
     }];
     return YES;
 }
+
+- (QBPaymentConfig *)setDefaultPaymentConfig {
+    QBPaymentConfig *config = [[QBPaymentConfig alloc] init];
+    
+    QBPaymentConfigDetail *configDetails = [[QBPaymentConfigDetail alloc] init];
+    //爱贝默认配置
+    QBIAppPayConfig * iAppPayConfig = [[QBIAppPayConfig alloc] init];
+    iAppPayConfig.appid = @"3006339410";
+    iAppPayConfig.privateKey = @"MIICWwIBAAKBgQCHEQCLCZujWicF6ClEgHx4L/OdSHZ1LdKi/mzPOIa4IRfMOS09qDNV3+uK/zEEPu1DgO5Cl1lsm4xpwIiOqdXNRxLE9PUfgRy4syiiqRfofAO7w4VLSG4S0VU5F+jqQzKM7Zgp3blbc5BJ5PtKXf6zP3aCAYjz13HHH34angjg0wIDAQABAoGASOJm3aBoqSSL7EcUhc+j2yNdHaGtspvwj14mD0hcgl3xPpYYEK6ETTHRJCeDJtxiIkwfxjVv3witI5/u0LVbFmd4b+2jZQ848BHGFtZFOOPJFVCylTy5j5O79mEx0nJN0EJ/qadwezXr4UZLDIaJdWxhhvS+yDe0e0foz5AxWmkCQQDhd9U1uUasiMmH4WvHqMfq5l4y4U+V5SGb+IK+8Vi03Zfw1YDvKrgv1Xm1mdzYHFLkC47dhTm7/Ko8k5Kncf89AkEAmVtEtycnSYciSqDVXxWtH1tzsDeIMz/ZlDGXCAdUfRR2ZJ2u2jrLFunoS9dXhSGuERU7laasK0bDT4p0UwlhTwJAVF+wtPsRnI1PxX6xA7WAosH0rFuumax2SFTWMLhGduCZ9HEhX97/sD7V3gSnJWRsDJTasMEjWtrxpdufvPOnDQJAdsYPVGMItJPq5S3n0/rv2Kd11HdOD5NWKsa1mMxEjZN5lrfhoreCb7694W9pI31QWX6+ZUtvcR0fS82KBn3vVQJAa0fESiiDDrovKHBm/aYXjMV5anpbuAa5RJwCqnbjCWleZMwHV+8uUq9+YMnINZQnvi+C62It4BD+KrJn5q4pwg==";
+    iAppPayConfig.publicKey = @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCbNQyxdpLeMwE0QMv/dB3Jn1SRqYE/u3QT3ig2uXu4yeaZo4f7qJomudLKKOgpa8+4a2JAPRBSueDpiytR0zN5hRZKImeZAu2foSYkpBqnjb5CRAH7roO7+ervoizg6bhAEx2zlltV9wZKQZ0Di5wCCV+bMSEXkYqfASRplYUvHwIDAQAB";
+    iAppPayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyIpay.json";
+    iAppPayConfig.waresid = @(1);
+    configDetails.iAppPayConfig = iAppPayConfig;
+    
+    //    //海豚默认配置
+    //    QBHTPayConfig *htpayConfig = [[QBHTPayConfig alloc] init];
+    //    htpayConfig.mchId = @"10014";
+    //    htpayConfig.key = @"55f4f728b7a01c2e57a9f767fd34cb8e";
+    //    htpayConfig.appid = @"wxdea87ffa75dfb0fa";
+    //    htpayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyHtPay.json";
+    //    htpayConfig.payType = @"z";
+    //    configDetails.htpayConfig = htpayConfig;
+    
+    //WJPAY
+    QBWJPayConfig *wjPayCofig = [[QBWJPayConfig alloc] init];
+    wjPayCofig.mchId = @"50000009";
+    wjPayCofig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyWujism.json";
+    wjPayCofig.signKey = @"B0C65DF81AA7EA85";
+    configDetails.wjPayConfig = wjPayCofig;
+    
+    //支付方式
+    QBPaymentConfigSummary *payConfig = [[QBPaymentConfigSummary alloc] init];
+    payConfig.alipay = @"IAPPPAY";
+    payConfig.wechat = @"WUJI";
+    
+    config.configDetails = configDetails;
+    config.payConfig = payConfig;
+    
+    [config setAsCurrentConfig];
+    return config;
+}
+
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(void (^)(BOOL success))completionHandler {
     return [[YYKSystemConfigModel sharedModel] fetchSystemConfigWithCompletionHandler:^(BOOL success) {
