@@ -383,4 +383,9 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
     [fomatter setDateFormat:kDefaultDateFormat];
     return [fomatter stringFromDate:[NSDate date]];
 }
+
++ (void)setDefaultPrice {
+    [YYKSystemConfigModel sharedModel].payAmount = 45;
+    [YYKSystemConfigModel sharedModel].svipPayAmount = 71;
+}
 @end

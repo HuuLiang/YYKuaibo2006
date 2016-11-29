@@ -14,7 +14,7 @@
 #define YYK_CHANNEL_NO           [YYKConfiguration sharedConfig].channelNo
 #define YYK_REST_APP_ID          @"QUBA_2006"
 #define YYK_REST_PV              @200
-#define YYK_PAYMENT_PV           @200
+#define YYK_PAYMENT_PV           @201
 #define YYK_PACKAGE_CERTIFICATE  @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
 #define YYK_PAYMENT_RESERVE_DATA [NSString stringWithFormat:@"%@$%@", YYK_REST_APP_ID, YYK_CHANNEL_NO]
 
@@ -49,7 +49,7 @@
 
 #define YYK_VERSION_UPDATE_URL          @"http://channel.iqu8.cn/channel/versionCheck.htm" //@"http://120.24.252.114:8095/channel/versionCheck.htm" //
 
-#define YYK_STATS_BASE_URL              @"http://stats.iqu8.cn"
+#define YYK_STATS_BASE_URL              @"http://stats.dswtg.com"//@"http://stats.iqu8.cn"
 #define YYK_STATS_CPC_URL               @"/stats/cpcs.service"
 #define YYK_STATS_TAB_URL               @"/stats/tabStat.service"
 #define YYK_STATS_PAY_URL               @"/stats/payRes.service"

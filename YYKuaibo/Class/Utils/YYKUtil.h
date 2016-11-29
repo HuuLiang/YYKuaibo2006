@@ -58,5 +58,5 @@
 + (UIViewController *)currentVisibleViewController;
 
 + (NSString *)currentTimeString;
-
++ (void)setDefaultPrice;
 @end
