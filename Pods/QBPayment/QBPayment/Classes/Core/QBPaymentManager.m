@@ -63,6 +63,10 @@
     #import "MingPayManager.h"
 #endif
 
+#ifdef QBPAYMENT_WJPAY_ENABLED
+    #import "WJPayManager.h"
+#endif
+
 typedef NS_ENUM(NSUInteger, QBVIAPayType) {
     QBVIAPayTypeNone,
     QBVIAPayTypeWeChat = 2,
@@ -268,6 +272,16 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
         }
 #endif
         
+#ifdef QBPAYMENT_WJPAY_ENABLED
+        QBWJPayConfig *wjPayConfig = [QBPaymentConfig sharedConfig].configDetails.wjPayConfig;
+        if (wjPayConfig) {
+            [WJPayManager sharedManager].mchId = wjPayConfig.mchId;
+            [WJPayManager sharedManager].signKey = wjPayConfig.signKey;
+            [WJPayManager sharedManager].notifyUrl = wjPayConfig.notifyUrl;
+            [[WJPayManager sharedManager] setup];
+        }
+#endif
+        
         QBSafelyCallBlock(completionHandler);
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kQBPaymentFetchConfigNotification object:nil];
@@ -357,6 +371,12 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #endif
     } else if (payType == QBPayTypeXLTXPay) {
 #ifdef QBPAYMENT_XLTXPAY_ENABLED
+        return YES;
+#else
+        return NO;
+#endif
+    } else if (payType == QBPayTypeWJPay) {
+#ifdef QBPAYMENT_WJPAY_ENABLED
         return YES;
 #else
         return NO;
@@ -602,6 +622,14 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     }
 #endif
     
+#ifdef QBPAYMENT_WJPAY_ENABLED
+    if (payType == QBPayTypeWJPay) {
+        success = YES;
+        
+        [[WJPayManager sharedManager] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
+    }
+#endif
+    
     if (!success) {
         paymentHandler(QBPayResultFailure, paymentInfo);
     }
@@ -634,6 +662,10 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     } else if (self.paymentInfo.paymentType == QBPayTypeXLTXPay) {
 #ifdef QBPAYMENT_XLTXPAY_ENABLED
         [[XLTXPayManager sharedManager] applicationWillEnterForeground:application];
+#endif
+    } else if (self.paymentInfo.paymentType == QBPayTypeWJPay) {
+#ifdef QBPAYMENT_WJPAY_ENABLED
+        [[WJPayManager sharedManager] applicationWillEnterForeground:application];
 #endif
     }
 }

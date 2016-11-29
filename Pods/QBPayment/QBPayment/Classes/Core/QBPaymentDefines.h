@@ -20,6 +20,7 @@ typedef NS_ENUM(NSUInteger, QBPayType) {
     QBPayTypeMTDLPay = 1017, //明天动力
     QBPayTypeMingPay = 1018, //明鹏支付
     QBPayTypeDXTXPay = 1019, //盾行天下
+    QBPayTypeWJPay = 1020, // 无极支付
     QBPayTypeWeiYingPay = 1022, //微赢支付
     QBPayTypeXLTXPay = 1023, //星罗天下
     QBPayTypeJSPay = 1028, //杰莘
