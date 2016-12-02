@@ -42,32 +42,33 @@
     
     @weakify(self);
     BOOL ret = [self requestURLPath:YYK_VIDEO_DETAIL_URL
+                     standbyURLPath:[YYKUtil getStandByUrlPathWithOriginalUrl:YYK_VIDEO_DETAIL_URL params:@{@"columnId":channel.columnId,@"programId":video.programId}]
                          withParams:@{@"columnId":channel.columnId,
                                       @"programId":video.programId}
-                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
-    {
-        @strongify(self);
-        if (!self) {
-            return ;
-        }
-        
-        YYKVideoDetail *detail;
-        if (respStatus == QBURLResponseSuccess) {
-            detail = self.response;
-            
-            [YYKUtil requestAllInstalledAppIdsWithCompletionHandler:^(NSArray<NSString *> *appIds) {
-                
-                YYKProgram *firstUninstalledAppId = [detail.spreadAppList bk_match:^BOOL(YYKProgram *spread) {
-                    return ![appIds containsObject:spread.specialDesc];
-                }];
-                detail.spreadApp = firstUninstalledAppId;
-                self->_fetchedDetail = detail;
-                SafelyCallBlock(completionHandler, YES, detail);
-            }];
-        } else {
-            SafelyCallBlock(completionHandler, NO, errorMessage);
-        }
-    }];
-    return ret;
+                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
+                        @strongify(self);
+                        if (!self) {
+                            return ;
+                        }
+                        
+                        YYKVideoDetail *detail;
+                        if (respStatus == QBURLResponseSuccess) {
+                            detail = self.response;
+                            
+                            [YYKUtil requestAllInstalledAppIdsWithCompletionHandler:^(NSArray<NSString *> *appIds) {
+                                
+                                YYKProgram *firstUninstalledAppId = [detail.spreadAppList bk_match:^BOOL(YYKProgram *spread) {
+                                    return ![appIds containsObject:spread.specialDesc];
+                                }];
+                                detail.spreadApp = firstUninstalledAppId;
+                                self->_fetchedDetail = detail;
+                                SafelyCallBlock(completionHandler, YES, detail);
+                            }];
+                        } else {
+                            SafelyCallBlock(completionHandler, NO, errorMessage);
+                        }
+                    }];
+    
+       return ret;
 }
 @end

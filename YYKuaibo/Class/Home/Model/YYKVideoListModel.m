@@ -30,7 +30,7 @@
 {
     @weakify(self);
     BOOL ret = [self requestURLPath:space==YYKVideoListSpaceHot ? YYK_HOT_VIDEO_URL : YYK_VIP_VIDEO_URL
-                     standbyURLPath:space==YYKVideoListSpaceHot ? YYK_STANDBY_HOT_VIDEO_URL : YYK_STANDBY_VIP_VIDEO_URL
+                     standbyURLPath:[YYKUtil getStandByUrlPathWithOriginalUrl:space==YYKVideoListSpaceHot ? YYK_HOT_VIDEO_URL : YYK_VIP_VIDEO_URL params:@{@"page":@(page)}]
                          withParams:@{@"page":@(page)}
                     responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {

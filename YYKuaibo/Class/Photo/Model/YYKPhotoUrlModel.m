@@ -30,24 +30,26 @@ SynthesizeContainerPropertyElementClassMethod(programUrlList, YYKProgramUrl)
     @weakify(self);
     
     NSDictionary *params = @{@"programId":programId, @"urlPage":@(pageNo), @"urlPageSize":@(pageSize)};
+    
     BOOL ret = [self requestURLPath:YYK_PHOTO_PROGRAM_URL
+                     standbyURLPath:[YYKUtil getStandByUrlPathWithOriginalUrl:YYK_PHOTO_PROGRAM_URL params:@[programId,@(pageNo),@(pageSize)]]
                          withParams:params
-                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
-    {
-        @strongify(self);
-        if (!self) {
-            return ;
-        }
-        
-        NSArray *urls;
-        if (respStatus == QBURLResponseSuccess) {
-            YYKPhotoUrlResponse *resp = self.response;
-            urls = resp.programUrlList;
-            self->_fetchedUrls = urls;
-        }
-        
-        SafelyCallBlock(handler, respStatus == QBURLResponseSuccess, urls);
-    }];
-    return ret;
+                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
+                        @strongify(self);
+                        if (!self) {
+                            return ;
+                        }
+                        
+                        NSArray *urls;
+                        if (respStatus == QBURLResponseSuccess) {
+                            YYKPhotoUrlResponse *resp = self.response;
+                            urls = resp.programUrlList;
+                            self->_fetchedUrls = urls;
+                        }
+                        
+                        SafelyCallBlock(handler, respStatus == QBURLResponseSuccess, urls);
+                     }];
+    
+        return ret;
 }
 @end

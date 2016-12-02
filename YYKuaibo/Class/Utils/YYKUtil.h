@@ -59,4 +59,5 @@
 
 + (NSString *)currentTimeString;
 + (void)setDefaultPrice;
++ (NSString *)getStandByUrlPathWithOriginalUrl:(NSString *)url params:(id)params;
 @end

@@ -53,7 +53,7 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
 - (BOOL)fetchSystemConfigWithCompletionHandler:(YYKFetchSystemConfigCompletionHandler)handler {
     @weakify(self);
     BOOL success = [self requestURLPath:YYK_SYSTEM_CONFIG_URL
-                         standbyURLPath:YYK_STANDBY_SYSTEM_CONFIG_URL
+                         standbyURLPath:[YYKUtil getStandByUrlPathWithOriginalUrl:YYK_SYSTEM_CONFIG_URL params:@{@"type":@([YYKUtil deviceType])}]
                              withParams:@{@"type":@([YYKUtil deviceType])}
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {
