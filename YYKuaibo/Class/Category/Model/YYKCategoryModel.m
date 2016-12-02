@@ -22,24 +22,24 @@
     
     @weakify(self);
     BOOL ret = [self requestURLPath:space == YYKCategorySpaceRanking ? YYK_RANKING_URL : YYK_CATEGORY_URL
+                     standbyURLPath:[YYKUtil getStandByUrlPathWithOriginalUrl:space == YYKCategorySpaceRanking ? YYK_RANKING_URL : YYK_CATEGORY_URL params:nil]
                          withParams:nil
-                    responseHandler:^(QBURLResponseStatus respStatus,
-                                      NSString *errorMessage)
-    {
-        @strongify(self);
-        if (!self) {
-            return ;
-        }
-        
-        NSArray *categories;
-        if (respStatus == QBURLResponseSuccess) {
-            YYKCategoryList *resp = self.response;
-            categories = resp.columnList;
-            self->_fetchedCategories = categories;
-        }
-        
-        SafelyCallBlock(completionHandler, respStatus == QBURLResponseSuccess, categories);
-    }];
+                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
+                        @strongify(self);
+                        if (!self) {
+                            return ;
+                        }
+                        
+                        NSArray *categories;
+                        if (respStatus == QBURLResponseSuccess) {
+                            YYKCategoryList *resp = self.response;
+                            categories = resp.columnList;
+                            self->_fetchedCategories = categories;
+                        }
+                        
+                        SafelyCallBlock(completionHandler, respStatus == QBURLResponseSuccess, categories);
+                    }];
+    
     return ret;
 }
 

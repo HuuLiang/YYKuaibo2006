@@ -30,23 +30,26 @@
 - (BOOL)fetchChannelsInSpace:(YYKChannelSpace)space withCompletionHandler:(YYKCompletionHandler)handler {
     @weakify(self);
     BOOL ret = [self requestURLPath:space == YYKChannelSpaceSVIP ? YYK_VIP_CHANNEL_URL : YYK_CHANNEL_URL
+                     standbyURLPath:[YYKUtil getStandByUrlPathWithOriginalUrl:space == YYKChannelSpaceSVIP ? YYK_VIP_CHANNEL_URL : YYK_CHANNEL_URL params:nil]
                          withParams:nil
-                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
-    {
-        @strongify(self);
-        if (!self) {
-            return ;
-        }
-        
-        NSArray *channels;
-        if (respStatus == QBURLResponseSuccess) {
-            YYKChannelResponse *resp = self.response;
-            channels = resp.columnList;
-            self->_fetchedChannels = channels;
-        }
-        
-        SafelyCallBlock(handler, respStatus == QBURLResponseSuccess, channels);
-    }];
+                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
+                        @strongify(self);
+                        if (!self) {
+                            return ;
+                        }
+                        
+                        NSArray *channels;
+                        if (respStatus == QBURLResponseSuccess) {
+                            YYKChannelResponse *resp = self.response;
+                            channels = resp.columnList;
+                            self->_fetchedChannels = channels;
+                        }
+                        
+                        SafelyCallBlock(handler, respStatus == QBURLResponseSuccess, channels);
+
+                    }];
+    
+
     return ret;
 }
 @end

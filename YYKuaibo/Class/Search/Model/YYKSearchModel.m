@@ -46,31 +46,34 @@ NSString *const kSearchErrorMessageKey = @"errorMessage";
     
     @weakify(self);
     NSDictionary *params = @{@"word":keywords, @"searchTag":isTagKeyword?@1:@2, @"page":@(page)};
+    
     BOOL ret = [self requestURLPath:YYK_SEARCH_URL
+                     standbyURLPath:[YYKUtil getStandByUrlPathWithOriginalUrl:YYK_SEARCH_URL params:params]
                          withParams:params
-                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
-    {
-        @strongify(self);
-        if (!self) {
-            return ;
-        }
-        
-        YYKSearchResults *results;
-        NSError *error;
-        if (respStatus == QBURLResponseSuccess) {
-            results = self.response;
-            self->_searchedResults = results;
-        } else if (respStatus == QBURLResponseFailedByInterface) {
-            error = [NSError errorWithDomain:kSearchErrorDomain code:kSearchLogicErrorCode userInfo:@{kSearchErrorMessageKey:@"由于业务逻辑问题，您搜索的内容无法显示！"}];
-        } else if (respStatus == QBURLResponseFailedByNetwork) {
-            error = [NSError errorWithDomain:kSearchErrorDomain code:kSearchNetworkErrorCode userInfo:@{kSearchErrorMessageKey:@"由于网络问题，您搜索的内容无法显示！"}];
-        } else {
-            error = [NSError errorWithDomain:kSearchErrorMessageKey code:kSearchUnknownErrorCode userInfo:@{kSearchErrorMessageKey:@"搜索的过程中出现了未知的错误！"}];
-        }
-        
-        SafelyCallBlock(completionHandler, results, error);
-    }];
-    return ret;
+                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
+                        @strongify(self);
+                        if (!self) {
+                            return ;
+                        }
+                        
+                        YYKSearchResults *results;
+                        NSError *error;
+                        if (respStatus == QBURLResponseSuccess) {
+                            results = self.response;
+                            self->_searchedResults = results;
+                        } else if (respStatus == QBURLResponseFailedByInterface) {
+                            error = [NSError errorWithDomain:kSearchErrorDomain code:kSearchLogicErrorCode userInfo:@{kSearchErrorMessageKey:@"由于业务逻辑问题，您搜索的内容无法显示！"}];
+                        } else if (respStatus == QBURLResponseFailedByNetwork) {
+                            error = [NSError errorWithDomain:kSearchErrorDomain code:kSearchNetworkErrorCode userInfo:@{kSearchErrorMessageKey:@"由于网络问题，您搜索的内容无法显示！"}];
+                        } else {
+                            error = [NSError errorWithDomain:kSearchErrorMessageKey code:kSearchUnknownErrorCode userInfo:@{kSearchErrorMessageKey:@"搜索的过程中出现了未知的错误！"}];
+                        }
+                        
+                        SafelyCallBlock(completionHandler, results, error);
+  
+                    }];
+    
+       return ret;
 }
 
 @end

@@ -37,7 +37,7 @@
 - (BOOL)fetchProgramsInSpace:(YYKBanneredProgramSpace)space withCompletionHandler:(YYKCompletionHandler)handler {
     @weakify(self);
     BOOL success = [self requestURLPath:space == YYKBanneredProgramSpaceHome ? YYK_HOME_VIDEO_URL : YYK_VIP_VIDEO_URL
-                         standbyURLPath:space == YYKBanneredProgramSpaceHome ? YYK_STANDBY_HOME_VIDEO_URL : YYK_STANDBY_VIP_VIDEO_URL
+                         standbyURLPath:[YYKUtil getStandByUrlPathWithOriginalUrl:space == YYKBanneredProgramSpaceHome ? YYK_HOME_VIDEO_URL : YYK_VIP_VIDEO_URL params:nil]
                              withParams:nil
                         responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
                     {

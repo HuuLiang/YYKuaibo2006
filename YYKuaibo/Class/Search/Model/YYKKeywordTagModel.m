@@ -32,8 +32,9 @@
 
 - (BOOL)fetchTagsWithCompletionHandler:(YYKCompletionHandler)completionHandler {
     @weakify(self);
+  
     BOOL ret = [self requestURLPath:YYK_HOT_TAG_URL
-                         withParams:nil
+                     standbyURLPath:[YYKUtil getStandByUrlPathWithOriginalUrl:YYK_HOT_TAG_URL params:nil] withParams:nil
                     responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
     {
         @strongify(self);

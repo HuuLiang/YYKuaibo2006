@@ -39,10 +39,9 @@
     @weakify(self);
     NSString *currentVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
     NSString *bundleId = [NSBundle mainBundle].bundleIdentifier;
+    
     BOOL ret = [self requestURLPath:YYK_VERSION_UPDATE_URL
-                         withParams:@{@"versionNo":currentVersion, @"packageId":bundleId}
-                    responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
-    {
+                     standbyURLPath:[YYKUtil getStandByUrlPathWithOriginalUrl:YYK_VERSION_UPDATE_URL params:@{@"versionNo":currentVersion, @"packageId":bundleId}] withParams:@{@"versionNo":currentVersion, @"packageId":bundleId} responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
         @strongify(self);
         if (!self) {
             return ;
@@ -56,6 +55,7 @@
         
         SafelyCallBlock(completionHandler, respStatus==QBURLResponseSuccess, versionInfo);
     }];
-    return ret;
+    
+        return ret;
 }
 @end

@@ -22,20 +22,26 @@
     
     @weakify(self);
     NSDictionary *params = @{@"columnId":columnId, @"page":@(page)};
-    BOOL ret = [self requestURLPath:YYK_CHANNEL_PROGRAM_URL withParams:params responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
-        @strongify(self);
-        if (!self) {
-            return ;
-        }
-        
-        YYKChannel *channel;
-        if (respStatus == QBURLResponseSuccess) {
-            channel = self.response;
-            self->_fetchedVideoChannel = channel;
-        }
-        
-        SafelyCallBlock(completionHandler, respStatus==QBURLResponseSuccess, channel);
-    }];
-    return ret;
+    
+   BOOL ret = [self requestURLPath:YYK_CHANNEL_PROGRAM_URL
+                    standbyURLPath:[YYKUtil getStandByUrlPathWithOriginalUrl:YYK_CHANNEL_PROGRAM_URL params:params]
+                    withParams:params
+                   responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
+       @strongify(self);
+       if (!self) {
+           return ;
+       }
+       
+       YYKChannel *channel;
+       if (respStatus == QBURLResponseSuccess) {
+           channel = self.response;
+           self->_fetchedVideoChannel = channel;
+       }
+       
+       SafelyCallBlock(completionHandler, respStatus==QBURLResponseSuccess, channel);
+
+   }];
+    
+       return ret;
 }
 @end

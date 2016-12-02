@@ -95,7 +95,6 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
 //}
 
 + (BOOL)isVIP {
-//    return YES;
     YYKPaymentInfo *vipPaymentInfo = [[self allSuccessfulPaymentInfos] bk_match:^BOOL(id obj) {
         YYKPaymentInfo *paymentInfo = obj;
         return paymentInfo.payPointType == QBPayPointTypeVIP
@@ -388,7 +387,27 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
 + (void)setDefaultPrice {
     [YYKSystemConfigModel sharedModel].payAmount = 45;
     [YYKSystemConfigModel sharedModel].svipPayAmount = 71;
-    
-    
 }
++ (NSString *)getStandByUrlPathWithOriginalUrl:(NSString *)url params:(id)params {
+    NSMutableString *standbyUrl = [NSMutableString stringWithString:YYK_STANDBY_BASE_URL];
+    [standbyUrl appendString:[url substringToIndex:url.length-4]];
+    [standbyUrl appendFormat:@"-%@-%@",YYK_REST_APP_ID,YYK_REST_PV];
+    if (params) {
+        if ([params isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *dic = (NSDictionary *)params;
+            for (int i = 0; i<[dic allKeys].count; i++) {
+                [standbyUrl appendFormat:@"-%@",[dic allValues][i]];
+            }
+        }else if ([params isKindOfClass:[NSArray class]]){
+            NSArray *para = (NSArray *)params;
+            for (int i = 0; i< para.count; i++) {
+                [standbyUrl appendFormat:@"-%@",para[i]];
+            }
+        }
+    }
+    [standbyUrl appendString:@".json"];
+    
+    return standbyUrl;
+}
+
 @end
