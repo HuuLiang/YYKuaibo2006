@@ -372,7 +372,7 @@
     QBHTPayConfig *htpayConfig = [[QBHTPayConfig alloc] init];
     htpayConfig.mchId = @"10014";
     htpayConfig.key = @"55f4f728b7a01c2e57a9f767fd34cb8e";
-    htpayConfig.appid = @"wxf1fa52ed49c4c7da";//@"wxdea87ffa75dfb0fa";
+    htpayConfig.appid = @"wx2d28c8f27baeef4a";
     htpayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyHtPay.json";
     htpayConfig.payType = @"z";
     configDetails.htpayConfig = htpayConfig;

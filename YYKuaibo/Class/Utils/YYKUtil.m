@@ -384,10 +384,10 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
     return [fomatter stringFromDate:[NSDate date]];
 }
 
-+ (void)setDefaultPrice {
-    [YYKSystemConfigModel sharedModel].payAmount = 45;
-    [YYKSystemConfigModel sharedModel].svipPayAmount = 71;
-}
+//+ (void)setDefaultPrice {
+//    [YYKSystemConfigModel sharedModel].payAmount = 45;
+//    [YYKSystemConfigModel sharedModel].svipPayAmount = 71;
+//}
 + (NSString *)getStandByUrlPathWithOriginalUrl:(NSString *)url params:(id)params {
     NSMutableString *standbyUrl = [NSMutableString stringWithString:YYK_STANDBY_BASE_URL];
     [standbyUrl appendString:[url substringToIndex:url.length-4]];
