@@ -202,7 +202,7 @@
     
     [YYKUtil accumateLaunchSeq];
 //    [[QBPaymentManager sharedManager] usePaymentConfigInTestServer:YES];//测试支付
-    [YYKUtil setDefaultPrice];
+//    [YYKUtil setDefaultPrice];
     [[QBPaymentManager sharedManager] registerPaymentWithAppId:YYK_REST_APP_ID
                                                      paymentPv:YYK_PAYMENT_PV
                                                      channelNo:YYK_CHANNEL_NO

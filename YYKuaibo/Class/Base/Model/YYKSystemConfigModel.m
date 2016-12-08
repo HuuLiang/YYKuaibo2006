@@ -147,6 +147,16 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
                             //
                             _loaded = YES;
                             [self saveRandomPayAmount];
+                        }else {
+                           self.payAmount = 4500;
+                            self.originalPayAmount = 5500;
+                            self.svipPayAmount = 2600;
+                            if ([YYKUtil isVIP]) {
+                                self.originalSVIPPayAmount = 3500;
+                            }else {
+                                self.originalSVIPPayAmount = 9900;
+                            }
+                            self.allVIPPayAmount = 7000;
                         }
                         
                         if (handler) {

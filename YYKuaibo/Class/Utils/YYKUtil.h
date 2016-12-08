@@ -58,6 +58,6 @@
 + (UIViewController *)currentVisibleViewController;
 
 + (NSString *)currentTimeString;
-+ (void)setDefaultPrice;
+//+ (void)setDefaultPrice;
 + (NSString *)getStandByUrlPathWithOriginalUrl:(NSString *)url params:(id)params;
 @end
