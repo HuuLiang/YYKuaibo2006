@@ -1,0 +1,1 @@
+../../../../QBPayment/QBPayment/Vendor/WJPay/FFLPaySDK.framework/Headers/FFLPayClient.h
