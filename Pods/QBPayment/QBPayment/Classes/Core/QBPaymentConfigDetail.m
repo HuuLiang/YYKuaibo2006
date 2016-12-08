@@ -23,6 +23,7 @@ NSString *const kQBJSPayConfigName = @"JSPAY";
 NSString *const kQBHeePayConfigName = @"HFB";
 NSString *const kQBXLTXPayConfigName = @"XLTX";
 NSString *const kQBWJPayConfigName = @"WUJI";
+NSString *const kQBZhangPayConfigName = @"MLY";
 
 @implementation QBPaymentConfigDetail
 
@@ -51,6 +52,8 @@ NSString *const kQBWJPayConfigName = @"WUJI";
         return [QBXLTXPayConfig class];
     } else if ([propName isEqualToString:NSStringFromSelector(@selector(wjPayConfig))]) {
         return [QBWJPayConfig class];
+    } else if ([propName isEqualToString:NSStringFromSelector(@selector(zhangPayConfig))]) {
+        return [QBZhangPayConfig class];
     }
     return nil;
 }
@@ -80,6 +83,8 @@ NSString *const kQBWJPayConfigName = @"WUJI";
         return NSStringFromSelector(@selector(xltxPayConfig));
     } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBWJPayConfigName]]) {
         return NSStringFromSelector(@selector(wjPayConfig));
+    } else if ([parsingName hasSuffix:[@"-" stringByAppendingString:kQBZhangPayConfigName]]) {
+        return NSStringFromSelector(@selector(zhangPayConfig));
     }
     return nil;
 }
@@ -251,5 +256,9 @@ NSString *const kQBWJPayConfigName = @"WUJI";
 @end
 
 @implementation QBWJPayConfig
+
+@end
+
+@implementation QBZhangPayConfig
 
 @end

@@ -38,7 +38,7 @@
     #import "HTPayManager.h"
 #endif
 
-#ifdef QBPAYMENT_WFTPAY_ENABLED
+#if defined(QBPAYMENT_WFTPAY_ENABLED) || defined(QBPAYMENT_ZHANGPAY_ENABLED)
     #import "SPayUtil.h"
 #endif
 
@@ -239,11 +239,24 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #ifdef QBPAYMENT_WFTPAY_ENABLED
         QBSPayConfig *spayConfig = [QBPaymentConfig sharedConfig].configDetails.spayConfig;
         if (spayConfig) {
-            [[SPayUtil sharedInstance] registerMchId:spayConfig.mchId
-                                             signKey:spayConfig.signKey
-                                           notifyUrl:spayConfig.notifyUrl];
+            [SPayUtil sharedInstance].appId = spayConfig.appId;
+            [SPayUtil sharedInstance].mchId = spayConfig.mchId;
+            [SPayUtil sharedInstance].signKey = spayConfig.signKey;
+            [SPayUtil sharedInstance].notifyUrl = spayConfig.notifyUrl;
+            [[SPayUtil sharedInstance] setup];
         }
 
+#endif
+        
+#ifdef QBPAYMENT_ZHANGPAY_ENABLED
+        QBZhangPayConfig *zhangPayConfig = [QBPaymentConfig sharedConfig].configDetails.zhangPayConfig;
+        if (zhangPayConfig) {
+            [SPayUtil sharedInstance].appId = zhangPayConfig.appid;
+            [SPayUtil sharedInstance].mchId = zhangPayConfig.mchId;
+            [SPayUtil sharedInstance].signKey = zhangPayConfig.key;
+            [SPayUtil sharedInstance].notifyUrl = zhangPayConfig.notifyUrl;
+            [[SPayUtil sharedInstance] setup];
+        }
 #endif
         
 #ifdef QBPAYMENT_HEEPAY_ENABLED
@@ -377,6 +390,12 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #endif
     } else if (payType == QBPayTypeWJPay) {
 #ifdef QBPAYMENT_WJPAY_ENABLED
+        return YES;
+#else
+        return NO;
+#endif
+    } else if (payType == QBPayTypeZhangPay) {
+#ifdef QBPAYMENT_ZHANGPAY_ENABLED
         return YES;
 #else
         return NO;
@@ -545,8 +564,8 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
     }
 #endif
     
-#ifdef QBPAYMENT_WFTPAY_ENABLED
-    if (payType == QBPayTypeSPay) {
+#if defined(QBPAYMENT_WFTPAY_ENABLED) || defined(QBPAYMENT_ZHANGPAY_ENABLED)
+    if (payType == QBPayTypeSPay || payType == QBPayTypeZhangPay) {
         [[SPayUtil sharedInstance] payWithPaymentInfo:paymentInfo completionHandler:paymentHandler];
         
         success = YES;
@@ -643,8 +662,9 @@ QBDefineLazyPropertyInitialization(QBOrderQueryModel, orderQueryModel)
 #ifdef QBPAYMENT_DXTXPAY_ENABLED
         [[PayuPlugin defaultPlugin] applicationWillEnterForeground:application];
 #endif
-    } else if (self.paymentInfo.paymentType == QBPayTypeSPay) {
-#ifdef QBPAYMENT_WFTPAY_ENABLED
+    } else if (self.paymentInfo.paymentType == QBPayTypeSPay
+               || self.paymentInfo.paymentType == QBPayTypeZhangPay) {
+#if defined(QBPAYMENT_WFTPAY_ENABLED) || defined(QBPAYMENT_ZHANGPAY_ENABLED)
         [[SPayUtil sharedInstance] applicationWillEnterForeground];
 #endif
     } else if (self.paymentInfo.paymentType == QBPayTypeHTPay) {

@@ -1,0 +1,1 @@
+../../../QBPayment/QBPayment/Classes/PayUtils/WJPay/WJPayManager.h

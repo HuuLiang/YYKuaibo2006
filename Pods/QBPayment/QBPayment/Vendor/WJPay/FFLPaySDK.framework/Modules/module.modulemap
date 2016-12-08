@@ -1,0 +1,6 @@
+framework module FFLPaySDK {
+  umbrella header "FFLPaySDK.h"
+
+  export *
+  module * { export * }
+}
