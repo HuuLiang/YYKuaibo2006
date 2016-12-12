@@ -63,6 +63,7 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic) NSString *allVIPPriceExclude;
 
 @property (nonatomic) NSUInteger statsTimeInterval;
+@property (nonatomic) NSInteger timeOutInterval;
 
 //@property (nonatomic) NSString *spreadLeftImage;
 //@property (nonatomic) NSString *spreadLeftUrl;

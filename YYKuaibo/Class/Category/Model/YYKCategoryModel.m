@@ -10,6 +10,8 @@
 
 @implementation YYKCategoryModel
 
+RequestTimeOutInterval
+
 + (Class)responseClass {
     return [YYKCategoryList class];
 }

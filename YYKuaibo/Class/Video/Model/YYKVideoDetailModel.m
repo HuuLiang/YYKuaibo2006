@@ -27,6 +27,7 @@
 @end
 
 @implementation YYKVideoDetailModel
+RequestTimeOutInterval
 
 + (Class)responseClass {
     return [YYKVideoDetail class];

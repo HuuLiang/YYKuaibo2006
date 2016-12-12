@@ -9,6 +9,7 @@
 #import "YYKChannelProgramModel.h"
 
 @implementation YYKChannelProgramModel
+RequestTimeOutInterval
 
 + (Class)responseClass {
     return [YYKChannel class];

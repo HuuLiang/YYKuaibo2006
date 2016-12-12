@@ -31,6 +31,8 @@ typedef void (^QBURLResponseHandler)(QBURLResponseStatus respStatus, NSString *e
 @property (nonatomic,retain,readonly) QBNetworkingConfiguration *configuration;
 @property (nonatomic,retain) id response;
 
+@property (nonatomic) NSTimeInterval requestTimeInterval;
+
 - (instancetype)initWithConfiguration:(QBNetworkingConfiguration *)configuration;
 
 + (Class)responseClass;  // override this method to provide a custom class to be used when instantiating instances of QBURLResponse

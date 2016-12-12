@@ -62,6 +62,11 @@ extern NSString *const kSearchErrorMessageKey;
 #define SynthesizeContainerPropertyElementClassMethod(propName, elementClass) \
 - (Class)propName##ElementClass { return [elementClass class]; }
 
+#define RequestTimeOutInterval  \
+- (NSTimeInterval)requestTimeInterval {\
+return [YYKSystemConfigModel sharedModel].timeOutInterval;\
+}
+
 #define kPaidNotificationName @"yykuaibo_paid_notification"
 #define kDefaultDateFormat    @"yyyyMMddHHmmss"
 #define kDefaultCollectionViewInteritemSpace  (5)

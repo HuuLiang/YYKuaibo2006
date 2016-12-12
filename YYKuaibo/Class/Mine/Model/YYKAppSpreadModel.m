@@ -9,6 +9,7 @@
 #import "YYKAppSpreadModel.h"
 
 @implementation YYKAppSpreadModel
+RequestTimeOutInterval
 
 + (Class)responseClass {
     return [YYKChannel class];
