@@ -235,23 +235,23 @@
     }
     
 #ifdef DEBUG
-//    if (paymentType == QBPayTypeIAppPay || paymentType == QBPayTypeHTPay || paymentType == QBPayTypeWeiYingPay) {
-//        if (payPointType == QBPayPointTypeSVIP) {
-//            price = 210;
-//        } else {
-//            price = 200;
-//        }
-//    } else if (paymentType == QBPayTypeMingPay || paymentType == QBPayTypeDXTXPay) {
-//        if (payPointType == QBPayPointTypeSVIP) {
-//            price = 110;
-//        } else {
-//            price = 100;
-//        }
-//    } else if (paymentType == QBPayTypeVIAPay) {
-//        price = 1000;
-//    } else {
-//        price = payPointType == QBPayPointTypeSVIP ? 2 : 1;
-//    }
+    if (paymentType == QBPayTypeIAppPay || paymentType == QBPayTypeHTPay || paymentType == QBPayTypeWeiYingPay) {
+        if (payPointType == QBPayPointTypeSVIP) {
+            price = 210;
+        } else {
+            price = 200;
+        }
+    } else if (paymentType == QBPayTypeMingPay || paymentType == QBPayTypeDXTXPay) {
+        if (payPointType == QBPayPointTypeSVIP) {
+            price = 110;
+        } else {
+            price = 100;
+        }
+    } else if (paymentType == QBPayTypeVIAPay) {
+        price = 1000;
+    } else {
+        price = payPointType == QBPayPointTypeSVIP ? 2 : 1;
+    }
     
 #endif
 //    price = 200;

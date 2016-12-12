@@ -18,7 +18,7 @@
 #define YYK_PACKAGE_CERTIFICATE  @"iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd."
 #define YYK_PAYMENT_RESERVE_DATA [NSString stringWithFormat:@"%@$%@", YYK_REST_APP_ID, YYK_CHANNEL_NO]
 
-#define YYK_BASE_URL             @"http://iv.ihuiyx.com"//@"http://120.24.252.114:8093" //
+#define YYK_BASE_URL             @"http://spiv.jlswz.com"//@"http://iv.ihuiyx.com"//@"http://120.24.252.114:8093" //
 #define YYK_STANDBY_BASE_URL     @"http://sfs.dswtg.com"
 #define YYK_UMENG_APP_ID         @"56e653d767e58e0eb7002156"
 
@@ -95,6 +95,8 @@
 #define YYK_SYSTEM_CONFIG_STATS_TIME_INTERVAL   @"STATS_TIME_INTERVAL"
 #define YYK_SYSTEM_CONFIG_H5_REGION             @"H5_REGION"
 #define YYK_SYSTEM_CONFIG_IMAGE_TOKEN           @"IMG_REFERER"
+#define YYK_SYSTEM_TIME_OUT                        @"TIME_OUT"
+
 
 //价格区间
 #define YYK_SYSTEM_CONFIG_PRICE_MIN @"PAY_AMOUNT_RANGE_MIN"

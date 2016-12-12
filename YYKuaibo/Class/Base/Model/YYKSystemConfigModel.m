@@ -140,6 +140,8 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
                                     self.H5Region = config.value;
                                 } else if ([config.name isEqualToString:YYK_SYSTEM_CONFIG_IMAGE_TOKEN]) {
                                     self.imageToken = config.value;
+                                } else if ([config.name isEqualToString:YYK_SYSTEM_TIME_OUT]){
+                                    self.timeOutInterval = config.value.integerValue;
                                 }
                                 
                             }];
@@ -148,7 +150,7 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
                             _loaded = YES;
                             [self saveRandomPayAmount];
                         }else {
-                           self.payAmount = 4500;
+                            self.payAmount = 4500;
                             self.originalPayAmount = 5500;
                             self.svipPayAmount = 2600;
                             if ([YYKUtil isVIP]) {

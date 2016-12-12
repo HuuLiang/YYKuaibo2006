@@ -22,6 +22,7 @@
 @end
 
 @implementation YYKChannelModel
+RequestTimeOutInterval
 
 + (Class)responseClass {
     return [YYKChannelResponse class];

@@ -10,6 +10,8 @@
 
 @implementation YYKBanneredProgramResponse
 
+RequestTimeOutInterval
+
 - (Class)columnListElementClass {
     return [YYKChannel class];
 }

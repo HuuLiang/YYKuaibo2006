@@ -24,6 +24,7 @@ NSString *const kSearchErrorMessageKey = @"errorMessage";
 @end
 
 @implementation YYKSearchModel
+RequestTimeOutInterval
 
 + (Class)responseClass {
     return [YYKSearchResults class];

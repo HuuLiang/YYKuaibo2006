@@ -40,5 +40,6 @@
 #import "YYKStatsManager.h"
 #import "YYKManualActivationManager.h"
 #import "YYKVideoTokenManager.h"
+#import "YYKSystemConfigModel.h"
 
 #endif /* YYKPrefixHeader_pch */

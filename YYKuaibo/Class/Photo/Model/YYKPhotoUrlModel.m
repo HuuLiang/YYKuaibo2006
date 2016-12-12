@@ -17,7 +17,7 @@ SynthesizeContainerPropertyElementClassMethod(programUrlList, YYKProgramUrl)
 @end
 
 @implementation YYKPhotoUrlModel
-
+RequestTimeOutInterval
 + (Class)responseClass {
     return [YYKPhotoUrlResponse class];
 }

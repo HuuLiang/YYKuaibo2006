@@ -9,6 +9,7 @@
 #import "YYKVideoListModel.h"
 
 @implementation YYKVideoListModel
+RequestTimeOutInterval
 
 + (Class)responseClass {
     return [YYKChannel class];

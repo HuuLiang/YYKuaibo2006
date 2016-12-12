@@ -21,6 +21,7 @@
 @end
 
 @implementation YYKKeywordTagModel
+RequestTimeOutInterval
 
 + (Class)responseClass {
     return [YYKKeywordTags class];

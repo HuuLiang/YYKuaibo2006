@@ -13,6 +13,7 @@
 @end
 
 @implementation YYKVersionUpdateModel
+RequestTimeOutInterval
 
 + (instancetype)sharedModel {
     static YYKVersionUpdateModel *_sharedModel;
