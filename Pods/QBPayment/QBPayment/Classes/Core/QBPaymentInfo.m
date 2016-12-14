@@ -10,6 +10,8 @@
 #import "QBDefines.h"
 #import "NSMutableDictionary+SafeCoding.h"
 #import "NSString+md5.h"
+#import "QBOrderInfo.h"
+#import "QBContentInfo.h"
 
 static NSString *const kPaymentInfoKeyName = @"qbpayment_paymentinfo_keyname";
 
@@ -51,6 +53,32 @@ static NSString *const kPaymentInfoUserIdKeyName = @"qbpayment_paymentinfo_useri
     if (self) {
         _paymentResult = QBPayResultUnknown;
         _paymentStatus = QBPayStatusUnknown;
+    }
+    return self;
+}
+
+- (instancetype)initWithOrderInfo:(QBOrderInfo *)orderInfo contentInfo:(QBContentInfo *)contentInfo {
+    self = [self init];
+    if (self) {
+        
+        NSDictionary *paymentSubTypeMapping = @{@(QBOrderPayTypeWeChatPay):@(QBPaySubTypeWeChat),
+                                                @(QBOrderPayTypeAlipay):@(QBPaySubTypeAlipay),
+                                                @(QBOrderPayTypeQQPay):@(QBPaySubTypeQQ)};
+        
+        _orderId = orderInfo.orderId;
+        _orderPrice = orderInfo.orderPrice;
+        _orderDescription = orderInfo.orderDescription;
+        _paymentSubType = [paymentSubTypeMapping[@(orderInfo.payType)] unsignedIntegerValue];
+        _paymentTime = orderInfo.createTime;
+        _reservedData = orderInfo.reservedData;
+        _payPointType = orderInfo.payPointType;
+        _userId = orderInfo.userId;
+        
+        _contentId = contentInfo.contentId;
+        _contentType = contentInfo.contentType;
+        _contentLocation = contentInfo.contentLocation;
+        _columnId = contentInfo.columnId;
+        _columnType = contentInfo.columnType;
     }
     return self;
 }

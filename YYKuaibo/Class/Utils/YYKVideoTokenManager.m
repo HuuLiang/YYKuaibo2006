@@ -18,6 +18,8 @@ static NSString *const kTokenDataEncryptionPassword = @"fdl_2016$@Ask^we";
 @property (nonatomic) NSString *token;
 @property (nonatomic,retain) NSDate *expireTime;
 @property (nonatomic) NSString *userId;
+@property (nonatomic) NSString *httpHeaderValue;
+@property (nonatomic) NSString *httpHeaderKey;
 @end
 
 @implementation YYKVideoTokenManager
@@ -63,6 +65,9 @@ static NSString *const kTokenDataEncryptionPassword = @"fdl_2016$@Ask^we";
     }
     
     AFHTTPSessionManager *sessionManager = [[AFHTTPSessionManager alloc] init];
+    if (self.httpHeaderValue && self.httpHeaderKey) {
+        [sessionManager.requestSerializer setValue:self.httpHeaderValue forHTTPHeaderField:self.httpHeaderKey];
+    }
     sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     NSString *dataString = [NSString stringWithFormat:@"uid=%@&channelNo=%@&appId=%@", userId, YYK_CHANNEL_NO, YYK_REST_APP_ID];
@@ -103,5 +108,10 @@ static NSString *const kTokenDataEncryptionPassword = @"fdl_2016$@Ask^we";
     
     NSString *videoLink = [NSString stringWithFormat:@"%@?uid=%@&token=%@&verCode=%@", originalLink, self.userId, self.token, @"20160923"];
     return videoLink;
+}
+
+- (void)setValue:(NSString *)value forVideoHttpHeader:(NSString *)field {
+    self.httpHeaderKey = field;
+    self.httpHeaderValue = value;
 }
 @end

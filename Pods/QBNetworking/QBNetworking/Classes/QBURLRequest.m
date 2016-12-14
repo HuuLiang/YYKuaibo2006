@@ -151,6 +151,21 @@ NSString *const kQBNetworkingErrorMessageKey = @"com.iqu8.qbnetworking.errormess
 
 - (BOOL)requestURLPath:(NSString *)urlPath standbyURLPath:(NSString *)standbyUrlPath withParams:(id)params responseHandler:(QBURLResponseHandler)responseHandler {
     BOOL useStandbyRequest = standbyUrlPath.length > 0;
+    
+    if (useStandbyRequest && [QBNetworkingConfiguration defaultConfiguration].useStaticBaseUrl) {
+        BOOL success = [self requestURLPath:standbyUrlPath
+                                 withParams:params
+                                  isStandby:YES
+                          shouldNotifyError:YES
+                            responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage)
+                        {
+                            if (responseHandler) {
+                                responseHandler(respStatus,errorMessage);
+                            }
+                        }];
+        return success;
+    }
+    
     BOOL success = [self requestURLPath:urlPath
                              withParams:params
                               isStandby:NO
