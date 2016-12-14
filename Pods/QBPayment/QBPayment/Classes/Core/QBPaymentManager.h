@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "QBPaymentDefines.h"
 #import "QBDefines.h"
+#import "QBOrderInfo.h"
+#import "QBContentInfo.h"
 
 FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
 
@@ -49,13 +51,18 @@ FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
 /**
  *  开启支付
  *
- *  @param paymentInfo       支付信息
- *  @param completionHandler 回调block
+ *  @param orderInfo            订单信息
+ *  @param contentInfo          关联的内容信息
+ *  @param beginAction          开始调起支付前的回调block
+ *  @param completionHandler    完成支付后的回调block
  *
  *  @return 是否成功开启
  */
-- (BOOL)startPaymentWithPaymentInfo:(QBPaymentInfo *)paymentInfo
-                  completionHandler:(QBPaymentCompletionHandler)completionHandler;
+
+- (BOOL)startPaymentWithOrderInfo:(QBOrderInfo *)orderInfo
+                      contentInfo:(QBContentInfo *)contentInfo
+                      beginAction:(QBAction)beginAction
+                completionHandler:(QBPaymentCompletionHandler)completionHandler;
 
 /**
  *  手动激活，从回调数据中查询指定的订单状态
@@ -88,10 +95,8 @@ FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
 
 @interface QBPaymentManager (ConfiguredPaymentTypes)
 
-- (QBPayType)wechatPaymentType;
-- (QBPayType)alipayPaymentType;
-- (QBPayType)cardPayPaymentType;
-- (QBPayType)qqPaymentType;
+- (QBPayType)paymentTypeForOrderPayType:(QBOrderPayType)orderPayType;
+- (BOOL)isOrderPayTypeAvailable:(QBOrderPayType)orderPayType;
 
 @end
 
@@ -105,5 +110,25 @@ FOUNDATION_EXTERN NSString *const kQBPaymentFetchConfigNotification;
 @interface QBPaymentManager (Test)
 
 - (void)usePaymentConfigInTestServer:(BOOL)useTestConfig;
+
+@end
+
+@interface QBPaymentManager (Deprecated)
+
+/**
+ *  开启支付 (废弃的方法，请使用startPaymentWithOrderInfo:contentInfo:completionHandler:方法)
+ *
+ *  @param paymentInfo       支付信息
+ *  @param completionHandler 回调block
+ *
+ *  @return 是否成功开启
+ */
+- (BOOL)startPaymentWithPaymentInfo:(QBPaymentInfo *)paymentInfo
+                  completionHandler:(QBPaymentCompletionHandler)completionHandler DEPRECATED_MSG_ATTRIBUTE("Use -startPaymentWithOrderInfo:contentInfo:completionHandler: instead!");
+
+- (QBPayType)wechatPaymentType DEPRECATED_MSG_ATTRIBUTE("Use -isOrderPayTypeAvailable instead!");
+- (QBPayType)alipayPaymentType DEPRECATED_MSG_ATTRIBUTE("Use -isOrderPayTypeAvailable instead!");
+- (QBPayType)cardPayPaymentType DEPRECATED_MSG_ATTRIBUTE("Use -isOrderPayTypeAvailable instead!");
+- (QBPayType)qqPaymentType DEPRECATED_MSG_ATTRIBUTE("Use -isOrderPayTypeAvailable instead!");
 
 @end

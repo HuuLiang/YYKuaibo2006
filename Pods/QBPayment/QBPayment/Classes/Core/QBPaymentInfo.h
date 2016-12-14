@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "QBPaymentDefines.h"
 
+@class QBOrderInfo;
+@class QBContentInfo;
+
 @interface QBPaymentInfo : NSObject
 
 @property (nonatomic) NSString *orderId;
@@ -32,6 +35,7 @@
 @property (nonatomic) NSString *userId;
 
 + (NSArray<QBPaymentInfo *> *)allPaymentInfos;
+- (instancetype)initWithOrderInfo:(QBOrderInfo *)orderInfo contentInfo:(QBContentInfo *)contentInfo;
 //+ (instancetype)paymentInfoFromDictionary:(NSDictionary *)payment;
 - (void)save;
 
