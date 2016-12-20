@@ -32,9 +32,9 @@ RequestTimeOutInterval
     return [YYKVersionUpdateInfo class];
 }
 
-- (NSURL *)baseURL {
-    return nil;
-}
+//- (NSURL *)baseURL {
+//    return nil;
+//}
 
 - (BOOL)fetchLatestVersionWithCompletionHandler:(YYKCompletionHandler)completionHandler {
     @weakify(self);

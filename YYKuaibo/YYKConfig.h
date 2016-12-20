@@ -48,7 +48,7 @@
 #define YYK_AGREEMENT_NOTPAID_URL       @"/iosvideo/agreement.html"
 #define YYK_AGREEMENT_PAID_URL          @"/iosvideo/agreement-paid.html"
 
-#define YYK_VERSION_UPDATE_URL          @"http://120.24.252.114:8093/iosvideo/versionCheck.htm" //@"http://channel.iqu8.cn/channel/versionCheck.htm"//
+#define YYK_VERSION_UPDATE_URL          @"/iosvideo/versionCheck.htm" //@"http://channel.iqu8.cn/channel/versionCheck.htm"//
 
 #define YYK_STATS_BASE_URL              @"http://stats.dswtg.com"//@"http://stats.iqu8.cn"
 #define YYK_STATS_CPC_URL               @"/stats/cpcs.service"
