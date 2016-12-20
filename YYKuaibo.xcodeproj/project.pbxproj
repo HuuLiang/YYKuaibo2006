@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		037D0468D685E4B72E0B6DD4 /* libPods-YYKuaibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1275EC47F0194073061FF488 /* libPods-YYKuaibo.a */; };
+		B3CDC0991E09112000F5E255 /* YYKVersionUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CDC0981E09112000F5E255 /* YYKVersionUpdateViewController.m */; };
 		BC064B651D9C3AA60031BA87 /* YYKWeeklyRankingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC064B601D9C3AA60031BA87 /* YYKWeeklyRankingCell.m */; };
 		BC064B661D9C3AA60031BA87 /* YYKWeeklyRankingHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC064B621D9C3AA60031BA87 /* YYKWeeklyRankingHeaderView.m */; };
 		BC064B671D9C3AA60031BA87 /* YYKWeeklyRankingRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC064B641D9C3AA60031BA87 /* YYKWeeklyRankingRowCell.m */; };
@@ -80,7 +81,6 @@
 		BCD4AF311D9513B0002E919E /* YYKRankingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4AF301D9513B0002E919E /* YYKRankingViewController.m */; };
 		BCD4AF371D951641002E919E /* YYKHomeViewController+CollectionViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4AF361D951641002E919E /* YYKHomeViewController+CollectionViewModel.m */; };
 		BCD4AF3A1D951CC3002E919E /* YYKHomeViewController+SearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4AF391D951CC3002E919E /* YYKHomeViewController+SearchBar.m */; };
-		BCD4AF3D1D953CB6002E919E /* YYKVideoTokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD4AF3C1D953CB6002E919E /* YYKVideoTokenManager.m */; };
 		BCDE5A261D9A94E40084C868 /* YYKCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BCDE5A251D9A94E40084C868 /* YYKCategory.m */; };
 		BCDE5A2F1D9AAF6A0084C868 /* YYKCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCDE5A2A1D9AAF6A0084C868 /* YYKCategoryViewController.m */; };
 		BCDE5A301D9AAF6A0084C868 /* YYKCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCDE5A2D1D9AAF6A0084C868 /* YYKCategoryModel.m */; };
@@ -142,6 +142,8 @@
 /* Begin PBXFileReference section */
 		1275EC47F0194073061FF488 /* libPods-YYKuaibo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-YYKuaibo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6032C10DFC5389978ACD1413 /* Pods-YYKuaibo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YYKuaibo.release.xcconfig"; path = "Pods/Target Support Files/Pods-YYKuaibo/Pods-YYKuaibo.release.xcconfig"; sourceTree = "<group>"; };
+		B3CDC0971E09112000F5E255 /* YYKVersionUpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVersionUpdateViewController.h; sourceTree = "<group>"; };
+		B3CDC0981E09112000F5E255 /* YYKVersionUpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVersionUpdateViewController.m; sourceTree = "<group>"; };
 		B42548BC60CBE6302A79141B /* Pods-YYKuaibo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YYKuaibo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YYKuaibo/Pods-YYKuaibo.debug.xcconfig"; sourceTree = "<group>"; };
 		BC064B5F1D9C3AA60031BA87 /* YYKWeeklyRankingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKWeeklyRankingCell.h; sourceTree = "<group>"; };
 		BC064B601D9C3AA60031BA87 /* YYKWeeklyRankingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKWeeklyRankingCell.m; sourceTree = "<group>"; };
@@ -283,8 +285,6 @@
 		BCD4AF361D951641002E919E /* YYKHomeViewController+CollectionViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YYKHomeViewController+CollectionViewModel.m"; sourceTree = "<group>"; };
 		BCD4AF381D951CC3002E919E /* YYKHomeViewController+SearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YYKHomeViewController+SearchBar.h"; sourceTree = "<group>"; };
 		BCD4AF391D951CC3002E919E /* YYKHomeViewController+SearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YYKHomeViewController+SearchBar.m"; sourceTree = "<group>"; };
-		BCD4AF3B1D953CB6002E919E /* YYKVideoTokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKVideoTokenManager.h; sourceTree = "<group>"; };
-		BCD4AF3C1D953CB6002E919E /* YYKVideoTokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVideoTokenManager.m; sourceTree = "<group>"; };
 		BCDE5A241D9A94E40084C868 /* YYKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKCategory.h; sourceTree = "<group>"; };
 		BCDE5A251D9A94E40084C868 /* YYKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKCategory.m; sourceTree = "<group>"; };
 		BCDE5A291D9AAF6A0084C868 /* YYKCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKCategoryViewController.h; sourceTree = "<group>"; };
@@ -905,6 +905,8 @@
 				BC7643411CD04C680059E1C3 /* YYKSpreadBannerViewController.m */,
 				BC6C81631D75921100EB658A /* YYKWebPlayerViewController.h */,
 				BC6C81641D75921100EB658A /* YYKWebPlayerViewController.m */,
+				B3CDC0971E09112000F5E255 /* YYKVersionUpdateViewController.h */,
+				B3CDC0981E09112000F5E255 /* YYKVersionUpdateViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -974,8 +976,6 @@
 				BC0C86041CD35F5C00C51480 /* YYKStatsManager.m */,
 				BC25F10A1D243BB300ECE1F6 /* YYKManualActivationManager.h */,
 				BC25F10B1D243BB300ECE1F6 /* YYKManualActivationManager.m */,
-				BCD4AF3B1D953CB6002E919E /* YYKVideoTokenManager.h */,
-				BCD4AF3C1D953CB6002E919E /* YYKVideoTokenManager.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1142,7 +1142,7 @@
 					BCE255FD1C966A8E00133F4F = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 7VHT3KAS56;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					BCE256161C966A8E00133F4F = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -1280,7 +1280,6 @@
 				BCE2566C1C966C2600133F4F /* YYKSystemConfigModel.m in Sources */,
 				BCDE5A361D9AC1350084C868 /* YYKCategoryRectTextCell.m in Sources */,
 				BC5542471D632DFB00E93D56 /* YYKIconSpreadCell.m in Sources */,
-				BCD4AF3D1D953CB6002E919E /* YYKVideoTokenManager.m in Sources */,
 				BC428F081D9B1110001A9220 /* YYKCategoryAppIconCell.m in Sources */,
 				BCDE5A301D9AAF6A0084C868 /* YYKCategoryModel.m in Sources */,
 				BCC00FC41CD8B96D00F429B4 /* YYKPayStatsModel.m in Sources */,
@@ -1302,6 +1301,7 @@
 				BCDE5A261D9A94E40084C868 /* YYKCategory.m in Sources */,
 				BC32FD221CCF97A10030EB79 /* YYKAppSpreadBannerModel.m in Sources */,
 				BCE2570A1C966DB400133F4F /* UIScrollView+Refresh.m in Sources */,
+				B3CDC0991E09112000F5E255 /* YYKVersionUpdateViewController.m in Sources */,
 				BCE2575D1C96F4F800133F4F /* YYKInputTextViewController.m in Sources */,
 				BC77DB031CFD95BE003B66E8 /* YYKPayPointTypeCell.m in Sources */,
 				BC51AC311CA0F7530073AF91 /* YYKVideoListModel.m in Sources */,
@@ -1501,7 +1501,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: yu xie (744P33ZS5T)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 7VHT3KAS56;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/iAppPay",
@@ -1521,10 +1521,10 @@
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/HTPaySDK",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/DXTXPay",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.qskuaibo.new;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qianse.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b5507f93-7306-4c3c-8c4a-405bf9865b11";
-				PROVISIONING_PROFILE_SPECIFIER = QianSeKuaiboNewDevProvisioningProfile;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1536,8 +1536,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Neijiang Fenghuang Enterprise (Group) Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = 7VHT3KAS56;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/iAppPay",
@@ -1557,10 +1557,10 @@
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/HTPaySDK",
 					"$(PROJECT_DIR)/YYKuaibo/Class/Vendor/DXTXPay",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.qskuaibo.new;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qianse.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3bb69838-0b9c-4ad8-8781-3021f70e29b3";
-				PROVISIONING_PROFILE_SPECIFIER = QianSeKuaiboNewInHouseProvisioningProfile;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

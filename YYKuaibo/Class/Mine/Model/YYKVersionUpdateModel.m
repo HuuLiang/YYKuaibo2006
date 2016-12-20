@@ -32,9 +32,9 @@ RequestTimeOutInterval
     return [YYKVersionUpdateInfo class];
 }
 
-- (NSURL *)baseURL {
-    return nil;
-}
+//- (NSURL *)baseURL {
+//    return nil;
+//}
 
 - (BOOL)fetchLatestVersionWithCompletionHandler:(YYKCompletionHandler)completionHandler {
     @weakify(self);
@@ -42,7 +42,8 @@ RequestTimeOutInterval
     NSString *bundleId = [NSBundle mainBundle].bundleIdentifier;
     
     BOOL ret = [self requestURLPath:YYK_VERSION_UPDATE_URL
-                     standbyURLPath:[YYKUtil getStandByUrlPathWithOriginalUrl:YYK_VERSION_UPDATE_URL params:@{@"versionNo":currentVersion, @"packageId":bundleId}] withParams:@{@"versionNo":currentVersion, @"packageId":bundleId} responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
+                     standbyURLPath:nil
+                         withParams:@{@"versionNo":currentVersion, @"packageId":bundleId} responseHandler:^(QBURLResponseStatus respStatus, NSString *errorMessage) {
         @strongify(self);
         if (!self) {
             return ;

@@ -11,6 +11,7 @@
 @property (nonatomic) NSString *versionNo;
 @property (nonatomic) NSString *linkUrl;
 @property (nonatomic) NSNumber *isForceToUpdate;
+@property (nonatomic) NSNumber *up;
 
 @end
 

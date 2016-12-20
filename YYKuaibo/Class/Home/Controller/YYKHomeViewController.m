@@ -12,6 +12,8 @@
 #import "YYKCategoryViewController.h"
 
 #import "YYKBanneredProgramModel.h"
+#import "YYKVersionUpdateModel.h"
+#import "YYKVersionUpdateViewController.h"
 
 @interface YYKHomeViewController () <UISearchBarDelegate>
 @property (nonatomic) BOOL hasShownSpreadBanner;
@@ -24,7 +26,7 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self examineUpdate];//检查更新
     @weakify(self);
     self.navigationItem.title = nil;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[[UIImage imageNamed:@"category"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
@@ -63,6 +65,31 @@ DefineLazyPropertyInitialization(YYKBanneredProgramModel, programModel)
 ////        }];
 ////    }
 //}
+- (void)examineUpdate {
+    [[YYKVersionUpdateModel sharedModel] fetchLatestVersionWithCompletionHandler:^(BOOL success, id obj) {
+        if (success) {
+            YYKVersionUpdateInfo *info = obj;
+            if (info.up.boolValue) {
+                YYKVersionUpdateViewController *updateVC = [[YYKVersionUpdateViewController alloc] init];
+                updateVC.linkUrl = info.linkUrl;
+                [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:updateVC animated:YES completion:nil];
+            }
+            //            if (info.isForceToUpdate.boolValue) {
+            //                [UIAlertView bk_showAlertViewWithTitle:@"系统更新"
+            //                                               message:@"系统检测到新的版本，建议您升级到新的版本；如果您选择不升级，将影响到应用的使用。"
+            //                                     cancelButtonTitle:@"取消"
+            //                                     otherButtonTitles:@[@"确定"]
+            //                                               handler:^(UIAlertView *alertView, NSInteger buttonIndex)
+            //                {
+            //                    if (buttonIndex == 1) {
+            //                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:info.linkUrl]];
+            //                    }
+            //                }];
+            //            }
+        }
+    }];
+
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];

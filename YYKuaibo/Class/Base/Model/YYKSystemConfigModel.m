@@ -142,6 +142,10 @@ static NSString *const kSystemConfigModelALLVipKeyPrice = @"yykuaibov_systemconf
                                     self.imageToken = config.value;
                                 } else if ([config.name isEqualToString:YYK_SYSTEM_TIME_OUT]){
                                     self.timeOutInterval = config.value.integerValue;
+                                }else if ([config.name isEqualToString:YYK_SYSTEM_VIDEO_SIGN_KEY]){
+                                    self.videoSignKey = config.value;
+                                }else if ([config.name isEqualToString:YYK_SYSTEM_VIDEO_EXPIRE_TIME]){
+                                    self.expireTime = config.value.doubleValue;
                                 }
                                 
                             }];

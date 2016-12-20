@@ -18,9 +18,10 @@
 #import "YYKSystemConfigModel.h"
 #import "YYKAppSpreadBannerModel.h"
 #import "MobClick.h"
-#import "YYKVersionUpdateModel.h"
+
 #import <QBNetworkingConfiguration.h>
 #import <QBPaymentConfig.h>
+
 
 @interface YYKAppDelegate () <UITabBarControllerDelegate>
 @property (nonatomic,retain) UIViewController *rootViewController;
@@ -235,12 +236,12 @@
                         }
                     }];
 
-                    [[YYKVideoTokenManager sharedManager] requestTokenWithCompletionHandler:nil];
+//                    [[YYKVideoTokenManager sharedManager] requestTokenWithCompletionHandler:nil];
                 }
             }];
         } else {
             [[YYKUserAccessModel sharedModel] requestUserAccess];
-            [[YYKVideoTokenManager sharedManager] requestTokenWithCompletionHandler:nil];
+//            [[YYKVideoTokenManager sharedManager] requestTokenWithCompletionHandler:nil];
         }
         if ([QBNetworkInfo sharedInfo].networkStatus <= QBNetworkStatusNotReachable && (![YYKUtil isRegistered] || ![YYKSystemConfigModel sharedModel].loaded)) {
             if ([YYKUtil isIpad] || [UIDevice currentDevice].systemVersion.integerValue < 8.0) {
@@ -262,7 +263,7 @@
     NSString *imageToken = [YYKUtil imageToken];
     if (imageToken) {
         [[SDWebImageManager sharedManager].imageDownloader setValue:imageToken forHTTPHeaderField:@"Referer"];
-         [[YYKVideoTokenManager sharedManager] setValue:imageToken forVideoHttpHeader:@"Referer"];
+//         [[YYKVideoTokenManager sharedManager] setValue:imageToken forVideoHttpHeader:@"Referer"];
         self.window.rootViewController = self.rootViewController;
         [self.window makeKeyAndVisible];
     } else {
@@ -318,24 +319,7 @@
     
 //    [[YYKVideoTokenManager sharedManager] requestTokenWithCompletionHandler:nil];
     [[YYKAppSpreadBannerModel sharedModel] fetchAppSpreadWithCompletionHandler:nil];
-    [[YYKVersionUpdateModel sharedModel] fetchLatestVersionWithCompletionHandler:^(BOOL success, id obj) {
-        if (success) {
-            YYKVersionUpdateInfo *info = obj;
-            if (info.isForceToUpdate.boolValue) {
-                [UIAlertView bk_showAlertViewWithTitle:@"系统更新"
-                                               message:@"系统检测到新的版本，建议您升级到新的版本；如果您选择不升级，将影响到应用的使用。"
-                                     cancelButtonTitle:@"取消"
-                                     otherButtonTitles:@[@"确定"]
-                                               handler:^(UIAlertView *alertView, NSInteger buttonIndex)
-                {
-                    if (buttonIndex == 1) {
-                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:info.linkUrl]];
-                    }
-                }];
-            }
-        }
-    }];
-    return YES;
+        return YES;
 }
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(void (^)(BOOL success))completionHandler {
@@ -345,7 +329,7 @@
             [YYKUtil setImageToken:fetchedToken];
             if (fetchedToken) {
                 [[SDWebImageManager sharedManager].imageDownloader setValue:fetchedToken forHTTPHeaderField:@"Referer"];
-                 [[YYKVideoTokenManager sharedManager] setValue:fetchedToken forVideoHttpHeader:@"Referer"];
+//                 [[YYKVideoTokenManager sharedManager] setValue:fetchedToken forVideoHttpHeader:@"Referer"];
             }
             
         }
