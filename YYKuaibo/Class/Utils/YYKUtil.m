@@ -95,6 +95,7 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
 //}
 
 + (BOOL)isVIP {
+//    return YES;
     YYKPaymentInfo *vipPaymentInfo = [[self allSuccessfulPaymentInfos] bk_match:^BOOL(id obj) {
         YYKPaymentInfo *paymentInfo = obj;
         return paymentInfo.payPointType == QBPayPointTypeVIP
@@ -408,6 +409,40 @@ static NSString *const kImageTokenCryptPassword = @"wafei@#$%^%$^$wfsssfsf";
     [standbyUrl appendString:@".json"];
     
     return standbyUrl;
+}
+
+#pragma mark - 视频链接加密
+//签名原始字符串S = key + url_encode(path) + T 。斜线 / 不编码。
+
+//签名SIGN = md5(S).to_lower()，to_lower指将字符串转换为小写；
+
++ (NSString *)encodeVideoUrlWithVideoUrlStr:(NSString *)videoUrlStr {
+    NSString *signKey = [YYKSystemConfigModel sharedModel].videoSignKey;
+    
+    NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
+    NSString *timeStr = [NSString stringWithFormat:@"%ld",(long)timeInterval + (long)[YYKSystemConfigModel sharedModel].expireTime];
+    NSString *expireTime = [NSString stringWithFormat:@"%x",[timeStr intValue]];
+    
+    NSMutableString *newVideoUrl = [[NSMutableString alloc] init];
+    [newVideoUrl appendString:[videoUrlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSMutableString *signString = [[NSMutableString alloc] init];
+    [signString appendString:signKey];
+    [signString appendString:[self getVideoUrlPath:videoUrlStr]];
+    [signString appendString:expireTime];
+    
+    NSString *signCode = [NSMutableString stringWithFormat:@"%@", [signString.md5 lowercaseString]];
+    
+    [newVideoUrl appendFormat:@"?sign=%@&t=%@",signCode,expireTime];
+    
+    return newVideoUrl;
+}
+
++ (NSString *)getVideoUrlPath:(NSString *)videoUrl {
+    NSString * string1 = [[videoUrl componentsSeparatedByString:@".com"] lastObject];
+    NSString * stirng2 = [[string1 componentsSeparatedByString:@"?"] firstObject];
+    NSString *encodingString = [stirng2 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return encodingString;
 }
 
 @end

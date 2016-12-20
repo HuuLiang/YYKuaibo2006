@@ -73,6 +73,9 @@ typedef void (^YYKFetchSystemConfigCompletionHandler)(BOOL success);
 @property (nonatomic,readonly) BOOL loaded;
 @property (nonatomic,readonly) BOOL hasDiscount;
 
+@property (nonatomic) NSString *videoSignKey;
+@property (nonatomic) NSTimeInterval expireTime;
+
 + (instancetype)sharedModel;
 
 - (BOOL)fetchSystemConfigWithCompletionHandler:(YYKFetchSystemConfigCompletionHandler)handler;
