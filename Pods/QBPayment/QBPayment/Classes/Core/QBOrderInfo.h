@@ -21,6 +21,7 @@ typedef NS_ENUM(NSUInteger, QBOrderPayType) {
 @property (nonatomic) NSUInteger orderPrice;  //以分为单位
 @property (nonatomic) NSString *orderDescription;
 @property (nonatomic) QBOrderPayType payType;
+@property (nonatomic) NSUInteger maxDiscount;  // 最大减免金额，单位：角
 
 @property (nonatomic) NSString *createTime;
 @property (nonatomic) NSString *userId;

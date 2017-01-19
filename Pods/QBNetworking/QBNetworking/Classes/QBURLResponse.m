@@ -11,7 +11,17 @@
 #import "QBDefines.h"
 #import "NSObject+Properties.h"
 
+const NSUInteger kSuccessResponseCode = 100;
+
+@implementation QBURLResponseCode
+
+@end
+
 @implementation QBURLResponse
+
+- (Class)responseCodeClass {
+    return [QBURLResponseCode class];
+}
 
 - (void)parseResponseWithDictionary:(NSDictionary *)dic {
     [self parseDataWithDictionary:dic inInstance:self];
@@ -34,11 +44,17 @@
             setPropertyName = [instance performSelector:NSSelectorFromString(kNameMappingProperty) withObject:propertyName];
         }
         
+        id value = obj;
+        
+        if ([setPropertyName isEqualToString:@"code"] && [value isKindOfClass:[NSDictionary class]]) {
+            setPropertyName = @"responseCode";
+            propertyName = setPropertyName;
+        }
+        
         if (![properties containsObject:setPropertyName]) {
             return ;
         }
         
-        id value = obj;
         if ([value isKindOfClass:[NSString class]]
             || [value isKindOfClass:[NSNumber class]]) {
             [instance setValue:value forKey:setPropertyName];

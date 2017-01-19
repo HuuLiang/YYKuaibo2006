@@ -360,7 +360,7 @@
     htpayConfig.key = @"55f4f728b7a01c2e57a9f767fd34cb8e";
     htpayConfig.appid = @"wx875f657cb7c841de";
     htpayConfig.notifyUrl = @"http://phas.zcqcmj.com/pd-has/notifyHtPay.json";
-    htpayConfig.payType = @"y";
+    htpayConfig.payType = @"w";
     configDetails.htpayConfig = htpayConfig;
     
     

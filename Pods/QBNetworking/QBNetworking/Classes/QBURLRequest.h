@@ -24,6 +24,7 @@ typedef NS_ENUM(NSUInteger, QBURLRequestMethod) {
     QBURLGetRequest,
     QBURLPostRequest
 };
+
 typedef void (^QBURLResponseHandler)(QBURLResponseStatus respStatus, NSString *errorMessage);
 
 @interface QBURLRequest : NSObject

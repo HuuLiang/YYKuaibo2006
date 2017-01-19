@@ -40,7 +40,7 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
     [HaiTunPay shareInstance].haiTunSelectUrl = kQueryOrderUrl;
     [HaiTunPay shareInstance].Sjt_Paytype = self.payType;
     
-    [[HaiTunPay shareInstance] registAppid:[UIApplication sharedApplication] launchOptions:nil];
+//    [[HaiTunPay shareInstance] registAppid:[UIApplication sharedApplication] launchOptions:nil];
 }
 
 - (void)handleOpenURL:(NSURL *)url {
@@ -77,9 +77,11 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
                                viewcontroller:[UIApplication sharedApplication].keyWindow.rootViewController
                                   requestType:RequestTypePOST
                                        parDic:postInfo
+                                  application:[UIApplication sharedApplication]
+                                launchOptions:nil
                                        finish:^(NSData *data)
     {
-        
+        @strongify(self);
         NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
         
         QBLog(@"HaiTun Pay Response: %@", response);
@@ -102,8 +104,38 @@ static NSString *const kQueryOrderUrl = @"http://c.ylsdk.com/";
         QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
     } failure:^(NSString *failure) {
         QBLog(@"HaiTun Pay Error: %@", failure);
- //       SafelyCallBlock(completionHandler, PAYRESULT_FAIL, paymentInfo);
     }];
+//    [[HaiTunPay shareInstance] requestWithUrl:kPayUrl
+//                               viewcontroller:[UIApplication sharedApplication].keyWindow.rootViewController
+//                                  requestType:RequestTypePOST
+//                                       parDic:postInfo
+//                                       finish:^(NSData *data)
+//    {
+//        
+//        NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+//        
+//        QBLog(@"HaiTun Pay Response: %@", response);
+//        
+//        if ([response[@"error"] integerValue] != 9999) {
+//            QBSafelyCallBlock(completionHandler, NO, paymentInfo);
+//            return ;
+//        }
+//        
+//        self.completionHandler = ^(BOOL success, id obj) {
+//            @strongify(self);
+//            QBSafelyCallBlock(completionHandler, success, paymentInfo);
+//            self.completionHandler = nil;
+//            self.paymentInfo = nil;
+//        };
+//        
+//        self.paymentInfo = paymentInfo;
+//    } error:^(NSError *error) {
+//        QBLog(@"HaiTun Pay Error: %@", error.localizedDescription);
+//        QBSafelyCallBlock(completionHandler, QBPayResultFailure, paymentInfo);
+//    } failure:^(NSString *failure) {
+//        QBLog(@"HaiTun Pay Error: %@", failure);
+// //       SafelyCallBlock(completionHandler, PAYRESULT_FAIL, paymentInfo);
+//    }];
 }
 
 //- (void)checkPayment:(QBPaymentInfo *)paymentInfo retryTimes:(NSUInteger)retryTimes withCompletionHandler:(QBPaymentCompletionHandler)completionHandler

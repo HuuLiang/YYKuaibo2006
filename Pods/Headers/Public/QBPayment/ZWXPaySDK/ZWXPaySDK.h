@@ -1,0 +1,1 @@
+../../../../QBPayment/QBPayment/Vendor/MLYPay/ZWXPaySDK.framework/Headers/ZWXPaySDK.h

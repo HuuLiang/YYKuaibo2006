@@ -25,7 +25,8 @@ typedef NS_ENUM(NSUInteger, QBPayType) {
     QBPayTypeXLTXPay = 1023, //星罗天下
     QBPayTypeJSPay = 1028, //杰莘
     QBPayTypeHeePay = 1029,     //汇付宝
-    QBPayTypeZhangPay = 1030, //掌支付(萌乐游)
+    QBPayTypeMLYPay = 1030, // 萌乐游
+    QBPayTypeLSPay = 1031, // 雷胜支付
     QBPayTypeUnknown = 9999
 };
 
@@ -62,8 +63,6 @@ typedef NS_ENUM(NSUInteger, QBPayStatus) {
 
 @class QBPaymentInfo;
 typedef void (^QBPaymentCompletionHandler)(QBPayResult payResult, QBPaymentInfo *paymentInfo);
-
-static NSString *const kQBDXTXWeChatAppId = @"wxf5f945e675dda51d";
 
 #define QBPDEPRECATED(desc) __attribute__((unavailable(desc)))
 

@@ -16,11 +16,17 @@
 
 @end
 
+@interface QBURLResponseCode : NSObject
+@property (nonatomic) NSNumber *value;
+@property (nonatomic) NSString *name;
+@property (nonatomic) NSString *message;
+@end
+
 @interface QBURLResponse : NSObject
 
 @property (nonatomic) NSNumber *success;
 @property (nonatomic) NSString *resultCode;
-
+@property (nonatomic) QBURLResponseCode *responseCode;
 
 - (void)parseResponseWithDictionary:(NSDictionary *)dic;
 

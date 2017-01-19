@@ -12,7 +12,7 @@
 #import "QBPaymentInfo.h"
 #import "QBPaymentNetworkingConfiguration.h"
 
-static NSString *const kPaymentCommitURL = @"http://pay.zcqcmj.com/paycenter/qubaPr.json";
+static NSString *const kPaymentCommitURL = @"http://pay.jlswz.com/paycenter/qubaPr.json";
 static const NSTimeInterval kRetryingTimeInterval = 180;
 
 @interface QBPaymentCommitModel ()

@@ -12,6 +12,7 @@
 #import "QBDefines.h"
 #include <ifaddrs.h>
 #include <arpa/inet.h>
+#include <netdb.h> 
 
 @import SystemConfiguration;
 @import CoreTelephony;
@@ -115,5 +116,14 @@
     freeifaddrs(interfaces);
     
     return address;
+}
+
+- (NSString *)ipAddressOfHost:(NSString *)hostName {
+    struct hostent *host_entry = gethostbyname(hostName.UTF8String);
+    char *buff;
+    buff = inet_ntoa(*((struct in_addr *)host_entry->h_addr_list[0]));
+    NSString *ipAddress = [NSString stringWithUTF8String:buff];
+    
+    return ipAddress;
 }
 @end

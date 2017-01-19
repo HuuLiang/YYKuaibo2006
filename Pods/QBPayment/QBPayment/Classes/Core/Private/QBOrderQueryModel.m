@@ -10,7 +10,7 @@
 #import "NSString+md5.h"
 #import "NSString+crypt.h"
 
-static NSString *const kQueryOrderURL = @"http://phas.ihuiyx.com/pd-has/successOrderIds.json";
+static NSString *const kQueryOrderURL = @"http://phas.jlswz.com/pd-has/successOrderIds.json";
 
 @implementation QBOrderQueryModel
 

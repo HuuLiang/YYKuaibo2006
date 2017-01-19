@@ -29,5 +29,6 @@ typedef void (^QBNetworkReachabilityChangedAction)(BOOL reachable);
 
 + (instancetype)sharedInfo;
 - (void)startMonitoring;
+- (NSString *)ipAddressOfHost:(NSString *)hostName;
 
 @end
